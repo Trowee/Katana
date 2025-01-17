@@ -37,13 +37,13 @@ namespace TimeScale
         {
             if (_currentPriority < priority) return;
             _currentPriority = priority;
-            this.RestartRoutine(ref _updateTimeScaleRoutine, UpdateTimeScaleRoutine(timeScales));
+            this.RestartRoutine(ref _updateTimeScaleRoutine, UpdateTimeScaleRoutine(new(timeScales)));
         }
 
         private Coroutine _updateTimeScaleRoutine;
-        private IEnumerator UpdateTimeScaleRoutine(List<TimeScaleKey> timeScales)
+        private IEnumerator UpdateTimeScaleRoutine(TimeScaleKeys timeScales)
         {
-            foreach (var timeScale in timeScales)
+            foreach (var timeScale in timeScales.Keys)
             {
                 var startTimeScale = TimeScale;
                 float lerpPos = 0;
