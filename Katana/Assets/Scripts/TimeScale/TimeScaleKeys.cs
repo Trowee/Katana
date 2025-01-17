@@ -8,6 +8,11 @@ namespace TimeScale
     {
         public List<TimeScaleKey> Keys;
 
+        public TimeScaleKeys(TimeScaleKey key)
+        {
+            Keys = new() { key };
+        }
+        
         public TimeScaleKeys(List<TimeScaleKey> keys)
         {
             Keys = keys;

@@ -31,13 +31,13 @@ namespace TimeScale
             _fixedDeltaTime = Time.fixedDeltaTime;
         }
 
-        public void UpdateTimeScale(TimeScaleKey timeScaleKey, int priority = 0) => UpdateTimeScale(new List<TimeScaleKey> { timeScaleKey }, priority);
+        public void UpdateTimeScale(TimeScaleKey timeScaleKey, int priority = 0) => UpdateTimeScale(new TimeScaleKeys(timeScaleKey), priority);
 
-        public void UpdateTimeScale(List<TimeScaleKey> timeScales, int priority = 0)
+        public void UpdateTimeScale(TimeScaleKeys timeScales, int priority = 0)
         {
             if (_currentPriority < priority) return;
             _currentPriority = priority;
-            this.RestartRoutine(ref _updateTimeScaleRoutine, UpdateTimeScaleRoutine(new(timeScales)));
+            this.RestartRoutine(ref _updateTimeScaleRoutine, UpdateTimeScaleRoutine(timeScales));
         }
 
         private Coroutine _updateTimeScaleRoutine;
