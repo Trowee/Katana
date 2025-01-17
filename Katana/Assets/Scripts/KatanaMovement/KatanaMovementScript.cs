@@ -1,3 +1,4 @@
+using Core;
 using NnUtils.Scripts;
 using TimeScale;
 using UnityEngine;
@@ -37,6 +38,7 @@ namespace KatanaMovement
             var force = new Vector3(0, _jumpForce.y) + zForce;
             _rb.AddForce(force, ForceMode.Impulse);
             _rb.AddTorque(Vector3.right * _jumpRotation, ForceMode.Impulse);
+            GameManager.TimeScaleManager.UpdateTimeScale(_jumpTimeScale);
         }
 
         private void Dash()
@@ -44,6 +46,7 @@ namespace KatanaMovement
             _rb.linearVelocity = Vector3.zero;
             _rb.angularVelocity = Vector3.zero;
             _rb.AddForce(-transform.up * _dashForce, ForceMode.Impulse);
+            GameManager.TimeScaleManager.UpdateTimeScale(_dashTimeScale);
         }
 
         private Vector3 GetForward()

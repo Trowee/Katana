@@ -154,9 +154,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rb: {fileID: 26203709}
   _forcePoint: {fileID: 163726859}
-  _launchForce: {x: 10, y: 10}
-  _launchRotation: 0.5
+  _jumpForce: {x: 0, y: 0}
+  _jumpRotation: 0
+  _jumpTimeScale:
+    Keys:
+    - TimeScale: 1.5
+      Time: 0
+      Easing: 0
+    - TimeScale: 0.5
+      Time: 1
+      Easing: 9
   _dashForce: 30
+  _dashTimeScale:
+    Keys:
+    - TimeScale: 1.5
+      Time: 0
+      Easing: 0
+    - TimeScale: 0.5
+      Time: 1
+      Easing: 9
 --- !u!54 &26203709
 Rigidbody:
   m_ObjectHideFlags: 0
