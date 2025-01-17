@@ -30,6 +30,13 @@ namespace KatanaMovement
             if (Input.GetKeyDown(KeyCode.D)) Dash();
         }
 
+        private Vector3 GetForward()
+        {
+            var rot = transform.rotation.eulerAngles;
+            var noX = Quaternion.Euler(0, rot.y, rot.z);
+            return noX * Vector3.forward;
+        }
+
         private void Jump()
         {
             // Store forward
@@ -60,11 +67,9 @@ namespace KatanaMovement
             GameManager.TimeScaleManager.UpdateTimeScale(_dashTimeScale);
         }
 
-        private Vector3 GetForward()
+        private void Tilt()
         {
-            var rot = transform.rotation.eulerAngles;
-            var noX = Quaternion.Euler(0, rot.y, rot.z);
-            return noX * Vector3.forward;
+            
         }
     }
 }
