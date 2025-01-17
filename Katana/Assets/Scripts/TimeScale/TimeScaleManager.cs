@@ -45,7 +45,7 @@ namespace TimeScale
         {
             if (_currentPriority < priority) return;
             _currentPriority = priority;
-            this.RestartRoutine(ref _updateTimeScaleRoutine, UpdateTimeScaleRoutine(timeScales));
+            this.RestartRoutine(ref _updateTimeScaleRoutine, UpdateTimeScaleRoutine(new(timeScales)));
         }
 
         private Coroutine _updateTimeScaleRoutine;
