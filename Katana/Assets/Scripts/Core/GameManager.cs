@@ -1,7 +1,10 @@
+using NnUtils.Scripts;
+using TimeScale;
 using UnityEngine;
 
 namespace Core
 {
+    [RequireComponent(typeof(TimeScaleManager))]
     public class GameManager : MonoBehaviour
     {
         private static GameManager _instance;
@@ -20,10 +23,13 @@ namespace Core
                 DontDestroyOnLoad(_instance.gameObject);
             }
         }
+        
+        [ReadOnly] [SerializeField] private TimeScaleManager _timeScaleManager;
+        public static TimeScaleManager TimeScaleManager => Instance._timeScaleManager;
 
         private void Reset()
         {
-            
+            _timeScaleManager = GetComponent<TimeScaleManager>();
         }
         
         private void Awake()
