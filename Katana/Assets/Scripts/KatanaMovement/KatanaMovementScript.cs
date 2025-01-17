@@ -1,4 +1,6 @@
+using Core;
 using NnUtils.Scripts;
+using TimeScale;
 using UnityEngine;
 
 namespace KatanaMovement
@@ -8,9 +10,15 @@ namespace KatanaMovement
     {
         [ReadOnly] [SerializeField] private Rigidbody _rb;
         [SerializeField] private Transform _forcePoint;
-        [SerializeField] private Vector2 _launchForce;
-        [SerializeField] private float _launchRotation;
+       
+        [Header("Jump")]
+        [SerializeField] private Vector2 _jumpForce;
+        [SerializeField] private float _jumpRotation;
+        [SerializeField] private TimeScaleKeys _jumpTimeScale;
+        
+        [Header("Dash")]
         [SerializeField] private float _dashForce;
+        [SerializeField] private TimeScaleKeys _dashTimeScale;
 
         private void Reset()
         {
@@ -26,10 +34,11 @@ namespace KatanaMovement
         private void Jump()
         {
             var forward = GetForward();
-            var zForce = _launchForce.x * forward;
-            var force = new Vector3(0, _launchForce.y) + zForce;
+            var zForce = _jumpForce.x * forward;
+            var force = new Vector3(0, _jumpForce.y) + zForce;
             _rb.AddForce(force, ForceMode.Impulse);
-            _rb.AddTorque(Vector3.right * _launchRotation, ForceMode.Impulse);
+            _rb.AddTorque(Vector3.right * _jumpRotation, ForceMode.Impulse);
+            GameManager.TimeScaleManager.UpdateTimeScale(_jumpTimeScale);
         }
 
         private void Dash()
@@ -37,6 +46,7 @@ namespace KatanaMovement
             _rb.linearVelocity = Vector3.zero;
             _rb.angularVelocity = Vector3.zero;
             _rb.AddForce(-transform.up * _dashForce, ForceMode.Impulse);
+            GameManager.TimeScaleManager.UpdateTimeScale(_dashTimeScale);
         }
 
         private Vector3 GetForward()
