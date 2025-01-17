@@ -1,0 +1,3 @@
+[submodule "Katana/Assets/NnUtils"]
+	path = Katana/Assets/NnUtils
+	url = https://www.github.com/nnra6864/NnUtils
