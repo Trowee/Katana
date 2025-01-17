@@ -14,7 +14,7 @@ namespace KatanaMovement
 
             var rot = transform.rotation.eulerAngles;
             var katanaRot = _katana.rotation.eulerAngles;
-            transform.rotation = Quaternion.Euler(rot.x, katanaRot.y, rot.z);
+            transform.rotation = Quaternion.Euler(rot.x, rot.y, rot.z);
             
             transform.Translate(_offset);
         }

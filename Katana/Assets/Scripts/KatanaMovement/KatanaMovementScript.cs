@@ -9,7 +9,6 @@ namespace KatanaMovement
     public class KatanaMovementScript : MonoBehaviour
     {
         [ReadOnly] [SerializeField] private Rigidbody _rb;
-        [SerializeField] private Transform _forcePoint;
        
         [Header("Jump")]
         [SerializeField] private Vector2 _jumpForce;
@@ -33,19 +32,31 @@ namespace KatanaMovement
 
         private void Jump()
         {
+            // Store forward
             var forward = GetForward();
+            
+            // Calculate forces
             var zForce = _jumpForce.x * forward;
             var force = new Vector3(0, _jumpForce.y) + zForce;
+            
+            // Add force and rotation
             _rb.AddForce(force, ForceMode.Impulse);
             _rb.AddTorque(Vector3.right * _jumpRotation, ForceMode.Impulse);
+            
+            // Apply timescale changes
             GameManager.TimeScaleManager.UpdateTimeScale(_jumpTimeScale);
         }
 
         private void Dash()
         {
+            // Reset velocity
             _rb.linearVelocity = Vector3.zero;
             _rb.angularVelocity = Vector3.zero;
-            _rb.AddForce(-transform.up * _dashForce, ForceMode.Impulse);
+            
+            // Add force
+            _rb.AddForce(-transform.forward * _dashForce, ForceMode.Impulse);
+            
+            // Apply timescale changes
             GameManager.TimeScaleManager.UpdateTimeScale(_dashTimeScale);
         }
 
