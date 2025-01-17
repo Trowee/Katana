@@ -1,0 +1,62 @@
+using System.Collections;
+using System.Collections.Generic;
+using NnUtils.Scripts;
+using UnityEngine;
+
+namespace TimeScale
+{
+    public class TimeScaleManager : MonoBehaviour
+    {
+        private float _fixedDeltaTime;
+        
+        private float _timeScale = 1;
+        public float TimeScale
+        {
+            get => _timeScale;
+            private set
+            {
+                if (Mathf.Approximately(_timeScale, value)) return;
+                if (value < 0) _timeScale = 0;
+                _timeScale = value;
+                Time.timeScale = TimeScale;
+                Time.fixedDeltaTime = _fixedDeltaTime / TimeScale;
+            }
+        }
+
+        private int? _currentPriority;
+
+        private void Start()
+        {
+            TimeScale       = Time.timeScale;
+            _fixedDeltaTime = Time.fixedDeltaTime;
+        }
+
+        public void UpdateTimeScale(TimeScaleKey timeScaleKey, int priority = 0) => UpdateTimeScale(new List<TimeScaleKey> { timeScaleKey }, priority);
+
+        public void UpdateTimeScale(List<TimeScaleKey> timeScales, int priority = 0)
+        {
+            if (_currentPriority < priority) return;
+            _currentPriority = priority;
+            this.RestartRoutine(ref _updateTimeScaleRoutine, UpdateTimeScaleRoutine(timeScales));
+        }
+
+        private Coroutine _updateTimeScaleRoutine;
+        private IEnumerator UpdateTimeScaleRoutine(List<TimeScaleKey> timeScales)
+        {
+            foreach (var timeScale in timeScales)
+            {
+                var startTimeScale = TimeScale;
+                float lerpPos = 0;
+
+                while (lerpPos < 1)
+                {
+                    var t = Misc.Tween(ref lerpPos, timeScale.Time, timeScale.Easing, true);
+                    TimeScale = Mathf.Lerp(startTimeScale, timeScale.Time, t);
+                    yield return null;
+                }
+            }
+            
+            _currentPriority = null;
+        }
+    }
+}
