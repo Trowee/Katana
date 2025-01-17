@@ -51,7 +51,7 @@ namespace TimeScale
                 while (lerpPos < 1)
                 {
                     var t = Misc.Tween(ref lerpPos, timeScale.Time, timeScale.Easing, true);
-                    TimeScale = Mathf.Lerp(startTimeScale, timeScale.Time, t);
+                    TimeScale = Mathf.Lerp(startTimeScale, timeScale.TimeScale, t);
                     yield return null;
                 }
             }
