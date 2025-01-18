@@ -1,3 +1,4 @@
+using System;
 using Core;
 using NnUtils.Scripts;
 using TimeScale;
@@ -8,7 +9,9 @@ namespace KatanaMovement
     [RequireComponent(typeof(Rigidbody))]
     public class KatanaMovementScript : MonoBehaviour
     {
-        [ReadOnly] [SerializeField] private Rigidbody _rb;
+        [Header("Components")]
+        [SerializeField] private Rigidbody _rb;
+        [SerializeField] private Transform _model;
        
         [Header("Jump")]
         [SerializeField] private Vector2 _jumpForce;
@@ -19,15 +22,26 @@ namespace KatanaMovement
         [SerializeField] private float _dashForce;
         [SerializeField] private TimeScaleKeys _dashTimeScale;
 
+        [Header("Tilt")]
+        [SerializeField] private float _tiltAmount;
+        [SerializeField] private float _maxTilt;
+        private float _defaultTilt, _currentTilt;
+
         private void Reset()
         {
             _rb = GetComponent<Rigidbody>();
         }
 
+        private void Awake()
+        {
+            _defaultTilt = _model.localRotation.eulerAngles.z;
+        }
+
         private void Update()
         {
+            Tilt();
             if (Input.GetKeyDown(KeyCode.Space)) Jump();
-            if (Input.GetKeyDown(KeyCode.D)) Dash();
+            if (Input.GetKeyDown(KeyCode.Mouse0)) Dash();
         }
 
         private Vector3 GetForward()
@@ -61,7 +75,7 @@ namespace KatanaMovement
             _rb.angularVelocity = Vector3.zero;
             
             // Add force
-            _rb.AddForce(-transform.forward * _dashForce, ForceMode.Impulse);
+            _rb.AddForce(-transform.up * _dashForce, ForceMode.Impulse);
             
             // Apply timescale changes
             GameManager.TimeScaleManager.UpdateTimeScale(_dashTimeScale);
@@ -69,7 +83,17 @@ namespace KatanaMovement
 
         private void Tilt()
         {
-            
+            float amount = Input.GetAxisRaw("Horizontal") * Time.unscaledDeltaTime * _tiltAmount;
+
+            // Get the current rotation
+            Quaternion currentRotation = transform.localRotation;
+
+            // Define the tilt as a rotation around the Z axis
+            Quaternion tilt = Quaternion.AngleAxis(amount, Vector3.up);
+
+            // Combine the rotations
+            transform.localRotation = currentRotation * tilt;
         }
+        
     }
 }
