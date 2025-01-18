@@ -3,12 +3,21 @@ using Core;
 using NnUtils.Scripts;
 using TimeScale;
 using UnityEngine;
+using Color = UnityEngine.Color;
 
 namespace KatanaMovement
 {
     [RequireComponent(typeof(Rigidbody))]
     public class KatanaMovementScript : MonoBehaviour
     {
+        private Camera _cam;
+        
+        /// Whether the player is currently using the strike ability
+        private bool _isStriking;
+        
+        // Whether the player is performing the strike impact
+        private bool _isPerformingStrikeImpact;
+        
         [Header("Components")]
         [SerializeField] private Rigidbody _rb;
         [SerializeField] private Collider _collider;
@@ -34,19 +43,19 @@ namespace KatanaMovement
         [SerializeField] private float _strikeHoverTimeScale = 0.1f;
         
         [Header("Strike Impact")]
+        [SerializeField] private LayerMask _strikeLayerMask;
         [SerializeField] private float _strikeImpactForce = 200;
         [SerializeField] private TimeScaleKeys _strikeImpactTimeScale;
         [SerializeField] private TimeScaleKeys _postStrikeImpactTimeScale;
 
-        /// Whether the player is currently using the strike ability
-        private bool _isStriking;
-        
-        // Whether the player is performing the strike impact
-        private bool _isPerformingStrikeImpact;
-
         private void Reset()
         {
             _rb = GetComponent<Rigidbody>();
+        }
+
+        private void Awake()
+        {
+            _cam = Camera.main;
         }
 
         private void Update()
@@ -54,13 +63,17 @@ namespace KatanaMovement
             Tilt();
             if (Input.GetKeyDown(KeyCode.Space)) Jump();
             if (Input.GetKeyDown(KeyCode.Mouse0)) Dash();
-            if (Input.GetKeyDown(KeyCode.Mouse1)) Strike();
+            if (Input.GetKeyDown(KeyCode.S)) Strike();
         }
 
         private void OnCollisionEnter(Collision collision)
         {
-            // TODO: Add the check so it only stops on ground and not enemies
-            if (_isPerformingStrikeImpact) { StrikeImpact(); return; }
+            if (_isPerformingStrikeImpact)
+            {
+                if (collision.gameObject.layer == LayerMask.NameToLayer("Default"))
+                { StrikeImpact(); return; }
+            }
+            
         }
 
         private Vector3 GetForward()
@@ -72,6 +85,8 @@ namespace KatanaMovement
 
         private void Tilt()
         {
+            if (_isStriking || _isPerformingStrikeImpact) return;
+            
             var amount = Input.GetAxisRaw("Horizontal") * Time.unscaledDeltaTime * _tiltSpeed;
 
             // Get the current rotation
@@ -163,13 +178,32 @@ namespace KatanaMovement
             while (timer < _strikeHoverDuration)
             {
                 timer += Time.unscaledDeltaTime;
+                PerformStrikeHover();
                 if (Input.GetKeyDown(KeyCode.Mouse0)) { PerformStrikeImpact(); break; } 
                 yield return null;
             }
             
             PerformStrikeImpact();
-            
             _strikeRoutine = null;
+        }
+
+        private void PerformStrikeHover()
+        {
+            var ray = _cam.ScreenPointToRay(Input.mousePosition);
+
+            // Visualize the aiming ray in the Scene view
+            Debug.DrawRay(ray.origin, ray.direction * 1000, Color.red, 0.1f);
+
+            // Perform the raycast
+            if (!Physics.Raycast(ray, out var hit, Mathf.Infinity, _strikeLayerMask))
+                return;
+
+            // Visualize the hit point
+            Debug.DrawLine(transform.position, hit.point, Color.green, 0.1f);
+
+            // Orient the bottom side of the object towards the hit point
+            transform.LookAt(hit.point, Vector3.up);
+            transform.Rotate(-90, 0, 0); // Adjust rotation so the bottom side faces the target
         }
 
         private void PerformStrikeImpact()
