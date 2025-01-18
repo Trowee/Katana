@@ -31,6 +31,14 @@ namespace TimeScale
             _fixedDeltaTime = Time.fixedDeltaTime;
         }
 
+        public void UpdateTimeScale(float timeScale, int priority = 0)
+        {
+            if (_currentPriority < priority) return;
+            this.StopRoutine(ref _updateTimeScaleRoutine);
+            TimeScale        = timeScale;
+            _currentPriority = null;
+        }
+
         public void UpdateTimeScale(TimeScaleKey timeScaleKey, int priority = 0) => UpdateTimeScale(new TimeScaleKeys(timeScaleKey), priority);
 
         public void UpdateTimeScale(TimeScaleKeys timeScales, int priority = 0)
