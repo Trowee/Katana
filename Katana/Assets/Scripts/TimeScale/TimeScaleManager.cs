@@ -19,7 +19,7 @@ namespace TimeScale
                 if (value < 0) _timeScale = 0;
                 _timeScale = value;
                 Time.timeScale = TimeScale;
-                Time.fixedDeltaTime = _fixedDeltaTime / TimeScale;
+                Time.fixedDeltaTime = _fixedDeltaTime * TimeScale;
             }
         }
 
