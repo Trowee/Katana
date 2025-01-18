@@ -458,7 +458,7 @@ MonoBehaviour:
     - TimeScale: 2
       Time: 0
       Easing: 0
-    - TimeScale: 0.5
+    - TimeScale: 0.25
       Time: 2
       Easing: 9
   _dashForce: 30
@@ -467,11 +467,10 @@ MonoBehaviour:
     - TimeScale: 2
       Time: 0
       Easing: 0
-    - TimeScale: 0.5
+    - TimeScale: 0.25
       Time: 4
       Easing: 9
-  _tiltAmount: 60
-  _maxTilt: 15
+  _tiltSpeed: 90
 --- !u!54 &1461481853
 Rigidbody:
   m_ObjectHideFlags: 0
