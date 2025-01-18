@@ -450,7 +450,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rb: {fileID: 1461481853}
+  _collider: {fileID: 968672865}
   _model: {fileID: 579092011}
+  _tiltSpeed: 90
   _jumpForce: {x: 10, y: 15}
   _jumpRotation: 10
   _jumpTimeScale:
@@ -470,7 +472,48 @@ MonoBehaviour:
     - TimeScale: 0.25
       Time: 4
       Easing: 9
-  _tiltSpeed: 90
+  _strikeTransitionTime: 3
+  _strikeTransitionCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: -0
+      outSlope: 0.08554226
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.05055055
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: -0.7733753
+      outSlope: -0.7733753
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.06500012
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _strikeHoverHeight: 100
+  _strikeHoverDuration: 5
+  _strikeHoverTimeScale: 0.1
+  _strikeImpactForce: 200
+  _strikeImpactTimeScale:
+    Keys:
+    - TimeScale: 1
+      Time: 0.25
+      Easing: 8
+  _postStrikeImpactTimeScale:
+    Keys:
+    - TimeScale: 0.1
+      Time: 0
+      Easing: 0
+    - TimeScale: 0.5
+      Time: 5
+      Easing: 10
 --- !u!54 &1461481853
 Rigidbody:
   m_ObjectHideFlags: 0

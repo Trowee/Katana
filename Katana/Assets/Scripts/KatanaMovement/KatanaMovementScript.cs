@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using Core;
 using NnUtils.Scripts;
@@ -12,6 +11,7 @@ namespace KatanaMovement
     {
         [Header("Components")]
         [SerializeField] private Rigidbody _rb;
+        [SerializeField] private Collider _collider;
         [SerializeField] private Transform _model;
 
         [Header("Tilt")]
@@ -26,12 +26,23 @@ namespace KatanaMovement
         [SerializeField] private float _dashForce = 30;
         [SerializeField] private TimeScaleKeys _dashTimeScale;
 
-        [Header("Strike")]
-        [SerializeField] private float _strikeTransitionTime = 5;
-        [SerializeField] private float _strikeHeight = 100;
-        [SerializeField] private float _strikeForce = 100;
-        [SerializeField] private TimeScaleKeys _strikeHoverTimeScale;
+        [Header("Strike Hover")]
+        [SerializeField] private float _strikeTransitionTime = 3;
+        [SerializeField] private AnimationCurve _strikeTransitionCurve;
+        [SerializeField] private float _strikeHoverHeight = 100;
+        [SerializeField] private float _strikeHoverDuration = 5;
+        [SerializeField] private float _strikeHoverTimeScale = 0.1f;
+        
+        [Header("Strike Impact")]
+        [SerializeField] private float _strikeImpactForce = 200;
         [SerializeField] private TimeScaleKeys _strikeImpactTimeScale;
+        [SerializeField] private TimeScaleKeys _postStrikeImpactTimeScale;
+
+        /// Whether the player is currently using the strike ability
+        private bool _isStriking;
+        
+        // Whether the player is performing the strike impact
+        private bool _isPerformingStrikeImpact;
 
         private void Reset()
         {
@@ -44,6 +55,12 @@ namespace KatanaMovement
             if (Input.GetKeyDown(KeyCode.Space)) Jump();
             if (Input.GetKeyDown(KeyCode.Mouse0)) Dash();
             if (Input.GetKeyDown(KeyCode.Mouse1)) Strike();
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            // TODO: Add the check so it only stops on ground and not enemies
+            if (_isPerformingStrikeImpact) { StrikeImpact(); return; }
         }
 
         private Vector3 GetForward()
@@ -69,7 +86,7 @@ namespace KatanaMovement
 
         private void Jump()
         {
-            if (_strikeRoutine != null) return;
+            if (_isStriking || _isPerformingStrikeImpact) return;
             
             // Store forward
             var forward = GetForward();
@@ -88,7 +105,7 @@ namespace KatanaMovement
 
         private void Dash()
         {
-            if (_strikeRoutine != null) return;
+            if (_isStriking || _isPerformingStrikeImpact) return;
             
             // Reset velocity
             _rb.linearVelocity = Vector3.zero;
@@ -108,21 +125,70 @@ namespace KatanaMovement
         }
 
         private Coroutine _strikeRoutine;
+
         private IEnumerator StrikeRoutine()
         {
+            _isStriking = true;
+            
             // Disable gravity
             _rb.useGravity = false;
+            
+            // Disable collider
+            _collider.enabled = false;
             
             // Reset velocity
             _rb.linearVelocity = Vector3.zero;
             _rb.angularVelocity = Vector3.zero;
             
-            // Adjust transform
-            transform.localPosition += Vector3.up * 100;
-            transform.localRotation = Quaternion.Euler(0, transform.localRotation.eulerAngles.y, 0);
+            // Store transform
+            var startPos = transform.localPosition;
+            var targetPos = startPos + Vector3.up * _strikeHoverHeight;
+            var startRot = transform.localRotation;
+            var targetRot = Quaternion.Euler(0, startRot.eulerAngles.y, 0);
+
+            var startTimeScale = Time.timeScale;
+            float lerpPos = 0;
+
+            while (lerpPos < 1)
+            {
+                var t = _strikeTransitionCurve.Evaluate(Misc.Tween(ref lerpPos, _strikeTransitionTime, unscaled: true));
+                transform.localPosition = Vector3.LerpUnclamped(startPos, targetPos, t);
+                transform.localRotation = Quaternion.LerpUnclamped(startRot, targetRot, t);
+                GameManager.TimeScaleManager.UpdateTimeScale(Mathf.LerpUnclamped(startTimeScale, _strikeHoverTimeScale, t));
+                yield return null;
+            }
+
+            float timer = 0;
             
-            yield return new WaitForSeconds(5);
+            while (timer < _strikeHoverDuration)
+            {
+                timer += Time.unscaledDeltaTime;
+                if (Input.GetKeyDown(KeyCode.Mouse0)) { PerformStrikeImpact(); break; } 
+                yield return null;
+            }
+            
+            PerformStrikeImpact();
+            
             _strikeRoutine = null;
+        }
+
+        private void PerformStrikeImpact()
+        {
+            // Update values
+            _isStriking               = false;
+            _isPerformingStrikeImpact = true;
+            _rb.useGravity            = true;
+            _collider.enabled         = true;
+            
+            // Add strike to where the blade is pointing
+            _rb.AddForce(-transform.up * _strikeImpactForce, ForceMode.Impulse);
+            GameManager.TimeScaleManager.UpdateTimeScale(_strikeImpactTimeScale);
+        }
+
+        private void StrikeImpact()
+        {
+            _isPerformingStrikeImpact = false;
+            GameManager.TimeScaleManager.UpdateTimeScale(_postStrikeImpactTimeScale);
         }
     }
 }
