@@ -3,14 +3,13 @@ using Core;
 using NnUtils.Scripts;
 using TimeScale;
 using UnityEngine;
-using Color = UnityEngine.Color;
 
 namespace KatanaMovement
 {
     [RequireComponent(typeof(Rigidbody))]
-    public class KatanaMovementScript : MonoBehaviour
+    public class PlayerMovementScript : MonoBehaviour
     {
-        private Camera _cam;
+        private static Camera Cam => PlaySceneManager.CameraManager.Camera;
         
         /// Whether the player is currently using the strike ability
         private bool _isStriking;
@@ -25,6 +24,7 @@ namespace KatanaMovement
 
         [Header("Tilt")]
         [SerializeField] private float _tiltSpeed = 90;
+        [SerializeField] private float _tiltInvertPoint = 180;
        
         [Header("Jump")]
         [SerializeField] private Vector2 _jumpForce = new(10, 15);
@@ -53,14 +53,9 @@ namespace KatanaMovement
             _rb = GetComponent<Rigidbody>();
         }
 
-        private void Awake()
-        {
-            _cam = Camera.main;
-        }
-
         private void Update()
         {
-            //Tilt();
+            Tilt();
             if (Input.GetKeyDown(KeyCode.Space)) Jump();
             if (Input.GetKeyDown(KeyCode.Mouse0)) Dash();
             if (Input.GetKeyDown(KeyCode.S)) Strike();
@@ -86,17 +81,15 @@ namespace KatanaMovement
         private void Tilt()
         {
             if (_isStriking || _isPerformingStrikeImpact) return;
-            
+
+            var ea = transform.eulerAngles;
             var amount = Input.GetAxisRaw("Horizontal") * Time.unscaledDeltaTime * _tiltSpeed;
-
-            // Get the current rotation
-            var currentRotation = transform.localRotation;
-
-            // Define the tilt as a rotation around the Y axis
-            var tilt = Quaternion.AngleAxis(amount, Vector3.up);
+            amount *= ea.x > 180 ? -1 : 1;
+            amount *= ea.x < -180 ? -1 : 1;
 
             // Combine the rotations
-            transform.localRotation = currentRotation * tilt;
+            transform.Rotate(Vector3.up, amount, Space.World);
+            transform.eulerAngles = new(ea.x, transform.eulerAngles.y, ea.z);
         }
 
         private void Jump()
@@ -104,7 +97,7 @@ namespace KatanaMovement
             if (_isStriking || _isPerformingStrikeImpact) return;
             
             // Store forward
-            var forward = GetForward();
+            var forward = transform.up;
             
             // Calculate forces
             var zForce = _jumpForce.x * forward;
@@ -112,7 +105,7 @@ namespace KatanaMovement
             
             // Add force and rotation
             _rb.AddForce(force, ForceMode.Impulse);
-            _rb.AddTorque(Vector3.right * _jumpRotation, ForceMode.Impulse);
+            _rb.AddTorque(transform.right * _jumpRotation, ForceMode.Impulse);
             
             // Apply timescale changes
             GameManager.TimeScaleManager.UpdateTimeScale(_jumpTimeScale);
@@ -127,7 +120,7 @@ namespace KatanaMovement
             _rb.angularVelocity = Vector3.zero;
             
             // Add force
-            _rb.AddForce(-transform.up * _dashForce, ForceMode.Impulse);
+            _rb.AddForce(transform.up * _dashForce, ForceMode.Impulse);
             
             // Apply timescale changes
             GameManager.TimeScaleManager.UpdateTimeScale(_dashTimeScale);
@@ -189,7 +182,7 @@ namespace KatanaMovement
 
         private void PerformStrikeHover()
         {
-            var ray = _cam.ScreenPointToRay(Input.mousePosition);
+            var ray = Cam.ScreenPointToRay(Input.mousePosition);
 
             // Perform the raycast
             if (!Physics.Raycast(ray, out var hit, Mathf.Infinity, _strikeLayerMask))
