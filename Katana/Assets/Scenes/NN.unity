@@ -163,7 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5f29703eec8acd9cb5e8f84f5a4edb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _offset: {x: 0, y: 0, z: -5}
+  _offset: {x: 0, y: 3, z: -5}
   _translateCameraPosition: 0
 --- !u!1 &214591989
 GameObject:
@@ -628,7 +628,7 @@ MonoBehaviour:
   _tiltSpeed: 90
   _tiltInvertPoint: 180
   _flipForce: {x: 20, y: 25}
-  _flipRotation: 5
+  _flipRotation: 10
   _flipTimeScale:
     Keys:
     - TimeScale: 2
@@ -703,7 +703,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 1
-  m_AngularDrag: 0.5
+  m_AngularDrag: 1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}

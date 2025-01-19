@@ -16,18 +16,39 @@ namespace Core
         public static PlaySceneManager Instance => _instance = FindFirstObjectByType<PlaySceneManager>();
 
         [SerializeField] private GameObject _player;
-        public static GameObject Player => Instance._player ??= GameObject.FindWithTag("Player");
+        public static GameObject Player
+        {
+            get
+            {
+                if (!Instance) return null;
+                return Instance._player ??= GameObject.FindWithTag("Player");
+            }
+        }
 
         [SerializeField] private PlayerMovementScript _playerMovement;
-        public static PlayerMovementScript PlayerMovement => Instance._playerMovement ??= Player.GetComponent<PlayerMovementScript>();
-        
+        public static PlayerMovementScript PlayerMovement
+        {
+            get
+            {
+                if (!Instance) return null;
+                return Instance._playerMovement ??= Player?.GetComponent<PlayerMovementScript>();
+            }
+        }
+
         [SerializeField] private CameraManager _cameraManager;
-        public static CameraManager CameraManager => Instance._cameraManager ??= Instance.gameObject.GetOrAddComponent<CameraManager>();
+        public static CameraManager CameraManager
+        {
+            get
+            {
+                if (!Instance) return null;
+                return Instance._cameraManager ??= Instance.gameObject.GetOrAddComponent<CameraManager>();
+            }
+        }
 
         [SerializeField] private string _playerCameraHandler = FPCameraHandler;
         public static string PlayerCameraHandler
         {
-            get => Instance._playerCameraHandler;
+            get => Instance?._playerCameraHandler;
             set => Instance._playerCameraHandler = value;
         }
 
