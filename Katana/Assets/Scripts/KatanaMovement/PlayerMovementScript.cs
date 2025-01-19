@@ -63,6 +63,8 @@ namespace KatanaMovement
 
         private void Update()
         {
+            if (IsPerformingStrike || IsPerformingStrikeImpact) return;
+            
             Tilt();
             if (Input.GetKeyDown(KeyCode.Q)) ToggleCamera();
             if (Input.GetKeyDown(KeyCode.Space)) Flip();
@@ -82,8 +84,6 @@ namespace KatanaMovement
 
         private void Tilt()
         {
-            if (IsPerformingStrike || IsPerformingStrikeImpact) return;
-
             var ea = transform.eulerAngles;
             var amount = Input.GetAxisRaw("Horizontal") * Time.unscaledDeltaTime * _tiltSpeed;
             amount *= ea.x > 180 ? -1 : 1;
@@ -102,8 +102,6 @@ namespace KatanaMovement
 
         private void Flip()
         {
-            if (IsPerformingStrike || IsPerformingStrikeImpact) return;
-            
             // Store forward
             var forward = transform.up;
             
@@ -121,8 +119,6 @@ namespace KatanaMovement
 
         private void Dash()
         {
-            if (IsPerformingStrike || IsPerformingStrikeImpact) return;
-            
             // Reset velocity
             _rb.linearVelocity = Vector3.zero;
             _rb.angularVelocity = Vector3.zero;
