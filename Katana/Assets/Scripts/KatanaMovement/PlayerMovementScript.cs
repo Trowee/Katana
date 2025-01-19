@@ -3,13 +3,15 @@ using Core;
 using NnUtils.Scripts;
 using TimeScale;
 using UnityEngine;
+using PSM = Core.PlaySceneManager;
 
 namespace KatanaMovement
 {
     [RequireComponent(typeof(Rigidbody))]
     public class PlayerMovementScript : MonoBehaviour
     {
-        private static Camera Cam => PlaySceneManager.CameraManager.Camera;
+        private static Camera Cam => PSM.CameraManager.Camera;
+        private static string CamHandler => PSM.PlayerCameraHandler;
         
         /// Whether the player is currently using the strike ability
         [ReadOnly] public bool IsPerformingStrike;
@@ -22,6 +24,10 @@ namespace KatanaMovement
         [SerializeField] private Collider _collider;
         [SerializeField] private Transform _model;
 
+        [Header("Camera")]
+        [SerializeField] private float _cameraSwitchDuration = 1;
+        [SerializeField] private Easings.Type _cameraSwitchEasing = Easings.Type.ExpoOut;
+        
         [Header("Tilt")]
         [SerializeField] private float _tiltSpeed = 90;
         [SerializeField] private float _tiltInvertPoint = 180;
@@ -58,6 +64,7 @@ namespace KatanaMovement
         private void Update()
         {
             Tilt();
+            if (Input.GetKeyDown(KeyCode.Q)) ToggleCamera();
             if (Input.GetKeyDown(KeyCode.Space)) Flip();
             if (Input.GetKeyDown(KeyCode.Mouse0)) Dash();
             if (Input.GetKeyDown(KeyCode.S)) Strike();
@@ -85,6 +92,12 @@ namespace KatanaMovement
             // Combine the rotations
             transform.Rotate(Vector3.up, amount, Space.World);
             transform.eulerAngles = new(ea.x, transform.eulerAngles.y, ea.z);
+        }
+
+        private void ToggleCamera()
+        {
+            PSM.PlayerCameraHandler = CamHandler == PSM.FPCameraHandler ? PSM.TPCameraHandler : PSM.FPCameraHandler;
+            PSM.CameraManager.SwitchCameraHandler(CamHandler, _cameraSwitchDuration, _cameraSwitchEasing, unscaled: true);
         }
 
         private void Flip()
@@ -154,7 +167,7 @@ namespace KatanaMovement
             float lerpPos = 0;
             
             // Start the camera switch and animation
-            PlaySceneManager.CameraManager.SwitchCameraHandler("StrikeCameraHandler", _strikeTransitionTime, _strikeTransitionCurve, true);
+            PSM.CameraManager.SwitchCameraHandler(PSM.StrikeCameraHandler, _strikeTransitionTime, _strikeTransitionCurve, true);
             while (lerpPos < 1)
             {
                 var t = _strikeTransitionCurve.Evaluate(Misc.Tween(ref lerpPos, _strikeTransitionTime, unscaled: true));
@@ -175,7 +188,7 @@ namespace KatanaMovement
             }
 
             // Return camera to the initial handler
-            PlaySceneManager.CameraManager.SwitchCameraHandler("PlayerCameraHandler", _camReturnDuration, _camReturnEasing, true);
+            PSM.CameraManager.SwitchCameraHandler(PSM.PlayerCameraHandler, _camReturnDuration, _camReturnEasing, true);
             yield return new WaitForSecondsRealtime(_camReturnDuration);
             
             PerformStrikeImpact();

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace PlayerCamera
 {
-    public class PlayerCameraScript : MonoBehaviour
+    public class FPCameraScript : MonoBehaviour
     {
         private static PlayerMovementScript PlayerMovement => PlaySceneManager.PlayerMovement;
         
@@ -23,7 +23,8 @@ namespace PlayerCamera
         
         private void Update()
         {
-            if (PlayerMovement.IsPerformingStrike || PlayerMovement.IsPerformingStrikeImpact)
+            if (PlayerMovement.IsPerformingStrike || PlayerMovement.IsPerformingStrikeImpact
+                || PlaySceneManager.PlayerCameraHandler != PlaySceneManager.FPCameraHandler)
             {
                 StopPanning();
                 return;

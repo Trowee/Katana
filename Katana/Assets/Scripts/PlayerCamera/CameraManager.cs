@@ -11,19 +11,19 @@ namespace PlayerCamera
         // Handlers should take care of adding/removing
         public readonly HashSet<CameraHandlerScript> Handlers = new();
         public Camera Camera { get; private set; }
-        public PlayerCameraScript PlayerCamera { get; private set; }
+        public FPCameraScript FPCamera { get; private set; }
 
         private void Awake()
         {
             Camera       = Camera.main;
-            PlayerCamera = Camera?.GetComponent<PlayerCameraScript>();
+            FPCamera = Camera?.GetComponent<FPCameraScript>();
         }
-
+        
         public void SwitchCameraHandler(string handlerName, float duration = 0, Easings.Type easing = Easings.Type.None, bool unscaled = false)
             => SwitchCameraHandler(handlerName, duration, easing, null, unscaled);
         
         public void SwitchCameraHandler(string handlerName, float duration = 0, AnimationCurve curve = null, bool unscaled = false)
-            => SwitchCameraHandler(handlerName, duration, Easings.Type.None, null, unscaled);
+            => SwitchCameraHandler(handlerName, duration, Easings.Type.None, curve, unscaled);
 
         private void SwitchCameraHandler(string handlerName, float duration, Easings.Type easing, AnimationCurve curve, bool unscaled)
         {

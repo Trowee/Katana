@@ -418,8 +418,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1461481850}
-  _playerMovement: {fileID: 0}
+  _playerMovement: {fileID: 1461481852}
   _cameraManager: {fileID: 843226436}
+  _playerCameraHandler: FirstPersonCameraHandler
 --- !u!114 &843226436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -622,6 +623,8 @@ MonoBehaviour:
   _rb: {fileID: 1461481853}
   _collider: {fileID: 968672865}
   _model: {fileID: 579092011}
+  _cameraSwitchDuration: 1
+  _cameraSwitchEasing: 16
   _tiltSpeed: 90
   _tiltInvertPoint: 180
   _flipForce: {x: 20, y: 25}
@@ -849,7 +852,7 @@ GameObject:
   - component: {fileID: 1736498947}
   - component: {fileID: 1736498948}
   m_Layer: 0
-  m_Name: PlayerCameraHandler
+  m_Name: FirstPersonCameraHandler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
