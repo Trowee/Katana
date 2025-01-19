@@ -1,4 +1,6 @@
 using System.Collections;
+using Core;
+using KatanaMovement;
 using NnUtils.Scripts;
 using UnityEngine;
 
@@ -6,6 +8,8 @@ namespace PlayerCamera
 {
     public class PlayerCameraScript : MonoBehaviour
     {
+        private static PlayerMovementScript PlayerMovement => PlaySceneManager.PlayerMovement;
+        
         // Current rotation has to be stored and can't be taken from the origin rot because quaternions are between -180 and 180
         private Vector2 _currentRot;
         private Vector2 _totalRot;
@@ -19,6 +23,12 @@ namespace PlayerCamera
         
         private void Update()
         {
+            if (PlayerMovement.IsPerformingStrike || PlayerMovement.IsPerformingStrikeImpact)
+            {
+                StopPanning();
+                return;
+            }
+            
             Pan();
         }
 
@@ -26,7 +36,6 @@ namespace PlayerCamera
         {
             // Store mouse movement and return if there is none
             Vector2 positionDelta = new(-Input.GetAxisRaw("Mouse Y"), Input.GetAxisRaw("Mouse X"));
-            if (positionDelta == Vector2.zero) return;
 
             // Update total rotation
             _totalRot += positionDelta * _sensitivity;
@@ -53,6 +62,12 @@ namespace PlayerCamera
             }
 
             _panRoutine = null;
+        }
+
+        private void StopPanning()
+        {
+            this.StopRoutine(ref _panRoutine);
+            _totalRot = _currentRot = Vector3.zero;
         }
     }
 }

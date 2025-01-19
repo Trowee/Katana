@@ -1,3 +1,4 @@
+using KatanaMovement;
 using UnityEngine;
 using NnUtils.Scripts;
 using PlayerCamera;
@@ -12,6 +13,9 @@ namespace Core
 
         [SerializeField] private GameObject _player;
         public static GameObject Player => Instance._player ??= GameObject.FindWithTag("Player");
+
+        [SerializeField] private PlayerMovementScript _playerMovement;
+        public static PlayerMovementScript PlayerMovement => Instance._playerMovement ??= Player.GetComponent<PlayerMovementScript>();
         
         [SerializeField] private CameraManager _cameraManager;
         public static CameraManager CameraManager => Instance._cameraManager ??= Instance.gameObject.GetOrAddComponent<CameraManager>();

@@ -12,10 +12,10 @@ namespace KatanaMovement
         private static Camera Cam => PlaySceneManager.CameraManager.Camera;
         
         /// Whether the player is currently using the strike ability
-        private bool _isStriking;
+        [ReadOnly] public bool IsPerformingStrike;
         
         // Whether the player is performing the strike impact
-        private bool _isPerformingStrikeImpact;
+        [ReadOnly] public bool IsPerformingStrikeImpact;
         
         [Header("Components")]
         [SerializeField] private Rigidbody _rb;
@@ -41,8 +41,10 @@ namespace KatanaMovement
         [SerializeField] private float _strikeHoverHeight = 100;
         [SerializeField] private float _strikeHoverDuration = 5;
         [SerializeField] private float _strikeHoverTimeScale = 0.1f;
-        
+
         [Header("Strike Impact")]
+        [SerializeField] private float _camReturnDuration = 0.5f;
+        [SerializeField] private Easings.Type _camReturnEasing = Easings.Type.ExpoOut;
         [SerializeField] private LayerMask _strikeLayerMask;
         [SerializeField] private float _strikeImpactForce = 200;
         [SerializeField] private TimeScaleKeys _strikeImpactTimeScale;
@@ -63,7 +65,7 @@ namespace KatanaMovement
 
         private void OnCollisionEnter(Collision collision)
         {
-            if (_isPerformingStrikeImpact)
+            if (IsPerformingStrikeImpact)
             {
                 if (collision.gameObject.layer == LayerMask.NameToLayer("Default"))
                 { StrikeImpact(); return; }
@@ -73,7 +75,7 @@ namespace KatanaMovement
 
         private void Tilt()
         {
-            if (_isStriking || _isPerformingStrikeImpact) return;
+            if (IsPerformingStrike || IsPerformingStrikeImpact) return;
 
             var ea = transform.eulerAngles;
             var amount = Input.GetAxisRaw("Horizontal") * Time.unscaledDeltaTime * _tiltSpeed;
@@ -87,7 +89,7 @@ namespace KatanaMovement
 
         private void Flip()
         {
-            if (_isStriking || _isPerformingStrikeImpact) return;
+            if (IsPerformingStrike || IsPerformingStrikeImpact) return;
             
             // Store forward
             var forward = transform.up;
@@ -106,7 +108,7 @@ namespace KatanaMovement
 
         private void Dash()
         {
-            if (_isStriking || _isPerformingStrikeImpact) return;
+            if (IsPerformingStrike || IsPerformingStrikeImpact) return;
             
             // Reset velocity
             _rb.linearVelocity = Vector3.zero;
@@ -129,7 +131,7 @@ namespace KatanaMovement
 
         private IEnumerator StrikeRoutine()
         {
-            _isStriking = true;
+            IsPerformingStrike = true;
             
             // Disable gravity
             _rb.useGravity = false;
@@ -143,13 +145,16 @@ namespace KatanaMovement
             
             // Store transform
             var startPos = transform.localPosition;
-            var targetPos = startPos + Vector3.up * _strikeHoverHeight;
+            var targetPos = Vector3.up * _strikeHoverHeight;
             var startRot = transform.localRotation;
-            var targetRot = Quaternion.Euler(0, startRot.eulerAngles.y, 0);
+            var targetRot = Quaternion.Euler(180, startRot.eulerAngles.y, 0);
 
+            // Store the timescale and lerp position
             var startTimeScale = Time.timeScale;
             float lerpPos = 0;
-
+            
+            // Start the camera switch and animation
+            PlaySceneManager.CameraManager.SwitchCameraHandler("StrikeCameraHandler", _strikeTransitionTime, _strikeTransitionCurve, true);
             while (lerpPos < 1)
             {
                 var t = _strikeTransitionCurve.Evaluate(Misc.Tween(ref lerpPos, _strikeTransitionTime, unscaled: true));
@@ -159,15 +164,19 @@ namespace KatanaMovement
                 yield return null;
             }
 
+            // Perform hover
             float timer = 0;
-            
             while (timer < _strikeHoverDuration)
             {
                 timer += Time.unscaledDeltaTime;
                 PerformStrikeHover();
-                if (Input.GetKeyDown(KeyCode.Mouse0)) { PerformStrikeImpact(); break; } 
+                if (Input.GetKeyDown(KeyCode.Mouse0)) break;
                 yield return null;
             }
+
+            // Return camera to the initial handler
+            PlaySceneManager.CameraManager.SwitchCameraHandler("PlayerCameraHandler", _camReturnDuration, _camReturnEasing, true);
+            yield return new WaitForSecondsRealtime(_camReturnDuration);
             
             PerformStrikeImpact();
             _strikeRoutine = null;
@@ -175,33 +184,32 @@ namespace KatanaMovement
 
         private void PerformStrikeHover()
         {
-            var ray = Cam.ScreenPointToRay(Input.mousePosition);
-
             // Perform the raycast
+            var ray = Cam.ScreenPointToRay(Input.mousePosition);
             if (!Physics.Raycast(ray, out var hit, Mathf.Infinity, _strikeLayerMask))
                 return;
 
-            // Orient the bottom side of the object towards the hit point
-            transform.LookAt(hit.point, Vector3.up);
-            transform.Rotate(-90, 0, 0); // Adjust rotation so the bottom side faces the target
+            // Rotate player towards the hit point
+            transform.LookAt(hit.point, Vector3.down);
+            transform.Rotate(90, 0, 0);
         }
 
         private void PerformStrikeImpact()
         {
             // Update values
-            _isStriking               = false;
-            _isPerformingStrikeImpact = true;
-            _rb.useGravity            = true;
-            _collider.enabled         = true;
-            
+            IsPerformingStrike       = false;
+            IsPerformingStrikeImpact = true;
+            _rb.useGravity           = true;
+            _collider.enabled        = true;
+
             // Add strike to where the blade is pointing
-            _rb.AddForce(-transform.up * _strikeImpactForce, ForceMode.Impulse);
+            _rb.AddForce(transform.up * _strikeImpactForce, ForceMode.Impulse);
             GameManager.TimeScaleManager.UpdateTimeScale(_strikeImpactTimeScale);
         }
 
         private void StrikeImpact()
         {
-            _isPerformingStrikeImpact = false;
+            IsPerformingStrikeImpact = false;
             GameManager.TimeScaleManager.UpdateTimeScale(_postStrikeImpactTimeScale);
         }
     }

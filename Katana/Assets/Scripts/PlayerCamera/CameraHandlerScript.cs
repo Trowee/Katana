@@ -15,11 +15,9 @@ namespace PlayerCamera
         [Tooltip("Whether the camera position will be moved or translated after rotation")]
         [SerializeField] private bool _translateCameraPosition = true;
 
-        private float _rotX;
-        
         private void Start()
         {
-            _rotX = transform.localEulerAngles.x;
+            PlaySceneManager.CameraManager.Handlers.Add(this);
         }
 
         private void Update()
@@ -27,7 +25,11 @@ namespace PlayerCamera
             // Move camera to the player's position to allow for proper offset after rotation
             transform.position = Player.position;
             Offset();
-            transform.localRotation = Quaternion.Euler(_rotX, transform.localEulerAngles.y, transform.localEulerAngles.z);
+        }
+
+        private void OnDestroy()
+        {
+            PlaySceneManager.CameraManager.Handlers.Remove(this);
         }
 
         private void Offset()
