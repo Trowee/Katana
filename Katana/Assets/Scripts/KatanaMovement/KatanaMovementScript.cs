@@ -60,7 +60,7 @@ namespace KatanaMovement
 
         private void Update()
         {
-            Tilt();
+            //Tilt();
             if (Input.GetKeyDown(KeyCode.Space)) Jump();
             if (Input.GetKeyDown(KeyCode.Mouse0)) Dash();
             if (Input.GetKeyDown(KeyCode.S)) Strike();
@@ -191,15 +191,9 @@ namespace KatanaMovement
         {
             var ray = _cam.ScreenPointToRay(Input.mousePosition);
 
-            // Visualize the aiming ray in the Scene view
-            Debug.DrawRay(ray.origin, ray.direction * 1000, Color.red, 0.1f);
-
             // Perform the raycast
             if (!Physics.Raycast(ray, out var hit, Mathf.Infinity, _strikeLayerMask))
                 return;
-
-            // Visualize the hit point
-            Debug.DrawLine(transform.position, hit.point, Color.green, 0.1f);
 
             // Orient the bottom side of the object towards the hit point
             transform.LookAt(hit.point, Vector3.up);
