@@ -26,10 +26,10 @@ namespace KatanaMovement
         [SerializeField] private float _tiltSpeed = 90;
         [SerializeField] private float _tiltInvertPoint = 180;
        
-        [Header("Jump")]
-        [SerializeField] private Vector2 _jumpForce = new(10, 15);
-        [SerializeField] private float _jumpRotation = 10;
-        [SerializeField] private TimeScaleKeys _jumpTimeScale;
+        [Header("Flip")]
+        [SerializeField] private Vector2 _flipForce = new(20, 25);
+        [SerializeField] private float _flipRotation = 5;
+        [SerializeField] private TimeScaleKeys _flipTimeScale;
         
         [Header("Dash")]
         [SerializeField] private float _dashForce = 30;
@@ -56,7 +56,7 @@ namespace KatanaMovement
         private void Update()
         {
             Tilt();
-            if (Input.GetKeyDown(KeyCode.Space)) Jump();
+            if (Input.GetKeyDown(KeyCode.Space)) Flip();
             if (Input.GetKeyDown(KeyCode.Mouse0)) Dash();
             if (Input.GetKeyDown(KeyCode.S)) Strike();
         }
@@ -69,13 +69,6 @@ namespace KatanaMovement
                 { StrikeImpact(); return; }
             }
             
-        }
-
-        private Vector3 GetForward()
-        {
-            var rot = transform.rotation.eulerAngles;
-            var noX = Quaternion.Euler(0, rot.y, rot.z);
-            return noX * Vector3.forward;
         }
 
         private void Tilt()
@@ -92,7 +85,7 @@ namespace KatanaMovement
             transform.eulerAngles = new(ea.x, transform.eulerAngles.y, ea.z);
         }
 
-        private void Jump()
+        private void Flip()
         {
             if (_isStriking || _isPerformingStrikeImpact) return;
             
@@ -100,15 +93,15 @@ namespace KatanaMovement
             var forward = transform.up;
             
             // Calculate forces
-            var zForce = _jumpForce.x * forward;
-            var force = new Vector3(0, _jumpForce.y) + zForce;
+            var zForce = _flipForce.x * forward;
+            var force = new Vector3(0, _flipForce.y) + zForce;
             
             // Add force and rotation
             _rb.AddForce(force, ForceMode.Impulse);
-            _rb.AddTorque(transform.right * _jumpRotation, ForceMode.Impulse);
+            _rb.AddTorque(transform.right * _flipRotation, ForceMode.Impulse);
             
             // Apply timescale changes
-            GameManager.TimeScaleManager.UpdateTimeScale(_jumpTimeScale);
+            GameManager.TimeScaleManager.UpdateTimeScale(_flipTimeScale);
         }
 
         private void Dash()

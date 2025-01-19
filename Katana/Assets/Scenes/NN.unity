@@ -621,9 +621,9 @@ MonoBehaviour:
   _model: {fileID: 579092011}
   _tiltSpeed: 90
   _tiltInvertPoint: 180
-  _jumpForce: {x: 20, y: 25}
-  _jumpRotation: 5
-  _jumpTimeScale:
+  _flipForce: {x: 20, y: 25}
+  _flipRotation: 5
+  _flipTimeScale:
     Keys:
     - TimeScale: 2
       Time: 0
@@ -858,14 +858,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1736498946}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: -0.7660445, y: 0, z: 0, w: 0.64278764}
   m_LocalPosition: {x: 0, y: -1.65, z: -0.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2087302221}
   m_Father: {fileID: 1461481851}
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -100, y: 0, z: 0}
 --- !u!114 &1736498948
 MonoBehaviour:
   m_ObjectHideFlags: 0
