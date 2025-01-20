@@ -96,7 +96,14 @@ namespace KatanaMovement
 
         private void ToggleCamera()
         {
-            PSM.PlayerCameraHandler = CamHandler == PSM.FPCameraHandler ? PSM.TPCameraHandler : PSM.FPCameraHandler;
+            PSM.PlayerCameraHandler = CamHandler switch
+            {
+                PSM.FPCameraHandler => PSM.RightCameraHandler,
+                PSM.RightCameraHandler => PSM.TPCameraHandler,
+                PSM.TPCameraHandler => PSM.LeftCameraHandler,
+                _ => PSM.FPCameraHandler
+            };
+            
             PSM.CameraManager.SwitchCameraHandler(CamHandler, _cameraSwitchDuration, _cameraSwitchEasing, unscaled: true);
         }
 

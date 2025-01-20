@@ -8,8 +8,10 @@ namespace Core
     [RequireComponent(typeof(CameraManager))]
     public class PlaySceneManager : MonoBehaviour
     {
-        public const string FPCameraHandler = "FirstPersonCameraHandler";
         public const string TPCameraHandler = "ThirdPersonCameraHandler";
+        public const string FPCameraHandler = "FirstPersonCameraHandler";
+        public const string RightCameraHandler = "RightCameraHandler";
+        public const string LeftCameraHandler = "LeftCameraHandler";
         public const string StrikeCameraHandler = "StrikeCameraHandler";
         
         private static PlaySceneManager _instance;
