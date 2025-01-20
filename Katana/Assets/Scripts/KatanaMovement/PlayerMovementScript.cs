@@ -36,8 +36,12 @@ namespace KatanaMovement
         [SerializeField] private TimeScaleKeys _flipTimeScale;
         
         [Header("Dash")]
-        [SerializeField] private float _dashForce = 30;
+        [SerializeField] private float _dashForce = 100;
         [SerializeField] private TimeScaleKeys _dashTimeScale;
+        
+        [Header("Dodge")]
+        [SerializeField] private float _dodgeForce = 30;
+        [SerializeField] private TimeScaleKeys _dodgeTimeScale;
 
         [Header("Strike Hover")]
         [SerializeField] private float _strikeTransitionTime = 3;
@@ -67,6 +71,7 @@ namespace KatanaMovement
             if (Input.GetKeyDown(KeyCode.Q)) ToggleCamera();
             if (Input.GetKeyDown(KeyCode.Space)) Flip();
             if (Input.GetKeyDown(KeyCode.Mouse0)) Dash();
+            if (Input.GetKeyDown(KeyCode.LeftShift)) Dodge();
             if (Input.GetKeyDown(KeyCode.S)) Strike();
         }
 
@@ -82,8 +87,14 @@ namespace KatanaMovement
 
         private void Tilt()
         {
+            // Store mouse input
             var x = Input.GetAxisRaw("Mouse X") * _tiltSpeed;
             var y = Input.GetAxisRaw("Mouse Y") * _tiltSpeed;
+
+            // Return if there is no input
+            if (x == 0 && y == 0) return;
+            
+            // Apply the rotation
             var deltaRotX = Quaternion.AngleAxis(x, Vector3.back);
             var deltaRotY = Quaternion.AngleAxis(y, Vector3.left);
             var deltaRot = deltaRotX * deltaRotY;
@@ -131,6 +142,19 @@ namespace KatanaMovement
             
             // Apply timescale changes
             GameManager.TimeScaleManager.UpdateTimeScale(_dashTimeScale);
+        }
+
+        private void Dodge()
+        {
+            // Reset velocity
+            _rb.linearVelocity = Vector3.zero;
+            _rb.angularVelocity = Vector3.zero;
+            
+            // Add force
+            _rb.AddForce(-transform.up * _dodgeForce, ForceMode.Impulse);
+            
+            // Apply timescale changes
+            GameManager.TimeScaleManager.UpdateTimeScale(_dodgeTimeScale);
         }
 
         private void Strike()

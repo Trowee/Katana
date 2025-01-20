@@ -647,6 +647,15 @@ MonoBehaviour:
     - TimeScale: 0.5
       Time: 2
       Easing: 9
+  _dodgeForce: 30
+  _dodgeTimeScale:
+    Keys:
+    - TimeScale: 2
+      Time: 0
+      Easing: 0
+    - TimeScale: 0.5
+      Time: 1
+      Easing: 9
   _strikeTransitionTime: 3
   _strikeTransitionCurve:
     serializedVersion: 2
