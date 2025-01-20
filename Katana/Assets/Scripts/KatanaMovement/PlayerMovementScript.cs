@@ -84,9 +84,10 @@ namespace KatanaMovement
         private void Tilt()
         {
             var ea = transform.eulerAngles;
-            var amount = Input.GetAxisRaw("Horizontal") * Time.unscaledDeltaTime * _tiltSpeed;
-            amount *= ea.x > 180 ? -1 : 1;
-            amount *= ea.x < -180 ? -1 : 1;
+            //var amount = Input.GetAxisRaw("Horizontal") * Time.unscaledDeltaTime * _tiltSpeed;
+            var amount = Input.GetAxisRaw("Mouse X") * _tiltSpeed;
+            amount *= ea.x >= 180 ? -1 : 1;
+            amount *= ea.x <= -180 ? -1 : 1;
 
             // Combine the rotations
             transform.Rotate(Vector3.up, amount, Space.World);
