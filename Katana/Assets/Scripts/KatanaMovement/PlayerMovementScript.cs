@@ -28,8 +28,7 @@ namespace KatanaMovement
         [SerializeField] private Easings.Type _cameraSwitchEasing = Easings.Type.ExpoOut;
         
         [Header("Tilt")]
-        [SerializeField] private float _tiltSpeed = 90;
-        [SerializeField] private float _tiltInvertPoint = 180;
+        [SerializeField] private float _tiltSpeed = 1;
        
         [Header("Flip")]
         [SerializeField] private Vector2 _flipForce = new(20, 25);
@@ -83,17 +82,14 @@ namespace KatanaMovement
 
         private void Tilt()
         {
-            var ea = transform.eulerAngles;
-            //var amount = Input.GetAxisRaw("Horizontal") * Time.unscaledDeltaTime * _tiltSpeed;
-            var amount = Input.GetAxisRaw("Mouse X") * _tiltSpeed;
-            amount *= ea.x >= 180 ? -1 : 1;
-            amount *= ea.x <= -180 ? -1 : 1;
-
-            // Combine the rotations
-            transform.Rotate(Vector3.up, amount, Space.World);
-            transform.eulerAngles = new(ea.x, transform.eulerAngles.y, ea.z);
+            var x = Input.GetAxisRaw("Mouse X") * _tiltSpeed;
+            var y = Input.GetAxisRaw("Mouse Y") * _tiltSpeed;
+            var deltaRotX = Quaternion.AngleAxis(x, Vector3.back);
+            var deltaRotY = Quaternion.AngleAxis(y, Vector3.left);
+            var deltaRot = deltaRotX * deltaRotY;
+            _rb.MoveRotation(_rb.rotation * deltaRot);
         }
-
+        
         private void ToggleCamera()
         {
             PSM.PlayerCameraHandler = CamHandler switch

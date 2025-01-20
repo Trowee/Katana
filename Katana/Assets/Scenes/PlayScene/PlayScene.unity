@@ -628,7 +628,6 @@ MonoBehaviour:
   _cameraSwitchDuration: 0.5
   _cameraSwitchEasing: 16
   _tiltSpeed: 1
-  _tiltInvertPoint: 180
   _flipForce: {x: 20, y: 25}
   _flipRotation: 10
   _flipTimeScale:
