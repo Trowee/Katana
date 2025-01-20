@@ -22,7 +22,6 @@ namespace KatanaMovement
         [Header("Components")]
         [SerializeField] private Rigidbody _rb;
         [SerializeField] private Collider _collider;
-        [SerializeField] private Transform _model;
 
         [Header("Camera")]
         [SerializeField] private float _cameraSwitchDuration = 1;
@@ -163,7 +162,7 @@ namespace KatanaMovement
             var startPos = transform.localPosition;
             var targetPos = Vector3.up * _strikeHoverHeight;
             var startRot = transform.localRotation;
-            var targetRot = Quaternion.Euler(180, startRot.eulerAngles.y, 0);
+            var targetRot = Quaternion.Euler(180, 90, 0);
 
             // Store the timescale and lerp position
             var startTimeScale = Time.timeScale;
@@ -206,7 +205,7 @@ namespace KatanaMovement
                 return;
 
             // Rotate player towards the hit point
-            transform.LookAt(hit.point, Vector3.down);
+            transform.LookAt(hit.point, Vector3.up);
             transform.Rotate(90, 0, 0);
         }
 
