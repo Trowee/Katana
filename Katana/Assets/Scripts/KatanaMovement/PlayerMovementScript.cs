@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using Core;
 using NnUtils.Scripts;
@@ -287,6 +286,11 @@ namespace KatanaMovement
                 GameManager.TimeScaleManager.UpdateTimeScale(Mathf.LerpUnclamped(startTimeScale, _strikeHoverTimeScale, t));
                 yield return null;
             }
+            
+            // TODO: Replace with a custom cursor
+            // Show and unlock the cursor
+            Cursor.visible   = true;
+            Cursor.lockState = CursorLockMode.None;
 
             // Perform hover
             float timer = 0;
@@ -297,11 +301,16 @@ namespace KatanaMovement
                 if (Input.GetKeyDown(KeyCode.Mouse0)) break;
                 yield return null;
             }
+            
+            // Hide and lock the cursor
+            Cursor.visible   = false;
+            Cursor.lockState = CursorLockMode.Locked;
 
             // Return camera to the initial handler
             PSM.CameraManager.SwitchCameraHandler(PSM.PlayerCameraHandler, _camReturnDuration, _camReturnEasing, true);
             yield return new WaitForSecondsRealtime(_camReturnDuration);
             
+            // Perform the impact
             PerformStrikeImpact();
             _strikeRoutine = null;
         }

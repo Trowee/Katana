@@ -1,3 +1,4 @@
+using System;
 using KatanaMovement;
 using UnityEngine;
 using NnUtils.Scripts;
@@ -65,6 +66,13 @@ namespace Core
         {
             if (_instance != null) Destroy(gameObject);
             _instance = this;
+        }
+
+        private void Start()
+        {
+            // TODO: Possibly move this to another script
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
         }
     }
 }
