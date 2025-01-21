@@ -8,18 +8,24 @@ namespace PlayerCamera
         private static Transform Player => PlaySceneManager.Player.transform;
         
         [Header("Position")]
-        
         [Tooltip("Offset from the player")]
         [SerializeField] private Vector3 _offset;
         
-        [Tooltip("Whether the camera position will be moved or translated after rotation")]
-        [SerializeField] private bool _translateCameraPosition = true;
+        [Tooltip("Whether offset is applied locally or globally")]
+        [SerializeField] private bool _localOffset = true;
         
-        [Tooltip("Whether the camera will be rotated like the player")]
+        [Tooltip("If enabled, offset will be applied according to the rotation")]
+        [SerializeField] private bool _translateOffset;
+        
+        [Header("Rotation")]
+        [Tooltip("Whether the camera will follow player's rotation")]
         [SerializeField] private bool _rotateCamera;
 
         [Tooltip("Delta between the player rotation and camera rotation")]
         [SerializeField] private Vector3 _rotationOffset;
+        
+        [Header("")]
+        [SerializeField] private LayerMask _cameraCollisionMask;
 
         private void Start()
         {
@@ -42,9 +48,28 @@ namespace PlayerCamera
 
         private void Offset()
         {
-            // Apply offset to the camera
-            if (_translateCameraPosition) transform.Translate(_offset);
-            else transform.localPosition += _offset;
+            // Store parent
+            var parent = transform.parent ? transform.parent : transform;
+            
+            // Calculate offset
+            var offset = _localOffset ? parent.TransformPoint(_offset) - Player.position : _offset;
+            
+            var desiredPos = transform.position + (_translateOffset ? transform.TransformVector(offset) : offset);
+            var dir = desiredPos - Player.position;
+            var distance = dir.magnitude;
+
+            // Set the camera handler position
+            if (Physics.Raycast(Player.position, dir.normalized, out var hit, distance, _cameraCollisionMask))
+            {
+                var targetPos = hit.point - dir.normalized * 0.1f;
+                if (_localOffset) transform.localPosition = parent.InverseTransformPoint(targetPos);
+                else transform.position                   = targetPos;
+            }
+            else
+            {
+                if (_localOffset) transform.localPosition = parent.InverseTransformPoint(desiredPos);
+                else transform.position                   = desiredPos;
+            }
         }
 
         private void Rotate()

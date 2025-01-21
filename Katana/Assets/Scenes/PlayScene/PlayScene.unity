@@ -164,9 +164,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _offset: {x: 0, y: 1, z: -5}
-  _translateCameraPosition: 1
+  _localOffset: 0
+  _translateOffset: 1
   _rotateCamera: 1
   _rotationOffset: {x: -90, y: 0, z: 0}
+  _cameraCollisionMask:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!1001 &393394267
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -545,9 +549,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _offset: {x: 0.15, y: -1.5, z: 0}
-  _translateCameraPosition: 0
+  _localOffset: 1
+  _translateOffset: 0
   _rotateCamera: 0
   _rotationOffset: {x: 0, y: 0, z: 0}
+  _cameraCollisionMask:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!1 &1461481850
 GameObject:
   m_ObjectHideFlags: 0
@@ -876,9 +884,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _offset: {x: 0, y: -1.65, z: -0.2}
-  _translateCameraPosition: 0
+  _localOffset: 1
+  _translateOffset: 0
   _rotateCamera: 0
   _rotationOffset: {x: 0, y: 0, z: 0}
+  _cameraCollisionMask:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!1 &2043410004
 GameObject:
   m_ObjectHideFlags: 0
@@ -924,9 +936,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _offset: {x: 0, y: 10, z: 0}
-  _translateCameraPosition: 0
+  _localOffset: 0
+  _translateOffset: 0
   _rotateCamera: 0
   _rotationOffset: {x: 0, y: 0, z: 0}
+  _cameraCollisionMask:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!1 &2087302218
 GameObject:
   m_ObjectHideFlags: 0
@@ -1109,9 +1125,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _offset: {x: -0.15, y: -1.5, z: 0}
-  _translateCameraPosition: 0
+  _localOffset: 1
+  _translateOffset: 0
   _rotateCamera: 0
   _rotationOffset: {x: 0, y: 0, z: 0}
+  _cameraCollisionMask:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!1001 &20844135305825245
 PrefabInstance:
   m_ObjectHideFlags: 0
