@@ -14,6 +14,12 @@ namespace PlayerCamera
         
         [Tooltip("Whether the camera position will be moved or translated after rotation")]
         [SerializeField] private bool _translateCameraPosition = true;
+        
+        [Tooltip("Whether the camera will be rotated like the player")]
+        [SerializeField] private bool _rotateCamera;
+
+        [Tooltip("Delta between the player rotation and camera rotation")]
+        [SerializeField] private Vector3 _rotationOffset;
 
         private void Start()
         {
@@ -24,6 +30,7 @@ namespace PlayerCamera
         {
             // Move camera to the player's position to allow for proper offset after rotation
             transform.position = Player.position;
+            if (_rotateCamera) Rotate();
             Offset();
         }
 
@@ -38,6 +45,11 @@ namespace PlayerCamera
             // Apply offset to the camera
             if (_translateCameraPosition) transform.Translate(_offset);
             else transform.localPosition += _offset;
+        }
+
+        private void Rotate()
+        {
+            transform.localRotation = Player.localRotation * Quaternion.Euler(_rotationOffset);
         }
     }
 }
