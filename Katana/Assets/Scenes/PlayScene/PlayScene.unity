@@ -630,7 +630,7 @@ MonoBehaviour:
   _cameraSwitchEasing: 16
   _tiltSpeed: 1
   _minStickVelocity: 25
-  _maxStickAngle: 60
+  _maxStickAngle: 45
   _flipForce: {x: 20, y: 25}
   _flipRotation: 10
   _flipTimeScale:
