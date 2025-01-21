@@ -12,7 +12,7 @@ namespace PlayerCamera
         [SerializeField] private Vector3 _offset;
         
         [Tooltip("Whether offset is applied locally or globally")]
-        [SerializeField] private bool _localOffset = true;
+        [SerializeField] private bool _localOffset;
         
         [Tooltip("If enabled, offset will be applied according to the rotation")]
         [SerializeField] private bool _translateOffset;
