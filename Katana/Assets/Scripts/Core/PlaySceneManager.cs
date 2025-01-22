@@ -1,4 +1,3 @@
-using System;
 using KatanaMovement;
 using UnityEngine;
 using NnUtils.Scripts;
@@ -14,7 +13,7 @@ namespace Core
         public const string RightCameraHandler = "RightCameraHandler";
         public const string LeftCameraHandler = "LeftCameraHandler";
         public const string StrikeCameraHandler = "StrikeCameraHandler";
-        
+
         private static PlaySceneManager _instance;
         public static PlaySceneManager Instance => _instance = FindFirstObjectByType<PlaySceneManager>();
 
@@ -57,8 +56,8 @@ namespace Core
 
         private void Reset()
         {
-            _cameraManager  = GetComponent<CameraManager>();
-            _player         = GameObject.FindWithTag("Player");
+            _cameraManager = GetComponent<CameraManager>();
+            _player = GameObject.FindWithTag("Player");
             _playerMovement = Player.GetComponent<PlayerMovementScript>();
         }
 
