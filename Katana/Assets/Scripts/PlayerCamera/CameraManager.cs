@@ -10,12 +10,10 @@ namespace PlayerCamera
     {
         // Handlers should take care of adding/removing
         public readonly HashSet<CameraHandlerScript> Handlers = new();
-        public Camera Camera { get; private set; }
 
-        private void Awake()
-        {
-            Camera       = Camera.main;
-        }
+        public Transform CameraHolder;
+        public Camera Camera;
+        public Camera PlayerCamera;
         
         public void SwitchCameraHandler(string handlerName, float duration = 0, Easings.Type easing = Easings.Type.None, bool unscaled = false)
             => SwitchCameraHandler(handlerName, duration, easing, null, unscaled);
@@ -34,7 +32,7 @@ namespace PlayerCamera
             }
 
             // Change the cam parent and switch
-            Camera.transform.parent = handler.transform;
+            CameraHolder.parent = handler.transform;
             this.RestartRoutine(ref _switchCameraRoutine, SwitchCameraRoutine(duration, easing, curve, unscaled));
         }
 
@@ -42,8 +40,8 @@ namespace PlayerCamera
         private IEnumerator SwitchCameraRoutine(float duration, Easings.Type easing, AnimationCurve curve, bool unscaled)
         {
             // Store transform
-            var startPos = Camera.transform.localPosition;
-            var startRot = Camera.transform.localRotation;
+            var startPos = CameraHolder.localPosition;
+            var startRot = CameraHolder.transform.localRotation;
 
             float lerpPos = 0;
             while (lerpPos < 1)
@@ -53,8 +51,8 @@ namespace PlayerCamera
                 if (curve != null) t = curve.Evaluate(t);
                 
                 // Update transform
-                Camera.transform.localPosition = Vector3.Lerp(startPos, Vector3.zero, t);
-                Camera.transform.localRotation = Quaternion.Lerp(startRot, Quaternion.identity, t);
+                CameraHolder.localPosition = Vector3.Lerp(startPos, Vector3.zero, t);
+                CameraHolder.localRotation = Quaternion.Lerp(startRot, Quaternion.identity, t);
                 
                 // Wait for the next frame
                 yield return null;
