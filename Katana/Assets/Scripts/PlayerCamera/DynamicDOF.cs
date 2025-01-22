@@ -5,13 +5,14 @@ using UnityEngine.Rendering.Universal;
 
 namespace PlayerCamera
 {
+    [ExecuteAlways]
     [RequireComponent(typeof(Volume))]
     public class DynamicDOF : MonoBehaviour
     {
         private static Camera Camera => PlaySceneManager.CameraManager.Camera;
         
         [SerializeField] private DepthOfField _dof;
-        [SerializeField] private float _gaussianSize;
+        [SerializeField] private float _gaussianSize = 20;
         [SerializeField] private LayerMask _layerMask;
 
         private void Reset()
