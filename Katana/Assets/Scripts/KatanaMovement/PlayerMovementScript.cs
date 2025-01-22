@@ -25,6 +25,8 @@ namespace KatanaMovement
         [Header("Components")]
         [SerializeField] private Rigidbody _rb;
         [SerializeField] private Collider _collider;
+        [SerializeField] private Transform _decalPrefab;
+        [SerializeField] private Transform _decalPoint;
 
         [Header("Camera")]
         [SerializeField] private float _cameraSwitchDuration = 1;
@@ -129,6 +131,7 @@ namespace KatanaMovement
                 
                 // Get stuck and return
                 GetStuck(col.transform);
+                SpawnDecal();
                 return;
             }
         }
@@ -145,6 +148,12 @@ namespace KatanaMovement
             
             // Set IsStuck to true
             IsStuck = true;
+        }
+
+        private void SpawnDecal()
+        {
+            var decal = Instantiate(_decalPrefab, _decalPoint);
+            decal.SetParent(null);
         }
 
         private void GetUnstuck()

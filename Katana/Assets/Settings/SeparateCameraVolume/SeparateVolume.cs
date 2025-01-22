@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine.Rendering.RenderGraphModule.Util;
 using UnityEngine.Experimental.Rendering;
 
-public class LayerRenderFeature : ScriptableRendererFeature
+public class SeparateVolume : ScriptableRendererFeature
 {
     public RenderPassEvent push = RenderPassEvent.AfterRenderingPostProcessing;
     public RenderPassEvent pop = RenderPassEvent.AfterRenderingPostProcessing+49;
