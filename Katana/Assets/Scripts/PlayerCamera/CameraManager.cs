@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using NnUtils.Scripts;
+using PlayerCamera;
 using UnityEngine;
 
-namespace PlayerCamera
+namespace Assets.Scripts.PlayerCamera
 {
     public class CameraManager : MonoBehaviour
     {
@@ -14,10 +15,10 @@ namespace PlayerCamera
         public Transform CameraHolder;
         public Camera Camera;
         public Camera PlayerCamera;
-        
+
         public void SwitchCameraHandler(string handlerName, float duration = 0, Easings.Type easing = Easings.Type.None, bool unscaled = false)
             => SwitchCameraHandler(handlerName, duration, easing, null, unscaled);
-        
+
         public void SwitchCameraHandler(string handlerName, float duration = 0, AnimationCurve curve = null, bool unscaled = false)
             => SwitchCameraHandler(handlerName, duration, Easings.Type.None, curve, unscaled);
 
@@ -49,11 +50,11 @@ namespace PlayerCamera
                 // Get T
                 var t = Misc.Tween(ref lerpPos, duration, easing, unscaled);
                 if (curve != null) t = curve.Evaluate(t);
-                
+
                 // Update transform
                 CameraHolder.localPosition = Vector3.Lerp(startPos, Vector3.zero, t);
                 CameraHolder.localRotation = Quaternion.Lerp(startRot, Quaternion.identity, t);
-                
+
                 // Wait for the next frame
                 yield return null;
             }

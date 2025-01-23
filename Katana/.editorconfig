@@ -1,0 +1,9 @@
+# .editorconfig
+root = true
+
+[*.cs]
+dotnet_naming_rule.namespace_rule.symbols = namespace
+dotnet_naming_rule.namespace_rule.style = relative
+dotnet_naming_rule.namespace_rule.severity = suggestion
+
+dotnet_diagnostic.IDE0130.severity = suggestion

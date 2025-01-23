@@ -1,9 +1,9 @@
-using KatanaMovement;
 using UnityEngine;
 using NnUtils.Scripts;
-using PlayerCamera;
+using Assets.Scripts.PlayerCamera;
+using Assets.Scripts.KatanaMovement;
 
-namespace Core
+namespace Assets.Scripts.Core
 {
     [RequireComponent(typeof(CameraManager))]
     public class PlaySceneManager : MonoBehaviour

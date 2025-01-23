@@ -1,11 +1,11 @@
 using System.Collections;
-using Core;
+using Assets.Scripts.Core;
+using Assets.Scripts.TimeScale;
 using NnUtils.Scripts;
-using TimeScale;
 using UnityEngine;
-using PSM = Core.PlaySceneManager;
+using PSM = Assets.Scripts.Core.PlaySceneManager;
 
-namespace KatanaMovement
+namespace Assets.Scripts.KatanaMovement
 {
     [RequireComponent(typeof(Rigidbody))]
     public class PlayerMovementScript : MonoBehaviour
@@ -15,13 +15,13 @@ namespace KatanaMovement
 
         /// Whether the player is currently stuck
         [ReadOnly] public bool IsStuck;
-        
+
         /// Whether the player is currently using the strike ability
         [ReadOnly] public bool IsPerformingStrike;
-        
+
         /// Whether the player is performing the strike impact
         [ReadOnly] public bool IsPerformingStrikeImpact;
-        
+
         [Header("Components")]
         [SerializeField] private Rigidbody _rb;
         [SerializeField] private Collider _collider;
@@ -31,23 +31,23 @@ namespace KatanaMovement
         [Header("Camera")]
         [SerializeField] private float _cameraSwitchDuration = 1;
         [SerializeField] private Easings.Type _cameraSwitchEasing = Easings.Type.ExpoOut;
-        
+
         [Header("Tilt")]
         [SerializeField] private float _tiltSpeed = 1;
-        
+
         [Header("Stick")]
         [SerializeField] private float _minStickVelocity = 5;
         [SerializeField] private float _maxStickAngle = 45;
-       
+
         [Header("Flip")]
         [SerializeField] private Vector2 _flipForce = new(20, 25);
         [SerializeField] private float _flipRotation = 5;
         [SerializeField] private TimeScaleKeys _flipTimeScale;
-        
+
         [Header("Dash")]
         [SerializeField] private float _dashForce = 100;
         [SerializeField] private TimeScaleKeys _dashTimeScale;
-        
+
         [Header("Dodge")]
         [SerializeField] private float _dodgeForce = 30;
         [SerializeField] private TimeScaleKeys _dodgeTimeScale;
@@ -75,7 +75,7 @@ namespace KatanaMovement
         private void Update()
         {
             if (IsPerformingStrike || IsPerformingStrikeImpact) return;
-            
+
             Tilt();
             if (Input.GetKeyDown(KeyCode.Q)) ToggleCamera();
             if (Input.GetKeyDown(KeyCode.Space)) Flip();
@@ -90,15 +90,15 @@ namespace KatanaMovement
             if (IsPerformingStrikeImpact)
             {
                 // If there is no hit, do an early return
-                if ((_strikeLayerMask & (1 << col.gameObject.layer)) == 0) return;
-                
+                if ((_strikeLayerMask & 1 << col.gameObject.layer) == 0) return;
+
                 // Handle the strike impact
                 StrikeImpact(col);
-                
+
                 // Return
                 return;
             }
-            
+
             // Try to stick
             Stick(col);
         }
@@ -107,10 +107,10 @@ namespace KatanaMovement
         {
             // Return if already stuck
             if (IsStuck) return;
-            
+
             // Return if striking
             if (IsPerformingStrike || IsPerformingStrikeImpact) return;
-            
+
             // Return if not moving forward fast enough
             if (col.relativeVelocity.magnitude < _minStickVelocity) return;
             //if (transform.InverseTransformDirection(_rb.linearVelocity).y < _minStickVelocity) return;
@@ -125,10 +125,10 @@ namespace KatanaMovement
                 // Get the normal and dot product
                 var contactNormal = contact.normal;
                 var dp = Vector3.Dot(fw, contactNormal);
-                
+
                 // Return if angle is not low enough
                 if (dp > threshold) continue;
-                
+
                 // Get stuck and return
                 GetStuck(col.transform);
                 SpawnDecal();
@@ -142,10 +142,10 @@ namespace KatanaMovement
             _rb.linearVelocity = Vector3.zero;
             _rb.angularVelocity = Vector3.zero;
             _rb.isKinematic = true;
-            
+
             // Set parent to follow that object
             transform.SetParent(parent);
-            
+
             // Set IsStuck to true
             IsStuck = true;
         }
@@ -160,13 +160,13 @@ namespace KatanaMovement
         {
             // Return if not stuck
             if (!IsStuck) return;
-            
+
             // Unfreeze the rb
             _rb.isKinematic = false;
-            
+
             // Reset parent
             transform.SetParent(null);
-            
+
             // Set IsStuck to false
             IsStuck = false;
         }
@@ -175,21 +175,21 @@ namespace KatanaMovement
         {
             // Return if stuck
             if (IsStuck) return;
-            
+
             // Store mouse input
             var x = Input.GetAxisRaw("Mouse X") * _tiltSpeed;
             var y = Input.GetAxisRaw("Mouse Y") * _tiltSpeed;
 
             // Return if there is no input
             if (x == 0 && y == 0) return;
-            
+
             // Apply the rotation
             var deltaRotX = Quaternion.AngleAxis(x, Vector3.back);
             var deltaRotY = Quaternion.AngleAxis(y, Vector3.left);
             var deltaRot = deltaRotX * deltaRotY;
             _rb.MoveRotation(_rb.rotation * deltaRot);
         }
-        
+
         private void ToggleCamera()
         {
             PSM.PlayerCameraHandler = CamHandler switch
@@ -199,25 +199,25 @@ namespace KatanaMovement
                 PSM.TPCameraHandler => PSM.LeftCameraHandler,
                 _ => PSM.FPCameraHandler
             };
-            
+
             PSM.CameraManager.SwitchCameraHandler(CamHandler, _cameraSwitchDuration, _cameraSwitchEasing, unscaled: true);
         }
 
         private void Flip()
         {
             GetUnstuck();
-            
+
             // Store forward
             var forward = transform.up;
-            
+
             // Calculate forces
             var zForce = _flipForce.x * forward;
             var force = new Vector3(0, _flipForce.y) + zForce;
-            
+
             // Add force and rotation
             _rb.AddForce(force, ForceMode.Impulse);
             _rb.AddTorque(transform.right * _flipRotation, ForceMode.Impulse);
-            
+
             // Apply timescale changes
             GameManager.TimeScaleManager.UpdateTimeScale(_flipTimeScale);
         }
@@ -225,14 +225,14 @@ namespace KatanaMovement
         private void Dash()
         {
             GetUnstuck();
-            
+
             // Reset velocity
             _rb.linearVelocity = Vector3.zero;
             _rb.angularVelocity = Vector3.zero;
-            
+
             // Add force
             _rb.AddForce(transform.up * _dashForce, ForceMode.Impulse);
-            
+
             // Apply timescale changes
             GameManager.TimeScaleManager.UpdateTimeScale(_dashTimeScale);
         }
@@ -240,14 +240,14 @@ namespace KatanaMovement
         private void Dodge()
         {
             GetUnstuck();
-            
+
             // Reset velocity
             _rb.linearVelocity = Vector3.zero;
             _rb.angularVelocity = Vector3.zero;
-            
+
             // Add force
             _rb.AddForce(-transform.up * _dodgeForce, ForceMode.Impulse);
-            
+
             // Apply timescale changes
             GameManager.TimeScaleManager.UpdateTimeScale(_dodgeTimeScale);
         }
@@ -263,18 +263,18 @@ namespace KatanaMovement
         private IEnumerator StrikeRoutine()
         {
             IsPerformingStrike = true;
-            
+
             // Unstick
             GetUnstuck();
-            
+
             // Freeze rb
             _rb.linearVelocity = Vector3.zero;
             _rb.angularVelocity = Vector3.zero;
             _rb.isKinematic = true;
-            
+
             // Disable collider
             _collider.enabled = false;
-            
+
             // Store transform
             var startPos = transform.localPosition;
             var targetPos = Vector3.up * _strikeHoverHeight;
@@ -284,7 +284,7 @@ namespace KatanaMovement
             // Store the timescale and lerp position
             var startTimeScale = Time.timeScale;
             float lerpPos = 0;
-            
+
             // Start the camera switch and animation
             PSM.CameraManager.SwitchCameraHandler(PSM.StrikeCameraHandler, _strikeTransitionTime, _strikeTransitionCurve, true);
             while (lerpPos < 1)
@@ -295,10 +295,10 @@ namespace KatanaMovement
                 GameManager.TimeScaleManager.UpdateTimeScale(Mathf.LerpUnclamped(startTimeScale, _strikeHoverTimeScale, t));
                 yield return null;
             }
-            
+
             // TODO: Replace with a custom cursor
-            // Show and unlock the cursor
-            Cursor.visible   = true;
+            // Show and unlk the cursor
+            Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
 
             // Perform hover
@@ -310,15 +310,15 @@ namespace KatanaMovement
                 if (Input.GetKeyDown(KeyCode.Mouse0)) break;
                 yield return null;
             }
-            
-            // Hide and lock the cursor
-            Cursor.visible   = false;
+
+            // Hide and locthe cursor
+            Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
 
             // Return camera to the initial handler
             PSM.CameraManager.SwitchCameraHandler(PSM.PlayerCameraHandler, _camReturnDuration, _camReturnEasing, true);
             yield return new WaitForSecondsRealtime(_camReturnDuration);
-            
+
             // Perform the impact
             PerformStrikeImpact();
             _strikeRoutine = null;
@@ -339,10 +339,10 @@ namespace KatanaMovement
         private void PerformStrikeImpact()
         {
             // Update values
-            IsPerformingStrike       = false;
+            IsPerformingStrike = false;
             IsPerformingStrikeImpact = true;
-            _rb.isKinematic          = false;
-            _collider.enabled        = true;
+            _rb.isKinematic = false;
+            _collider.enabled = true;
 
             // Add strike to where the blade is pointing
             _rb.AddForce(transform.up * _strikeImpactForce, ForceMode.Impulse);

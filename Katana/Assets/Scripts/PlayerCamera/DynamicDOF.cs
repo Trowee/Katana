@@ -1,11 +1,11 @@
 using System.Collections;
-using Core;
+using Assets.Scripts.Core;
 using NnUtils.Scripts;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
-namespace PlayerCamera
+namespace Assets.Scripts.PlayerCamera
 {
     [ExecuteAlways]
     [RequireComponent(typeof(Volume))]
