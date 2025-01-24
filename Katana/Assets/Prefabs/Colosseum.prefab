@@ -41,7 +41,6 @@ Transform:
   - {fileID: 2409265439630227617}
   - {fileID: 1104304321260583970}
   - {fileID: 3730624758799423195}
-  - {fileID: 8184869084148170978}
   - {fileID: 5259308164153697216}
   - {fileID: 7283078998657995377}
   m_Father: {fileID: 0}
@@ -250,7 +249,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9e0b02092584c0a4eb5943f6fffb5056, type: 3}
       propertyPath: m_Name
-      value: ClosedGate
+      value: ColosseumGates
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -312,7 +311,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c46777bcb2b485049855bf980c390f92, type: 3}
       propertyPath: m_Name
-      value: Arena
+      value: ColosseumFloor
       objectReference: {fileID: 0}
     - target: {fileID: 1043754759516515036, guid: c46777bcb2b485049855bf980c390f92, type: 3}
       propertyPath: m_RenderingLayerMask
@@ -386,7 +385,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6442dcdd62d0847488018ee56469ca50, type: 3}
       propertyPath: m_Name
-      value: StairsRail
+      value: ColosseumStairsRails
       objectReference: {fileID: 0}
     - target: {fileID: 8381422113255522882, guid: 6442dcdd62d0847488018ee56469ca50, type: 3}
       propertyPath: m_RenderingLayerMask
@@ -452,7 +451,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 71bc3e26d4d8f8342ad188b963adc89d, type: 3}
       propertyPath: m_Name
-      value: DoorFrame
+      value: ColosseumGateFrames
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -581,10 +580,10 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 15d7b191d8973e344b7efc2e5c11f77b, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 53422cb10d6cfcb41b89510d47606452, type: 2}
+      objectReference: {fileID: 2100000, guid: ffb8d105e67ca4a4483330245005134d, type: 2}
     - target: {fileID: 919132149155446097, guid: 15d7b191d8973e344b7efc2e5c11f77b, type: 3}
       propertyPath: m_Name
-      value: SphereBar
+      value: ColosseumCage
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -644,9 +643,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 3999cff90dd70e043bc3e429f5486d77, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ffb8d105e67ca4a4483330245005134d, type: 2}
     - target: {fileID: 919132149155446097, guid: 3999cff90dd70e043bc3e429f5486d77, type: 3}
       propertyPath: m_Name
-      value: Sphere
+      value: ColosseumCageBars
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3999cff90dd70e043bc3e429f5486d77, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -657,74 +664,4 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3999cff90dd70e043bc3e429f5486d77, type: 3}
   m_PrefabInstance: {fileID: 7104438026270635418}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &8510895564777842441
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 4194575827226779813}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 71bc3e26d4d8f8342ad188b963adc89d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 71bc3e26d4d8f8342ad188b963adc89d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 71bc3e26d4d8f8342ad188b963adc89d, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 71bc3e26d4d8f8342ad188b963adc89d, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 71bc3e26d4d8f8342ad188b963adc89d, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 71bc3e26d4d8f8342ad188b963adc89d, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 71bc3e26d4d8f8342ad188b963adc89d, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 71bc3e26d4d8f8342ad188b963adc89d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 71bc3e26d4d8f8342ad188b963adc89d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 71bc3e26d4d8f8342ad188b963adc89d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8328237593927768102, guid: 71bc3e26d4d8f8342ad188b963adc89d, type: 3}
-      propertyPath: m_RenderingLayerMask
-      value: 257
-      objectReference: {fileID: 0}
-    - target: {fileID: -5002809963905180450, guid: 71bc3e26d4d8f8342ad188b963adc89d, type: 3}
-      propertyPath: m_RenderingLayerMask
-      value: 257
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 71bc3e26d4d8f8342ad188b963adc89d, type: 3}
-      propertyPath: m_Name
-      value: DoorFrame
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 71bc3e26d4d8f8342ad188b963adc89d, type: 3}
---- !u!4 &8184869084148170978 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 71bc3e26d4d8f8342ad188b963adc89d, type: 3}
-  m_PrefabInstance: {fileID: 8510895564777842441}
   m_PrefabAsset: {fileID: 0}
