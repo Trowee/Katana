@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2658314747431121474}
   - component: {fileID: 6553102454788179147}
   - component: {fileID: 2834539036692716666}
-  - component: {fileID: 7771028172529222264}
+  - component: {fileID: 6436778042629017717}
   m_Layer: 0
   m_Name: Colosseum
   m_TagString: Untagged
@@ -41,8 +41,8 @@ Transform:
   - {fileID: 2409265439630227617}
   - {fileID: 1104304321260583970}
   - {fileID: 3730624758799423195}
-  - {fileID: 5259308164153697216}
-  - {fileID: 7283078998657995377}
+  - {fileID: 2001426619168786337}
+  - {fileID: 4917518603009914042}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &4058669810007858585
@@ -176,8 +176,8 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: -6495901572847236943, guid: e983d295824217e778786664969a5a70, type: 3}
---- !u!64 &7771028172529222264
+  m_Mesh: {fileID: 4019729370164408668, guid: e983d295824217e778786664969a5a70, type: 3}
+--- !u!64 &6436778042629017717
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -198,7 +198,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: -4656861306814393083, guid: 3999cff90dd70e043bc3e429f5486d77, type: 3}
+  m_Mesh: {fileID: -8634338456207152865, guid: 15715ff908efe3a428be4c0c24927c2d, type: 3}
 --- !u!1001 &637821818708106185
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -330,6 +330,68 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c46777bcb2b485049855bf980c390f92, type: 3}
   m_PrefabInstance: {fileID: 829529347789386215}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2039224197832269898
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4194575827226779813}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 15715ff908efe3a428be4c0c24927c2d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 15715ff908efe3a428be4c0c24927c2d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 15715ff908efe3a428be4c0c24927c2d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 15715ff908efe3a428be4c0c24927c2d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 15715ff908efe3a428be4c0c24927c2d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 15715ff908efe3a428be4c0c24927c2d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 15715ff908efe3a428be4c0c24927c2d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 15715ff908efe3a428be4c0c24927c2d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 15715ff908efe3a428be4c0c24927c2d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 15715ff908efe3a428be4c0c24927c2d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 15715ff908efe3a428be4c0c24927c2d, type: 3}
+      propertyPath: m_Name
+      value: ColosseumCage
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 15715ff908efe3a428be4c0c24927c2d, type: 3}
+--- !u!4 &2001426619168786337 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 15715ff908efe3a428be4c0c24927c2d, type: 3}
+  m_PrefabInstance: {fileID: 2039224197832269898}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2802883126608895818
 PrefabInstance:
@@ -463,6 +525,68 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 71bc3e26d4d8f8342ad188b963adc89d, type: 3}
   m_PrefabInstance: {fileID: 3769352422430421296}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4878577489426420561
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4194575827226779813}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 15d7b191d8973e344b7efc2e5c11f77b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 15d7b191d8973e344b7efc2e5c11f77b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 15d7b191d8973e344b7efc2e5c11f77b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 15d7b191d8973e344b7efc2e5c11f77b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 15d7b191d8973e344b7efc2e5c11f77b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 15d7b191d8973e344b7efc2e5c11f77b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 15d7b191d8973e344b7efc2e5c11f77b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 15d7b191d8973e344b7efc2e5c11f77b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 15d7b191d8973e344b7efc2e5c11f77b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 15d7b191d8973e344b7efc2e5c11f77b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 15d7b191d8973e344b7efc2e5c11f77b, type: 3}
+      propertyPath: m_Name
+      value: ColosseumCageBars
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 15d7b191d8973e344b7efc2e5c11f77b, type: 3}
+--- !u!4 &4917518603009914042 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 15d7b191d8973e344b7efc2e5c11f77b, type: 3}
+  m_PrefabInstance: {fileID: 4878577489426420561}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5027708426502013389
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -528,140 +652,4 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5a0a166835816c84386ae7aa306a1d9a, type: 3}
   m_PrefabInstance: {fileID: 5027708426502013389}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &5725880062604739627
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 4194575827226779813}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 15d7b191d8973e344b7efc2e5c11f77b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 15d7b191d8973e344b7efc2e5c11f77b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 15d7b191d8973e344b7efc2e5c11f77b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 15d7b191d8973e344b7efc2e5c11f77b, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 15d7b191d8973e344b7efc2e5c11f77b, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 15d7b191d8973e344b7efc2e5c11f77b, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 15d7b191d8973e344b7efc2e5c11f77b, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 15d7b191d8973e344b7efc2e5c11f77b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 15d7b191d8973e344b7efc2e5c11f77b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 15d7b191d8973e344b7efc2e5c11f77b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -7511558181221131132, guid: 15d7b191d8973e344b7efc2e5c11f77b, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: ffb8d105e67ca4a4483330245005134d, type: 2}
-    - target: {fileID: 919132149155446097, guid: 15d7b191d8973e344b7efc2e5c11f77b, type: 3}
-      propertyPath: m_Name
-      value: ColosseumCage
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 15d7b191d8973e344b7efc2e5c11f77b, type: 3}
---- !u!4 &5259308164153697216 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 15d7b191d8973e344b7efc2e5c11f77b, type: 3}
-  m_PrefabInstance: {fileID: 5725880062604739627}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &7104438026270635418
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 4194575827226779813}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 3999cff90dd70e043bc3e429f5486d77, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3999cff90dd70e043bc3e429f5486d77, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3999cff90dd70e043bc3e429f5486d77, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3999cff90dd70e043bc3e429f5486d77, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3999cff90dd70e043bc3e429f5486d77, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3999cff90dd70e043bc3e429f5486d77, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3999cff90dd70e043bc3e429f5486d77, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3999cff90dd70e043bc3e429f5486d77, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3999cff90dd70e043bc3e429f5486d77, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3999cff90dd70e043bc3e429f5486d77, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -7511558181221131132, guid: 3999cff90dd70e043bc3e429f5486d77, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: ffb8d105e67ca4a4483330245005134d, type: 2}
-    - target: {fileID: 919132149155446097, guid: 3999cff90dd70e043bc3e429f5486d77, type: 3}
-      propertyPath: m_Name
-      value: ColosseumCageBars
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 3999cff90dd70e043bc3e429f5486d77, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 3999cff90dd70e043bc3e429f5486d77, type: 3}
---- !u!4 &7283078998657995377 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3999cff90dd70e043bc3e429f5486d77, type: 3}
-  m_PrefabInstance: {fileID: 7104438026270635418}
   m_PrefabAsset: {fileID: 0}
