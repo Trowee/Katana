@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2951458016823287143}
   - component: {fileID: 3788333334091966352}
+  - component: {fileID: -3082846963600588979}
   m_Layer: 0
   m_Name: KatanaDecal
   m_TagString: Untagged
@@ -56,3 +57,19 @@ MonoBehaviour:
   m_Offset: {x: 0, y: 0, z: 0.125}
   m_Size: {x: 0.5, y: 0.5, z: 0.25}
   m_FadeFactor: 1
+--- !u!114 &-3082846963600588979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4901846843171138959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1999379f817b918f69b4a2abadabccb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _decalProjector: {fileID: 3788333334091966352}
+  _lifeTime: 10
+  _fadeTime: 5
+  _fadeEasing: 4
