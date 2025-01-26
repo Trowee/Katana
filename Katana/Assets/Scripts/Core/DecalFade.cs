@@ -20,7 +20,7 @@ namespace Assets.Scripts.Core
 
         private IEnumerator Start()
         {
-            yield return new WaitForSeconds(_lifeTime);
+            yield return new WaitForSecondsRealtime(_lifeTime);
 
             float lerpPos = 1;
             while (lerpPos > 0)
@@ -29,6 +29,8 @@ namespace Assets.Scripts.Core
                 _decalProjector.fadeFactor = t;
                 yield return null;
             }
+            
+            Destroy(gameObject);
         }
     }
 }
