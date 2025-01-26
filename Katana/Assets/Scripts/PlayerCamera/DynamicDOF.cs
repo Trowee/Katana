@@ -15,6 +15,7 @@ namespace Assets.Scripts.PlayerCamera
 
         private float _distance, _previousDistance;
 
+        [SerializeField] private Transform _dofPoint;
         [SerializeField] private DepthOfField _dof;
         [SerializeField] private float _gaussianSize = 20;
         [SerializeField] private LayerMask _layerMask;
@@ -37,10 +38,10 @@ namespace Assets.Scripts.PlayerCamera
             float distance = 1000;
 
             // Create a ray from the camera center, check for hits and update the distance accordingly
-            var ray = Camera.ScreenPointToRay(new(Screen.width / 2f, Screen.height / 2f));
+            Ray ray = new(_dofPoint.position, _dofPoint.forward);
             if (Physics.Raycast(ray, out var hit, Mathf.Infinity, _layerMask)) distance = hit.distance;
 
-            // Check if object distance is aprox the same and return
+            // Check if object distance is approx the same and return
             if (Mathf.Approximately(distance, _distance)) return;
 
             // Update distance values and restart the transition routine
