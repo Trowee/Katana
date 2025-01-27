@@ -67,6 +67,7 @@
     <Compile Include="Assets/NnUtils/Modules/TextUtils/Scripts/InteractiveText/InteractiveTextProcessing.cs" />
     <Compile Include="Assets/Scripts/TimeScale/TimeScaleKey.cs" />
     <Compile Include="Assets/NnUtils/Scripts/Easings.cs" />
+    <Compile Include="Assets/Scripts/MainMenu/MainMenuButton.cs" />
     <Compile Include="Assets/NnUtils/Modules/TextUtils/Scripts/InteractiveText/DynamicText.cs" />
     <Compile Include="Assets/Scripts/KatanaMovement/PlayerMovementScript.cs" />
     <Compile Include="Assets/Scripts/MainMenu/MainMenuManager.cs" />
