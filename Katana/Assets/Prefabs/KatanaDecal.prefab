@@ -71,5 +71,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _decalProjector: {fileID: 3788333334091966352}
   _lifeTime: 10
-  _fadeTime: 5
-  _fadeEasing: 4
+  _fadeTime: 3
+  _fadeEasing: 1
