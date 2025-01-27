@@ -20,8 +20,19 @@ namespace Assets.Scripts.Items
             }
         }
         public event Action OnCoinsChanged;
-        
-        public Item SelectedItem { get; private set; }
+
+        private Item _selectedItem;
+        public Item SelectedItem
+        {
+            get => _selectedItem;
+            private set
+            {
+                if (_selectedItem?.Name == value?.Name) return;
+                _selectedItem = value;
+                OnItemChanged?.Invoke();
+            }
+        }
+        public event Action OnItemChanged;
         
         public List<Item> Items;
 

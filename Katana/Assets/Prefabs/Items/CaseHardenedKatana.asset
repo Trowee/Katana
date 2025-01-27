@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a21134f56454c77bc3b9e8b77bf2228, type: 3}
   m_Name: CaseHardenedKatana
   m_EditorClassIdentifier: 
-  Name: CaseHardenedKatana
+  Name: Case Hardened Katana
   Price: 0
   UnlockedByDefault: 1
   Material: {fileID: 2100000, guid: 4f155f41ba1d29240bb86bf601cbca8a, type: 2}

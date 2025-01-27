@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a21134f56454c77bc3b9e8b77bf2228, type: 3}
   m_Name: ModernKatana
   m_EditorClassIdentifier: 
-  Name: ModernKatana
+  Name: Modern Katana
   Price: 0
   UnlockedByDefault: 1
   Material: {fileID: 2100000, guid: bc667d113e4593c4f808216b926e9a05, type: 2}
