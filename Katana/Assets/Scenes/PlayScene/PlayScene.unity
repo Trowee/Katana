@@ -661,6 +661,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Colosseum
       objectReference: {fileID: 0}
+    - target: {fileID: 2544329054606176548, guid: 8c287bba4f7c7a74592cb8cca5ebe6a5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4194575827226779813, guid: 8c287bba4f7c7a74592cb8cca5ebe6a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
