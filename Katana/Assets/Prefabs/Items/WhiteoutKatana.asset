@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: WhiteoutKatana
   m_EditorClassIdentifier: 
   Name: Whiteout Katana
-  Price: 10000
+  Price: 500
   UnlockedByDefault: 0
   Material: {fileID: 2100000, guid: fb7f9a9eea0216a4b80ea8aa16942ea9, type: 2}
