@@ -7,8 +7,8 @@ namespace Assets.Scripts.Items
 {
     public class ItemManager : MonoBehaviour
     {
-        private float _coins = 500;
-        public float Coins
+        private int _coins;
+        public int Coins
         {
             get => _coins;
 
@@ -39,6 +39,8 @@ namespace Assets.Scripts.Items
 
         private void Awake()
         {
+            Coins = PlayerPrefs.GetInt("Coins", 0);
+            
             var itemName = PlayerPrefs.GetString("SelectedItem");
             var item = Items.FirstOrDefault(x => x.Name == itemName);
             SelectedItem = item ?? Items[0];

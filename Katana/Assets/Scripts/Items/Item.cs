@@ -7,7 +7,7 @@ namespace Assets.Scripts.Items
     public class Item : ScriptableObject
     {
         public string Name;
-        public float Price;
+        public int Price;
         public bool UnlockedByDefault;
         public Material Material;
 
