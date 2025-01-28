@@ -13,10 +13,10 @@ namespace Assets.Scripts.Items
 
         public bool Unlocked
         {
-            get => PlayerPrefs.GetInt("Unlocked", 0) == 1 || UnlockedByDefault;
+            get => PlayerPrefs.GetInt($"{Name}Unlocked", 0) == 1 || UnlockedByDefault;
             set
             {
-                PlayerPrefs.SetInt("Unlocked", value ? 1 : 0);
+                PlayerPrefs.SetInt($"{Name}Unlocked", value ? 1 : 0);
                 OnUnlocked?.Invoke();
             }
         }

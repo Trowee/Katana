@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: BlackoutKatana
   m_EditorClassIdentifier: 
   Name: Blackout Katana
-  Price: 0
-  UnlockedByDefault: 1
+  Price: 100
+  UnlockedByDefault: 0
   Material: {fileID: 2100000, guid: 2654556053939f0449ad550b629d5192, type: 2}

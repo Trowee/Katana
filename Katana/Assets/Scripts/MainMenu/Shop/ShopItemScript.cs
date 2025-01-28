@@ -1,14 +1,18 @@
 using System.Collections;
+using System.Globalization;
 using Assets.Scripts.Core;
 using Assets.Scripts.Items;
 using NnUtils.Scripts;
 using TMPro;
 using UnityEngine;
+using Color = UnityEngine.Color;
 
 namespace Assets.Scripts.MainMenu.Shop
 {
     public class ShopItemScript : MonoBehaviour
     {
+        private static ItemManager ItemManager => GameManager.ItemManager;
+        
         [Header("Components")]
         
         [Tooltip("Item")]
@@ -22,6 +26,9 @@ namespace Assets.Scripts.MainMenu.Shop
 
         [Tooltip("Name TMP_Text")]
         [SerializeField] private TMP_Text _nameTMP;
+        
+        [Tooltip("Price TMP_Text")]
+        [SerializeField] private TMP_Text _priceTMP;
 
         [Header("Animation")]
 
@@ -37,14 +44,26 @@ namespace Assets.Scripts.MainMenu.Shop
         [Tooltip("Speed at which the object will rotate")]
         [SerializeField] private float _rotationSpeed = 180;
 
-        private void Awake()
+        private void Start()
         {
-            _nameTMP.text = _item.Name;
+            _nameTMP.text    =  _item.Name;
+            ItemManager.OnItemChanged += UpdateUI;
+            UpdateUI();
+        }
+
+        private void UpdateUI()
+        {
+            _priceTMP.text = _item.Unlocked
+                ? ItemManager.SelectedItem == _item ? "Selected" : "Unlocked"
+                : $@"₦{_item.Price.ToString(CultureInfo.InvariantCulture)}";
+            _priceTMP.color = _item.Unlocked
+                ? ItemManager.SelectedItem == _item ? Color.cyan : Color.white
+                : _item.Price > ItemManager.Coins ? Color.red : Color.green;
         }
 
         public void Select()
         {
-            GameManager.ItemManager.SelectItem(_item);
+            ItemManager.SelectItem(_item);
         }
 
         public void Hover()

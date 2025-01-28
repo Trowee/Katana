@@ -3,6 +3,7 @@ using Assets.Scripts.TimeScale;
 using NnUtils.Scripts;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Core
 {
@@ -43,6 +44,12 @@ namespace Assets.Scripts.Core
         {
             if (_instance == null) Instance = this;
             else if (_instance != this) Destroy(gameObject);
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            TimeScaleManager.UpdateTimeScale(1, -100);
         }
     }
 }
