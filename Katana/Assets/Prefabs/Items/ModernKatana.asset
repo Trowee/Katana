@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: ModernKatana
   m_EditorClassIdentifier: 
   Name: Modern Katana
-  Price: 0
-  UnlockedByDefault: 1
+  Price: 1000
+  UnlockedByDefault: 0
   Material: {fileID: 2100000, guid: bc667d113e4593c4f808216b926e9a05, type: 2}

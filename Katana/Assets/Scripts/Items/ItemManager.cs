@@ -7,8 +7,8 @@ namespace Assets.Scripts.Items
 {
     public class ItemManager : MonoBehaviour
     {
-        private float _coins;
-        public float Coins
+        private int _coins;
+        public int Coins
         {
             get => _coins;
 
@@ -29,6 +29,7 @@ namespace Assets.Scripts.Items
             {
                 if (_selectedItem?.Name == value?.Name) return;
                 _selectedItem = value;
+                PlayerPrefs.SetString("SelectedItem", _selectedItem?.Name);
                 OnItemChanged?.Invoke();
             }
         }
@@ -38,6 +39,8 @@ namespace Assets.Scripts.Items
 
         private void Awake()
         {
+            Coins = PlayerPrefs.GetInt("Coins", 0);
+            
             var itemName = PlayerPrefs.GetString("SelectedItem");
             var item = Items.FirstOrDefault(x => x.Name == itemName);
             SelectedItem = item ?? Items[0];
@@ -48,12 +51,12 @@ namespace Assets.Scripts.Items
         {
             if (!item.Unlocked)
             {
+                if (item.Price > Coins) return;
                 item.Unlocked =  true;
                 Coins         -= item.Price;
             }
-            
+
             SelectedItem = item;
-            PlayerPrefs.SetString("SelectedItem", item.Name);
         }
     }
 }
