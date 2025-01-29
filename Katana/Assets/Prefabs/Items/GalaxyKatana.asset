@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Galaxy Katana
   Price: 5000
-  UnlockedByDefault: 0
+  UnlockedByDefault: 1
   Material: {fileID: 2100000, guid: a30fb04686843c74c85c43001333cab7, type: 2}

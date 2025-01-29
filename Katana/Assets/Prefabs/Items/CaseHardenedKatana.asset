@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Case Hardened Katana
   Price: 250
-  UnlockedByDefault: 0
+  UnlockedByDefault: 1
   Material: {fileID: 2100000, guid: 4f155f41ba1d29240bb86bf601cbca8a, type: 2}
