@@ -18,7 +18,7 @@ namespace Assets.Scripts.Core
             }
         }
 
-        [SerializeField] private float _motionBlur;
+        private float _motionBlur;
         public float MotionBlur
         {
             get => _motionBlur;
@@ -31,7 +31,6 @@ namespace Assets.Scripts.Core
         }
 
         private Perspective _perspective;
-
         public Perspective Perspective 
         {
             get => _perspective;
@@ -86,7 +85,6 @@ namespace Assets.Scripts.Core
             UseDOF = PlayerPrefs.GetInt("UseDOF", 1) == 1;
             MotionBlur = PlayerPrefs.GetFloat("MotionBlur", 1);
             Perspective = (Perspective)Enum.Parse(typeof(Perspective), PlayerPrefs.GetString("Perspective", "First"));
-            
             MasterVolume = PlayerPrefs.GetFloat("MasterVolume", 0.5f);
             SFXVolume = PlayerPrefs.GetFloat("SFXVolume", 1f);
             MusicVolume = PlayerPrefs.GetFloat("MusicVolume", 1f);
