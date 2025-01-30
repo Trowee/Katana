@@ -82,6 +82,7 @@
     <Compile Include="Assets/NnUtils/Modules/TextUtils/Scripts/InteractiveText/InteractiveTextScript.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/ConfigGradient.cs" />
     <Compile Include="Assets/Scripts/PlayerCamera/CameraManager.cs" />
+    <Compile Include="Assets/Scripts/MainMenu/SettingsMenu.cs" />
     <Compile Include="Assets/NnUtils/Scripts/NashSet.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/ConfigVector2.cs" />
     <Compile Include="Assets/NnUtils/Scripts/UI/NBar.cs" />
