@@ -5,6 +5,7 @@ namespace Assets.Scripts.PlayerCamera
         First,
         Third,
         Right,
-        Left
+        Left,
+        Strike
     }
 }

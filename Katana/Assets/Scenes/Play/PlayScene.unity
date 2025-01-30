@@ -623,6 +623,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db7e62bdeb3d42ca8caa96b8db5675cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _followMouse: 0
   _dofPoint: {fileID: 513143999}
   _dof: {fileID: -8719300124806374663, guid: 938587e53954a523193178966c78029a, type: 2}
   _gaussianSize: 10
@@ -675,7 +676,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5f29703eec8acd9cb5e8f84f5a4edb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Perspective: 0
+  Perspective: 4
   _cameraCollisionMask:
     serializedVersion: 2
     m_Bits: 1

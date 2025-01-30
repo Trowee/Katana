@@ -294,7 +294,7 @@ namespace Assets.Scripts.KatanaMovement
             float lerpPos = 0;
 
             // Start the camera switch and animation
-            PSM.CameraManager.SwitchCameraHandler(Settings.Perspective, _strikeTransitionTime, _strikeTransitionCurve, true);
+            PSM.CameraManager.SwitchCameraHandler(Perspective.Strike, _strikeTransitionTime, _strikeTransitionCurve, true);
             while (lerpPos < 1)
             {
                 var t = _strikeTransitionCurve.Evaluate(Misc.Tween(ref lerpPos, _strikeTransitionTime, unscaled: true));
