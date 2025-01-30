@@ -63,6 +63,7 @@
     <Compile Include="Assets/NnUtils/Modules/TextUtils/Scripts/InteractiveText/InteractiveLabel.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/Volume/ConfigVolumeProfile.cs" />
     <Compile Include="Assets/Settings/SeparateCameraVolume/SeparateVolume.cs" />
+    <Compile Include="Assets/Scripts/PlayerCamera/Perspective.cs" />
     <Compile Include="Assets/NnUtils/Scripts/ReadOnlyAttribute.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/UI/ConfigRectTransform.cs" />
     <Compile Include="Assets/NnUtils/Modules/TextUtils/Scripts/InteractiveText/InteractiveTextProcessing.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/ConfigVector2.cs" />
     <Compile Include="Assets/NnUtils/Scripts/UI/NBar.cs" />
     <Compile Include="Assets/Scripts/TimeScale/TimeScaleKeys.cs" />
+    <Compile Include="Assets/Scripts/Core/SettingsManager.cs" />
     <Compile Include="Assets/NnUtils/Scripts/WaitForSecondsWhileNot.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/UI/ConfigCanvas.cs" />
     <Compile Include="Assets/Scripts/Core/PlaySceneManager.cs" />
