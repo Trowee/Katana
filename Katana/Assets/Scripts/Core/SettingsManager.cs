@@ -1,11 +1,16 @@
 using System;
 using Assets.Scripts.PlayerCamera;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 namespace Assets.Scripts.Core
 {
     public class SettingsManager : MonoBehaviour
     {
+        [SerializeField] private VolumeProfile _dofProfile;
+        [SerializeField] private VolumeProfile _motionBlurProfile;
+        
         private bool _useDOF;
         public bool UseDOF
         {
@@ -15,6 +20,7 @@ namespace Assets.Scripts.Core
                 if (_useDOF == value) return;
                 _useDOF = value;
                 PlayerPrefs.SetInt("UseDOF", UseDOF ? 1 : 0);
+                if (_dofProfile.TryGet(out DepthOfField dof)) dof.active = _useDOF;
             }
         }
 
@@ -27,6 +33,7 @@ namespace Assets.Scripts.Core
                 if (Mathf.Approximately(_motionBlur, value)) return;
                 _motionBlur = value;
                 PlayerPrefs.SetFloat("MotionBlur", value);
+                if (_motionBlurProfile.TryGet(out MotionBlur mb)) mb.intensity.value = _motionBlur;
             }
         }
 

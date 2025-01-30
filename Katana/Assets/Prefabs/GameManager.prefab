@@ -94,3 +94,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fabaf466d2d068bd2ae4809bb57cb62c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _dofProfile: {fileID: 11400000, guid: 938587e53954a523193178966c78029a, type: 2}
+  _motionBlurProfile: {fileID: 11400000, guid: 09927a804cb3f1171af33436b439b7b6, type: 2}
