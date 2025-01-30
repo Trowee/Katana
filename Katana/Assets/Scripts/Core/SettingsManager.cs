@@ -1,6 +1,8 @@
 using System;
+using System.Threading.Tasks;
 using Assets.Scripts.PlayerCamera;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
@@ -9,7 +11,11 @@ namespace Assets.Scripts.Core
     public class SettingsManager : MonoBehaviour
     {
         [SerializeField] private VolumeProfile _dofProfile;
+        [SerializeField] private VolumeProfile _menuDOFProfile;
         [SerializeField] private VolumeProfile _motionBlurProfile;
+        [SerializeField] private AudioMixerGroup _master;
+        [SerializeField] private AudioMixerGroup _sfx;
+        [SerializeField] private AudioMixerGroup _music;
         
         private bool _useDOF;
         public bool UseDOF
@@ -19,8 +25,9 @@ namespace Assets.Scripts.Core
             {
                 if (_useDOF == value) return;
                 _useDOF = value;
+                if (_menuDOFProfile != null && _dofProfile.TryGet(out DepthOfField dof)) dof.active = _useDOF;
+                if (_menuDOFProfile != null && _menuDOFProfile.TryGet(out DepthOfField menuDOF)) menuDOF.active = _useDOF;
                 PlayerPrefs.SetInt("UseDOF", UseDOF ? 1 : 0);
-                if (_dofProfile.TryGet(out DepthOfField dof)) dof.active = _useDOF;
             }
         }
 
@@ -32,8 +39,8 @@ namespace Assets.Scripts.Core
             {
                 if (Mathf.Approximately(_motionBlur, value)) return;
                 _motionBlur = value;
+                if (_motionBlurProfile != null && _motionBlurProfile.TryGet(out MotionBlur mb)) mb.intensity.value = _motionBlur;
                 PlayerPrefs.SetFloat("MotionBlur", value);
-                if (_motionBlurProfile.TryGet(out MotionBlur mb)) mb.intensity.value = _motionBlur;
             }
         }
 
@@ -57,6 +64,7 @@ namespace Assets.Scripts.Core
             {
                 if (Mathf.Approximately(_masterVolume, value)) return;
                 _masterVolume = value;
+                _master.audioMixer.SetFloat("MasterVolume", GetVolume(value));
                 PlayerPrefs.SetFloat("MasterVolume", value);
             }
         }
@@ -69,6 +77,7 @@ namespace Assets.Scripts.Core
             {
                 if (Mathf.Approximately(_sfxVolume, value)) return;
                 _sfxVolume = value;
+                _sfx.audioMixer.SetFloat("SFXVolume", GetVolume(value));
                 PlayerPrefs.SetFloat("SFXVolume", value);
             }
         }
@@ -81,17 +90,27 @@ namespace Assets.Scripts.Core
             {
                 if (Mathf.Approximately(_musicVolume, value)) return;
                 _musicVolume = value;
+                _music.audioMixer.SetFloat("MusicVolume", GetVolume(value));
                 PlayerPrefs.SetFloat("MusicVolume", value);
             }
         }
 
         private void Awake() => LoadSettings();
 
-        private void LoadSettings()
+        private async void LoadSettings()
         {
             UseDOF = PlayerPrefs.GetInt("UseDOF", 1) == 1;
             MotionBlur = PlayerPrefs.GetFloat("MotionBlur", 1);
             Perspective = (Perspective)Enum.Parse(typeof(Perspective), PlayerPrefs.GetString("Perspective", "First"));
+
+            // Takes care of updating the UI
+            MasterVolume = PlayerPrefs.GetFloat("MasterVolume", 0.5f);
+            SFXVolume = PlayerPrefs.GetFloat("SFXVolume", 1f);
+            MusicVolume = PlayerPrefs.GetFloat("MusicVolume", 1f);
+            
+            // Wait a bit before updating the audio mixer cuz unity devs are competent
+            await Task.Delay(TimeSpan.FromSeconds(0.01f));
+            
             MasterVolume = PlayerPrefs.GetFloat("MasterVolume", 0.5f);
             SFXVolume = PlayerPrefs.GetFloat("SFXVolume", 1f);
             MusicVolume = PlayerPrefs.GetFloat("MusicVolume", 1f);
@@ -103,5 +122,7 @@ namespace Assets.Scripts.Core
         public void ChangeMasterVolume(float vol) => MasterVolume = vol;
         public void ChangeSFXVolume(float vol) => SFXVolume = vol;
         public void ChangeMusicVolume(float vol) => MusicVolume = vol;
+
+        private float GetVolume(float t) => Mathf.Lerp(-80, 0, t);
     }
 }

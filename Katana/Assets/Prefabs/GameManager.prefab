@@ -95,4 +95,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dofProfile: {fileID: 11400000, guid: 938587e53954a523193178966c78029a, type: 2}
+  _menuDOFProfile: {fileID: 11400000, guid: c79c608b773d05460a47c1615f3713eb, type: 2}
   _motionBlurProfile: {fileID: 11400000, guid: 09927a804cb3f1171af33436b439b7b6, type: 2}
+  _master: {fileID: 24300002, guid: 058b23a6ebdc6c69a89dbde75f191e96, type: 2}
+  _sfx: {fileID: 1831776637779280436, guid: 058b23a6ebdc6c69a89dbde75f191e96, type: 2}
+  _music: {fileID: -2359160903320283803, guid: 058b23a6ebdc6c69a89dbde75f191e96, type: 2}

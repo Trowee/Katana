@@ -77,6 +77,7 @@ namespace Assets.Scripts.KatanaMovement
         private void Start()
         {
             _renderer.sharedMaterial = GameManager.ItemManager.SelectedItem.Material;
+            PSM.CameraManager.SwitchCameraHandler(Settings.Perspective, _cameraSwitchDuration, _cameraSwitchEasing, unscaled: true);
         }
 
         private void Update()
