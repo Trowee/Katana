@@ -425,40 +425,40 @@
       <HintPath>/home/nnra/Unity/Hub/Editor/6000.0.34f1/Editor/Data/PlaybackEngines/LinuxStandaloneSupport/UnityEditor.LinuxStandalone.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.YamlDotNet">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/PackageCache/com.unity.visualscripting/Editor/VisualScripting.Core/Dependencies/YamlDotNet/Unity.VisualScripting.YamlDotNet.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/PackageCache/com.unity.visualscripting/Editor/VisualScripting.Core/Dependencies/YamlDotNet/Unity.VisualScripting.YamlDotNet.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Collections.LowLevel.ILSupport">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/PackageCache/com.unity.collections/Unity.Collections.LowLevel.ILSupport/Unity.Collections.LowLevel.ILSupport.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/PackageCache/com.unity.collections/Unity.Collections.LowLevel.ILSupport/Unity.Collections.LowLevel.ILSupport.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/PackageCache/com.unity.ext.nunit/net40/unity-custom/nunit.framework.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/PackageCache/com.unity.ext.nunit/net40/unity-custom/nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="unityplastic">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/PackageCache/com.unity.collab-proxy/Lib/Editor/unityplastic.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/PackageCache/com.unity.collab-proxy/Lib/Editor/unityplastic.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Plastic.Antlr3.Runtime">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/PackageCache/com.unity.collab-proxy/Lib/Editor/Unity.Plastic.Antlr3.Runtime.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/PackageCache/com.unity.collab-proxy/Lib/Editor/Unity.Plastic.Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Plastic.Newtonsoft.Json">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/PackageCache/com.unity.collab-proxy/Lib/Editor/Unity.Plastic.Newtonsoft.Json.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/PackageCache/com.unity.collab-proxy/Lib/Editor/Unity.Plastic.Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="log4netPlastic">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/PackageCache/com.unity.collab-proxy/Lib/Editor/log4netPlastic.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/PackageCache/com.unity.collab-proxy/Lib/Editor/log4netPlastic.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.IonicZip">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/PackageCache/com.unity.visualscripting/Editor/VisualScripting.Core/Dependencies/DotNetZip/Unity.VisualScripting.IonicZip.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/PackageCache/com.unity.visualscripting/Editor/VisualScripting.Core/Dependencies/DotNetZip/Unity.VisualScripting.IonicZip.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/PackageCache/com.unity.visualscripting/Runtime/VisualScripting.Flow/Dependencies/NCalc/Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/PackageCache/com.unity.visualscripting/Runtime/VisualScripting.Flow/Dependencies/NCalc/Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/PackageCache/com.unity.nuget.newtonsoft-json/Runtime/Newtonsoft.Json.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/PackageCache/com.unity.nuget.newtonsoft-json/Runtime/Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.TextureAssets">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/PackageCache/com.unity.visualscripting/Editor/VisualScripting.Core/EditorAssetResources/Unity.VisualScripting.TextureAssets.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/PackageCache/com.unity.visualscripting/Editor/VisualScripting.Core/EditorAssetResources/Unity.VisualScripting.TextureAssets.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/PackageCache/com.unity.nuget.mono-cecil/Mono.Cecil.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/PackageCache/com.unity.nuget.mono-cecil/Mono.Cecil.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Android.Types">
       <HintPath>/home/nnra/Unity/Hub/Editor/6000.0.34f1/Editor/Data/PlaybackEngines/AndroidPlayer/Unity.Android.Types.dll</HintPath>
@@ -842,157 +842,157 @@
       <HintPath>/home/nnra/Unity/Hub/Editor/6000.0.34f1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/netstandard.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TestRunner">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.TestRunner">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.2D.Runtime">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.2D.Runtime.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.2D.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Config.Runtime">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Config.Runtime.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Config.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Editor.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.InputSystem.ForUI">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.InputSystem.ForUI.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.InputSystem.ForUI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Searcher.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.Searcher.Editor.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Searcher.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Collections.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.Collections.Editor.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Collections.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.AI.Navigation">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.AI.Navigation.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.AI.Navigation.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.Shared.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.VisualScripting.Shared.Editor.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.VisualScripting.Shared.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.Core.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.VisualScripting.Core.Editor.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.VisualScripting.Core.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Multiplayer.Center.Common">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.Multiplayer.Center.Common.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Multiplayer.Center.Common.dll</HintPath>
     </Reference>
     <Reference Include="Unity.AI.Navigation.Updater">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.AI.Navigation.Updater.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.AI.Navigation.Updater.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.Flow.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.VisualScripting.Flow.Editor.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.VisualScripting.Flow.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Shaders">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Runtime.Shared">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.Shared.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.Shared.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.ShaderGraph.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.State.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.VisualScripting.State.Editor.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.VisualScripting.State.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.AI.Navigation.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.AI.Navigation.Editor.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.AI.Navigation.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Mathematics">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.SettingsProvider.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.VisualScripting.SettingsProvider.Editor.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.VisualScripting.SettingsProvider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Editor.Shared">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.Shared.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.Shared.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PlasticSCM.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.PlasticSCM.Editor.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.PlasticSCM.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Runtime">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Multiplayer.Center.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.Multiplayer.Center.Editor.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Multiplayer.Center.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.State">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.VisualScripting.State.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.VisualScripting.State.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Mathematics.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.AI.Navigation.Editor.ConversionSystem">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.AI.Navigation.Editor.ConversionSystem.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.AI.Navigation.Editor.ConversionSystem.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.GPUDriven.Runtime">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.GPUDriven.Runtime.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.GPUDriven.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Collections">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.Collections.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Collections.dll</HintPath>
     </Reference>
     <Reference Include="PPv2URPConverters">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/PPv2URPConverters.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/PPv2URPConverters.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualStudio.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Runtime">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rendering.LightTransport.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.Rendering.LightTransport.Editor.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Rendering.LightTransport.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.Flow">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.VisualScripting.Flow.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.VisualScripting.Flow.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rendering.LightTransport.Runtime">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.Rendering.LightTransport.Runtime.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Rendering.LightTransport.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.Core">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.VisualScripting.Core.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.VisualScripting.Core.dll</HintPath>
     </Reference>
     <Reference Include="Unity.InputSystem">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.InputSystem.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.InputSystem.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
