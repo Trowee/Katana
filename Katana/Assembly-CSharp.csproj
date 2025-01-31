@@ -96,6 +96,7 @@
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/ConfigComponent.cs" />
     <Compile Include="Assets/Scripts/PlayerCamera/DynamicDOF.cs" />
     <Compile Include="Assets/NnUtils/Scripts/FileSystemMonitor.cs" />
+    <Compile Include="Assets/Scripts/Fruits/CannonScript.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/Volume/ConfigVolume.cs" />
     <Compile Include="Assets/Scripts/Core/GameManager.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/ConfigTransform.cs" />

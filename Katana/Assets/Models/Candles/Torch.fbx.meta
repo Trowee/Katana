@@ -3,7 +3,22 @@ guid: 7f879838da757c5cb96b4bf392321c7a
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Nail
+    second: {fileID: 2100000, guid: 176f3851335b3f8f7a43069357a8934b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Torch
+    second: {fileID: 2100000, guid: 0282d822c2dfb9218bc827a4e18f6d9c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: WallHolder
+    second: {fileID: 2100000, guid: 82409e5e2c965b14c800bd87f3455fc3, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
