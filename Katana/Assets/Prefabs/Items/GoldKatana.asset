@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Gold Katana
   Price: 10000
-  UnlockedByDefault: 1
+  UnlockedByDefault: 0
   Material: {fileID: 2100000, guid: e47e234fd9b01bd308f9075a8f49a914, type: 2}
