@@ -27,6 +27,7 @@ namespace Assets.Scripts.KatanaMovement
         [Header("Components")]
         [SerializeField] private Rigidbody _rb;
         [SerializeField] private Collider _collider;
+        [SerializeField] private GameObject _meshObject;
         [SerializeField] private Renderer _renderer;
         [SerializeField] private Transform _decalPrefab;
         [SerializeField] private Transform _decalPoint;
@@ -71,6 +72,9 @@ namespace Assets.Scripts.KatanaMovement
         [SerializeField] private TimeScaleKeys _strikeImpactTimeScale;
         [SerializeField] private TimeScaleKeys _postStrikeImpactTimeScale;
 
+        [Header("Death")]
+        [SerializeField] private TimeScaleKeys _deathTimeScale;
+
         private void Reset()
         {
             _rb = GetComponent<Rigidbody>();
@@ -84,6 +88,7 @@ namespace Assets.Scripts.KatanaMovement
 
         private void Update()
         {
+            if (PSM.Instance.IsDead) return;
             if (IsPerformingStrike || IsPerformingStrikeImpact) return;
 
             Tilt();
@@ -96,6 +101,7 @@ namespace Assets.Scripts.KatanaMovement
 
         private void OnCollisionEnter(Collision col)
         {
+            if (PSM.Instance.IsDead) return;
             // Store the col layer
             var layer = col.gameObject.layer;
 
@@ -367,6 +373,18 @@ namespace Assets.Scripts.KatanaMovement
             IsPerformingStrikeImpact = false;
             Stick(col);
             GameManager.TimeScaleManager.UpdateTimeScale(_postStrikeImpactTimeScale);
+        }
+
+        public void Die()
+        {
+            StopAllCoroutines();
+            GameManager.TimeScaleManager.UpdateTimeScale(_deathTimeScale, 1000);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible   = true;
+            _meshObject.SetActive(false);
+            _rb.isKinematic = true;
+            _collider.enabled = false;
+            PSM.Instance.Die();
         }
     }
 }

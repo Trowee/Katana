@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Assets.Scripts.KatanaMovement;
 using UnityEngine;
 
 namespace Assets.Scripts.Fruits
@@ -10,6 +11,7 @@ namespace Assets.Scripts.Fruits
         [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private LayerMask _playerMask;
         [SerializeField] private float _destroyForce = 25;
+        [SerializeField] private float _radius = 10;
         
         [Header("Particles")]
         [SerializeField] private Transform _particles;
@@ -24,18 +26,24 @@ namespace Assets.Scripts.Fruits
 
         private void OnCollisionEnter(Collision col)
         {
-            var layer = col.gameObject.layer;
-            var player = (_playerMask & 1 << layer) != 0;
-            if (col.relativeVelocity.magnitude >= _destroyForce) GetDestroyed();
+            GetDestroyed();
         }
 
         public void GetDestroyed()
         {
+            Kill();
             _collider.enabled = false;
             _explosionParticles.ForEach(x => x.Play());
             _particles.SetParent(null);
             Destroy(_particles.gameObject, _destroyParticlesAfter);
             Destroy(gameObject);
+        }
+
+        private void Kill()
+        {
+            var hits = Physics.OverlapSphere(transform.position, _radius, _playerMask);
+            foreach (var hit in hits)
+                if (hit.transform.parent.TryGetComponent(out PlayerMovementScript player)) player.Die();
         }
     }
 }

@@ -41,6 +41,10 @@ namespace Assets.Scripts.Core
             }
         }
 
+        public bool IsDead;
+
+        [SerializeField] private GameObject _deathScreen;
+
         private void Reset()
         {
             _cameraManager = GetComponent<CameraManager>();
@@ -56,9 +60,14 @@ namespace Assets.Scripts.Core
 
         private void Start()
         {
-            // TODO: Possibly move this to another script
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
+        }
+
+        public void Die()
+        {
+            _deathScreen.SetActive(true);
+            IsDead = true;
         }
     }
 }

@@ -9737,8 +9737,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 11, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7728954312781397136}
   - {fileID: 6283195202776858674}
@@ -9789,6 +9789,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _destroyForce: 25
+  _radius: 20
   _particles: {fileID: 6283195202776858674}
   _explosionParticles:
   - {fileID: 6156594635098565228}
