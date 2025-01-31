@@ -87,6 +87,7 @@
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/ConfigVector2.cs" />
     <Compile Include="Assets/NnUtils/Scripts/UI/NBar.cs" />
     <Compile Include="Assets/Scripts/TimeScale/TimeScaleKeys.cs" />
+    <Compile Include="Assets/Scripts/Fruits/FruitScript.cs" />
     <Compile Include="Assets/Scripts/Core/SettingsManager.cs" />
     <Compile Include="Assets/NnUtils/Scripts/WaitForSecondsWhileNot.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/UI/ConfigCanvas.cs" />
