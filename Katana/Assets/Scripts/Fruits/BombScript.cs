@@ -1,23 +1,20 @@
 using System.Collections.Generic;
-using Assets.Scripts.Core;
 using UnityEngine;
 
 namespace Assets.Scripts.Fruits
 {
-    [RequireComponent(typeof(Collider))]
     [RequireComponent(typeof(Rigidbody))]
-    public class FruitScript : MonoBehaviour
+    public class BombScript : MonoBehaviour
     {
         [SerializeField] private Collider _collider;
         [SerializeField] private Rigidbody _rigidbody;
-        [SerializeField] private LayerMask _pointsMask;
+        [SerializeField] private LayerMask _playerMask;
         [SerializeField] private float _destroyForce = 25;
-        [SerializeField] private int _coins;
         
         [Header("Particles")]
         [SerializeField] private Transform _particles;
         [SerializeField] private List<ParticleSystem> _explosionParticles;
-        private float _destroyParticlesAfter = 11;
+        private float _destroyParticlesAfter = 25;
 
         private void Reset()
         {
@@ -28,13 +25,12 @@ namespace Assets.Scripts.Fruits
         private void OnCollisionEnter(Collision col)
         {
             var layer = col.gameObject.layer;
-            var getPoints = (_pointsMask & 1 << layer) != 0;
-            if (col.relativeVelocity.magnitude >= _destroyForce) GetDestroyed(getPoints);
+            var player = (_playerMask & 1 << layer) != 0;
+            if (col.relativeVelocity.magnitude >= _destroyForce) GetDestroyed();
         }
 
-        public void GetDestroyed(bool getPoints)
+        public void GetDestroyed()
         {
-            if (getPoints) GameManager.ItemManager.Coins += _coins;
             _collider.enabled = false;
             _explosionParticles.ForEach(x => x.Play());
             _particles.SetParent(null);

@@ -181,28 +181,28 @@ MonoBehaviour:
   _flipRotation: 10
   _flipTimeScale:
     Keys:
-    - TimeScale: 2
+    - TimeScale: 1.5
       Time: 0
       Easing: 0
-    - TimeScale: 0.5
+    - TimeScale: 0.25
       Time: 1
       Easing: 9
-  _dashForce: 100
+  _dashForce: 150
   _dashTimeScale:
     Keys:
-    - TimeScale: 2
+    - TimeScale: 1.5
       Time: 0
       Easing: 0
-    - TimeScale: 0.5
-      Time: 2
+    - TimeScale: 0.25
+      Time: 1
       Easing: 9
-  _dodgeForce: 30
+  _dodgeForce: 50
   _dodgeTimeScale:
     Keys:
-    - TimeScale: 2
+    - TimeScale: 1.5
       Time: 0
       Easing: 0
-    - TimeScale: 0.5
+    - TimeScale: 0.25
       Time: 1
       Easing: 9
   _strikeTransitionTime: 3
@@ -232,7 +232,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   _strikeHoverHeight: 55
   _strikeHoverDuration: 5
-  _strikeHoverTimeScale: 0.1
+  _strikeHoverTimeScale: 0.5
   _camReturnDuration: 1
   _camReturnEasing: 9
   _strikeLayerMask:
@@ -249,8 +249,8 @@ MonoBehaviour:
     - TimeScale: 0.1
       Time: 0
       Easing: 0
-    - TimeScale: 0.5
-      Time: 5
+    - TimeScale: 0.25
+      Time: 2
       Easing: 10
 --- !u!1 &2700068650421365856
 GameObject:
