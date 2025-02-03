@@ -22,6 +22,6 @@ namespace Assets.Scripts.MainMenu.Shop
 
         private void UpdateCoins() => _coinsTMP.text = $@"₦{ItemManager.Coins}";
 
-        private void UpdateKatana() => _katana.sharedMaterial = ItemManager.SelectedItem.Material;
+        private void UpdateKatana() => _katana.sharedMaterial = ItemManager.SelectedItem?.Material;
     }
 }
