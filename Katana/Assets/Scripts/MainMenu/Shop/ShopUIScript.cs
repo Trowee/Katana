@@ -1,3 +1,4 @@
+using System;
 using Assets.Scripts.Core;
 using Assets.Scripts.Items;
 using TMPro;
@@ -18,6 +19,12 @@ namespace Assets.Scripts.MainMenu.Shop
             ItemManager.OnItemChanged  += UpdateKatana;
             UpdateCoins();
             UpdateKatana();
+        }
+
+        private void OnDestroy()
+        {
+            ItemManager.OnCoinsChanged -= UpdateCoins;
+            ItemManager.OnItemChanged -= UpdateKatana;
         }
 
         private void UpdateCoins() => _coinsTMP.text = $@"₦{ItemManager.Coins}";
