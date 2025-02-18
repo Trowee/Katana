@@ -46,72 +46,73 @@
     <Analyzer Include="/home/nnra/Unity/Hub/Editor/6000.0.34f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets/Scripts/Items/Item.cs" />
-    <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/Volume/ConfigVolumeComponent.cs" />
-    <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/ConfigGradientAlphaKey.cs" />
-    <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/ConfigGradientColorKey.cs" />
-    <Compile Include="Assets/NnUtils/Scripts/TimeManager.cs" />
-    <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/ConfigGameObject.cs" />
-    <Compile Include="Assets/NnUtils/Scripts/NnManager.cs" />
-    <Compile Include="Assets/NnUtils/Scripts/Misc.cs" />
-    <Compile Include="Assets/Scripts/MainMenu/Shop/ShopItemScript.cs" />
-    <Compile Include="Assets/Scripts/PlayerCamera/CameraHandlerScript.cs" />
-    <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/UI/ConfigText.cs" />
-    <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/UI/ConfigCanvasScaler.cs" />
-    <Compile Include="Assets/NnUtils/Scripts/UI/EnvelopedImage.cs" />
-    <Compile Include="Assets/Scripts/Core/DeathScreen.cs" />
-    <Compile Include="Assets/NnUtils/Scripts/UI/RadioNutton.cs" />
-    <Compile Include="Assets/NnUtils/Modules/TextUtils/Scripts/InteractiveText/InteractiveLabel.cs" />
-    <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/Volume/ConfigVolumeProfile.cs" />
-    <Compile Include="Assets/Settings/SeparateCameraVolume/SeparateVolume.cs" />
-    <Compile Include="Assets/Scripts/PlayerCamera/Perspective.cs" />
-    <Compile Include="Assets/Scripts/Fruits/BombScript.cs" />
-    <Compile Include="Assets/NnUtils/Scripts/ReadOnlyAttribute.cs" />
-    <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/UI/ConfigRectTransform.cs" />
-    <Compile Include="Assets/NnUtils/Modules/TextUtils/Scripts/InteractiveText/InteractiveTextProcessing.cs" />
-    <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/UI/Image/ProjectImageManagerScript.cs" />
-    <Compile Include="Assets/Scripts/TimeScale/TimeScaleKey.cs" />
-    <Compile Include="Assets/NnUtils/Scripts/Easings.cs" />
-    <Compile Include="Assets/Scripts/MainMenu/MainMenuButton.cs" />
     <Compile Include="Assets/NnUtils/Modules/TextUtils/Scripts/InteractiveText/DynamicText.cs" />
     <Compile Include="Assets/Scripts/KatanaMovement/PlayerMovementScript.cs" />
+    <Compile Include="Assets/Scripts/Items/Item.cs" />
+    <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/Volume/ConfigVolumeComponent.cs" />
     <Compile Include="Assets/Scripts/Items/ItemManager.cs" />
+    <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/ConfigGradientAlphaKey.cs" />
+    <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/ConfigGradientColorKey.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/UI/Image/ProjectImage.cs" />
+    <Compile Include="Assets/NnUtils/Scripts/TimeManager.cs" />
     <Compile Include="Assets/Scripts/MainMenu/MainMenuManager.cs" />
     <Compile Include="Assets/Scripts/TimeScale/TimeScaleManager.cs" />
     <Compile Include="Assets/Scripts/Core/DecalFade.cs" />
     <Compile Include="Assets/Scripts/MainMenu/Shop/ShopUIScript.cs" />
+    <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/ConfigGameObject.cs" />
     <Compile Include="Assets/NnUtils/Modules/TextUtils/Scripts/SystemFont.cs" />
     <Compile Include="Assets/TutorialInfo/Scripts/Readme.cs" />
     <Compile Include="Assets/NnUtils/Modules/TextUtils/Scripts/InteractiveText/InteractiveTextScript.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/ConfigGradient.cs" />
+    <Compile Include="Assets/NnUtils/Scripts/NnManager.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/UI/Image/InteractiveImageScript.cs" />
+    <Compile Include="Assets/NnUtils/Scripts/Misc.cs" />
+    <Compile Include="Assets/Scripts/PlayerCamera/CameraHandlerScript.cs" />
+    <Compile Include="Assets/Scripts/MainMenu/Shop/ShopItemScript.cs" />
     <Compile Include="Assets/Scripts/PlayerCamera/CameraManager.cs" />
     <Compile Include="Assets/Scripts/MainMenu/SettingsMenu.cs" />
     <Compile Include="Assets/Scripts/Core/ScoreScript.cs" />
+    <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/UI/ConfigText.cs" />
     <Compile Include="Assets/NnUtils/Scripts/NashSet.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/ConfigVector2.cs" />
     <Compile Include="Assets/NnUtils/Scripts/UI/NBar.cs" />
     <Compile Include="Assets/Scripts/TimeScale/TimeScaleKeys.cs" />
+    <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/UI/ConfigCanvasScaler.cs" />
+    <Compile Include="Assets/NnUtils/Scripts/UI/EnvelopedImage.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/UI/Image/ConfigImage.cs" />
     <Compile Include="Assets/Scripts/Fruits/FruitScript.cs" />
+    <Compile Include="Assets/Scripts/Core/DeathScreen.cs" />
     <Compile Include="Assets/Scripts/Core/SettingsManager.cs" />
     <Compile Include="Assets/NnUtils/Scripts/WaitForSecondsWhileNot.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/UI/ConfigCanvas.cs" />
+    <Compile Include="Assets/NnUtils/Scripts/UI/RadioNutton.cs" />
     <Compile Include="Assets/Scripts/Core/PlaySceneManager.cs" />
     <Compile Include="Assets/NnUtils/Modules/TextUtils/Scripts/InteractiveText/InteractiveTMPText.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/ConfigComponent.cs" />
+    <Compile Include="Assets/NnUtils/Modules/TextUtils/Scripts/InteractiveText/InteractiveLabel.cs" />
     <Compile Include="Assets/Scripts/PlayerCamera/DynamicDOF.cs" />
     <Compile Include="Assets/NnUtils/Scripts/FileSystemMonitor.cs" />
     <Compile Include="Assets/Scripts/Fruits/CannonScript.cs" />
+    <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/Volume/ConfigVolumeProfile.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/Volume/ConfigVolume.cs" />
+    <Compile Include="Assets/Settings/SeparateCameraVolume/SeparateVolume.cs" />
     <Compile Include="Assets/Scripts/Core/GameManager.cs" />
+    <Compile Include="Assets/Scripts/PlayerCamera/Perspective.cs" />
+    <Compile Include="Assets/Scripts/Fruits/BombScript.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/ConfigVector4.cs" />
+    <Compile Include="Assets/NnUtils/Scripts/ReadOnlyAttribute.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/ConfigTransform.cs" />
+    <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/UI/ConfigRectTransform.cs" />
+    <Compile Include="Assets/Scripts/Fruits/ExplosionManagerScript.cs" />
     <Compile Include="Assets/NnUtils/Scripts/Color.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/ConfigVector3.cs" />
+    <Compile Include="Assets/NnUtils/Modules/TextUtils/Scripts/InteractiveText/InteractiveTextProcessing.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/UI/ConfigVerticalLayoutGroup.cs" />
+    <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/UI/Image/ProjectImageManagerScript.cs" />
+    <Compile Include="Assets/Scripts/TimeScale/TimeScaleKey.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/ConfigColor.cs" />
+    <Compile Include="Assets/NnUtils/Scripts/Easings.cs" />
+    <Compile Include="Assets/Scripts/MainMenu/MainMenuButton.cs" />
     <Compile Include="Assets/NnUtils/Scripts/UI/RadioNuttonManager.cs" />
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader" />
@@ -489,9 +490,6 @@
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/PackageCache/com.unity.ext.nunit/net40/unity-custom/nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/PackageCache/com.unity.visualscripting/Runtime/VisualScripting.Flow/Dependencies/NCalc/Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/PackageCache/com.unity.nuget.newtonsoft-json/Runtime/Newtonsoft.Json.dll</HintPath>
@@ -871,8 +869,17 @@
     <Reference Include="mscorlib">
       <HintPath>/home/nnra/Unity/Hub/Editor/6000.0.34f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/mscorlib.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.2D.Runtime">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.2D.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="com.cqf.urpvolumetricfog.editor">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/com.cqf.urpvolumetricfog.editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Config.Runtime">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Config.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Editor">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.InputSystem.ForUI">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.InputSystem.ForUI.dll</HintPath>
@@ -880,20 +887,44 @@
     <Reference Include="UnityEditor.UI">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.VisualEffectGraph.Runtime">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.VisualEffectGraph.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Searcher.Editor">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Searcher.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualEffectGraph.Editor">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.VisualEffectGraph.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Collections.Editor">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Collections.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.AI.Navigation">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.AI.Navigation.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.AI.Navigation">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.AI.Navigation.dll</HintPath>
+    <Reference Include="com.cqf.urpvolumetricfog.runtime">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/com.cqf.urpvolumetricfog.runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Multiplayer.Center.Common">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Multiplayer.Center.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.AI.Navigation.Updater">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.AI.Navigation.Updater.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Shaders">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Runtime.Shared">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.Shared.dll</HintPath>
@@ -910,8 +941,17 @@
     <Reference Include="Unity.RenderPipelines.Core.Editor.Shared">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.Shared.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.AI.Navigation.Editor">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.AI.Navigation.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mathematics">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.Editor">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
@@ -922,86 +962,29 @@
     <Reference Include="Unity.Multiplayer.Center.Editor">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Multiplayer.Center.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Mathematics.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.RenderPipelines.GPUDriven.Runtime">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.GPUDriven.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Collections">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Collections.dll</HintPath>
-    </Reference>
-    <Reference Include="PPv2URPConverters">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/PPv2URPConverters.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Rendering.LightTransport.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Rendering.LightTransport.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.Core">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.VisualScripting.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.RenderPipelines.Universal.Config.Runtime">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Config.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.RenderPipelines.Universal.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Collections.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Collections.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="com.cqf.urpvolumetricfog.runtime">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/com.cqf.urpvolumetricfog.runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.Shared.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.VisualScripting.Shared.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.Core.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.VisualScripting.Core.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Multiplayer.Center.Common">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Multiplayer.Center.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.AI.Navigation.Updater">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.AI.Navigation.Updater.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.Flow.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.VisualScripting.Flow.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.TextMeshPro">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.SettingsProvider.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.VisualScripting.SettingsProvider.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.State.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.VisualScripting.State.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.AI.Navigation.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.AI.Navigation.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Mathematics">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.RenderPipelines.Core.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Runtime">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.VisualScripting.State">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.VisualScripting.State.dll</HintPath>
+    <Reference Include="Unity.Mathematics.Editor">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.AI.Navigation.Editor.ConversionSystem">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.AI.Navigation.Editor.ConversionSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.GPUDriven.Runtime">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.GPUDriven.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst.Editor">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Collections">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="PPv2URPConverters">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/PPv2URPConverters.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
@@ -1012,17 +995,14 @@
     <Reference Include="Unity.RenderPipelines.Core.Runtime">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.VisualScripting.Flow">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.VisualScripting.Flow.dll</HintPath>
+    <Reference Include="Unity.Rendering.LightTransport.Editor">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Rendering.LightTransport.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rendering.LightTransport.Runtime">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Rendering.LightTransport.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.InputSystem">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.InputSystem.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.RenderPipelines.Universal.2D.Runtime">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.2D.Runtime.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,6 @@
 using Assets.Scripts.Items;
 using Assets.Scripts.TimeScale;
 using NnUtils.Scripts;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -41,8 +40,8 @@ namespace Assets.Scripts.Core
         private void Reset()
         {
             _settingsManager = GetComponent<SettingsManager>();
-            _timeScaleManager = this.GetOrAddComponent<TimeScaleManager>();
-            _itemManager = this.GetOrAddComponent<ItemManager>();
+            _timeScaleManager = gameObject.GetOrAddComponent<TimeScaleManager>();
+            _itemManager = gameObject.GetOrAddComponent<ItemManager>();
         }
 
         private void Awake()
