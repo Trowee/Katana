@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -8,55 +5,61 @@ namespace Assets.Scripts.Fruits
 {
     public class ExplosionManagerScript : MonoBehaviour
     {
-        // Stores up to 4 inactive explosions
-        private readonly List<VisualEffect> _newlyAvailableExplosions = new(4);
-        private readonly HashSet<VisualEffect> _unavailableExplosions = new(4);
-        private readonly Queue<VisualEffect> _availableExplosions = new(4);
+        [Tooltip("Prefab of the explosion effect")]
+        [SerializeField] private VisualEffect _explosionPrefab;
+        
+        [Tooltip("Maximum number of explosions at once")]
+        [SerializeField] private int _explosionsCount = 4;
 
-        /// How often the available explosions check is ran
-        [SerializeField] private float _checkInterval = 1;
- 
+        /// Parent for explosions
+        private Transform _explosionsParent;
+        
+        /// Holds all explosions
+        private VisualEffect[] _explosions;
+
         private void Awake()
         {
-            foreach (var xp in GetComponentsInChildren<VisualEffect>()) _availableExplosions.Enqueue(xp);
-        }
-
-        private void Start() => StartCoroutine(AvailableCheckRoutine());
-
-        private IEnumerator AvailableCheckRoutine()
-        {
-            var checkInterval = _checkInterval;
-            
-            while (true)
+            // Return if prefab is not set
+            if (_explosionPrefab == null)
             {
-                CheckActive();
-                
-                if (_newlyAvailableExplosions.Count > 0)
-                {
-                    foreach (var xp in _newlyAvailableExplosions)
-                    {
-                        _unavailableExplosions.Remove(xp);
-                        _availableExplosions.Enqueue(xp);
-                    }
-                }
-
-                yield return new WaitForSecondsRealtime(checkInterval);
+                Debug.LogError("Explosion Manager requires the Explosion Prefab in order to function");
+                enabled = false;
+                return;
             }
+            
+            // Create an array with set capacity
+            _explosions = new VisualEffect[_explosionsCount];
+            
+            // Initialize explosions
+            InitializeExplosions();
         }
 
-        private void CheckActive()
+        /// Creates the explosions parent and instantiates the explosion prefabs
+        private void InitializeExplosions()
         {
-            _newlyAvailableExplosions.Clear();
-            foreach (var xp in _unavailableExplosions.Where(xp => !xp.HasAnySystemAwake()))
-                _newlyAvailableExplosions.Add(xp);
+            // Create the parent
+            _explosionsParent = new GameObject().transform;
+            _explosionsParent.SetParent(transform);
+            
+            // Instantiate explosions
+            for (int i = 0; i < _explosionsCount; i++)
+                _explosions[i] = Instantiate(_explosionPrefab, _explosionsParent);
         }
-        
+
+        /// Plays the first available explosion at a given position
         public void PlayExplosion(Vector3 position)
         {
-            if (_availableExplosions.Count == 0) return;
-            var xp = _availableExplosions.Dequeue();
-            _unavailableExplosions.Add(xp);
-            xp.Play();
+            foreach (var explosion in _explosions)
+            {
+                // Continue if the explosion is still playing
+                if (explosion.HasAnySystemAwake()) continue;
+                
+                // Set position and play
+                explosion.transform.position = position;
+                explosion.Play();
+                
+                return;
+            }
         }
     }
 }

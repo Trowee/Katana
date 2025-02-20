@@ -23,13 +23,9 @@ namespace Assets.Scripts.PlayerCamera
 
         private void SwitchCameraHandler(Perspective perspective, float duration, Easings.Type easing, AnimationCurve curve, bool unscaled)
         {
-            // Get the handler and check if it exists
-            var handler = Handlers.First(x => x.Perspective == perspective);
-            if (handler == null)
-            {
-                Debug.LogError($"Camera not found: {perspective}, returning");
-                return;
-            }
+            // Get the handler and return if it doesn't exist
+            var handler = Handlers.FirstOrDefault(x => x.Perspective == perspective);
+            if (handler == null) return;
 
             // Change the cam parent and switch
             CameraHolder.parent = handler.transform;
