@@ -12,7 +12,15 @@ namespace Assets.Scripts.PlayerCamera
     public class DynamicDOF : MonoBehaviour
     {
         private static Camera _cam;
-        private static Camera Camera => _cam ??= Camera.main;
+        private static Camera Camera
+        {
+            get
+            {
+                if (_cam != null) return _cam;
+                _cam = Camera.main;
+                return _cam;
+            }
+        }
 
         private float _distance, _previousDistance, _targetDistance;
 
