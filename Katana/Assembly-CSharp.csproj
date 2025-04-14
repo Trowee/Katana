@@ -60,10 +60,13 @@
     <Compile Include="Assets/Scripts/MainMenu/MainMenuManager.cs" />
     <Compile Include="Assets/Scripts/TimeScale/TimeScaleManager.cs" />
     <Compile Include="Assets/Scripts/Core/DecalFade.cs" />
+    <Compile Include="Assets/NnUtils/Modules/TextureRemapper/TextureRemapper.cs" />
     <Compile Include="Assets/Scripts/MainMenu/Shop/ShopUIScript.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/ConfigGameObject.cs" />
     <Compile Include="Assets/NnUtils/Modules/TextUtils/Scripts/SystemFont.cs" />
+    <Compile Include="Assets/NnUtils/Modules/TextureRemapper/TextureRemapperWindow.cs" />
     <Compile Include="Assets/TutorialInfo/Scripts/Readme.cs" />
+    <Compile Include="Assets/NnUtils/Scripts/LaunchOnStartup.cs" />
     <Compile Include="Assets/NnUtils/Modules/TextUtils/Scripts/InteractiveText/InteractiveTextScript.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/ConfigGradient.cs" />
     <Compile Include="Assets/NnUtils/Scripts/NnManager.cs" />
@@ -81,6 +84,7 @@
     <Compile Include="Assets/Scripts/TimeScale/TimeScaleKeys.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/UI/ConfigCanvasScaler.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/UI/Image/ConfigImage.cs" />
+    <Compile Include="Assets/NnUtils/Modules/TextureRemapper/TextureMapping.cs" />
     <Compile Include="Assets/Scripts/Fruits/FruitScript.cs" />
     <Compile Include="Assets/Scripts/Core/DeathScreen.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/UI/Image/ConfigSlideshow.cs" />
@@ -103,6 +107,7 @@
     <Compile Include="Assets/NnUtils/Scripts/UI/Slideshow/SlideshowTransition.cs" />
     <Compile Include="Assets/Scripts/Core/GameManager.cs" />
     <Compile Include="Assets/Scripts/PlayerCamera/Perspective.cs" />
+    <Compile Include="Assets/NnUtils/Modules/TextureRemapper/ChannelMapping.cs" />
     <Compile Include="Assets/Scripts/Fruits/BombScript.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/ConfigVector4.cs" />
     <Compile Include="Assets/NnUtils/Scripts/UI/ProjectImageManagerScript.cs" />
@@ -128,6 +133,7 @@
     <None Include="Assets/TextMesh Pro/Shaders/TMPro_Mobile.cginc" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF SSD.shader" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets/NnUtils/Shaders/Squircle.shader" />
     <None Include="Assets/TextMesh Pro/Shaders/SDFFunctions.hlsl" />
     <None Include="Assets/NnUtils/Scripts/GameManager.txt" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Surface.shader" />
@@ -878,17 +884,8 @@
     <Reference Include="mscorlib">
       <HintPath>/home/nnra/Unity/Hub/Editor/6000.0.34f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/mscorlib.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.RenderPipelines.Universal.2D.Runtime">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.2D.Runtime.dll</HintPath>
-    </Reference>
     <Reference Include="com.cqf.urpvolumetricfog.editor">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/com.cqf.urpvolumetricfog.editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.RenderPipelines.Universal.Config.Runtime">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Config.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.RenderPipelines.Universal.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.InputSystem.ForUI">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.InputSystem.ForUI.dll</HintPath>
@@ -896,17 +893,8 @@
     <Reference Include="UnityEditor.UI">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.VisualEffectGraph.Runtime">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.VisualEffectGraph.Runtime.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Searcher.Editor">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Searcher.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.VisualEffectGraph.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.VisualEffectGraph.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Collections.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Collections.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.AI.Navigation">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.AI.Navigation.dll</HintPath>
@@ -914,20 +902,11 @@
     <Reference Include="Unity.Rider.Editor">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.TerrainTools.Editor">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.TerrainTools.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unified.Universal.Blur">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unified.Universal.Blur.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Multiplayer.Center.Common">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Multiplayer.Center.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.AI.Navigation.Updater">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.AI.Navigation.Updater.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="com.cqf.urpvolumetricfog.runtime">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/com.cqf.urpvolumetricfog.runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
@@ -935,17 +914,14 @@
     <Reference Include="Unity.RenderPipelines.Universal.Shaders">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.TextMeshPro">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Runtime.Shared">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.Shared.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.TerrainTools">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.TerrainTools.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.ShaderGraph.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
@@ -953,17 +929,11 @@
     <Reference Include="Unity.RenderPipelines.Core.Editor.Shared">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.Shared.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.AI.Navigation.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.AI.Navigation.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Mathematics">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.RenderPipelines.Core.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
+    <Reference Include="Unity.ShaderGraph.Editor">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
@@ -974,29 +944,74 @@
     <Reference Include="Unity.Multiplayer.Center.Editor">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Multiplayer.Center.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.RenderPipelines.Universal.Runtime">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Mathematics.Editor">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.AI.Navigation.Editor.ConversionSystem">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.AI.Navigation.Editor.ConversionSystem.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.RenderPipelines.GPUDriven.Runtime">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.GPUDriven.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Burst.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Collections">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Collections.dll</HintPath>
     </Reference>
     <Reference Include="PPv2URPConverters">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/PPv2URPConverters.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Rendering.LightTransport.Editor">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Rendering.LightTransport.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unified.Universal.Blur.Editor">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unified.Universal.Blur.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Config.Runtime">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Config.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Editor">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualEffectGraph.Runtime">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.VisualEffectGraph.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualEffectGraph.Editor">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.VisualEffectGraph.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Collections.Editor">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Collections.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="com.cqf.urpvolumetricfog.runtime">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/com.cqf.urpvolumetricfog.runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Multiplayer.Center.Common">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Multiplayer.Center.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.AI.Navigation.Updater">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.AI.Navigation.Updater.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.AI.Navigation.Editor">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.AI.Navigation.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mathematics">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.Editor">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Runtime">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.AI.Navigation.Editor.ConversionSystem">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.AI.Navigation.Editor.ConversionSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro.Editor">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Burst.Editor">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
@@ -1007,17 +1022,14 @@
     <Reference Include="Unity.RenderPipelines.Core.Runtime">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Rendering.LightTransport.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Rendering.LightTransport.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Rendering.LightTransport.Runtime">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Rendering.LightTransport.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="Unified.Universal.Blur.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unified.Universal.Blur.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.InputSystem">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.InputSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.2D.Runtime">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.2D.Runtime.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
