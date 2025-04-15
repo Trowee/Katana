@@ -66,5 +66,12 @@ namespace Assets.Scripts.MainMenu
             
             _switchTabRoutine = null;
         }
+
+        public void SetDOF(bool value) => Settings.ChangeDOF(value);
+        public void SetMotionBlur(float value) => Settings.ChangeMotionBlur(value);
+        public void SetPerspective(int value) => Settings.ChangePerspective(value);
+        public void SetMasterVolume(float value) => Settings.ChangeMasterVolume(value);
+        public void SetSFXVolume(float value) => Settings.ChangeSFXVolume(value);
+        public void SetMusicVolume(float value) => Settings.ChangeMusicVolume(value);
     }
 }

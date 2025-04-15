@@ -17,7 +17,7 @@ namespace Assets.Scripts.Core
             get => _instance;
             private set
             {
-                if (_instance != null && _instance != value)
+                if (_instance && _instance != value)
                 {
                     Destroy(value.gameObject);
                     return;
@@ -46,7 +46,7 @@ namespace Assets.Scripts.Core
 
         private void Awake()
         {
-            if (_instance == null) Instance = this;
+            if (!_instance) Instance = this;
             else if (_instance != this) Destroy(gameObject);
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
