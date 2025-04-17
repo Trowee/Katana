@@ -90,7 +90,6 @@ namespace Assets.Scripts.Core
                 if (_perspective == value) return;
                 _perspective = value;
                 PlayerPrefs.SetString("Perspective", _perspective.ToString());
-                Debug.Log(_perspective);
             }
         }
         
