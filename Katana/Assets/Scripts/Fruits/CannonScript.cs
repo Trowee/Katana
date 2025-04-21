@@ -29,7 +29,8 @@ namespace Assets.Scripts.Fruits
                 var startRot = _barrel.localEulerAngles;
                 startRot.z = _idleRot;
                 var targetRot = startRot;
-                targetRot.z = Random.Range(_shootingRotRange.x, _cooldownRange.y);
+                targetRot.z = Random.Range(_shootingRotRange.x, _shootingRotRange.y);
+                
                 float lerpPos = 0;
                 while (lerpPos < 1)
                 {
