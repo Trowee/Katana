@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using Assets.Scripts.Core;
 using Assets.Scripts.Fruits;
 using Assets.Scripts.PlayerCamera;
@@ -84,6 +85,7 @@ namespace Assets.Scripts.KatanaMovement
         {
             _renderer.sharedMaterial = GameManager.ItemManager.SelectedItem.Material;
             PSM.CameraManager.SwitchCameraHandler(Settings.Perspective, _cameraSwitchDuration, _cameraSwitchEasing, unscaled: true);
+            GetStuck(null);
         }
 
         private void Update()
@@ -132,26 +134,18 @@ namespace Assets.Scripts.KatanaMovement
 
             // Return if not moving forward fast enough
             if (col.relativeVelocity.magnitude < _minStickVelocity) return;
-            //if (transform.InverseTransformDirection(_rb.linearVelocity).y < _minStickVelocity) return;
 
             // Get forward and threshold
             var fw = transform.up;
             var threshold = -Mathf.Cos(_maxStickAngle * Mathf.Deg2Rad);
 
-            // Loop through all normals and see if they are at a low enough angle relative to player
-            foreach (var contact in col.contacts)
+            // Check if any of the normals are at a low enough angle relative to the player
+            if (col.contacts.Select(contact => contact.normal)
+                .Select(contactNormal => Vector3.Dot(fw, contactNormal))
+                .Any(dp => !(dp > threshold)))
             {
-                // Get the normal and dot product
-                var contactNormal = contact.normal;
-                var dp = Vector3.Dot(fw, contactNormal);
-
-                // Return if angle is not low enough
-                if (dp > threshold) continue;
-
-                // Get stuck and return
                 GetStuck(col.transform);
                 SpawnDecal();
-                return;
             }
         }
 
