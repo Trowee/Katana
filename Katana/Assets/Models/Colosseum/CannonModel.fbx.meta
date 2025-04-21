@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: de9ee55cec40388b0b299e719d2c046d
+guid: 18a5f994c61d6a6c29efb23e2b98bff0
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -9,11 +9,6 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: CannonTop
     second: {fileID: 2100000, guid: 3dc2dc6fce3014f43b97dcef4e4bccfc, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Rope
-    second: {fileID: 2100000, guid: 18515d12c2fe67c4c815d295efd072d8, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -56,7 +51,7 @@ ModelImporter:
     nodeNameCollisionStrategy: 1
     fileIdsGeneration: 2
     swapUVChannels: 0
-    generateSecondaryUV: 1
+    generateSecondaryUV: 0
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 1

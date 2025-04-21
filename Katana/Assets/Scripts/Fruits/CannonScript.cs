@@ -11,10 +11,9 @@ namespace Assets.Scripts.Fruits
         [SerializeField] private Transform _spawnPoint;
         [SerializeField] private List<Rigidbody> _fruits;
 
-        [SerializeField] private float _idleRot = -50;
-        [SerializeField] private Vector2 _shootingRotRange = new(-20, 20);
+        [SerializeField] private Vector2 _shootingRotRange = new(-20, 10);
         [SerializeField] private Vector2 _cooldownRange = new(10, 20);
-        [SerializeField] private Vector2 _shootingForce = new(50, 100);
+        [SerializeField] private Vector2 _shootingForceRange = new(25, 75);
         [SerializeField] private Vector2 _torqueRange = new(-50, 50);
 
         [SerializeField] private float _aimTime = 1;
@@ -27,9 +26,8 @@ namespace Assets.Scripts.Fruits
                 yield return new WaitForSeconds(Random.Range(_cooldownRange.x, _cooldownRange.y));
 
                 var startRot = _barrel.localEulerAngles;
-                startRot.z = _idleRot;
                 var targetRot = startRot;
-                targetRot.z = Random.Range(_shootingRotRange.x, _shootingRotRange.y);
+                targetRot.x = Random.Range(_shootingRotRange.x, _shootingRotRange.y);
                 
                 float lerpPos = 0;
                 while (lerpPos < 1)
@@ -43,8 +41,14 @@ namespace Assets.Scripts.Fruits
                 
                 var f = _fruits[Random.Range(0, _fruits.Count)];
                 var fruit = Instantiate(f, _spawnPoint.position, _spawnPoint.rotation);
-                fruit.AddRelativeForce(Vector3.right * _shootingForce, ForceMode.Impulse);
-                fruit.AddTorque(new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1)) * _torqueRange, ForceMode.Impulse);
+
+                var shootingForce = Random.Range(_shootingForceRange.x, _shootingForceRange.y);
+                fruit.AddRelativeForce(Vector3.forward * shootingForce, ForceMode.Impulse);
+                
+                var shootingTorque = Random.Range(_torqueRange.x, _torqueRange.y);
+                fruit.AddTorque(
+                    new Vector3(Misc.Random1, Misc.Random1, Misc.Random1) * shootingTorque,
+                    ForceMode.Impulse);
                 
                 lerpPos = 0;
                 while (lerpPos < 1)
