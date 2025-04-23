@@ -25,56 +25,54 @@ namespace Assets.Scripts.KatanaMovement
         /// Whether the player is performing the strike impact
         [ReadOnly] public bool IsPerformingStrikeImpact;
 
-        [Header("Components")]
-        [SerializeField] private Rigidbody _rb;
+        [Header("Components")] [SerializeField]
+        private Rigidbody _rb;
+
         [SerializeField] private Collider _collider;
-        [SerializeField] private GameObject _meshObject;
+        [SerializeField] private GameObject _katanaObject;
+        [SerializeField] private MeshFilter _mesh;
         [SerializeField] private Renderer _renderer;
         [SerializeField] private Transform _decalPrefab;
         [SerializeField] private Transform _decalPoint;
+        [SerializeField] private LayerMask _sliceLayer;
 
-        [Header("Camera")]
-        [SerializeField] private float _cameraSwitchDuration = 1;
+        [Header("Camera")] [SerializeField] private float _cameraSwitchDuration = 1;
         [SerializeField] private Easings.Type _cameraSwitchEasing = Easings.Type.ExpoOut;
 
-        [Header("Tilt")]
-        [SerializeField] private float _tiltSpeed = 1;
+        [Header("Tilt")] [SerializeField] private float _tiltSpeed = 1;
 
-        [Header("Stick")]
-        [SerializeField] private LayerMask _stickMask;
+        [Header("Stick")] [SerializeField] private LayerMask _stickMask;
         [SerializeField] private float _minStickVelocity = 5;
         [SerializeField] private float _maxStickAngle = 45;
 
-        [Header("Flip")]
-        [SerializeField] private Vector2 _flipForce = new(20, 25);
+        [Header("Flip")] [SerializeField] private Vector2 _flipForce = new(20, 25);
         [SerializeField] private float _flipRotation = 5;
         [SerializeField] private TimeScaleKeys _flipTimeScale;
 
-        [Header("Dash")]
-        [SerializeField] private float _dashForce = 100;
+        [Header("Dash")] [SerializeField] private float _dashForce = 100;
         [SerializeField] private TimeScaleKeys _dashTimeScale;
 
-        [Header("Dodge")]
-        [SerializeField] private float _dodgeForce = 30;
+        [Header("Dodge")] [SerializeField] private float _dodgeForce = 30;
         [SerializeField] private TimeScaleKeys _dodgeTimeScale;
 
-        [Header("Strike Hover")]
-        [SerializeField] private float _strikeTransitionTime = 3;
+        [Header("Strike Hover")] [SerializeField]
+        private float _strikeTransitionTime = 3;
+
         [SerializeField] private AnimationCurve _strikeTransitionCurve;
         [SerializeField] private float _strikeHoverHeight = 100;
         [SerializeField] private float _strikeHoverDuration = 5;
         [SerializeField] private float _strikeHoverTimeScale = 0.1f;
 
-        [Header("Strike Impact")]
-        [SerializeField] private float _camReturnDuration = 0.5f;
+        [Header("Strike Impact")] [SerializeField]
+        private float _camReturnDuration = 0.5f;
+
         [SerializeField] private Easings.Type _camReturnEasing = Easings.Type.ExpoOut;
         [SerializeField] private LayerMask _strikeLayerMask;
         [SerializeField] private float _strikeImpactForce = 200;
         [SerializeField] private TimeScaleKeys _strikeImpactTimeScale;
         [SerializeField] private TimeScaleKeys _postStrikeImpactTimeScale;
 
-        [Header("Death")]
-        [SerializeField] private TimeScaleKeys _deathTimeScale;
+        [Header("Death")] [SerializeField] private TimeScaleKeys _deathTimeScale;
 
         private void Reset()
         {
@@ -84,7 +82,8 @@ namespace Assets.Scripts.KatanaMovement
         private void Start()
         {
             _renderer.sharedMaterial = GameManager.ItemManager.SelectedItem.Material;
-            PSM.CameraManager.SwitchCameraHandler(Settings.Perspective, _cameraSwitchDuration, _cameraSwitchEasing, unscaled: true);
+            PSM.CameraManager.SwitchCameraHandler(Settings.Perspective, _cameraSwitchDuration,
+                _cameraSwitchEasing, unscaled: true);
             GetStuck(null);
         }
 
@@ -104,6 +103,7 @@ namespace Assets.Scripts.KatanaMovement
         private void OnCollisionEnter(Collision col)
         {
             if (PSM.Instance.IsDead) return;
+            
             // Store the col layer
             var layer = col.gameObject.layer;
 
@@ -122,6 +122,37 @@ namespace Assets.Scripts.KatanaMovement
 
             // Try to stick
             if ((_stickMask & 1 << layer) != 0) Stick(col);
+        }
+
+        private void OnCollisionStay(Collision col)
+        {
+            Slice();
+        }
+
+        private void Slice()
+        {
+            var mesh = _mesh.sharedMesh;
+            var meshTr = _mesh.transform;
+            var center = mesh.bounds.center;
+            var extents = mesh.bounds.extents;
+
+            extents = new(extents.x * meshTr.localScale.x,
+                extents.y * meshTr.localScale.y,
+                extents.z * meshTr.localScale.z);
+                                  
+            // Cast a ray and find the nearest object
+            var hits = Physics.BoxCastAll(transform.position, extents, transform.forward,
+                transform.rotation, extents.z, _sliceLayer);
+            
+            Debug.Log(hits.Length);
+            foreach(var hit in hits)
+            {
+                var sliceObj = hit.collider.GetComponent<Slice>();
+                if (!sliceObj) continue;
+                sliceObj.GetComponent<MeshRenderer>()?.material.SetVector("CutPlaneOrigin", Vector3.positiveInfinity);
+                sliceObj.ComputeSlice(transform.up, transform.position);
+            }
+
         }
 
         private void Stick(Collision col)
@@ -375,7 +406,7 @@ namespace Assets.Scripts.KatanaMovement
             GameManager.TimeScaleManager.UpdateTimeScale(_deathTimeScale, 1000);
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible   = true;
-            _meshObject.SetActive(false);
+            _katanaObject.SetActive(false);
             _rb.isKinematic = true;
             _collider.enabled = false;
             PSM.Instance.Die();
