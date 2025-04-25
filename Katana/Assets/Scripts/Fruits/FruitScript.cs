@@ -6,10 +6,11 @@ namespace Assets.Scripts.Fruits
 {
     [RequireComponent(typeof(Collider))]
     [RequireComponent(typeof(Rigidbody))]
-    public class FruitScript : MonoBehaviour
+    public class FruitScript : MonoBehaviour, ISliceable
     {
         [SerializeField] private Collider _collider;
         [SerializeField] private Rigidbody _rigidbody;
+        [SerializeField] private Slice _slice;
         [SerializeField] private LayerMask _pointsMask;
         [SerializeField] private float _destroyForce = 25;
         [SerializeField] private int _coins;
@@ -17,28 +18,35 @@ namespace Assets.Scripts.Fruits
         [Header("Particles")]
         [SerializeField] private Transform _particles;
         [SerializeField] private List<ParticleSystem> _explosionParticles;
-        private float _destroyParticlesAfter = 11;
+        private const float DestroyParticlesAfter = 11;
 
         private void Reset()
         {
             _collider = GetComponent<Collider>();
             _rigidbody = GetComponent<Rigidbody>();
+            _slice = GetComponent<Slice>();
+        }
+
+        public void GetSliced(Vector3 sliceOrigin, Vector3 sliceNormal, float sliceVelocity)
+        {
+            if (sliceVelocity < _destroyForce) return;
+            _slice.ComputeSlice(sliceNormal, sliceOrigin);
+            GetDestroyed(true);
         }
 
         private void OnCollisionEnter(Collision col)
         {
-            var layer = col.gameObject.layer;
-            var getPoints = (_pointsMask & 1 << layer) != 0;
-            if (col.relativeVelocity.magnitude >= _destroyForce) GetDestroyed(getPoints);
+            if ((_pointsMask & 1 << col.gameObject.layer) == 0) return;
+            GetDestroyed(false);
         }
 
-        public void GetDestroyed(bool getPoints)
+        public void GetDestroyed(bool destroyedByPlayer)
         {
-            if (getPoints) GameManager.ItemManager.Coins += _coins;
+            if (destroyedByPlayer) GameManager.ItemManager.Coins += _coins;
             _collider.enabled = false;
             _explosionParticles.ForEach(x => x.Play());
             _particles.SetParent(null);
-            Destroy(_particles.gameObject, _destroyParticlesAfter);
+            Destroy(_particles.gameObject, DestroyParticlesAfter);
             Destroy(gameObject);
         }
     }

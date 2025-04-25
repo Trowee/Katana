@@ -103,7 +103,24 @@ namespace Assets.Scripts.KatanaMovement
         private void OnCollisionEnter(Collision col)
         {
             if (PSM.Instance.IsDead) return;
-            
+
+            if (col.gameObject.TryGetComponent(out ISliceable sliceable))
+                foreach (var c in col.contacts)
+                {
+                    var cPos = c.point;
+                    var cNorm = c.normal;
+
+                    var hitUp = Vector3.Dot(transform.up, -cNorm) > 0.5f;
+                    var hitForward = Vector3.Dot(transform.forward, -cNorm) > 0.5f;
+                    if (!hitUp && !hitForward) continue;
+
+                    var sliceDir = hitUp
+                        ? Vector3.Cross(transform.forward, transform.up).normalized
+                        : Vector3.Cross(transform.up, transform.forward).normalized;
+
+                    sliceable.GetSliced(cPos, sliceDir, col.relativeVelocity.magnitude);
+                }
+
             // Store the col layer
             var layer = col.gameObject.layer;
 
@@ -122,37 +139,6 @@ namespace Assets.Scripts.KatanaMovement
 
             // Try to stick
             if ((_stickMask & 1 << layer) != 0) Stick(col);
-        }
-
-        private void OnCollisionStay(Collision col)
-        {
-            Slice();
-        }
-
-        private void Slice()
-        {
-            var mesh = _mesh.sharedMesh;
-            var meshTr = _mesh.transform;
-            var center = mesh.bounds.center;
-            var extents = mesh.bounds.extents;
-
-            extents = new(extents.x * meshTr.localScale.x,
-                extents.y * meshTr.localScale.y,
-                extents.z * meshTr.localScale.z);
-                                  
-            // Cast a ray and find the nearest object
-            var hits = Physics.BoxCastAll(transform.position, extents, transform.forward,
-                transform.rotation, extents.z, _sliceLayer);
-            
-            Debug.Log(hits.Length);
-            foreach(var hit in hits)
-            {
-                var sliceObj = hit.collider.GetComponent<Slice>();
-                if (!sliceObj) continue;
-                sliceObj.GetComponent<MeshRenderer>()?.material.SetVector("CutPlaneOrigin", Vector3.positiveInfinity);
-                sliceObj.ComputeSlice(transform.up, transform.position);
-            }
-
         }
 
         private void Stick(Collision col)
@@ -174,10 +160,7 @@ namespace Assets.Scripts.KatanaMovement
             if (col.contacts.Select(contact => contact.normal)
                 .Select(contactNormal => Vector3.Dot(fw, contactNormal))
                 .Any(dp => !(dp > threshold)))
-            {
                 GetStuck(col.transform);
-                SpawnDecal();
-            }
         }
 
         private void GetStuck(Transform parent)
@@ -189,15 +172,16 @@ namespace Assets.Scripts.KatanaMovement
 
             // Set parent to follow that object
             transform.SetParent(parent);
+            SpawnDecal(parent);
 
             // Set IsStuck to true
             IsStuck = true;
         }
 
-        private void SpawnDecal()
+        private void SpawnDecal(Transform parent)
         {
             var decal = Instantiate(_decalPrefab, _decalPoint);
-            decal.SetParent(null);
+            decal.SetParent(parent);
         }
 
         private void GetUnstuck()

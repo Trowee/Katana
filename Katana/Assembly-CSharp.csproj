@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets/NnUtils/Modules/TextUtils/Scripts/InteractiveText/DynamicText.cs" />
+    <Compile Include="Assets/Scripts/Core/ISliceable.cs" />
     <Compile Include="Assets/Scripts/KatanaMovement/PlayerMovementScript.cs" />
     <Compile Include="Assets/NnUtils/Scripts/UI/Slideshow/Slideshow.cs" />
     <Compile Include="Assets/Scripts/Items/Item.cs" />
