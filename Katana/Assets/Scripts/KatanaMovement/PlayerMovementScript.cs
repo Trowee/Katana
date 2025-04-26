@@ -4,6 +4,7 @@ using Assets.Scripts.PlayerCamera;
 using Assets.Scripts.TimeScale;
 using NnUtils.Scripts;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using PSM = Assets.Scripts.Core.PlaySceneManager;
 
 namespace Assets.Scripts.KatanaMovement
@@ -16,9 +17,11 @@ namespace Assets.Scripts.KatanaMovement
         /// Whether the player is currently stuck
         [ReadOnly] public bool IsStuck;
 
-        [Header("Components")] [SerializeField]
-        private Rigidbody _rb;
+        [Header("Components")]
 
+        [SerializeField] private InputActionAsset _inputActionAsset;
+        private InputAction _dashAction, _dodgeAction, _flipAction, _perspectiveAction;
+        [SerializeField] private Rigidbody _rb;
         [SerializeField] private Collider _collider;
         [SerializeField] private GameObject _katanaObject;
         [SerializeField] private MeshFilter _mesh;
@@ -27,26 +30,40 @@ namespace Assets.Scripts.KatanaMovement
         [SerializeField] private Transform _decalPoint;
         [SerializeField] private LayerMask _sliceLayer;
 
-        [Header("Camera")] [SerializeField] private float _cameraSwitchDuration = 1;
+        [Header("Camera")]
+        
+        [SerializeField] private float _cameraSwitchDuration = 1;
         [SerializeField] private Easings.Type _cameraSwitchEasing = Easings.Type.ExpoOut;
 
-        [Header("Tilt")] [SerializeField] private float _tiltSpeed = 1;
+        [Header("Tilt")]
+        
+        [SerializeField] private float _tiltSpeed = 1;
 
-        [Header("Stick")] [SerializeField] private LayerMask _stickMask;
+        [Header("Stick")]
+        
+        [SerializeField] private LayerMask _stickMask;
         [SerializeField] private float _minStickVelocity = 5;
         [SerializeField] private float _maxStickAngle = 45;
 
-        [Header("Flip")] [SerializeField] private Vector2 _flipForce = new(20, 25);
+        [Header("Flip")]
+        
+        [SerializeField] private Vector2 _flipForce = new(20, 25);
         [SerializeField] private float _flipRotation = 5;
         [SerializeField] private TimeScaleKeys _flipTimeScale;
 
-        [Header("Dash")] [SerializeField] private float _dashForce = 100;
+        [Header("Dash")]
+        
+        [SerializeField] private float _dashForce = 100;
         [SerializeField] private TimeScaleKeys _dashTimeScale;
 
-        [Header("Dodge")] [SerializeField] private float _dodgeForce = 30;
+        [Header("Dodge")]
+        
+        [SerializeField] private float _dodgeForce = 30;
         [SerializeField] private TimeScaleKeys _dodgeTimeScale;
 
-        [Header("Death")] [SerializeField] private TimeScaleKeys _deathTimeScale;
+        [Header("Death")]
+        
+        [SerializeField] private TimeScaleKeys _deathTimeScale;
 
         private void Reset()
         {
