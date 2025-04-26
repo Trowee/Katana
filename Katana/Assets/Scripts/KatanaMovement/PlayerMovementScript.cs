@@ -1,4 +1,5 @@
 using System.Linq;
+using Alchemy.Inspector;
 using Assets.Scripts.Core;
 using Assets.Scripts.PlayerCamera;
 using Assets.Scripts.TimeScale;
@@ -14,56 +15,39 @@ namespace Assets.Scripts.KatanaMovement
     {
         private static SettingsManager Settings => GameManager.SettingsManager;
 
-        /// Whether the player is currently stuck
-        [ReadOnly] public bool IsStuck;
-
-        [Header("Components")]
-
-        [SerializeField] private InputActionAsset _inputActionAsset;
         private InputAction _dashAction, _dodgeAction, _flipAction, _perspectiveAction;
-        [SerializeField] private Rigidbody _rb;
-        [SerializeField] private Collider _collider;
-        [SerializeField] private GameObject _katanaObject;
-        [SerializeField] private MeshFilter _mesh;
-        [SerializeField] private Renderer _renderer;
-        [SerializeField] private Transform _decalPrefab;
-        [SerializeField] private Transform _decalPoint;
-        [SerializeField] private LayerMask _sliceLayer;
+        [FoldoutGroup("Components"), SerializeField] private InputActionAsset _inputActionAsset;
+        [FoldoutGroup("Components"), SerializeField] private Rigidbody _rb;
+        [FoldoutGroup("Components"), SerializeField] private Collider _collider;
+        [FoldoutGroup("Components"), SerializeField] private GameObject _katanaObject;
+        [FoldoutGroup("Components"), SerializeField] private MeshFilter _mesh;
+        [FoldoutGroup("Components"), SerializeField] private Renderer _renderer;
+        [FoldoutGroup("Components"), SerializeField] private Transform _decalPrefab;
+        [FoldoutGroup("Components"), SerializeField] private Transform _decalPoint;
+        [FoldoutGroup("Components"), SerializeField] private LayerMask _sliceLayer;
 
-        [Header("Camera")]
-        
-        [SerializeField] private float _cameraSwitchDuration = 1;
-        [SerializeField] private Easings.Type _cameraSwitchEasing = Easings.Type.ExpoOut;
+        [FoldoutGroup("Camera"), SerializeField] private float _cameraSwitchDuration = 1;
+        [FoldoutGroup("Camera"), SerializeField] private Easings.Type _cameraSwitchEasing = Easings.Type.ExpoOut;
 
-        [Header("Tilt")]
-        
-        [SerializeField] private float _tiltSpeed = 1;
+        [FoldoutGroup("Movement"), SerializeField] private float _tiltSpeed = 1;
 
-        [Header("Stick")]
-        
-        [SerializeField] private LayerMask _stickMask;
-        [SerializeField] private float _minStickVelocity = 5;
-        [SerializeField] private float _maxStickAngle = 45;
+        [FoldoutGroup("Movement/Dash"), SerializeField] private float _dashForce = 100;
+        [FoldoutGroup("Movement/Dash"), SerializeField] private TimeScaleKeys _dashTimeScale;
 
-        [Header("Flip")]
-        
-        [SerializeField] private Vector2 _flipForce = new(20, 25);
-        [SerializeField] private float _flipRotation = 5;
-        [SerializeField] private TimeScaleKeys _flipTimeScale;
+        [FoldoutGroup("Movement/Dodge"), SerializeField] private float _dodgeForce = 30;
+        [FoldoutGroup("Movement/Dodge"), SerializeField] private TimeScaleKeys _dodgeTimeScale;
 
-        [Header("Dash")]
-        
-        [SerializeField] private float _dashForce = 100;
-        [SerializeField] private TimeScaleKeys _dashTimeScale;
+        [FoldoutGroup("Movement/Flip"), SerializeField] private Vector2 _flipForce = new(20, 25);
+        [FoldoutGroup("Movement/Flip"), SerializeField] private float _flipRotation = 5;
+        [FoldoutGroup("Movement/Flip"), SerializeField] private TimeScaleKeys _flipTimeScale;
 
-        [Header("Dodge")]
-        
-        [SerializeField] private float _dodgeForce = 30;
-        [SerializeField] private TimeScaleKeys _dodgeTimeScale;
+        [FoldoutGroup("Movement/Stick"), SerializeField] private LayerMask _stickMask;
+        [FoldoutGroup("Movement/Stick"), SerializeField] private float _minStickVelocity = 5;
+        [FoldoutGroup("Movement/Stick"), SerializeField] private float _maxStickAngle = 45;
 
-        [Header("Death")]
-        
-        [SerializeField] private TimeScaleKeys _deathTimeScale;
+        [FoldoutGroup("Death"), SerializeField] private TimeScaleKeys _deathTimeScale;
+
+        [FoldoutGroup("Dev"), Alchemy.Inspector.ReadOnly] public bool IsStuck;
 
         private void Reset()
         {
