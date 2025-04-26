@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Linq;
 using Assets.Scripts.Core;
-using Assets.Scripts.Fruits;
 using Assets.Scripts.PlayerCamera;
 using Assets.Scripts.TimeScale;
 using NnUtils.Scripts;
@@ -13,17 +11,10 @@ namespace Assets.Scripts.KatanaMovement
     [RequireComponent(typeof(Rigidbody))]
     public class PlayerMovementScript : MonoBehaviour
     {
-        private static Camera Cam => PSM.CameraManager.Camera;
         private static SettingsManager Settings => GameManager.SettingsManager;
 
         /// Whether the player is currently stuck
         [ReadOnly] public bool IsStuck;
-
-        /// Whether the player is currently using the strike ability
-        [ReadOnly] public bool IsPerformingStrike;
-
-        /// Whether the player is performing the strike impact
-        [ReadOnly] public bool IsPerformingStrikeImpact;
 
         [Header("Components")] [SerializeField]
         private Rigidbody _rb;
@@ -55,23 +46,6 @@ namespace Assets.Scripts.KatanaMovement
         [Header("Dodge")] [SerializeField] private float _dodgeForce = 30;
         [SerializeField] private TimeScaleKeys _dodgeTimeScale;
 
-        [Header("Strike Hover")] [SerializeField]
-        private float _strikeTransitionTime = 3;
-
-        [SerializeField] private AnimationCurve _strikeTransitionCurve;
-        [SerializeField] private float _strikeHoverHeight = 100;
-        [SerializeField] private float _strikeHoverDuration = 5;
-        [SerializeField] private float _strikeHoverTimeScale = 0.1f;
-
-        [Header("Strike Impact")] [SerializeField]
-        private float _camReturnDuration = 0.5f;
-
-        [SerializeField] private Easings.Type _camReturnEasing = Easings.Type.ExpoOut;
-        [SerializeField] private LayerMask _strikeLayerMask;
-        [SerializeField] private float _strikeImpactForce = 200;
-        [SerializeField] private TimeScaleKeys _strikeImpactTimeScale;
-        [SerializeField] private TimeScaleKeys _postStrikeImpactTimeScale;
-
         [Header("Death")] [SerializeField] private TimeScaleKeys _deathTimeScale;
 
         private void Reset()
@@ -90,14 +64,12 @@ namespace Assets.Scripts.KatanaMovement
         private void Update()
         {
             if (PSM.Instance.IsDead) return;
-            if (IsPerformingStrike || IsPerformingStrikeImpact) return;
 
             Tilt();
             if (Input.GetKeyDown(KeyCode.Q)) ToggleCamera();
             if (Input.GetKeyDown(KeyCode.Space)) Flip();
             if (Input.GetKeyDown(KeyCode.Mouse0)) Dash();
             if (Input.GetKeyDown(KeyCode.LeftShift)) Dodge();
-            if (Input.GetKeyDown(KeyCode.S)) Strike();
         }
 
         private void OnCollisionEnter(Collision col)
@@ -124,19 +96,6 @@ namespace Assets.Scripts.KatanaMovement
             // Store the col layer
             var layer = col.gameObject.layer;
 
-            // If performing strike, check if something's hit
-            if (IsPerformingStrikeImpact)
-            {
-                // If there is no hit, do an early return
-                if ((_strikeLayerMask & 1 << layer) == 0) return;
-
-                // Handle the strike impact
-                StrikeImpact(col);
-
-                // Return
-                return;
-            }
-
             // Try to stick
             if ((_stickMask & 1 << layer) != 0) Stick(col);
         }
@@ -145,9 +104,6 @@ namespace Assets.Scripts.KatanaMovement
         {
             // Return if already stuck
             if (IsStuck) return;
-
-            // Return if striking
-            if (IsPerformingStrike || IsPerformingStrikeImpact) return;
 
             // Return if not moving forward fast enough
             if (col.relativeVelocity.magnitude < _minStickVelocity) return;
@@ -278,110 +234,6 @@ namespace Assets.Scripts.KatanaMovement
 
             // Apply timescale changes
             GameManager.TimeScaleManager.UpdateTimeScale(_dodgeTimeScale);
-        }
-
-        private void Strike()
-        {
-            if (IsPerformingStrike || IsPerformingStrikeImpact) return;
-            this.RestartRoutine(ref _strikeRoutine, StrikeRoutine());
-        }
-
-        private Coroutine _strikeRoutine;
-
-        private IEnumerator StrikeRoutine()
-        {
-            IsPerformingStrike = true;
-
-            // Unstick
-            GetUnstuck();
-
-            // Freeze rb
-            _rb.linearVelocity = Vector3.zero;
-            _rb.angularVelocity = Vector3.zero;
-            _rb.isKinematic = true;
-
-            // Disable collider
-            _collider.enabled = false;
-
-            // Store transform
-            var startPos = transform.localPosition;
-            var targetPos = Vector3.up * _strikeHoverHeight;
-            var startRot = transform.localRotation;
-            var targetRot = Quaternion.Euler(180, 90, 0);
-
-            // Store the timescale and lerp position
-            var startTimeScale = Time.timeScale;
-            float lerpPos = 0;
-
-            // Start the camera switch and animation
-            PSM.CameraManager.SwitchCameraHandler(Perspective.Strike, _strikeTransitionTime, _strikeTransitionCurve, true);
-            while (lerpPos < 1)
-            {
-                var t = _strikeTransitionCurve.Evaluate(Misc.Tween(ref lerpPos, _strikeTransitionTime, unscaled: true));
-                transform.localPosition = Vector3.LerpUnclamped(startPos, targetPos, t);
-                transform.localRotation = Quaternion.LerpUnclamped(startRot, targetRot, t);
-                GameManager.TimeScaleManager.UpdateTimeScale(Mathf.LerpUnclamped(startTimeScale, _strikeHoverTimeScale, t));
-                yield return null;
-            }
-
-            // TODO: Replace with a custom cursor
-            // Show and unlock the cursor
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-
-            // Perform hover
-            float timer = 0;
-            while (timer < _strikeHoverDuration)
-            {
-                timer += Time.unscaledDeltaTime;
-                PerformStrikeHover();
-                if (Input.GetKeyDown(KeyCode.Mouse0)) break;
-                yield return null;
-            }
-
-            // Hide and lock the cursor
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-
-            // Return camera to the initial handler
-            PSM.CameraManager.SwitchCameraHandler(Settings.Perspective, _camReturnDuration, _camReturnEasing, true);
-            yield return new WaitForSecondsRealtime(_camReturnDuration);
-
-            // Perform the impact
-            PerformStrikeImpact();
-            _strikeRoutine = null;
-        }
-
-        private void PerformStrikeHover()
-        {
-            // Perform the raycast
-            var ray = Cam.ScreenPointToRay(Input.mousePosition);
-            if (!Physics.Raycast(ray, out var hit, Mathf.Infinity, _strikeLayerMask))
-                return;
-
-            // Rotate player towards the hit point
-            transform.LookAt(hit.point, Vector3.up);
-            transform.Rotate(90, 0, 0);
-        }
-
-        private void PerformStrikeImpact()
-        {
-            // Update values
-            IsPerformingStrike = false;
-            IsPerformingStrikeImpact = true;
-            _rb.isKinematic = false;
-            _collider.enabled = true;
-
-            // Add strike to where the blade is pointing
-            _rb.AddForce(transform.up * _strikeImpactForce, ForceMode.Impulse);
-            GameManager.TimeScaleManager.UpdateTimeScale(_strikeImpactTimeScale);
-        }
-
-        private void StrikeImpact(Collision col)
-        {
-            IsPerformingStrikeImpact = false;
-            Stick(col);
-            GameManager.TimeScaleManager.UpdateTimeScale(_postStrikeImpactTimeScale);
         }
 
         public void Die()
