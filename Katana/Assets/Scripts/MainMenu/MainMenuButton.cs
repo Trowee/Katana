@@ -1,4 +1,5 @@
 using System.Collections;
+using Alchemy.Inspector;
 using NnUtils.Scripts;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ namespace Assets.Scripts.MainMenu
     public class MainMenuButton : MonoBehaviour
     {
         private Vector3 _originalPos;
-        [SerializeField] private Transform _mesh;
+        [SerializeField, Required] private Transform _mesh;
         [SerializeField] private float _animationTime = 1;
         [SerializeField] private Easings.Type _animationEasing = Easings.Type.ExpoOut;
 
@@ -36,8 +37,8 @@ namespace Assets.Scripts.MainMenu
         private IEnumerator MoveRoutine(Vector3 targetPos)
         {
             var startPos = _mesh.localPosition;
+            
             float lerpPos = 0;
-
             while (lerpPos < 1)
             {
                 var t = Misc.Tween(ref lerpPos, _animationTime, _animationEasing, true);

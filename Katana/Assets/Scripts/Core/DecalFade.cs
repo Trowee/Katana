@@ -8,7 +8,7 @@ namespace Assets.Scripts.Core
     [RequireComponent(typeof(DecalProjector))]
     public class DecalFade : MonoBehaviour
     {
-        [ReadOnly][SerializeField] private DecalProjector _decalProjector;
+        [HideInInspector, SerializeField] private DecalProjector _decalProjector;
         [SerializeField] private float _lifeTime = 10;
         [SerializeField] private float _fadeTime = 5;
         [SerializeField] private Easings.Type _fadeEasing = Easings.Type.SineIn;

@@ -1,4 +1,5 @@
 using System;
+using Alchemy.Inspector;
 using Assets.Scripts.Core;
 using Assets.Scripts.Items;
 using TMPro;
@@ -10,9 +11,9 @@ namespace Assets.Scripts.MainMenu.Shop
     {
         private static ItemManager ItemManager => GameManager.ItemManager;
         
-        [SerializeField] private Renderer _katana;
-        [SerializeField] private TMP_Text _nameTMP;
-        [SerializeField] private TMP_Text _coinsTMP;
+        [SerializeField, Required] private Renderer _katana;
+        [SerializeField, Required] private TMP_Text _nameTMP;
+        [SerializeField, Required] private TMP_Text _coinsTMP;
 
         private void Start()
         {
@@ -33,7 +34,7 @@ namespace Assets.Scripts.MainMenu.Shop
         private void UpdateKatana()
         {
             _katana.sharedMaterial = ItemManager.SelectedItem?.Material;
-            _nameTMP.text = ItemManager.SelectedItem?.Name;
+            _nameTMP.text          = ItemManager.SelectedItem?.Name;
         }
     }
 }

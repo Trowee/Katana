@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Globalization;
+using Alchemy.Inspector;
 using Assets.Scripts.Core;
 using Assets.Scripts.Items;
 using NnUtils.Scripts;
@@ -13,36 +14,32 @@ namespace Assets.Scripts.MainMenu.Shop
     {
         private static ItemManager ItemManager => GameManager.ItemManager;
         
-        [Header("Components")]
+        [FoldoutGroup("Components"), SerializeField, Required]
+        private Item _item;
+
+        [FoldoutGroup("Components"), SerializeField, Required]
+        private Transform _itemObject;
+
+        [FoldoutGroup("Components"), SerializeField, Required]
+        private RectTransform _uiPanel;
+
+        [FoldoutGroup("Components"), SerializeField, Required]
+        private TMP_Text _nameTMP;
         
-        [Tooltip("Item")]
-        [SerializeField] private Item _item;
+        [FoldoutGroup("Components"), SerializeField, Required]
+        private TMP_Text _priceTMP;
 
-        [Tooltip("Mesh that will be animated")]
-        [SerializeField] private Transform _itemTransform;
+        [FoldoutGroup("Animation"), SerializeField]
+        private Vector3 _position;
 
-        [Tooltip("Panel that holds ui components")]
-        [SerializeField] private RectTransform _uiPanel;
+        [FoldoutGroup("Animation"), SerializeField]
+        private float _animationTime = 0.3f;
 
-        [Tooltip("Name TMP_Text")]
-        [SerializeField] private TMP_Text _nameTMP;
-        
-        [Tooltip("Price TMP_Text")]
-        [SerializeField] private TMP_Text _priceTMP;
+        [FoldoutGroup("Animation"), SerializeField]
+        private AnimationCurve _animationEasing;
 
-        [Header("Animation")]
-
-        [Tooltip("Position to which the object will be moved")]
-        [SerializeField] private Vector3 _position;
-
-        [Tooltip("How long the move transition will last")]
-        [SerializeField] private float _animationTime = 1;
-
-        [Tooltip("Curve used for the move transition")]
-        [SerializeField] private AnimationCurve _animationEasing;
-
-        [Tooltip("Speed at which the object will rotate")]
-        [SerializeField] private float _rotationSpeed = 180;
+        [FoldoutGroup("Animation"), SerializeField]
+        private float _rotationSpeed = 180;
 
         private void Start()
         {
@@ -83,26 +80,20 @@ namespace Assets.Scripts.MainMenu.Shop
         private Coroutine _selectRoutine;
         private IEnumerator SelectRoutine()
         {
-            Vector3 startPos = _itemTransform.localPosition;
-            Vector3 uiStartPos = _uiPanel.localPosition;
-            Vector3 uiStartScale = _uiPanel.localScale;
+            var startPos = _itemObject.localPosition;
+            var uiStartPos = _uiPanel.localPosition;
+            var uiStartScale = _uiPanel.localScale;
 
             float lerpPos = 0;
-
             while (lerpPos < 1)
             {
+                var t = _animationEasing.Evaluate(
+                    Misc.Tween(ref lerpPos, _animationTime, unscaled: true));
 
-                // Update T
-                var t = _animationEasing.Evaluate(Misc.Tween(ref lerpPos, _animationTime, unscaled: true));
+                _itemObject.localPosition = Vector3.LerpUnclamped(startPos, _position, t);
+                _uiPanel.localPosition  = Vector3.LerpUnclamped(uiStartPos, _position, t);
+                _uiPanel.localScale     = Vector3.LerpUnclamped(uiStartScale, Vector3.one, t);
 
-                // Update item
-                _itemTransform.localPosition = Vector3.LerpUnclamped(startPos, _position, t);
-
-                // Update UI
-                _uiPanel.localPosition = Vector3.LerpUnclamped(uiStartPos, _position, t);
-                _uiPanel.localScale = Vector3.LerpUnclamped(uiStartScale, Vector3.one, t);
-
-                // Wait for the next frame
                 yield return null;
             }
 
@@ -112,27 +103,22 @@ namespace Assets.Scripts.MainMenu.Shop
         private Coroutine _deselectRoutine;
         private IEnumerator DeselectRoutine()
         {
-            var startPos = _itemTransform.localPosition;
-            var startRot = _itemTransform.localRotation;
+            var startPos = _itemObject.localPosition;
+            var startRot = _itemObject.localRotation;
             var uiStartPos = _uiPanel.localPosition;
             var uiStartScale = _uiPanel.localScale;
 
             float lerpPos = 0;
-
             while (lerpPos < 1)
             {
-                // Update T
-                var t = _animationEasing.Evaluate(Misc.Tween(ref lerpPos, _animationTime, unscaled: true));
+                var t = _animationEasing.Evaluate(
+                    Misc.Tween(ref lerpPos, _animationTime, unscaled: true));
 
-                // Update Item
-                _itemTransform.localPosition = Vector3.LerpUnclamped(startPos, Vector3.zero, t);
-                _itemTransform.localRotation = Quaternion.LerpUnclamped(startRot, Quaternion.identity, t);
-
-                // Update UI
+                _itemObject.localPosition = Vector3.LerpUnclamped(startPos, Vector3.zero, t);
+                _itemObject.localRotation = Quaternion.LerpUnclamped(startRot, Quaternion.identity, t);
                 _uiPanel.localPosition = Vector3.LerpUnclamped(uiStartPos, Vector3.zero, t);
                 _uiPanel.localScale = Vector3.LerpUnclamped(uiStartScale, Vector3.zero, t);
 
-                // Wait for the next frame
                 yield return null;
             }
 
@@ -143,10 +129,10 @@ namespace Assets.Scripts.MainMenu.Shop
         private IEnumerator RotateRoutine()
         {
             var rot = Vector3.up * _rotationSpeed;
-
+            
             while (true)
             {
-                _itemTransform.Rotate(rot * Time.deltaTime);
+                _itemObject.Rotate(rot * Time.deltaTime);
                 yield return null;
             }
         }

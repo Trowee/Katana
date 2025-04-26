@@ -8,6 +8,8 @@ namespace Assets.Scripts.Items
     public class ItemManager : MonoBehaviour
     {
         private int _coins;
+        public event Action OnCoinsChanged;
+
         public int Coins
         {
             get => _coins;
@@ -19,9 +21,10 @@ namespace Assets.Scripts.Items
                 OnCoinsChanged?.Invoke();
             }
         }
-        public event Action OnCoinsChanged;
 
         private Item _selectedItem;
+        public event Action OnItemChanged;
+
         public Item SelectedItem
         {
             get => _selectedItem;
@@ -33,20 +36,18 @@ namespace Assets.Scripts.Items
                 OnItemChanged?.Invoke();
             }
         }
-        public event Action OnItemChanged;
-        
+
         public List<Item> Items;
 
         private void Awake()
         {
             Coins = PlayerPrefs.GetInt("Coins", 0);
-            
             var itemName = PlayerPrefs.GetString("SelectedItem");
             var item = Items.FirstOrDefault(x => x.Name == itemName);
             SelectedItem = item ?? Items[0];
             PlayerPrefs.SetString("SelectedItem", itemName);
         }
-        
+
         public void SelectItem(Item item)
         {
             if (!item.Unlocked)

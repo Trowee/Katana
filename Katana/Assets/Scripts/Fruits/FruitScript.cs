@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Alchemy.Inspector;
 using Assets.Scripts.Core;
 using UnityEngine;
 
@@ -8,8 +9,8 @@ namespace Assets.Scripts.Fruits
     [RequireComponent(typeof(Rigidbody))]
     public class FruitScript : MonoBehaviour, ISliceable
     {
-        [SerializeField] private Collider _collider;
-        [SerializeField] private Rigidbody _rigidbody;
+        [SerializeField, ReadOnly] private Collider _collider;
+        [SerializeField, ReadOnly] private Rigidbody _rigidbody;
         [SerializeField] private Slice _slice;
         [SerializeField] private LayerMask _pointsMask;
         [SerializeField] private float _destroyForce = 25;

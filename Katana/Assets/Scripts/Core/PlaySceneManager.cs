@@ -1,3 +1,4 @@
+using Alchemy.Inspector;
 using Assets.Scripts.Fruits;
 using Assets.Scripts.Player;
 using Assets.Scripts.Player.Camera;
@@ -10,21 +11,10 @@ namespace Assets.Scripts.Core
     public class PlaySceneManager : MonoBehaviour
     {
         private static PlaySceneManager _instance;
-        public static PlaySceneManager Instance => _instance = FindFirstObjectByType<PlaySceneManager>();
+        public static PlaySceneManager Instance =>
+            _instance ??= FindFirstObjectByType<PlaySceneManager>();
 
-        [SerializeField] private PlayerScript _player;
-        public static PlayerScript Player
-        {
-            get
-            {
-                if (!Instance) return null;
-                return Instance._player ??=
-                    GameObject.FindWithTag("Player")?.GetComponent<PlayerScript>();
-            }
-        }
-
-        [SerializeField] private CameraManager _cameraManager;
-
+        [SerializeField, ReadOnly] private CameraManager _cameraManager;
         public static CameraManager CameraManager
         {
             get
@@ -34,8 +24,7 @@ namespace Assets.Scripts.Core
             }
         }
 
-        [SerializeField] private ExplosionManagerScript _explosionManager;
-
+        [SerializeField, ReadOnly] private ExplosionManagerScript _explosionManager;
         public static ExplosionManagerScript ExplosionManager
         {
             get
@@ -44,10 +33,21 @@ namespace Assets.Scripts.Core
                 return Instance._explosionManager ??= Instance.gameObject.GetComponent<ExplosionManagerScript>();
             }
         }
+        
+        [ReadOnly] public bool IsDead;
 
-        public bool IsDead;
-
-        [SerializeField] private GameObject _deathScreen;
+        [SerializeField, Required] private PlayerScript _player;
+        public static PlayerScript Player
+        {
+            get
+            {
+                if (!Instance) return null;
+                return Instance._player ??=
+                    GameObject.FindWithTag("Player")?.GetComponent<PlayerScript>();
+            }
+        }
+        
+        [SerializeField, Required] private GameObject _deathScreen;
 
         private void Reset()
         {
@@ -58,7 +58,7 @@ namespace Assets.Scripts.Core
 
         private void Awake()
         {
-            if (_instance != null) Destroy(gameObject);
+            if (_instance) Destroy(gameObject);
             _instance = this;
         }
 

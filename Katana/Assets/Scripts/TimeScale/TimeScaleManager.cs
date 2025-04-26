@@ -38,7 +38,8 @@ namespace Assets.Scripts.TimeScale
             _currentPriority = null;
         }
 
-        public void UpdateTimeScale(TimeScaleKey timeScaleKey, int priority = 0) => UpdateTimeScale(new TimeScaleKeys(timeScaleKey), priority);
+        public void UpdateTimeScale(TimeScaleKey timeScaleKey, int priority = 0)
+            => UpdateTimeScale(new TimeScaleKeys(timeScaleKey), priority);
 
         public void UpdateTimeScale(TimeScaleKeys timeScales, int priority = 0)
         {
@@ -53,8 +54,8 @@ namespace Assets.Scripts.TimeScale
             foreach (var timeScale in timeScales.Keys)
             {
                 var startTimeScale = TimeScale;
+                
                 float lerpPos = 0;
-
                 while (lerpPos < 1)
                 {
                     var t = Misc.Tween(ref lerpPos, timeScale.Time, timeScale.Easing, true);

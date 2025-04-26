@@ -1,4 +1,5 @@
 using System.Collections;
+using Alchemy.Inspector;
 using NnUtils.Scripts;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,10 +9,11 @@ namespace Assets.Scripts.MainMenu
     public class MainMenuManager : MonoBehaviour
     {
         private static MainMenuManager _instance;
-        public static MainMenuManager Instance => _instance = FindFirstObjectByType<MainMenuManager>();
+        public static MainMenuManager Instance =>
+            _instance ??= FindFirstObjectByType<MainMenuManager>();
 
-        [SerializeField] private Transform _cameraHolder;
-        [SerializeField] private float _menuTransitionTime;
+        [SerializeField, Required] private Transform _cameraHolder;
+        [SerializeField] private float _menuTransitionTime = 0.3f;
         [SerializeField] private AnimationCurve _menuTransitionCurve;
         [SerializeField] private Vector3 _mainMenuRotation;
         [SerializeField] private Vector3 _settingsRotation = new(0, 180, 0);

@@ -120,7 +120,7 @@ namespace Assets.Scripts.Fruits
 
             var startWheelRot = _wheels.localRotation;
             var targetWheelRot = startWheelRot * Quaternion.Euler(
-                Vector3.right * moveDistance * _wheelRotIntensity);
+                Vector3.right * (moveDistance * _wheelRotIntensity));
 
             return (
                 startCannonPos, targetCannonPos,

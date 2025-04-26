@@ -11,6 +11,8 @@ namespace Assets.Scripts.Items
         public bool UnlockedByDefault;
         public Material Material;
 
+        public event Action OnUnlocked;
+
         public bool Unlocked
         {
             get => PlayerPrefs.GetInt($"{Name}Unlocked", 0) == 1 || UnlockedByDefault;
@@ -20,7 +22,5 @@ namespace Assets.Scripts.Items
                 OnUnlocked?.Invoke();
             }
         }
-
-        public event Action OnUnlocked;
     }
 }

@@ -1,3 +1,4 @@
+using Alchemy.Inspector;
 using Assets.Scripts.Core;
 using Assets.Scripts.Player;
 using UnityEngine;
@@ -7,7 +8,7 @@ namespace Assets.Scripts.Fruits
     [RequireComponent(typeof(Rigidbody))]
     public class BombScript : MonoBehaviour
     {
-        [SerializeField] private Collider _collider;
+        [SerializeField, Required] private Collider _collider;
         [SerializeField] private LayerMask _playerMask;
         [SerializeField] private float _destroyForce = 25;
         [SerializeField] private float _radius = 10;

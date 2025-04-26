@@ -49,21 +49,24 @@ namespace Assets.Scripts.Player.Camera
             var parent = transform.parent ? transform.parent : transform;
             var offset = _localOffset ? parent.TransformPoint(_offset) - Player.position : _offset;
 
-            var desiredPos = transform.position + (_translateOffset ? transform.TransformVector(offset) : offset);
+            var desiredPos = transform.position +
+                             (_translateOffset ? transform.TransformVector(offset) : offset);
             var dir = desiredPos - Player.position;
             var distance = dir.magnitude;
 
             // Set the camera handler position
-            if (Physics.Raycast(Player.position, dir.normalized, out var hit, distance, _cameraCollisionMask))
+            if (Physics.Raycast(Player.position, dir.normalized, out var hit, distance,
+                    _cameraCollisionMask))
             {
                 var targetPos = hit.point - dir.normalized * 0.1f;
                 if (_localOffset) transform.localPosition = parent.InverseTransformPoint(targetPos);
-                else transform.position = targetPos;
+                else transform.position                   = targetPos;
             }
             else
             {
-                if (_localOffset) transform.localPosition = parent.InverseTransformPoint(desiredPos);
-                else transform.position = desiredPos;
+                if (_localOffset)
+                    transform.localPosition = parent.InverseTransformPoint(desiredPos);
+                else transform.position     = desiredPos;
             }
         }
 

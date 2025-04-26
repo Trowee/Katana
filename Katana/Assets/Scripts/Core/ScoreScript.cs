@@ -1,4 +1,5 @@
 using System.Collections;
+using Alchemy.Inspector;
 using NnUtils.Scripts;
 using TMPro;
 using UnityEngine;
@@ -7,8 +8,8 @@ namespace Assets.Scripts.Core
 {
     public class ScoreScript : MonoBehaviour
     {
-        [SerializeField] private TMP_Text _score;
-        [SerializeField] private RectTransform _rt;
+        [SerializeField, Required] private TMP_Text _score;
+        [SerializeField, Required] private RectTransform _rt;
         [SerializeField] private float _animTime = 1;
         [SerializeField] private AnimationCurve _animCurve;
 
