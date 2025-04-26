@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Assets.Scripts.Player.Camera
 {
-    [ExecuteAlways]
     public class CameraHandlerScript : MonoBehaviour
     {
         private static Transform Player => PlaySceneManager.Player.transform;
@@ -24,10 +23,18 @@ namespace Assets.Scripts.Player.Camera
         [Tooltip("Delta between the player rotation and camera rotation")]
         [FoldoutGroup("Rotation"), SerializeField] private Vector3 _rotationOffset;
 
-        private void OnEnable()
+        [HorizontalGroup, Button]
+        private void AddToSceneManager()
         {
             var handlers = PlaySceneManager.CameraManager.Handlers;
             if (!handlers.Contains(this)) PlaySceneManager.CameraManager.Handlers.Add(this);
+        }
+        
+        [HorizontalGroup, Button]
+        private void RemoveFromSceneManager()
+        {
+            var handlers = PlaySceneManager.CameraManager.Handlers;
+            if (handlers.Contains(this)) PlaySceneManager.CameraManager.Handlers.Remove(this);
         }
 
         private void Update()
@@ -36,12 +43,6 @@ namespace Assets.Scripts.Player.Camera
             transform.position = Player.position;
             if (_rotateCamera) Rotate();
             Offset();
-        }
-
-        private void OnDestroy()
-        {
-            if (PlaySceneManager.CameraManager == null) return;
-            PlaySceneManager.CameraManager.Handlers.Remove(this);
         }
 
         private void Offset()
