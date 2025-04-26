@@ -7,7 +7,7 @@ namespace Assets.Scripts.Player.Camera
     [ExecuteAlways]
     public class CameraHandlerScript : MonoBehaviour
     {
-        private static Transform Player => PlaySceneManager.Player.transform;
+        private static Transform Player => ColosseumSceneManager.Player.transform;
         
         public Perspective Perspective;
         [SerializeField] private LayerMask _cameraCollisionMask;
@@ -37,15 +37,15 @@ namespace Assets.Scripts.Player.Camera
         [HorizontalGroup, Button]
         private void AddToSceneManager()
         {
-            var handlers = PlaySceneManager.CameraManager.Handlers;
-            if (!handlers.Contains(this)) PlaySceneManager.CameraManager.Handlers.Add(this);
+            var handlers = ColosseumSceneManager.CameraManager.Handlers;
+            if (!handlers.Contains(this)) ColosseumSceneManager.CameraManager.Handlers.Add(this);
         }
         
         [HorizontalGroup, Button]
         private void RemoveFromSceneManager()
         {
-            var handlers = PlaySceneManager.CameraManager.Handlers;
-            if (handlers.Contains(this)) PlaySceneManager.CameraManager.Handlers.Remove(this);
+            var handlers = ColosseumSceneManager.CameraManager.Handlers;
+            if (handlers.Contains(this)) ColosseumSceneManager.CameraManager.Handlers.Remove(this);
         }
 
         private void Offset()

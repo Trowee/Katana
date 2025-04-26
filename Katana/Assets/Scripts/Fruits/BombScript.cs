@@ -28,7 +28,7 @@ namespace Assets.Scripts.Fruits
         {
             Kill();
             _collider.enabled = false;
-            PlaySceneManager.ExplosionManager.PlayExplosion(transform.position);
+            ColosseumSceneManager.ExplosionManager.PlayExplosion(transform.position);
             Destroy(gameObject);
         }
 

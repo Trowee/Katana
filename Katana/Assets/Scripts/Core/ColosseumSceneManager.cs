@@ -8,11 +8,11 @@ namespace Assets.Scripts.Core
 {
     [RequireComponent(typeof(CameraManager))]
     [RequireComponent(typeof(ExplosionManagerScript))]
-    public class PlaySceneManager : MonoBehaviour
+    public class ColosseumSceneManager : MonoBehaviour
     {
-        private static PlaySceneManager _instance;
-        public static PlaySceneManager Instance =>
-            _instance ? _instance : _instance = FindFirstObjectByType<PlaySceneManager>();
+        private static ColosseumSceneManager _instance;
+        public static ColosseumSceneManager Instance =>
+            _instance ? _instance : _instance = FindFirstObjectByType<ColosseumSceneManager>();
         
         [SerializeField, ReadOnly] private CameraManager _cameraManager;
         public static CameraManager CameraManager

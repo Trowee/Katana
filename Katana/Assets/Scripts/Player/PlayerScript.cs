@@ -6,7 +6,6 @@ using Assets.Scripts.TimeScale;
 using NnUtils.Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using PSM = Assets.Scripts.Core.PlaySceneManager;
 
 namespace Assets.Scripts.Player
 {
@@ -57,14 +56,14 @@ namespace Assets.Scripts.Player
         private void Start()
         {
             _renderer.sharedMaterial = GameManager.ItemManager.SelectedItem.Material;
-            PSM.CameraManager.SwitchCameraHandler(Settings.Perspective, _cameraSwitchDuration,
+            ColosseumSceneManager.CameraManager.SwitchCameraHandler(Settings.Perspective, _cameraSwitchDuration,
                 _cameraSwitchEasing, unscaled: true);
             GetStuck(null);
         }
 
         private void Update()
         {
-            if (PSM.Instance.IsDead) return;
+            if (ColosseumSceneManager.Instance.IsDead) return;
 
             Tilt();
             if (Input.GetKeyDown(KeyCode.Q)) ToggleCamera();
@@ -75,7 +74,7 @@ namespace Assets.Scripts.Player
 
         private void OnCollisionEnter(Collision col)
         {
-            if (PSM.Instance.IsDead) return;
+            if (ColosseumSceneManager.Instance.IsDead) return;
 
             if (col.gameObject.TryGetComponent(out ISliceable sliceable))
                 foreach (var c in col.contacts)
@@ -185,7 +184,7 @@ namespace Assets.Scripts.Player
                 _ => Perspective.First
             };
 
-            PSM.CameraManager.SwitchCameraHandler(Settings.Perspective, _cameraSwitchDuration, _cameraSwitchEasing, unscaled: true);
+            ColosseumSceneManager.CameraManager.SwitchCameraHandler(Settings.Perspective, _cameraSwitchDuration, _cameraSwitchEasing, unscaled: true);
         }
 
         private void Flip()
@@ -246,7 +245,7 @@ namespace Assets.Scripts.Player
             _katanaObject.SetActive(false);
             _rb.isKinematic = true;
             _collider.enabled = false;
-            PSM.Instance.Die();
+            ColosseumSceneManager.Instance.Die();
         }
     }
 }
