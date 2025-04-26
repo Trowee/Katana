@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using Assets.Scripts.PlayerCamera;
+using Assets.Scripts.Player.Camera;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Rendering;

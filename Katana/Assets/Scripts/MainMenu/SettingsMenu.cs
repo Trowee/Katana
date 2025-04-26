@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using Assets.Scripts.Core;
-using Assets.Scripts.PlayerCamera;
+using Assets.Scripts.Player.Camera;
 using NnUtils.Scripts;
 using TMPro;
 using UnityEngine;

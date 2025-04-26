@@ -1,5 +1,5 @@
 using Assets.Scripts.Core;
-using Assets.Scripts.KatanaMovement;
+using Assets.Scripts.Player;
 using UnityEngine;
 
 namespace Assets.Scripts.Fruits

@@ -1,14 +1,14 @@
 using System.Linq;
 using Alchemy.Inspector;
 using Assets.Scripts.Core;
-using Assets.Scripts.PlayerCamera;
+using Assets.Scripts.Player.Camera;
 using Assets.Scripts.TimeScale;
 using NnUtils.Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using PSM = Assets.Scripts.Core.PlaySceneManager;
 
-namespace Assets.Scripts.KatanaMovement
+namespace Assets.Scripts.Player
 {
     [RequireComponent(typeof(Rigidbody))]
     public class PlayerScript : MonoBehaviour

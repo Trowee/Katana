@@ -1,36 +1,33 @@
+using Alchemy.Inspector;
 using Assets.Scripts.Core;
 using UnityEngine;
 
-namespace Assets.Scripts.PlayerCamera
+namespace Assets.Scripts.Player.Camera
 {
+    [ExecuteAlways]
     public class CameraHandlerScript : MonoBehaviour
     {
         private static Transform Player => PlaySceneManager.Player.transform;
         
-        [Header("")]
         public Perspective Perspective;
         [SerializeField] private LayerMask _cameraCollisionMask;
 
-        [Header("Position")]
         [Tooltip("Offset from the player")]
-        [SerializeField] private Vector3 _offset;
-
+        [FoldoutGroup("Position"), SerializeField] private Vector3 _offset;
         [Tooltip("Whether offset is applied locally or globally")]
-        [SerializeField] private bool _localOffset;
-
+        [FoldoutGroup("Position"), SerializeField] private bool _localOffset;
         [Tooltip("If enabled, offset will be applied according to the rotation")]
-        [SerializeField] private bool _translateOffset;
+        [FoldoutGroup("Position"), SerializeField] private bool _translateOffset;
 
-        [Header("Rotation")]
         [Tooltip("Whether the camera will follow player's rotation")]
-        [SerializeField] private bool _rotateCamera;
-
+        [FoldoutGroup("Rotation"), SerializeField] private bool _rotateCamera;
         [Tooltip("Delta between the player rotation and camera rotation")]
-        [SerializeField] private Vector3 _rotationOffset;
+        [FoldoutGroup("Rotation"), SerializeField] private Vector3 _rotationOffset;
 
-        private void Start()
+        private void OnEnable()
         {
-            PlaySceneManager.CameraManager.Handlers.Add(this);
+            var handlers = PlaySceneManager.CameraManager.Handlers;
+            if (!handlers.Contains(this)) PlaySceneManager.CameraManager.Handlers.Add(this);
         }
 
         private void Update()
@@ -49,10 +46,7 @@ namespace Assets.Scripts.PlayerCamera
 
         private void Offset()
         {
-            // Store parent
             var parent = transform.parent ? transform.parent : transform;
-
-            // Calculate offset
             var offset = _localOffset ? parent.TransformPoint(_offset) - Player.position : _offset;
 
             var desiredPos = transform.position + (_translateOffset ? transform.TransformVector(offset) : offset);

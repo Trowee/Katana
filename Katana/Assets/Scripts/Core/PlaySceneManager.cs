@@ -1,7 +1,7 @@
 using Assets.Scripts.Fruits;
+using Assets.Scripts.Player;
+using Assets.Scripts.Player.Camera;
 using UnityEngine;
-using Assets.Scripts.PlayerCamera;
-using Assets.Scripts.KatanaMovement;
 
 namespace Assets.Scripts.Core
 {
