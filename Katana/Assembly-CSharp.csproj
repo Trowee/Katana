@@ -96,7 +96,6 @@
     <Compile Include="Assets/NnUtils/Scripts/WaitForSecondsWhileNot.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/UI/ConfigCanvas.cs" />
     <Compile Include="Assets/NnUtils/Scripts/UI/RadioNutton.cs" />
-    <Compile Include="Assets/Scripts/Core/PlaySceneManager.cs" />
     <Compile Include="Assets/NnUtils/Modules/TextUtils/Scripts/InteractiveText/InteractiveTMPText.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/ConfigComponent.cs" />
     <Compile Include="Assets/NnUtils/Modules/TextUtils/Scripts/InteractiveText/InteractiveLabel.cs" />
@@ -115,6 +114,7 @@
     <Compile Include="Assets/Scripts/Player/Camera/CameraHandlerScript.cs" />
     <Compile Include="Assets/NnUtils/Scripts/ReadOnlyAttribute.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/ConfigTransform.cs" />
+    <Compile Include="Assets/Scripts/Core/ColosseumSceneManager.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/UI/Image/ConfigSlideshowTransition.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/UI/ConfigRectTransform.cs" />
     <Compile Include="Assets/NnUtils/Scripts/UI/InteractiveImageScript.cs" />
