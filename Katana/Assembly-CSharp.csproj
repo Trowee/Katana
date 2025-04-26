@@ -41,6 +41,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+    <Analyzer Include="/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/PackageCache/com.annulusgames.alchemy/Generator/Alchemy.SourceGenerator.dll" />
     <Analyzer Include="/home/nnra/Unity/Hub/Editor/6000.0.34f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll" />
     <Analyzer Include="/home/nnra/Unity/Hub/Editor/6000.0.34f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll" />
     <Analyzer Include="/home/nnra/Unity/Hub/Editor/6000.0.34f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll" />
@@ -1034,6 +1035,9 @@
     <Reference Include="Unity.Burst.Editor">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Alchemy">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Alchemy.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Burst">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
     </Reference>
@@ -1042,6 +1046,9 @@
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Runtime">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Alchemy.Editor">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Alchemy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rendering.LightTransport.Runtime">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Rendering.LightTransport.Runtime.dll</HintPath>
