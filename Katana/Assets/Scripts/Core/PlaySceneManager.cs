@@ -12,25 +12,14 @@ namespace Assets.Scripts.Core
         private static PlaySceneManager _instance;
         public static PlaySceneManager Instance => _instance = FindFirstObjectByType<PlaySceneManager>();
 
-        [SerializeField] private GameObject _player;
-
-        public static GameObject Player
+        [SerializeField] private PlayerScript _player;
+        public static PlayerScript Player
         {
             get
             {
                 if (!Instance) return null;
-                return Instance._player ??= GameObject.FindWithTag("Player");
-            }
-        }
-
-        [SerializeField] private PlayerMovementScript _playerMovement;
-
-        public static PlayerMovementScript PlayerMovement
-        {
-            get
-            {
-                if (!Instance) return null;
-                return Instance._playerMovement ??= Player?.GetComponent<PlayerMovementScript>();
+                return Instance._player ??=
+                    GameObject.FindWithTag("Player")?.GetComponent<PlayerScript>();
             }
         }
 
@@ -64,8 +53,7 @@ namespace Assets.Scripts.Core
         {
             _cameraManager    = GetComponent<CameraManager>();
             _explosionManager = GetComponent<ExplosionManagerScript>();
-            _player           = GameObject.FindWithTag("Player");
-            _playerMovement   = Player.GetComponent<PlayerMovementScript>();
+            _player           = GameObject.FindWithTag("Player")?.GetComponent<PlayerScript>();
         }
 
         private void Awake()

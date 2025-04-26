@@ -35,7 +35,7 @@ namespace Assets.Scripts.Fruits
         {
             var hits = Physics.OverlapSphere(transform.position, _radius, _playerMask);
             foreach (var hit in hits)
-                if (hit.transform.parent.TryGetComponent(out PlayerMovementScript player)) player.Die();
+                if (hit.transform.parent.TryGetComponent(out PlayerScript player)) player.Die();
         }
     }
 }

@@ -11,7 +11,7 @@ using PSM = Assets.Scripts.Core.PlaySceneManager;
 namespace Assets.Scripts.KatanaMovement
 {
     [RequireComponent(typeof(Rigidbody))]
-    public class PlayerMovementScript : MonoBehaviour
+    public class PlayerScript : MonoBehaviour
     {
         private static SettingsManager Settings => GameManager.SettingsManager;
 
