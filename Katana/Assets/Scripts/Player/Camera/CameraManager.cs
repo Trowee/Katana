@@ -9,8 +9,13 @@ namespace Assets.Scripts.Player.Camera
 {
     public class CameraManager : MonoBehaviour
     {
+        [Required] public Transform CameraHolder;
+        [Required] public UnityEngine.Camera Camera;
+        [Required] public UnityEngine.Camera PlayerCamera;
+        
         #region Handlers
-        [OnListViewChanged(
+        [ListViewSettings(ShowAddRemoveFooter = false, ShowBoundCollectionSize = false),
+         OnListViewChanged(
             OnItemChanged = nameof(HandleHandlersItemChanged),
             OnItemIndexChanged = nameof(HandleHandlersIndexChanged)
             )]
@@ -18,22 +23,16 @@ namespace Assets.Scripts.Player.Camera
 
         private void HandleHandlersItemChanged(int index, CameraHandlerScript handler)
         {
-            Debug.Log("Here");
             if (index != 0) return;
             SwitchToDefaultHandler();
         }
 
         private void HandleHandlersIndexChanged(int before, int after)
         {
-            Debug.Log("Here");
             if (before != 0 && after != 0) return;
             SwitchToDefaultHandler();
         }
         #endregion
-
-        [Required] public Transform CameraHolder;
-        [Required] public UnityEngine.Camera Camera;
-        [Required] public UnityEngine.Camera PlayerCamera;
         
         private void Start()
         {
