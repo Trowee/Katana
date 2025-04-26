@@ -10,7 +10,7 @@ namespace Assets.Scripts.MainMenu
     {
         private static MainMenuManager _instance;
         public static MainMenuManager Instance =>
-            _instance ??= FindFirstObjectByType<MainMenuManager>();
+            _instance ? _instance : _instance = FindFirstObjectByType<MainMenuManager>();
 
         [SerializeField, Required] private Transform _cameraHolder;
         [SerializeField] private float _menuTransitionTime = 0.3f;

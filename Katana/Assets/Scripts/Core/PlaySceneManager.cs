@@ -12,8 +12,8 @@ namespace Assets.Scripts.Core
     {
         private static PlaySceneManager _instance;
         public static PlaySceneManager Instance =>
-            _instance ??= FindFirstObjectByType<PlaySceneManager>();
-
+            _instance ? _instance : _instance = FindFirstObjectByType<PlaySceneManager>();
+        
         [SerializeField, ReadOnly] private CameraManager _cameraManager;
         public static CameraManager CameraManager
         {
