@@ -1,0 +1,10 @@
+using UnityEngine;
+using NnUtils.Scripts;
+
+namespace Assets.Audio
+{
+    public class #SCRIPTNAME# : MonoBehaviour
+    {
+        
+    }
+}

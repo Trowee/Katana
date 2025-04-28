@@ -48,18 +48,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets/NnUtils/Modules/TextureRemapper/Editor/TextureRemapperWindow.cs" />
-    <Compile Include="Assets/NnUtils/Scripts/Editor/ReadOnlyDrawer.cs" />
     <Compile Include="Assets/NnUtils/Modules/TextureRemapper/Editor/TextureRemapper.cs" />
     <Compile Include="Assets/NnUtils/Scripts/Editor/EditorShortcuts.cs" />
     <Compile Include="Assets/NnUtils/Scripts/UI/Editor/NliderEditor.cs" />
     <Compile Include="Assets/TutorialInfo/Scripts/Editor/ReadmeEditor.cs" />
-    <Compile Include="Assets/NnUtils/Scripts/Editor/InvertColor.cs" />
+    <Compile Include="Assets/NnUtils/Scripts/Editor/SceneSwitcher.cs" />
     <Compile Include="Assets/NnUtils/Modules/TextureRemapper/Editor/ChannelMapping.cs" />
     <Compile Include="Assets/NnUtils/Modules/TextureRemapper/Editor/TextureMapping.cs" />
-    <Compile Include="Assets/NnUtils/Scripts/Editor/ARMtoMAS.cs" />
     <Compile Include="Assets/NnUtils/Scripts/Editor/MultiObjectRename.cs" />
     <Compile Include="Assets/NnUtils/Scripts/UI/Editor/InteractiveImageScriptEditor.cs" />
-    <None Include="Assets/NnUtils/Scripts/Editor/NnScriptTemplate.txt" />
+    <None Include="Assets/NnUtils/Scripts/Editor/NewScriptTemplate.txt" />
     <Reference Include="UnityEngine">
       <HintPath>/home/nnra/Unity/Hub/Editor/6000.0.34f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

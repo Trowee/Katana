@@ -108,7 +108,6 @@
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/ConfigVector4.cs" />
     <Compile Include="Assets/NnUtils/Scripts/UI/ProjectImageManagerScript.cs" />
     <Compile Include="Assets/Scripts/Player/Camera/CameraHandlerScript.cs" />
-    <Compile Include="Assets/NnUtils/Scripts/ReadOnlyAttribute.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/ConfigTransform.cs" />
     <Compile Include="Assets/Scripts/Core/ColosseumSceneManager.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/UI/Image/ConfigSlideshowTransition.cs" />
