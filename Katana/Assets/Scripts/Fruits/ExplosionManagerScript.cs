@@ -1,4 +1,4 @@
-using Alchemy.Inspector;
+using ArtificeToolkit.Attributes;
 using UnityEngine;
 using UnityEngine.VFX;
 

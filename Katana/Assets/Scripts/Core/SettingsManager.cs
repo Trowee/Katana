@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using Alchemy.Inspector;
+using ArtificeToolkit.Attributes;
 using Assets.Scripts.Player.Camera;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -11,16 +11,19 @@ namespace Assets.Scripts.Core
 {
     public class SettingsManager : MonoBehaviour
     {
-        [FoldoutGroup("Volume Profiles"), SerializeField, Required]
+        [SerializeField, Required, FoldoutGroup("Volume Profiles")]
         private VolumeProfile _dofProfile;
-        [FoldoutGroup("Volume Profiles"), SerializeField, Required]
+        [SerializeField, Required, FoldoutGroup("Volume Profiles")]
         private VolumeProfile _menuDOFProfile;
-        [FoldoutGroup("Volume Profiles"), SerializeField, Required]
+        [SerializeField, Required, FoldoutGroup("Volume Profiles")]
         private VolumeProfile _motionBlurProfile;
         
-        [FoldoutGroup("Audio"), SerializeField, Required] private AudioMixerGroup _master;
-        [FoldoutGroup("Audio"), SerializeField, Required] private AudioMixerGroup _sfx;
-        [FoldoutGroup("Audio"), SerializeField, Required] private AudioMixerGroup _music;
+        [SerializeField, Required, FoldoutGroup("Audio")]
+        private AudioMixerGroup _master;
+        [SerializeField, Required, FoldoutGroup("Audio")]
+        private AudioMixerGroup _sfx;
+        [SerializeField, Required, FoldoutGroup("Audio")]
+        private AudioMixerGroup _music;
 
         private void Awake() => LoadSettings();
 
@@ -46,7 +49,7 @@ namespace Assets.Scripts.Core
         
         #region DOF
         
-        [FoldoutGroup("Settings"), Button]
+        [Button, FoldoutGroup("Settings")]
         public void ChangeDOF(bool useDOF) => UseDOF = useDOF;
         
         private bool _useDOF;
@@ -71,7 +74,7 @@ namespace Assets.Scripts.Core
 
         #region MotionBlur
         
-        [FoldoutGroup("Settings"), Button]
+        [Button, FoldoutGroup("Settings")]
         public void ChangeMotionBlur(float mb) => MotionBlur = mb;
         
         private float _motionBlur;
@@ -94,7 +97,7 @@ namespace Assets.Scripts.Core
 
         #region Perspective
 
-        [FoldoutGroup("Settings"), Button]
+        [Button, FoldoutGroup("Settings")]
         public void ChangePerspective(Perspective p) => Perspective = p;
         
         public void ChangePerspective(int p) => Perspective = (Perspective)p;
@@ -116,11 +119,11 @@ namespace Assets.Scripts.Core
         #region Volume
         
         private float GetVolume(float t) => Mathf.Lerp(-80, 0, t);
-        [FoldoutGroup("Settings/Audio"), Button]
+        [Button, FoldoutGroup("Settings/Audio")]
         public void ChangeMasterVolume(float vol) => MasterVolume = vol;
-        [FoldoutGroup("Settings/Audio"), Button]
+        [Button, FoldoutGroup("Settings/Audio")]
         public void ChangeSFXVolume(float vol) => SFXVolume = vol;
-        [FoldoutGroup("Settings/Audio"), Button]
+        [Button, FoldoutGroup("Settings/Audio")]
         public void ChangeMusicVolume(float vol) => MusicVolume = vol;
         
         private float _masterVolume;

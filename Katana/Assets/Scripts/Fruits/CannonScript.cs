@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using Alchemy.Inspector;
+using ArtificeToolkit.Attributes;
 using NnUtils.Scripts;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.Fruits
 {
@@ -17,7 +18,8 @@ namespace Assets.Scripts.Fruits
         [FoldoutGroup("Cannon Parts"), SerializeField, Required]
         private Transform _wheels;
 
-        [FoldoutGroup("Cannon Parts"), SerializeField, Required]
+        [FoldoutGroup("Cannon Parts"), SerializeField, Required,
+         ValidateInput(nameof(_projectilesValidation), "Cannon must have at least 1 Projectile")]
         private Transform _projectileSpawnPoint;
 
         [FoldoutGroup("Shooting"), SerializeField]
@@ -29,14 +31,15 @@ namespace Assets.Scripts.Fruits
         [FoldoutGroup("Shooting"), SerializeField]
         private Vector2 _shootingForceRange = new(20, 50);
 
-        [FoldoutGroup("Shooting"), SerializeField]
+        [FoldoutGroup("Shooting"), SerializeField
+         ]
         private Vector2 _shootingTorqueRange = new(-50, 50);
 
         [FoldoutGroup("Shooting"), SerializeField,
-         ValidateInput(nameof(_projectilesValidation), "Cannon must have at least 1 Projectile")]
+        ]
         private List<Rigidbody> _projectiles;
 
-        private bool _projectilesValidation(List<Rigidbody> projectiles) => projectiles.Count >= 1;
+        private bool _projectilesValidation() => _projectiles.Count >= 1;
 
         [FoldoutGroup("Animation/Aim"), SerializeField]
         private Vector2 _aimAnimTimeRange = new(0.75f, 1.25f);
@@ -48,7 +51,7 @@ namespace Assets.Scripts.Fruits
         [Tooltip("X - Min X\nY - Max X\nZ - Min Z\nW - Max Z")]
         private Vector4 _aimPosRange = new(-1.5f, 1.5f, 1, 3);
 
-        [FoldoutGroup("Animation/Aim"), SerializeField, Range(0, 1)]
+        [FoldoutGroup("Animation/Aim"), SerializeField, UnityEngine.Range(0, 1)]
         private float _aimRotIntensity = 0.25f;
 
         [FoldoutGroup("Animation/Aim"), SerializeField]

@@ -1,5 +1,5 @@
 using System.Collections;
-using Alchemy.Inspector;
+using ArtificeToolkit.Attributes;
 using NnUtils.Scripts;
 using TMPro;
 using UnityEngine;

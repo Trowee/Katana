@@ -1,4 +1,4 @@
-using Alchemy.Inspector;
+using ArtificeToolkit.Attributes;
 using Assets.Scripts.Items;
 using Assets.Scripts.TimeScale;
 using NnUtils.Scripts;
@@ -29,13 +29,13 @@ namespace Assets.Scripts.Core
             }
         }
 
-        [Alchemy.Inspector.ReadOnly, SerializeField, Required] private SettingsManager _settingsManager;
+        [ReadOnly, SerializeField, Required] private SettingsManager _settingsManager;
         public static SettingsManager SettingsManager => Instance._settingsManager;
         
-        [Alchemy.Inspector.ReadOnly, SerializeField, Required] private TimeScaleManager _timeScaleManager;
+        [ReadOnly, SerializeField, Required] private TimeScaleManager _timeScaleManager;
         public static TimeScaleManager TimeScaleManager => Instance._timeScaleManager;
 
-        [Alchemy.Inspector.ReadOnly, SerializeField, Required] private ItemManager _itemManager;
+        [ReadOnly, SerializeField, Required] private ItemManager _itemManager;
         public static ItemManager ItemManager => Instance._itemManager;
         
         private void Reset()

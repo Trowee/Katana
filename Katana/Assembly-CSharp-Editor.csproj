@@ -41,21 +41,20 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/PackageCache/com.annulusgames.alchemy/Generator/Alchemy.SourceGenerator.dll" />
     <Analyzer Include="/home/nnra/Unity/Hub/Editor/6000.0.34f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll" />
     <Analyzer Include="/home/nnra/Unity/Hub/Editor/6000.0.34f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll" />
     <Analyzer Include="/home/nnra/Unity/Hub/Editor/6000.0.34f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets/NnUtils/Modules/TextureRemapper/Editor/TextureRemapperWindow.cs" />
     <Compile Include="Assets/NnUtils/Modules/TextureRemapper/Editor/TextureRemapper.cs" />
-    <Compile Include="Assets/NnUtils/Scripts/Editor/EditorShortcuts.cs" />
-    <Compile Include="Assets/NnUtils/Scripts/UI/Editor/NliderEditor.cs" />
     <Compile Include="Assets/TutorialInfo/Scripts/Editor/ReadmeEditor.cs" />
     <Compile Include="Assets/NnUtils/Scripts/Editor/SceneSwitcher.cs" />
-    <Compile Include="Assets/NnUtils/Modules/TextureRemapper/Editor/ChannelMapping.cs" />
     <Compile Include="Assets/NnUtils/Modules/TextureRemapper/Editor/TextureMapping.cs" />
     <Compile Include="Assets/NnUtils/Scripts/Editor/MultiObjectRename.cs" />
+    <Compile Include="Assets/NnUtils/Modules/TextureRemapper/Editor/TextureRemapperWindow.cs" />
+    <Compile Include="Assets/NnUtils/Scripts/Editor/EditorShortcuts.cs" />
+    <Compile Include="Assets/NnUtils/Scripts/UI/Editor/NliderEditor.cs" />
+    <Compile Include="Assets/NnUtils/Modules/TextureRemapper/Editor/ChannelMapping.cs" />
     <Compile Include="Assets/NnUtils/Scripts/UI/Editor/InteractiveImageScriptEditor.cs" />
     <None Include="Assets/NnUtils/Scripts/Editor/NewScriptTemplate.txt" />
     <Reference Include="UnityEngine">
@@ -955,6 +954,9 @@
     <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="abzorba.artificetoolkit.editor">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/abzorba.artificetoolkit.editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Multiplayer.Center.Common">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Multiplayer.Center.Common.dll</HintPath>
     </Reference>
@@ -966,6 +968,9 @@
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.EditorCoroutines.Editor">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.EditorCoroutines.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.AI.Navigation.Editor">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.AI.Navigation.Editor.dll</HintPath>
@@ -985,11 +990,11 @@
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Alchemy">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Alchemy.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Burst.Editor">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="abzorba.artificetoolkit.runtime">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/abzorba.artificetoolkit.runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
@@ -999,9 +1004,6 @@
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Runtime">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="Alchemy.Editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Alchemy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rendering.LightTransport.Runtime">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.Rendering.LightTransport.Runtime.dll</HintPath>

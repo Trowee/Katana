@@ -1,5 +1,5 @@
 using System.Linq;
-using Alchemy.Inspector;
+using ArtificeToolkit.Attributes;
 using Assets.Scripts.Core;
 using Assets.Scripts.Player.Camera;
 using Assets.Scripts.TimeScale;
@@ -46,7 +46,7 @@ namespace Assets.Scripts.Player
 
         [FoldoutGroup("Death"), SerializeField] private TimeScaleKeys _deathTimeScale;
 
-        [FoldoutGroup("Dev"), Alchemy.Inspector.ReadOnly] public bool IsStuck;
+        [FoldoutGroup("Dev"), ReadOnly] public bool IsStuck;
 
         private void Reset()
         {
