@@ -47,15 +47,15 @@
     <Analyzer Include="/home/nnra/Unity/Hub/Editor/6000.0.34f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets/NnUtils/Modules/TextureRemapper/Editor/TextureRemapperWindow.cs" />
     <Compile Include="Assets/NnUtils/Modules/TextureRemapper/Editor/TextureRemapper.cs" />
-    <Compile Include="Assets/NnUtils/Scripts/Editor/EditorShortcuts.cs" />
-    <Compile Include="Assets/NnUtils/Scripts/UI/Editor/NliderEditor.cs" />
     <Compile Include="Assets/TutorialInfo/Scripts/Editor/ReadmeEditor.cs" />
     <Compile Include="Assets/NnUtils/Scripts/Editor/SceneSwitcher.cs" />
-    <Compile Include="Assets/NnUtils/Modules/TextureRemapper/Editor/ChannelMapping.cs" />
     <Compile Include="Assets/NnUtils/Modules/TextureRemapper/Editor/TextureMapping.cs" />
     <Compile Include="Assets/NnUtils/Scripts/Editor/MultiObjectRename.cs" />
+    <Compile Include="Assets/NnUtils/Modules/TextureRemapper/Editor/TextureRemapperWindow.cs" />
+    <Compile Include="Assets/NnUtils/Scripts/Editor/EditorShortcuts.cs" />
+    <Compile Include="Assets/NnUtils/Scripts/UI/Editor/NliderEditor.cs" />
+    <Compile Include="Assets/NnUtils/Modules/TextureRemapper/Editor/ChannelMapping.cs" />
     <Compile Include="Assets/NnUtils/Scripts/UI/Editor/InteractiveImageScriptEditor.cs" />
     <None Include="Assets/NnUtils/Scripts/Editor/NewScriptTemplate.txt" />
     <Reference Include="UnityEngine">
@@ -912,6 +912,9 @@
     </Reference>
     <Reference Include="RuntimeAssembly">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/RuntimeAssembly.dll</HintPath>
+    </Reference>
+    <Reference Include="RBG.Mulligan">
+      <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/RBG.Mulligan.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.GPUDriven.Runtime">
       <HintPath>/home/nnra/Data/Projects/Unity/GoodKatana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.GPUDriven.Runtime.dll</HintPath>
