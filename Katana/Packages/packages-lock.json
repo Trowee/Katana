@@ -40,6 +40,13 @@
       "dependencies": {},
       "hash": "2571f2e28250162410b8b6c28f2ffde724391cf1"
     },
+    "com.seaeees.simple-folder-icon": {
+      "version": "https://github.com/SeaeeesSan/SimpleFolderIcon.git?path=Packages/com.seaeees.simple-folder-icon",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "61962458dcd75068bd2324cf2ba5fc547d9e1ed8"
+    },
     "com.smkplus.custom-toolbar": {
       "version": "https://github.com/smkplus/CustomToolbar.git#master",
       "depth": 0,
