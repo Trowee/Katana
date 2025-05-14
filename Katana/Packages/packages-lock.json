@@ -7,7 +7,7 @@
       "dependencies": {
         "com.unity.editorcoroutines": "1.0.0"
       },
-      "hash": "f740567dc61a152e1b259c6914422aadaa6b06bf"
+      "hash": "7aa15e79c65d76f0877be8d7cd92ba7386fc3c0b"
     },
     "com.cqf.urpvolumetricfog": {
       "version": "https://github.com/CristianQiu/Unity-URP-Volumetric-Light.git",

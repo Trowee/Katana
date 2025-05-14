@@ -18,8 +18,7 @@ namespace Assets.Scripts.Fruits
         [FoldoutGroup("Cannon Parts"), SerializeField, Required]
         private Transform _wheels;
 
-        [FoldoutGroup("Cannon Parts"), SerializeField, Required,
-         ValidateInput(nameof(_projectilesValidation), "Cannon must have at least 1 Projectile")]
+        [FoldoutGroup("Cannon Parts"), SerializeField, Required]
         private Transform _projectileSpawnPoint;
 
         [FoldoutGroup("Shooting"), SerializeField]
@@ -36,7 +35,7 @@ namespace Assets.Scripts.Fruits
         private Vector2 _shootingTorqueRange = new(-50, 50);
 
         [FoldoutGroup("Shooting"), SerializeField,
-        ]
+        ValidateInput(nameof(_projectilesValidation), "Cannon must have at least 1 Projectile")]
         private List<Rigidbody> _projectiles;
 
         private bool _projectilesValidation() => _projectiles.Count >= 1;

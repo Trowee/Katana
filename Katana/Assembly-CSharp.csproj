@@ -93,7 +93,6 @@
     <Compile Include="Assets/Scripts/Core/DynamicDOF.cs" />
     <Compile Include="Assets/NnUtils/Modules/TextUtils/Scripts/InteractiveText/InteractiveTextScript.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/ConfigGradient.cs" />
-    <Compile Include="Assets/Artifice_CustomAttributeDrawer_ValidateInputAttribute.cs" />
     <Compile Include="Assets/Scripts/MainMenu/SettingsMenu.cs" />
     <Compile Include="Assets/Scripts/Core/ScoreScript.cs" />
     <Compile Include="Assets/NnUtils/Scripts/NashSet.cs" />
@@ -111,7 +110,6 @@
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/ConfigComponent.cs" />
     <Compile Include="Assets/NnUtils/Scripts/FileSystemMonitor.cs" />
     <Compile Include="Assets/Scripts/Fruits/CannonScript.cs" />
-    <Compile Include="Assets/ValidateInputAttribute.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/Volume/ConfigVolume.cs" />
     <Compile Include="Assets/NnUtils/Scripts/UI/Slideshow/SlideshowTransition.cs" />
     <Compile Include="Assets/Scripts/Core/GameManager.cs" />
