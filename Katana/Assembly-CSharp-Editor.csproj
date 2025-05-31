@@ -852,14 +852,14 @@
     <Reference Include="Unity.Searcher.Editor">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.Searcher.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.AI.Navigation">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.AI.Navigation.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Rider.Editor">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PlayerPrefsEditor.EditorResources">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.PlayerPrefsEditor.EditorResources.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.AI.Navigation">
+      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.AI.Navigation.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TerrainTools.Editor">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.TerrainTools.Editor.dll</HintPath>
