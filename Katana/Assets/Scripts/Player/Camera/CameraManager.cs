@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Alchemy.Inspector;
+using ArtificeToolkit.Attributes;
 using NnUtils.Scripts;
 using UnityEngine;
 
@@ -14,11 +14,11 @@ namespace Assets.Scripts.Player.Camera
         [Required] public UnityEngine.Camera PlayerCamera;
         
         #region Handlers
-        [ListViewSettings(ShowAddRemoveFooter = false, ShowBoundCollectionSize = false),
+        /*[ListViewSettings(ShowAddRemoveFooter = false, ShowBoundCollectionSize = false),
          OnListViewChanged(
             OnItemChanged = nameof(HandleHandlersItemChanged),
             OnItemIndexChanged = nameof(HandleHandlersIndexChanged)
-            )]
+            )]*/
         public List<CameraHandlerScript> Handlers = new();
 
         private void HandleHandlersItemChanged(int index, CameraHandlerScript handler)

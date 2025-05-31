@@ -1,11 +1,13 @@
 {
   "dependencies": {
-    "com.annulusgames.alchemy": {
-      "version": "https://github.com/annulusgames/Alchemy.git?path=/Alchemy/Assets/Alchemy",
+    "com.abzorba.artificetoolkit": {
+      "version": "https://github.com/AbZorbaGames/artificetoolkit.git",
       "depth": 0,
       "source": "git",
-      "dependencies": {},
-      "hash": "3f8d35f6d286aef760ca44fa4191790868df41eb"
+      "dependencies": {
+        "com.unity.editorcoroutines": "1.0.0"
+      },
+      "hash": "b14d90c0d84b52e80543cf3c9ea916f03efba4c0"
     },
     "com.bgtools.playerprefseditor": {
       "version": "https://github.com/Dysman/bgTools-playerPrefsEditor.git#upm",
@@ -106,6 +108,13 @@
         "com.unity.nuget.mono-cecil": "1.11.4",
         "com.unity.test-framework.performance": "3.0.3"
       },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.editorcoroutines": {
+      "version": "1.0.0",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.ext.nunit": {

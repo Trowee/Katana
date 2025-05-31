@@ -1,4 +1,4 @@
-using Alchemy.Inspector;
+using ArtificeToolkit.Attributes;
 using Assets.Scripts.Fruits;
 using Assets.Scripts.Player;
 using Assets.Scripts.Player.Camera;

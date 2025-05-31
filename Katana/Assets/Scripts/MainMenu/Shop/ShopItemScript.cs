@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Globalization;
-using Alchemy.Inspector;
+using ArtificeToolkit.Attributes;
 using Assets.Scripts.Core;
 using Assets.Scripts.Items;
 using NnUtils.Scripts;

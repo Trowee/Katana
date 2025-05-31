@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using Alchemy.Inspector;
+using ArtificeToolkit.Attributes;
 using Assets.Scripts.Core;
 using Assets.Scripts.Player.Camera;
 using NnUtils.Scripts;
