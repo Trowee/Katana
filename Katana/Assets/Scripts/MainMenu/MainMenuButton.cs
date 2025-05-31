@@ -1,5 +1,6 @@
 using System.Collections;
 using ArtificeToolkit.Attributes;
+using NnUtils.Modules.Easings;
 using NnUtils.Scripts;
 using UnityEngine;
 

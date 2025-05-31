@@ -57,6 +57,7 @@
     <Compile Include="Assets/NnUtils/Scripts/TimeManager.cs" />
     <Compile Include="Assets/NnUtils/Scripts/ColorUtils.cs" />
     <Compile Include="Assets/NnUtils/Modules/Tabs/Tabs.cs" />
+    <Compile Include="Assets/SmoothSceneCamera/SmoothSceneCamera.cs" />
     <Compile Include="Assets/NnUtils/Modules/SystemAudioMonitor/PulseAudioMonitor.cs" />
     <Compile Include="Assets/NnUtils/Modules/SystemAudioMonitor/CoreAudio/Interfaces/IMMDeviceCollection.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/ConfigGameObject.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Assets/NnUtils/Modules/SystemAudioMonitor/CoreAudio/Interfaces/IMMNotificationClient.cs" />
     <Compile Include="Assets/NnUtils/Modules/SystemAudioMonitor/CoreAudio/MMDeviceCollection.cs" />
     <Compile Include="Assets/Settings/SeparateCameraVolume/SeparateVolume.cs" />
+    <Compile Include="Assets/NnUtils/Modules/Easings/Easings.cs" />
     <Compile Include="Assets/Scripts/Fruits/BombScript.cs" />
     <Compile Include="Assets/Scripts/Core/ColosseumSceneManager.cs" />
     <Compile Include="Assets/NnUtils/Modules/JSONUtils/Scripts/Types/Components/UI/Image/ConfigSlideshowTransition.cs" />

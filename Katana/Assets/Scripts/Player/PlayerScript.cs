@@ -3,6 +3,7 @@ using ArtificeToolkit.Attributes;
 using Assets.Scripts.Core;
 using Assets.Scripts.Player.Camera;
 using Assets.Scripts.TimeScale;
+using NnUtils.Modules.Easings;
 using NnUtils.Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;

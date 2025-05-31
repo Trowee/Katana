@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using ArtificeToolkit.Attributes;
+using NnUtils.Modules.Easings;
 using NnUtils.Scripts;
 using UnityEngine;
 
@@ -42,16 +43,16 @@ namespace Assets.Scripts.Player.Camera
         private void SwitchToDefaultHandler()
         {
             if (Handlers.Count < 1) return;
-            SwitchCameraHandler(Handlers[0].Perspective, 0, Easings.Type.None);
+            SwitchCameraHandler(Handlers[0].Perspective, 0, Easings.Type.Linear);
         }
         
         public void SwitchCameraHandler(Perspective perspective, float duration = 0,
-            Easings.Type easing = Easings.Type.None, bool unscaled = false)
+            Easings.Type easing = Easings.Type.Linear, bool unscaled = false)
             => SwitchCameraHandler(perspective, duration, easing, null, unscaled);
 
         public void SwitchCameraHandler(Perspective perspective, float duration = 0,
             AnimationCurve curve = null, bool unscaled = false)
-            => SwitchCameraHandler(perspective, duration, Easings.Type.None, curve, unscaled);
+            => SwitchCameraHandler(perspective, duration, Easings.Type.Linear, curve, unscaled);
 
         private void SwitchCameraHandler(Perspective perspective, float duration,
             Easings.Type easing, AnimationCurve curve, bool unscaled)

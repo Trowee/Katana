@@ -1,6 +1,7 @@
 using UnityEngine;
 using NnUtils.Scripts;
 using System.Collections;
+using NnUtils.Modules.Easings;
 using UnityEngine.Rendering.Universal;
 
 namespace Assets.Scripts.Core

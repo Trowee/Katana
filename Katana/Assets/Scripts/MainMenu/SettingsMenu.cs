@@ -3,6 +3,7 @@ using System.Collections;
 using ArtificeToolkit.Attributes;
 using Assets.Scripts.Core;
 using Assets.Scripts.Player.Camera;
+using NnUtils.Modules.Easings;
 using NnUtils.Scripts;
 using TMPro;
 using UnityEngine;
