@@ -6,6 +6,7 @@
     "com.cysharp.zlinq": "https://github.com/Cysharp/ZLinq.git?path=src/ZLinq.Unity/Assets/ZLinq.Unity",
     "com.dgreenheck.openfracture": "https://github.com/dgreenheck/OpenFracture.git",
     "com.github-glitchenzo.nugetforunity": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity",
+    "com.handzlikchris.fastscriptreload": "https://github.com/handzlikchris/FastScriptReload.git?path=Assets",
     "com.jimmycushnie.noisynodes": "https://github.com/JimmyCushnie/Noisy-Nodes.git",
     "com.nnra6864.smoothscenecamera": "https://github.com/nnra6864/SmoothSceneCamera.git",
     "com.redbluegames.mulligan": "https://github.com/redbluegames/unity-mulligan-renamer.git?path=/Assets/RedBlueGames/MulliganRenamer",

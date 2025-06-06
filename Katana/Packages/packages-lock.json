@@ -47,6 +47,13 @@
       "dependencies": {},
       "hash": "a22299e7e94eaa13ac17b326e0de8f2d3afa9e46"
     },
+    "com.handzlikchris.fastscriptreload": {
+      "version": "https://github.com/handzlikchris/FastScriptReload.git?path=Assets",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "9be7355b279cd6a4e402621a41b37fbb5b96efac"
+    },
     "com.jimmycushnie.noisynodes": {
       "version": "https://github.com/JimmyCushnie/Noisy-Nodes.git",
       "depth": 0,
