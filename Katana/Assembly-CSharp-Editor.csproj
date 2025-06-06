@@ -41,22 +41,13 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+    <Analyzer Include="/home/nnra/Data/Projects/Unity/Katana/Katana/Assets/Packages/ZLinq.DropInGenerator.1.4.10/analyzers/dotnet/cs/ZLinq.DropInGenerator.dll" />
     <Analyzer Include="/home/nnra/Unity/Hub/Editor/6000.0.34f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll" />
     <Analyzer Include="/home/nnra/Unity/Hub/Editor/6000.0.34f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll" />
     <Analyzer Include="/home/nnra/Unity/Hub/Editor/6000.0.34f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets/NnUtils/Modules/TextureRemapper/Editor/TextureRemapper.cs" />
     <Compile Include="Assets/TutorialInfo/Scripts/Editor/ReadmeEditor.cs" />
-    <Compile Include="Assets/NnUtils/Scripts/Editor/SceneSwitcher.cs" />
-    <Compile Include="Assets/NnUtils/Modules/TextureRemapper/Editor/TextureMapping.cs" />
-    <Compile Include="Assets/NnUtils/Scripts/Editor/MultiObjectRename.cs" />
-    <Compile Include="Assets/NnUtils/Modules/TextureRemapper/Editor/TextureRemapperWindow.cs" />
-    <Compile Include="Assets/NnUtils/Scripts/Editor/EditorShortcuts.cs" />
-    <Compile Include="Assets/NnUtils/Scripts/UI/Editor/NliderEditor.cs" />
-    <Compile Include="Assets/NnUtils/Modules/TextureRemapper/Editor/ChannelMapping.cs" />
-    <Compile Include="Assets/NnUtils/Scripts/UI/Editor/InteractiveImageScriptEditor.cs" />
-    <None Include="Assets/NnUtils/Scripts/Editor/NewScriptTemplate.txt" />
     <Reference Include="UnityEngine">
       <HintPath>/home/nnra/Unity/Hub/Editor/6000.0.34f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -452,6 +443,15 @@
     </Reference>
     <Reference Include="Mono.Cecil">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/PackageCache/com.unity.nuget.mono-cecil/Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="NuGetForUnity.PluginAPI">
+      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/PackageCache/com.github-glitchenzo.nugetforunity/Editor/PluginAPI/NuGetForUnity.PluginAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe">
+      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Assets/Packages/System.Runtime.CompilerServices.Unsafe.6.1.2/lib/netstandard2.0/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="ZLinq">
+      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Assets/Packages/ZLinq.1.4.10/lib/netstandard2.1/ZLinq.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Android.Types">
       <HintPath>/home/nnra/Unity/Hub/Editor/6000.0.34f1/Editor/Data/PlaybackEngines/AndroidPlayer/Unity.Android.Types.dll</HintPath>
@@ -933,6 +933,9 @@
     <Reference Include="PPv2URPConverters">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/PPv2URPConverters.dll</HintPath>
     </Reference>
+    <Reference Include="ZLinq.Unity.UnityCollectoins">
+      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/ZLinq.Unity.UnityCollectoins.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Rendering.LightTransport.Editor">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.Rendering.LightTransport.Editor.dll</HintPath>
     </Reference>
@@ -987,6 +990,9 @@
     <Reference Include="Unity.EditorCoroutines.Editor">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.EditorCoroutines.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="NuGetForUnity">
+      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/NuGetForUnity.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.AI.Navigation.Editor">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.AI.Navigation.Editor.dll</HintPath>
     </Reference>
@@ -1004,6 +1010,9 @@
     </Reference>
     <Reference Include="AssetUsageDetector.Editor">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/AssetUsageDetector.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="ZLinq.Unity">
+      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/ZLinq.Unity.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
@@ -1040,6 +1049,14 @@
     <ProjectReference Include="Assembly-CSharp.csproj">
       <Project>{4d28f289-74aa-edcc-e16d-7d9b74312923}</Project>
       <Name>Assembly-CSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="Scripts.csproj">
+      <Project>{d7b54722-11de-b296-c362-573c906d90f6}</Project>
+      <Name>Scripts</Name>
+    </ProjectReference>
+    <ProjectReference Include="nnra.NnUtils.csproj">
+      <Project>{b68e8857-48ed-d1eb-7e8b-69c8a9ec45c8}</Project>
+      <Name>nnra.NnUtils</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

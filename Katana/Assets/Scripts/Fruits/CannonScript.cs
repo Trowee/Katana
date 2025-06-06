@@ -30,8 +30,7 @@ namespace Assets.Scripts.Fruits
         [FoldoutGroup("Shooting"), SerializeField]
         private Vector2 _shootingForceRange = new(20, 50);
 
-        [FoldoutGroup("Shooting"), SerializeField
-         ]
+        [FoldoutGroup("Shooting"), SerializeField]
         private Vector2 _shootingTorqueRange = new(-50, 50);
 
         [FoldoutGroup("Shooting"), SerializeField,

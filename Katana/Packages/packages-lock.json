@@ -23,6 +23,13 @@
       "dependencies": {},
       "hash": "6fac03d2be5061c12dc9fa2342ef3cbe0f1ca5bf"
     },
+    "com.cysharp.zlinq": {
+      "version": "https://github.com/Cysharp/ZLinq.git?path=src/ZLinq.Unity/Assets/ZLinq.Unity",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "e77e9408eaedc382040bd113c24e9513f6646b46"
+    },
     "com.dgreenheck.openfracture": {
       "version": "https://github.com/dgreenheck/OpenFracture.git",
       "depth": 0,
@@ -32,6 +39,13 @@
         "com.unity.testtools.codecoverage": "1.0.1"
       },
       "hash": "6d0ddff64173193f024638c2de2dbeb8a2525965"
+    },
+    "com.github-glitchenzo.nugetforunity": {
+      "version": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "a22299e7e94eaa13ac17b326e0de8f2d3afa9e46"
     },
     "com.jimmycushnie.noisynodes": {
       "version": "https://github.com/JimmyCushnie/Noisy-Nodes.git",
