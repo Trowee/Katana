@@ -2,6 +2,7 @@
   "dependencies": {
     "com.abzorba.artificetoolkit": "https://github.com/AbZorbaGames/artificetoolkit.git",
     "com.bgtools.playerprefseditor": "https://github.com/Dysman/bgTools-playerPrefsEditor.git#upm",
+    "com.coffee.ui-effect": "https://github.com/mob-sakai/UIEffect.git?path=Packages/src",
     "com.cqf.urpvolumetricfog": "https://github.com/CristianQiu/Unity-URP-Volumetric-Light.git",
     "com.cysharp.zlinq": "https://github.com/Cysharp/ZLinq.git?path=src/ZLinq.Unity/Assets/ZLinq.Unity",
     "com.dgreenheck.openfracture": "https://github.com/dgreenheck/OpenFracture.git",

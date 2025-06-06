@@ -16,6 +16,15 @@
       "dependencies": {},
       "hash": "e98cb18702ec61457b051aad8a1862eab4f70b4e"
     },
+    "com.coffee.ui-effect": {
+      "version": "https://github.com/mob-sakai/UIEffect.git?path=Packages/src",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.ugui": "1.0.0"
+      },
+      "hash": "8a0e7d6b26fdd6eae7ade609495a11fa12cb543a"
+    },
     "com.cqf.urpvolumetricfog": {
       "version": "https://github.com/CristianQiu/Unity-URP-Volumetric-Light.git",
       "depth": 0,
