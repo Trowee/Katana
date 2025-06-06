@@ -1020,6 +1020,9 @@
     <Reference Include="Unity.VisualStudio.Editor">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="SmoothSceneCamera">
+      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/SmoothSceneCamera.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Runtime">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
     </Reference>

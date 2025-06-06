@@ -5,6 +5,7 @@
     "com.cqf.urpvolumetricfog": "https://github.com/CristianQiu/Unity-URP-Volumetric-Light.git",
     "com.dgreenheck.openfracture": "https://github.com/dgreenheck/OpenFracture.git",
     "com.jimmycushnie.noisynodes": "https://github.com/JimmyCushnie/Noisy-Nodes.git",
+    "com.nnra6864.smoothscenecamera": "https://github.com/nnra6864/SmoothSceneCamera.git",
     "com.redbluegames.mulligan": "https://github.com/redbluegames/unity-mulligan-renamer.git?path=/Assets/RedBlueGames/MulliganRenamer",
     "com.seaeees.simple-folder-icon": "https://github.com/SeaeeesSan/SimpleFolderIcon.git?path=Packages/com.seaeees.simple-folder-icon",
     "com.smkplus.custom-toolbar": "https://github.com/smkplus/CustomToolbar.git#master",

@@ -42,6 +42,15 @@
       },
       "hash": "38d18b868ba4550aab2f76b2817882474300e75c"
     },
+    "com.nnra6864.smoothscenecamera": {
+      "version": "https://github.com/nnra6864/SmoothSceneCamera.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.editorcoroutines": "1.0.0"
+      },
+      "hash": "05a6e715bc323094631499909e673904132e669b"
+    },
     "com.redbluegames.mulligan": {
       "version": "https://github.com/redbluegames/unity-mulligan-renamer.git?path=/Assets/RedBlueGames/MulliganRenamer",
       "depth": 0,
