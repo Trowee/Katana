@@ -6,10 +6,12 @@ using UnityEngine;
 
 namespace Assets.Scripts.MainMenu
 {
+    // TODO: Add buttons to a foldout when fixed
     public class MainMenuButton : MonoBehaviour
     {
-        private Vector3 _originalPos;
         [SerializeField, Required] private Transform _mesh;
+        [SerializeField] private Vector3 _selectedPosition = Vector3.zero;
+        [SerializeField] private Vector3 _deselectedPosition = Vector3.left * 0.5f;
         [SerializeField] private float _animationTime = 1;
         [SerializeField] private Easings.Type _animationEasing = Easings.Type.ExpoOut;
 
@@ -19,19 +21,16 @@ namespace Assets.Scripts.MainMenu
                 _mesh = transform.GetChild(0);
         }
 
-        private void Awake()
-        {
-            _originalPos = _mesh.localPosition;
-        }
-
+        [Button]
         public void Select()
         {
-            this.RestartRoutine(ref _moveRoutine, MoveRoutine(Vector3.zero));
+            this.RestartRoutine(ref _moveRoutine, MoveRoutine(_selectedPosition));
         }
 
+        [Button]
         public void Deselect()
         {
-            this.RestartRoutine(ref _moveRoutine, MoveRoutine(_originalPos));
+            this.RestartRoutine(ref _moveRoutine, MoveRoutine(_deselectedPosition));
         }
 
         private Coroutine _moveRoutine;
