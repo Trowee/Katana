@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyTextEffects", "EasyTextEffects.csproj", "{04e855f2-67da-cbb9-7ed0-34d6a0e95e89}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nnra.NnUtils", "nnra.NnUtils.csproj", "{b68e8857-48ed-d1eb-7e8b-69c8a9ec45c8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scripts", "Scripts.csproj", "{d7b54722-11de-b296-c362-573c906d90f6}"
@@ -14,6 +16,8 @@ Global
 		Debug|Any CPU = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{04e855f2-67da-cbb9-7ed0-34d6a0e95e89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04e855f2-67da-cbb9-7ed0-34d6a0e95e89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{b68e8857-48ed-d1eb-7e8b-69c8a9ec45c8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{b68e8857-48ed-d1eb-7e8b-69c8a9ec45c8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{d7b54722-11de-b296-c362-573c906d90f6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU

@@ -1008,9 +1008,6 @@
     <Reference Include="Unity.RenderPipelines.Universal.Runtime">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="EasyTextEffects">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/EasyTextEffects.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.AI.Navigation.Editor.ConversionSystem">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.AI.Navigation.Editor.ConversionSystem.dll</HintPath>
     </Reference>
@@ -1058,6 +1055,10 @@
     <ProjectReference Include="Assembly-CSharp.csproj">
       <Project>{4d28f289-74aa-edcc-e16d-7d9b74312923}</Project>
       <Name>Assembly-CSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="EasyTextEffects.csproj">
+      <Project>{04e855f2-67da-cbb9-7ed0-34d6a0e95e89}</Project>
+      <Name>EasyTextEffects</Name>
     </ProjectReference>
     <ProjectReference Include="Scripts.csproj">
       <Project>{d7b54722-11de-b296-c362-573c906d90f6}</Project>
