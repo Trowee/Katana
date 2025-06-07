@@ -521,23 +521,23 @@
     <Reference Include="log4netPlastic">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/PackageCache/com.unity.collab-proxy/Lib/Editor/log4netPlastic.dll</HintPath>
     </Reference>
+    <Reference Include="Coffee.UIEffect.R">
+      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/PackageCache/com.coffee.ui-effect/Runtime/Coffee.UIEffect.R.dll</HintPath>
+    </Reference>
+    <Reference Include="NuGetForUnity.PluginAPI">
+      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/PackageCache/com.github-glitchenzo.nugetforunity/Editor/PluginAPI/NuGetForUnity.PluginAPI.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/PackageCache/com.unity.nuget.newtonsoft-json/Runtime/Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/PackageCache/com.unity.nuget.mono-cecil/Mono.Cecil.dll</HintPath>
     </Reference>
-    <Reference Include="NuGetForUnity.PluginAPI">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/PackageCache/com.github-glitchenzo.nugetforunity/Editor/PluginAPI/NuGetForUnity.PluginAPI.dll</HintPath>
-    </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Assets/Packages/System.Runtime.CompilerServices.Unsafe.6.1.2/lib/netstandard2.0/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/PackageCache/com.handzlikchris.fastscriptreload/Plugins/Roslyn/2021+/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="ZLinq">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Assets/Packages/ZLinq.1.4.10/lib/netstandard2.1/ZLinq.dll</HintPath>
-    </Reference>
-    <Reference Include="Coffee.UIEffect.R">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/PackageCache/com.coffee.ui-effect/Runtime/Coffee.UIEffect.R.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Android.Types">
       <HintPath>/home/nnra/Unity/Hub/Editor/6000.0.34f1/Editor/Data/PlaybackEngines/AndroidPlayer/Unity.Android.Types.dll</HintPath>

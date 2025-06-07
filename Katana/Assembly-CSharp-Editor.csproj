@@ -438,23 +438,23 @@
     <Reference Include="log4netPlastic">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/PackageCache/com.unity.collab-proxy/Lib/Editor/log4netPlastic.dll</HintPath>
     </Reference>
+    <Reference Include="Coffee.UIEffect.R">
+      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/PackageCache/com.coffee.ui-effect/Runtime/Coffee.UIEffect.R.dll</HintPath>
+    </Reference>
+    <Reference Include="NuGetForUnity.PluginAPI">
+      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/PackageCache/com.github-glitchenzo.nugetforunity/Editor/PluginAPI/NuGetForUnity.PluginAPI.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/PackageCache/com.unity.nuget.newtonsoft-json/Runtime/Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/PackageCache/com.unity.nuget.mono-cecil/Mono.Cecil.dll</HintPath>
     </Reference>
-    <Reference Include="NuGetForUnity.PluginAPI">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/PackageCache/com.github-glitchenzo.nugetforunity/Editor/PluginAPI/NuGetForUnity.PluginAPI.dll</HintPath>
-    </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Assets/Packages/System.Runtime.CompilerServices.Unsafe.6.1.2/lib/netstandard2.0/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/PackageCache/com.handzlikchris.fastscriptreload/Plugins/Roslyn/2021+/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="ZLinq">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Assets/Packages/ZLinq.1.4.10/lib/netstandard2.1/ZLinq.dll</HintPath>
-    </Reference>
-    <Reference Include="Coffee.UIEffect.R">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/PackageCache/com.coffee.ui-effect/Runtime/Coffee.UIEffect.R.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Android.Types">
       <HintPath>/home/nnra/Unity/Hub/Editor/6000.0.34f1/Editor/Data/PlaybackEngines/AndroidPlayer/Unity.Android.Types.dll</HintPath>
@@ -897,11 +897,11 @@
     <Reference Include="Unity.PlayerPrefsEditor.Editor">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.PlayerPrefsEditor.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Editor.Shared">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.ShaderGraph.Editor">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
@@ -975,9 +975,6 @@
     <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="abzorba.artificetoolkit.editor">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/abzorba.artificetoolkit.editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Multiplayer.Center.Common">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.Multiplayer.Center.Common.dll</HintPath>
     </Reference>
@@ -986,6 +983,9 @@
     </Reference>
     <Reference Include="Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.dll</HintPath>
+    </Reference>
+    <Reference Include="abzorba.artificetoolkit.editor">
+      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/abzorba.artificetoolkit.editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
@@ -1026,6 +1026,9 @@
     <Reference Include="Unity.Burst.Editor">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Coffee.UIEffect">
+      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Coffee.UIEffect.dll</HintPath>
+    </Reference>
     <Reference Include="abzorba.artificetoolkit.runtime">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/abzorba.artificetoolkit.runtime.dll</HintPath>
     </Reference>
@@ -1037,9 +1040,6 @@
     </Reference>
     <Reference Include="SmoothSceneCamera">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/SmoothSceneCamera.dll</HintPath>
-    </Reference>
-    <Reference Include="Coffee.UIEffect">
-      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Coffee.UIEffect.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Runtime">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
