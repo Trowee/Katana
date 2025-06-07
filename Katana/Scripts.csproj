@@ -864,6 +864,9 @@
     <Reference Include="RuntimeAssembly">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/RuntimeAssembly.dll</HintPath>
     </Reference>
+    <Reference Include="EasyTextEffects">
+      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/EasyTextEffects.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
@@ -875,10 +878,6 @@
     <ProjectReference Include="nnra.NnUtils.csproj">
       <Project>{b68e8857-48ed-d1eb-7e8b-69c8a9ec45c8}</Project>
       <Name>nnra.NnUtils</Name>
-    </ProjectReference>
-    <ProjectReference Include="EasyTextEffects.csproj">
-      <Project>{04e855f2-67da-cbb9-7ed0-34d6a0e95e89}</Project>
-      <Name>EasyTextEffects</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
