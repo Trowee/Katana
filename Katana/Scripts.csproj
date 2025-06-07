@@ -864,6 +864,9 @@
     <Reference Include="RuntimeAssembly">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/RuntimeAssembly.dll</HintPath>
     </Reference>
+    <Reference Include="EasyTextEffects">
+      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/EasyTextEffects.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>

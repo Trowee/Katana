@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Globalization;
 using ArtificeToolkit.Attributes;
 using Assets.Scripts.Core;
 using Assets.Scripts.Items;
+using EasyTextEffects;
 using NnUtils.Scripts;
 using TMPro;
 using UnityEngine;
@@ -11,33 +13,40 @@ using Color = UnityEngine.Color;
 namespace Assets.Scripts.MainMenu.Shop
 {
     // TODO: Add ChildGameObjectsOnly attribute to fields when fixed
+    [ExecuteAlways]
     public class ShopItemScript : MonoBehaviour
     {
         private static ItemManager ItemManager => GameManager.ItemManager;
 
         [FoldoutGroup("Components"), SerializeField, AssetsOnly, Required]
-        [OnValueChanged(nameof(OnItemChanged))]
+        [OnValueChanged(nameof(HandleItemChanged))]
         private Item _item;
 
-        private void OnItemChanged()
-        {
-            if (_itemRenderer) _itemRenderer.GetComponent<Renderer>().material = _item?.Material;
-            if (_nameTMP) _nameTMP.text = _item?.Name;
-        }
+        private Item _previousItem;
 
         [FoldoutGroup("Components"), SerializeField, Required]
         private Transform _itemObject;
 
         [FoldoutGroup("Components"), SerializeField, Required]
-        [OnValueChanged(nameof(OnItemChanged))]
+        [OnValueChanged(nameof(HandleItemChanged))]
         private Renderer _itemRenderer;
 
         [FoldoutGroup("Components"), SerializeField, Required]
         private RectTransform _uiPanel;
 
         [FoldoutGroup("Components"), SerializeField, Required]
-        [OnValueChanged(nameof(OnItemChanged))]
+        [OnValueChanged(nameof(HandleNameChanged))]
         private TMP_Text _nameTMP;
+        
+        [SerializeField, HideInInspector]
+        private TextEffect _nameEffect;
+
+        private void HandleNameChanged()
+        {
+            _nameEffect = _nameTMP?.GetComponent<TextEffect>();
+            if (_nameTMP) _nameTMP.text = _item?.Name;
+            ApplyNameEffects();
+        }
 
         [FoldoutGroup("Components"), SerializeField, Required]
         private TMP_Text _priceTMP;
@@ -56,20 +65,54 @@ namespace Assets.Scripts.MainMenu.Shop
 
         private void Start()
         {
-            ItemManager.OnItemChanged += UpdateUI;
-            UpdateUI();
+            if (Application.isEditor) return;
+            
+            // Make the ui invisible
+            _uiPanel.localScale = Vector3.zero;
+
+            ItemManager.OnItemChanged += UpdatePrice;
+            UpdatePrice();
         }
 
-        private void UpdateUI()
+        private void OnEnable()
+        {
+            HandleItemChanged();
+        }
+
+        private void HandleItemChanged()
+        {
+            if (_previousItem) _previousItem.OnPropertyChanged -= HandleItemChanged;
+            if (_item) _item.OnPropertyChanged += HandleItemChanged;
+            _previousItem = _item;
+            if (_item) HandleItemPropertyChanged();
+        }
+
+        private void HandleItemPropertyChanged()
+        {
+            if (_itemRenderer) _itemRenderer.GetComponent<Renderer>().material = _item?.Material;
+            if (_nameTMP) _nameTMP.text = _item?.Name;
+            if (_priceTMP) _priceTMP.text = $"₦{_item?.Price.ToString()}";
+            ApplyNameEffects();
+        }
+
+        private void UpdatePrice()
         {
             _priceTMP.text = _item.Unlocked
                                  ? ItemManager.SelectedItem == _item ? "Selected" : "Unlocked"
-                                 : $@"₦{_item.Price.ToString(CultureInfo.InvariantCulture)}";
+                                 : $"₦{_item.Price}";
             _priceTMP.color = _item.Unlocked
                                   ? ItemManager.SelectedItem == _item ? Color.cyan : Color.white
                                   : _item.Price > ItemManager.Coins
                                       ? Color.red
                                       : Color.green;
+        }
+
+        private void ApplyNameEffects()
+        {
+            _nameEffect.globalEffects.Clear();
+            if (!_item) return;
+            _nameEffect.globalEffects.AddRange(_item.NameTextEffects);
+            _nameEffect.Refresh();
         }
 
         public void Select()

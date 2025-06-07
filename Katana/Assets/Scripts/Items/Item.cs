@@ -1,16 +1,29 @@
 using System;
+using System.Collections.Generic;
+using ArtificeToolkit.Attributes;
 using UnityEngine;
+using EasyTextEffects;
 
 namespace Assets.Scripts.Items
 {
     [CreateAssetMenu(fileName = "Item", menuName = "Item")]
     public class Item : ScriptableObject
     {
+        [OnValueChanged(nameof(HandlePropertyChanged))]
         public string Name;
+        [OnValueChanged(nameof(HandlePropertyChanged))]
         public int Price;
+        [OnValueChanged(nameof(HandlePropertyChanged))]
         public bool UnlockedByDefault;
+        [OnValueChanged(nameof(HandlePropertyChanged))]
         public Material Material;
+        [OnValueChanged(nameof(HandlePropertyChanged))]
+        public List<GlobalTextEffectEntry> NameTextEffects;
 
+        public event Action OnPropertyChanged;
+
+        private void HandlePropertyChanged() => OnPropertyChanged?.Invoke();
+        
         public event Action OnUnlocked;
 
         public bool Unlocked
