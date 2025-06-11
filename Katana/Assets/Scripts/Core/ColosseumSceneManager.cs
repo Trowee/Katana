@@ -58,7 +58,12 @@ namespace Assets.Scripts.Core
 
         private void Awake()
         {
-            if (_instance) Destroy(gameObject);
+            if (_instance && _instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            
             _instance = this;
         }
 
