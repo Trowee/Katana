@@ -10,7 +10,7 @@
     "com.handzlikchris.fastscriptreload": "https://github.com/handzlikchris/FastScriptReload.git?path=Assets",
     "com.jimmycushnie.noisynodes": "https://github.com/JimmyCushnie/Noisy-Nodes.git",
     "com.nnra6864.smoothscenecamera": "https://github.com/nnra6864/SmoothSceneCamera.git",
-    "com.qiaozhilei.easy-text-effects": "https://github.com/LeiQiaoZhi/Easy-Text-Effect.git",
+    "com.qiaozhilei.easy-text-effects": "https://github.com/nnra6864/Easy-Text-Effects-for-Unity.git#ChangeEventsInRefresh",
     "com.redbluegames.mulligan": "https://github.com/redbluegames/unity-mulligan-renamer.git?path=/Assets/RedBlueGames/MulliganRenamer",
     "com.seaeees.simple-folder-icon": "https://github.com/SeaeeesSan/SimpleFolderIcon.git?path=Packages/com.seaeees.simple-folder-icon",
     "com.smkplus.custom-toolbar": "https://github.com/smkplus/CustomToolbar.git#master",

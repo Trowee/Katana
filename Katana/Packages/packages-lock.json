@@ -82,13 +82,13 @@
       "hash": "05a6e715bc323094631499909e673904132e669b"
     },
     "com.qiaozhilei.easy-text-effects": {
-      "version": "https://github.com/LeiQiaoZhi/Easy-Text-Effect.git",
+      "version": "https://github.com/nnra6864/Easy-Text-Effects-for-Unity.git#ChangeEventsInRefresh",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.unity.ugui": "1.0.0"
       },
-      "hash": "39bd6c09605ab333277795f9525cfe52d697f2f6"
+      "hash": "6fa13090cd69280bced5350e7caa83b3712e4c94"
     },
     "com.redbluegames.mulligan": {
       "version": "https://github.com/redbluegames/unity-mulligan-renamer.git?path=/Assets/RedBlueGames/MulliganRenamer",
