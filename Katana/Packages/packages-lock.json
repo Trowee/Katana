@@ -88,7 +88,7 @@
       "dependencies": {
         "com.unity.ugui": "1.0.0"
       },
-      "hash": "a680e21539eaa9cbf3763db8d2acd10cafe1cfb1"
+      "hash": "39bd6c09605ab333277795f9525cfe52d697f2f6"
     },
     "com.redbluegames.mulligan": {
       "version": "https://github.com/redbluegames/unity-mulligan-renamer.git?path=/Assets/RedBlueGames/MulliganRenamer",
