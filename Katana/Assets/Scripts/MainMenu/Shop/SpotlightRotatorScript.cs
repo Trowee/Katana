@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace DefaultNamespace
+namespace Assets.Scripts.MainMenu.Shop
 {
     [ExecuteAlways]
     public class SpotlightRotatorScript : MonoBehaviour
