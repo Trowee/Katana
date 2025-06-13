@@ -57,12 +57,17 @@ namespace Assets.Scripts.Fruits
 
         private void HandleFragments(List<GameObject> fragments)
         {
+            if (fragments.Count < 1) return;
+
             fragments.ForEach(fragment =>
             {
                 var frag = fragment.AddComponent<FragmentScript>();
                 frag.CopySettings(_fragmentSettings);
                 frag.GetDestroyed();
+                Debug.Log($"Destroying: {frag.name}");
             });
+
+            Destroy(fragments[0].transform.parent.gameObject, _fragmentSettings.Lifetime + 1);
         }
 
         private void GetDestroyed()

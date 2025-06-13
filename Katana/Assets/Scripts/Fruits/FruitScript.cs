@@ -70,6 +70,8 @@ namespace Assets.Scripts.Fruits
                                      Vector3 forcePos = default,
                                      float force = 0)
         {
+            if (fragments.Count < 1) return;
+
             fragments.ForEach(fragment =>
             {
                 var frag = fragment.AddComponent<FragmentScript>();
@@ -80,6 +82,8 @@ namespace Assets.Scripts.Fruits
                 frag.Rigidbody.linearVelocity = _rigidbody.linearVelocity;
                 frag.Rigidbody.AddForce(force * forceDir, ForceMode.Impulse);
             });
+
+            Destroy(fragments[0].transform.parent.gameObject, _fragmentSettings.Lifetime + 1);
         }
 
         private void GetDestroyed()

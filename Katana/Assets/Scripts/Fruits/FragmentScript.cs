@@ -10,7 +10,7 @@ public class FragmentScript : MonoBehaviour
     public Rigidbody Rigidbody;
     private Collider _collider;
 
-    [SerializeField] private float _lifetime = 10;
+    public float Lifetime = 10;
 
     [FoldoutGroup("Disappear Animation")]
     [SerializeField] private float _disappearTime = 1;
@@ -26,7 +26,7 @@ public class FragmentScript : MonoBehaviour
     public void CopySettings(FragmentScript original)
     {
         gameObject.layer = original.gameObject.layer;
-        _lifetime = original._lifetime;
+        Lifetime = original.Lifetime;
         _disappearTime = original._disappearTime;
         _disappearCurve = original._disappearCurve;
     }
@@ -35,7 +35,7 @@ public class FragmentScript : MonoBehaviour
 
     private IEnumerator DestroyRoutine()
     {
-        yield return new WaitForSeconds(_lifetime);
+        yield return new WaitForSeconds(Lifetime);
         _collider.enabled = false;
         Rigidbody.useGravity = false;
 
@@ -47,5 +47,7 @@ public class FragmentScript : MonoBehaviour
             transform.localScale = Vector3.LerpUnclamped(originalScale, Vector3.zero, t);
             yield return null;
         }
+
+        // Parent should get destroyed so no need to cleanup here
     }
 }
