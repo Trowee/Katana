@@ -18,9 +18,7 @@ namespace Assets.Scripts.Fruits
         [SerializeField] private int _coins;
 
         [FoldoutGroup("Destruction")]
-        [SerializeField] private int _fragmentLayer;
-        [FoldoutGroup("Destruction")]
-        [SerializeField] private float _fragmentLifetime = 10;
+        [SerializeField, AssetsOnly] FruitFragmentScript _fragmentSettings;
         [FoldoutGroup("Destruction/Slice")]
         [SerializeField, Required] private Slice _slice;
         [FoldoutGroup("Destruction/Slice")]
@@ -58,14 +56,14 @@ namespace Assets.Scripts.Fruits
             var forcePos = ColosseumSceneManager.Player.transform.position;
             HandleFragments(_slice.ComputeSlice(sliceNormal, sliceOrigin), forcePos, _sliceForce);
 
-            GetDestroyed(true);
+            GetDestroyed();
             GameManager.ItemManager.Coins += _coins;
         }
 
         public void GetFractured(Vector3 forcePos = default, float fractureForce = 0)
         {
             HandleFragments(_fracture.ComputeFracture(), forcePos, fractureForce);
-            GetDestroyed(false);
+            GetDestroyed();
         }
 
         private void HandleFragments(List<GameObject> fragments,
@@ -74,19 +72,17 @@ namespace Assets.Scripts.Fruits
         {
             fragments.ForEach(fragment =>
             {
-                fragment.layer = _fragmentLayer;
+                var frag = fragment.AddComponent<FruitFragmentScript>();
+                frag.CopySettings(_fragmentSettings);
+                frag.GetDestroyed();
+
                 var forceDir = fragment.transform.position - forcePos;
-
-                var rb = fragment.GetComponent<Rigidbody>();
-                rb.linearVelocity = _rigidbody.linearVelocity;
-                rb.AddForce(force * forceDir, ForceMode.Impulse);
-
-                // TODO: Add the fragment component instead
-                Destroy(fragment.gameObject, _fragmentLifetime);
+                frag.Rigidbody.linearVelocity = _rigidbody.linearVelocity;
+                frag.Rigidbody.AddForce(force * forceDir, ForceMode.Impulse);
             });
         }
 
-        private void GetDestroyed(bool destroyedByPlayer)
+        private void GetDestroyed()
         {
             _collider.enabled = false;
             _explosionParticles.ForEach(x => x.Play());

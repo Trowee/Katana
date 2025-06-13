@@ -4,7 +4,6 @@ using Assets.Scripts.Core;
 using Assets.Scripts.Player.Camera;
 using Assets.Scripts.TimeScale;
 using NnUtils.Modules.Easings;
-using NnUtils.Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -83,10 +82,9 @@ namespace Assets.Scripts.Player
                     var cPos = c.point;
                     var cNorm = c.normal;
 
-                    var hitUp = Vector3.Dot(transform.up, -cNorm) > 0;
-                    var hitForward = Vector3.Dot(transform.forward, -cNorm) > 0;
+                    var hitUp = Vector3.Dot(transform.up, -cNorm) > 0.5f;
+                    var hitForward = Vector3.Dot(transform.forward, -cNorm) > 0.5f;
                     if (!hitUp && !hitForward) continue;
-                    Debug.Log("Here");
 
                     var sliceDir = hitUp
                         ? Vector3.Cross(transform.forward, transform.up).normalized
