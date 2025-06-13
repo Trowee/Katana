@@ -85,8 +85,8 @@ namespace Assets.Scripts.Fruits
         private void GetDestroyed()
         {
             _collider.enabled = false;
-            _explosionParticles.ForEach(x => x.Play());
             _particles.SetParent(null);
+            _explosionParticles.ForEach(x => x.Play());
             Destroy(_particles.gameObject, DestroyParticlesAfter);
             Destroy(gameObject);
         }
