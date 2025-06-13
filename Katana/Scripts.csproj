@@ -59,6 +59,7 @@
     <Compile Include="Assets/Scripts/MainMenu/MainMenuButton.cs" />
     <Compile Include="Assets/Scripts/AssemblyAttributes.cs" />
     <Compile Include="Assets/Scripts/Core/ISliceable.cs" />
+    <Compile Include="Assets/Scripts/Fruits/FruitFragmentScript.cs" />
     <Compile Include="Assets/Scripts/Items/ItemManager.cs" />
     <Compile Include="Assets/Scripts/MainMenu/MainMenuManager.cs" />
     <Compile Include="Assets/Scripts/TimeScale/TimeScaleManager.cs" />
@@ -441,6 +442,9 @@
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/PackageCache/com.unity.ext.nunit/net40/unity-custom/nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="ReportGeneratorMerged">
+      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/PackageCache/com.unity.testtools.codecoverage/lib/ReportGenerator/ReportGeneratorMerged.dll</HintPath>
     </Reference>
     <Reference Include="unityplastic">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/PackageCache/com.unity.collab-proxy/Lib/Editor/unityplastic.dll</HintPath>
@@ -859,6 +863,9 @@
     <Reference Include="abzorba.artificetoolkit.runtime">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/abzorba.artificetoolkit.runtime.dll</HintPath>
     </Reference>
+    <Reference Include="RuntimeAssembly">
+      <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/RuntimeAssembly.dll</HintPath>
+    </Reference>
     <Reference Include="EasyTextEffects">
       <HintPath>/home/nnra/Data/Projects/Unity/Katana/Katana/Library/ScriptAssemblies/EasyTextEffects.dll</HintPath>
     </Reference>
@@ -873,10 +880,6 @@
     <ProjectReference Include="nnra.NnUtils.csproj">
       <Project>{b68e8857-48ed-d1eb-7e8b-69c8a9ec45c8}</Project>
       <Name>nnra.NnUtils</Name>
-    </ProjectReference>
-    <ProjectReference Include="RuntimeAssembly.csproj">
-      <Project>{503c234c-af3d-1977-c68d-c94b88a49c06}</Project>
-      <Name>RuntimeAssembly</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

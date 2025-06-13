@@ -1,0 +1,15 @@
+{
+  "lsp": {
+    "dotrush": {
+      "settings": {
+        "dotrush": {
+          "roslyn": {
+            "showItemsFromUnimportedNamespaces": true,
+            "compilerDiagnosticsScope": "Project",
+            "analyzerDiagnosticsScope": "Document"
+          }
+        }
+      }
+    }
+  }
+}

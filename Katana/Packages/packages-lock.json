@@ -71,6 +71,16 @@
       },
       "hash": "123957fbc104b61dbc5705a1d329ffd275357ea3"
     },
+    "com.nnra6864.openfracture": {
+      "version": "https://github.com/nnra6864/OpenFracture.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.test-framework": "1.1.30",
+        "com.unity.testtools.codecoverage": "1.0.1"
+      },
+      "hash": "07b1a499a3354e2d3bf5702f63a2d62d11f3bfc3"
+    },
     "com.nnra6864.smoothscenecamera": {
       "version": "https://github.com/nnra6864/SmoothSceneCamera.git",
       "depth": 0,
@@ -277,6 +287,13 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.unity.settings-manager": {
+      "version": "2.0.1",
+      "depth": 2,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
     "com.unity.shadergraph": {
       "version": "17.0.3",
       "depth": 1,
@@ -314,6 +331,16 @@
       "dependencies": {
         "com.unity.test-framework": "1.1.31",
         "com.unity.modules.jsonserialize": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.testtools.codecoverage": {
+      "version": "1.2.6",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.test-framework": "1.0.16",
+        "com.unity.settings-manager": "1.0.1"
       },
       "url": "https://packages.unity.com"
     },
