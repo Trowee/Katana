@@ -5,7 +5,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Collider))]
-public class FruitFragmentScript : MonoBehaviour
+public class FragmentScript : MonoBehaviour
 {
     public Rigidbody Rigidbody;
     private Collider _collider;
@@ -23,7 +23,7 @@ public class FruitFragmentScript : MonoBehaviour
         _collider = GetComponent<Collider>();
     }
 
-    public void CopySettings(FruitFragmentScript original)
+    public void CopySettings(FragmentScript original)
     {
         gameObject.layer = original.gameObject.layer;
         _lifetime = original._lifetime;

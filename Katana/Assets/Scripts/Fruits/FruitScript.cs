@@ -18,7 +18,7 @@ namespace Assets.Scripts.Fruits
         [SerializeField] private int _coins;
 
         [FoldoutGroup("Destruction")]
-        [SerializeField, AssetsOnly] FruitFragmentScript _fragmentSettings;
+        [SerializeField, AssetsOnly] FragmentScript _fragmentSettings;
         [FoldoutGroup("Destruction/Slice")]
         [SerializeField, Required] private Slice _slice;
         [FoldoutGroup("Destruction/Slice")]
@@ -72,7 +72,7 @@ namespace Assets.Scripts.Fruits
         {
             fragments.ForEach(fragment =>
             {
-                var frag = fragment.AddComponent<FruitFragmentScript>();
+                var frag = fragment.AddComponent<FragmentScript>();
                 frag.CopySettings(_fragmentSettings);
                 frag.GetDestroyed();
 
