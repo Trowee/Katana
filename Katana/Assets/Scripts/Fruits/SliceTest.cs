@@ -2,7 +2,7 @@ using Assets.Scripts.Core;
 using UnityEngine;
 
 [RequireComponent(typeof(Slice))]
-public class SliceTest : MonoBehaviour, ISliceable
+public class SliceTest : MonoBehaviour, IDestructible
 {
     [SerializeField] private Slice _slice;
 

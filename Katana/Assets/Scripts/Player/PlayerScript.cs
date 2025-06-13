@@ -76,7 +76,7 @@ namespace Assets.Scripts.Player
         {
             if (ColosseumSceneManager.Instance.IsDead) return;
 
-            if (col.gameObject.TryGetComponent(out ISliceable sliceable))
+            if (col.gameObject.TryGetComponent(out IDestructible destructible))
                 foreach (var c in col.contacts)
                 {
                     var cPos = c.point;
@@ -90,7 +90,7 @@ namespace Assets.Scripts.Player
                         ? Vector3.Cross(transform.forward, transform.up).normalized
                         : Vector3.Cross(transform.up, transform.forward).normalized;
 
-                    sliceable.GetSliced(cPos, sliceDir, col.relativeVelocity.magnitude);
+                    destructible.GetSliced(cPos, sliceDir, col.relativeVelocity.magnitude);
                     break;
                 }
 

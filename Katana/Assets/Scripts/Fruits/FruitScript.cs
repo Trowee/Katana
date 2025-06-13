@@ -9,7 +9,7 @@ namespace Assets.Scripts.Fruits
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(Slice))]
     [RequireComponent(typeof(Fracture))]
-    public class FruitScript : MonoBehaviour, ISliceable
+    public class FruitScript : MonoBehaviour, IDestructible
     {
         [SerializeField, Required] private Collider _collider;
         [SerializeField, Required] private Rigidbody _rigidbody;
