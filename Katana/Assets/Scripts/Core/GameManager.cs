@@ -25,19 +25,20 @@ namespace Assets.Scripts.Core
                 }
 
                 _instance = value;
+                _instance.transform.SetParent(null);
                 DontDestroyOnLoad(_instance.gameObject);
             }
         }
 
         [ReadOnly, SerializeField, Required] private SettingsManager _settingsManager;
         public static SettingsManager SettingsManager => Instance._settingsManager;
-        
+
         [ReadOnly, SerializeField, Required] private TimeScaleManager _timeScaleManager;
         public static TimeScaleManager TimeScaleManager => Instance._timeScaleManager;
 
         [ReadOnly, SerializeField, Required] private ItemManager _itemManager;
         public static ItemManager ItemManager => Instance._itemManager;
-        
+
         private void Reset()
         {
             _settingsManager = GetComponent<SettingsManager>();
