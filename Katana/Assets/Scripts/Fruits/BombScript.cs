@@ -38,6 +38,12 @@ namespace Assets.Scripts.Fruits
         [Button]
         public void Explode()
         {
+            if (!Application.isPlaying)
+            {
+                Debug.LogWarning("This function can only be ran in Play Mode");
+                return;
+            }
+
             GetFractured(transform.position, _explosionForce);
             DestroyEntities();
             AffectRigidbodies();
