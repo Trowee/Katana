@@ -49,6 +49,12 @@ namespace Assets.Scripts.Fruits
                              _fractureForce * _rigidbody.linearVelocity.magnitude);
         }
 
+        public void GetFractured(Vector3 forceOrigin = default, float fractureForce = 0)
+        {
+            HandleFragments(_fracture.ComputeFracture(), forceOrigin, fractureForce);
+            GetDestroyed();
+        }
+
         public void GetSliced(Vector3 sliceOrigin, Vector3 sliceNormal, float sliceVelocity)
         {
             if (sliceVelocity < _destroyForce) return;
@@ -58,12 +64,6 @@ namespace Assets.Scripts.Fruits
 
             GetDestroyed();
             GameManager.ItemManager.Coins += _coins;
-        }
-
-        public void GetFractured(Vector3 forcePos = default, float fractureForce = 0)
-        {
-            HandleFragments(_fracture.ComputeFracture(), forcePos, fractureForce);
-            GetDestroyed();
         }
 
         private void HandleFragments(List<GameObject> fragments,
