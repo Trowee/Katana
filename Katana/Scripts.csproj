@@ -71,6 +71,7 @@
     <Compile Include="Assets/Scripts/TimeScale/TimeScaleKey.cs" />
     <Compile Include="Assets/Scripts/MainMenu/MainMenuButton.cs" />
     <Compile Include="Assets/Scripts/AssemblyAttributes.cs" />
+    <Compile Include="Assets/Scripts/Editor/BuildScript.cs" />
     <Compile Include="Assets/Scripts/Fruits/FragmentScript.cs" />
     <Compile Include="Assets/Scripts/Items/ItemManager.cs" />
     <Compile Include="Assets/Scripts/MainMenu/MainMenuManager.cs" />
