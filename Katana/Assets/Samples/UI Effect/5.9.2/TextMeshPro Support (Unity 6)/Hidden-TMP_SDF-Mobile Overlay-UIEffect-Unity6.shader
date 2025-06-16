@@ -1,9 +1,9 @@
-﻿// [OptionalShader] com.coffee.softmask-for-ugui: Hidden/TextMeshPro/Mobile/Distance Field (UIEffect)
-// [OptionalShader] com.coffee.ui-effect: Hidden/TextMeshPro/Mobile/Distance Field (SoftMaskable)
-Shader "Hidden/TextMeshPro/Mobile/Distance Field (UIEffect)" {
+﻿// [OptionalShader] com.coffee.softmask-for-ugui: Hidden/TextMeshPro/Mobile/Distance Field Overlay (UIEffect)
+// [OptionalShader] com.coffee.ui-effect: Hidden/TextMeshPro/Mobile/Distance Field Overlay (SoftMaskable)
+Shader "Hidden/TextMeshPro/Mobile/Distance Field Overlay (UIEffect)" {
 
 Properties {
-	_FaceColor          ("Face Color", Color) = (1,1,1,1)
+	_FaceColor		    ("Face Color", Color) = (1,1,1,1)
 	_FaceDilate			("Face Dilate", Range(-1,1)) = 0
 
 	_OutlineColor	    ("Outline Color", Color) = (0,0,0,1)
@@ -52,8 +52,8 @@ Properties {
 
 SubShader {
 	Tags
-	{
-		"Queue"="Transparent"
+  {
+		"Queue"="Overlay"
 		"IgnoreProjector"="True"
 		"RenderType"="Transparent"
 	}
@@ -72,7 +72,7 @@ SubShader {
 	ZWrite Off
 	Lighting Off
 	Fog { Mode Off }
-	ZTest [unity_GUIZTestMode]
+	ZTest Always
 	// ==== UIEFFECT START ====
 	Blend [_SrcBlend] [_DstBlend]
 	// ==== UIEFFECT END ====
@@ -80,7 +80,6 @@ SubShader {
 
 	Pass {
 		CGPROGRAM
-		#pragma enable_d3d11_debug_symbols
 		#pragma vertex VertShader
 		#pragma fragment PixShader
 		#pragma shader_feature __ OUTLINE_ON
@@ -93,11 +92,11 @@ SubShader {
         #pragma shader_feature_local_fragment _ TONE_GRAYSCALE TONE_SEPIA TONE_NEGATIVE TONE_RETRO TONE_POSTERIZE
         #pragma shader_feature_local_fragment _ COLOR_FILTER
         #pragma shader_feature_local_fragment _ SAMPLING_BLUR_FAST SAMPLING_BLUR_MEDIUM SAMPLING_BLUR_DETAIL SAMPLING_PIXELATION SAMPLING_RGB_SHIFT SAMPLING_EDGE_LUMINANCE SAMPLING_EDGE_ALPHA
-        #pragma shader_feature_local_fragment _ TRANSITION_FADE TRANSITION_CUTOFF TRANSITION_DISSOLVE TRANSITION_SHINY TRANSITION_MASK TRANSITION_MELT TRANSITION_BURN TRANSITION_PATTERN
+        #pragma shader_feature_local_fragment _ TRANSITION_FADE TRANSITION_CUTOFF TRANSITION_DISSOLVE TRANSITION_SHINY TRANSITION_MASK TRANSITION_MELT TRANSITION_BURN TRANSITION_PATTERN TRANSITION_BLAZE
         #pragma shader_feature_local_fragment _ EDGE_PLAIN EDGE_SHINY
         #pragma shader_feature_local_fragment _ DETAIL_MASKING DETAIL_MULTIPLY DETAIL_ADDITIVE DETAIL_SUBTRACTIVE DETAIL_REPLACE DETAIL_MULTIPLY_ADDITIVE
         #pragma shader_feature_local_fragment _ TARGET_HUE TARGET_LUMINANCE
-        #pragma shader_feature_local_fragment _ GRADATION_GRADIENT GRADATION_RADIAL GRADATION_COLOR2 GRADATION_COLOR4
+        #pragma shader_feature_local_fragment _ GRADATION_GRADIENT GRADATION_COLOR2 GRADATION_COLOR4
         #pragma shader_feature_fragment _ UIEFFECT_EDITOR
         // ==== UIEFFECT END ====
 
@@ -113,7 +112,8 @@ SubShader {
 		#include "UnityUI.cginc"
 		#include "Assets/TextMesh Pro/Shaders/TMPro_Properties.cginc"
 
-		struct vertex_t {
+		struct vertex_t
+		{
 			UNITY_VERTEX_INPUT_INSTANCE_ID
 			float4	vertex			: POSITION;
 			float3	normal			: NORMAL;
@@ -125,7 +125,8 @@ SubShader {
 			// ==== UIEFFECT END ====
 		};
 
-		struct pixel_t {
+		struct pixel_t
+		{
 			UNITY_VERTEX_INPUT_INSTANCE_ID
 			UNITY_VERTEX_OUTPUT_STEREO
 			float4	vertex			: SV_POSITION;
@@ -134,20 +135,21 @@ SubShader {
 			float4	texcoord0		: TEXCOORD0;			// Texture UV, Mask UV
 			half4	param			: TEXCOORD1;			// Scale(x), BiasIn(y), BiasOut(z), Bias(w)
 			half4	mask			: TEXCOORD2;			// Position in clip space(xy), Softness(zw)
-			#if (UNDERLAY_ON | UNDERLAY_INNER)
+
+		    #if (UNDERLAY_ON | UNDERLAY_INNER)
 			float4	texcoord1		: TEXCOORD3;			// Texture UV, alpha, reserved
 			half2	underlayParam	: TEXCOORD4;			// Scale(x), Bias(y)
-			#endif
+		    #endif
 			// ==== UIEFFECT START ====
 		    float4 uvMask			: TEXCOORD5;
 		    float4 worldPosition	: TEXCOORD6;
-		    fixed  alpha			: TEXCOORD7;
+			fixed  alpha			: TEXCOORD7;
 			// ==== UIEFFECT END ====
 		};
 
 		float _UIMaskSoftnessX;
         float _UIMaskSoftnessY;
-        int _UIVertexColorAlwaysGammaSpace;
+		int _UIVertexColorAlwaysGammaSpace;
 
 		pixel_t VertShader(vertex_t input)
 		{
@@ -185,10 +187,10 @@ SubShader {
             {
                 input.color.rgb = UIGammaToLinear(input.color.rgb);
             }
-            float opacity = 1;
-			#if (UNDERLAY_ON | UNDERLAY_INNER)
-			opacity = 1.0;
-			#endif
+			float opacity = 1;
+		    #if (UNDERLAY_ON | UNDERLAY_INNER)
+				opacity = 1.0;
+		    #endif
 
 			fixed4 faceColor = fixed4(input.color.rgb, opacity) * _FaceColor;
 			faceColor.rgb *= faceColor.a;
@@ -198,14 +200,14 @@ SubShader {
 			outlineColor.rgb *= outlineColor.a;
 			outlineColor = lerp(faceColor, outlineColor, sqrt(min(1.0, (outline * 2))));
 
-			#if (UNDERLAY_ON | UNDERLAY_INNER)
+		    #if (UNDERLAY_ON | UNDERLAY_INNER)
 			layerScale /= 1 + ((_UnderlaySoftness * _ScaleRatioC) * layerScale);
 			float layerBias = (.5 - weight) * layerScale - .5 - ((_UnderlayDilate * _ScaleRatioC) * .5 * layerScale);
 
 			float x = -(_UnderlayOffsetX * _ScaleRatioC) * _GradientScale / _TextureWidth;
 			float y = -(_UnderlayOffsetY * _ScaleRatioC) * _GradientScale / _TextureHeight;
 			float2 layerOffset = float2(x, y);
-			#endif
+		    #endif
 
 			// Generate UV for the Masking Texture
 			float4 clampedRect = clamp(_ClipRect, -2e10, 2e10);
@@ -217,7 +219,6 @@ SubShader {
 			output.outlineColor = outlineColor;
 			output.texcoord0 = float4(input.texcoord0.x, input.texcoord0.y, maskUV.x, maskUV.y);
 			output.param = half4(scale, bias - outline, bias + outline, bias);
-
 			const half2 maskSoftness = half2(max(_UIMaskSoftnessX, _MaskSoftnessX), max(_UIMaskSoftnessY, _MaskSoftnessY));
 			output.mask = half4(vert.xy * 2 - clampedRect.xy - clampedRect.zw, 0.25 / (0.25 * maskSoftness + pixelSize.xy));
 			#if (UNDERLAY_ON || UNDERLAY_INNER)
@@ -240,29 +241,28 @@ SubShader {
 		{
 			pixel_t input = _fragInput;
 			float2 uvMove = uv - input.texcoord0.xy;
-
 			half d = tex2D(_MainTex, input.texcoord0.xy + uvMove).a * input.param.x;
 			half4 c = input.faceColor * saturate(d - input.param.w);
 
-			#ifdef OUTLINE_ON
+		    #ifdef OUTLINE_ON
 			c = lerp(input.outlineColor, input.faceColor, saturate(d - input.param.z));
 			c *= saturate(d - input.param.y);
-			#endif
+		    #endif
 
-			#if UNDERLAY_ON
+		    #if UNDERLAY_ON
 			d = tex2D(_MainTex, input.texcoord1.xy + uvMove).a * input.underlayParam.x;
 			c += float4(_UnderlayColor.rgb * _UnderlayColor.a, _UnderlayColor.a) * saturate(d - input.underlayParam.y) * (1 - c.a);
-			#endif
+		    #endif
 
-			#if UNDERLAY_INNER
+		    #if UNDERLAY_INNER
 			half sd = saturate(d - input.param.z);
 			d = tex2D(_MainTex, input.texcoord1.xy + uvMove).a * input.underlayParam.x;
 			c += float4(_UnderlayColor.rgb * _UnderlayColor.a, _UnderlayColor.a) * (1 - saturate(d - input.underlayParam.y)) * sd * (1 - c.a);
-			#endif
+		    #endif
 
-			#if (UNDERLAY_ON | UNDERLAY_INNER)
+		    #if (UNDERLAY_ON | UNDERLAY_INNER)
 			c *= input.texcoord1.z;
-			#endif
+		    #endif
 
 			return c;
 		}
@@ -271,19 +271,18 @@ SubShader {
 		#include "Packages/com.coffee.ui-effect/Shaders/UIEffect.cginc"
 		// ==== UIEFFECT END ====
 
-		// PIXEL SHADER
 		fixed4 PixShader(pixel_t input) : SV_Target
 		{
 			UNITY_SETUP_INSTANCE_ID(input);
 			_fragInput = input;
 			half4 c = uieffect(input.texcoord0.xy, input.uvMask, input.worldPosition);
 			c *= input.alpha;
-
-			// Alternative implementation to UnityGet2DClipping with support for softness.
-			#if UNITY_UI_CLIP_RECT
+			
+		    // Alternative implementation to UnityGet2DClipping with support for softness.
+		    #if UNITY_UI_CLIP_RECT
 			half2 m = saturate((_ClipRect.zw - _ClipRect.xy - abs(input.mask.xy)) * input.mask.zw);
 			c *= m.x * m.y;
-			#endif
+		    #endif
 
 			// ==== SOFTMASKABLE START ====
 			#if SOFTMASKABLE
@@ -291,9 +290,9 @@ SubShader {
 			#endif
 			// ==== SOFTMASKABLE END ====
 
-			#if UNITY_UI_ALPHACLIP
+            #if UNITY_UI_ALPHACLIP
 			clip(c.a - 0.001);
-			#endif
+		    #endif
 
 			return c;
 		}

@@ -23,7 +23,7 @@
       "dependencies": {
         "com.unity.ugui": "1.0.0"
       },
-      "hash": "8a0e7d6b26fdd6eae7ade609495a11fa12cb543a"
+      "hash": "ec57c2a994addfc0ed4e3389aeae94d782c253c3"
     },
     "com.cqf.urpvolumetricfog": {
       "version": "https://github.com/CristianQiu/Unity-URP-Volumetric-Light.git",
