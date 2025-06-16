@@ -127,7 +127,7 @@
       "dependencies": {
         "com.unity.render-pipelines.universal": "14.0.11"
       },
-      "hash": "e7be0539c106b24c9d51f4f03d6f4367593109d9"
+      "hash": "3f7b28476cb83f2d56cf73a13c81de798a94f005"
     },
     "com.unity.ai.navigation": {
       "version": "2.0.5",
