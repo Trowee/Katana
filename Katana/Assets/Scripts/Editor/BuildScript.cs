@@ -15,7 +15,7 @@ public static class BuildScript
         var buildsDir = Path.GetFullPath(Path.Combine(Application.dataPath, "..", "..", "Builds"));
 
         BuildForLinux(buildsDir);
-        //BuildForWindows(buildsDir);
+        BuildForWindows(buildsDir);
     }
 
     public static void BuildForLinux(string buildsDir)
