@@ -82,7 +82,6 @@ namespace Assets.Scripts.MainMenu.Shop
             if (_nameLocalizeStringEvent)
             {
                 var ls = _item.LocalizedString;
-                //_nameLocalizeStringEvent.StringReference = ls;
                 _nameLocalizeStringEvent.StringReference
                                         .SetReference(ls.TableReference, ls.TableEntryReference);
                 ls.RefreshString();

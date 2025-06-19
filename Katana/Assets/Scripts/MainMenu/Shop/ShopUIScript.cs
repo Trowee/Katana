@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using ArtificeToolkit.Attributes;
 using Assets.Scripts.Core;
 using Assets.Scripts.Items;
@@ -70,7 +68,6 @@ namespace Assets.Scripts.MainMenu.Shop
         {
             _katana.sharedMaterial = ItemManager.SelectedItem?.Material;
             var ls = ItemManager.SelectedItem?.LocalizedString;
-            //_nameLocalizeStringEvent.StringReference = ls;
             _nameLocalizeStringEvent.StringReference
                                     .SetReference(ls.TableReference, ls.TableEntryReference);
             ls.RefreshString();
