@@ -47,6 +47,7 @@
     <Compile Include="Assets/Scripts/Player/Camera/Perspective.cs" />
     <Compile Include="Assets/Scripts/MainMenu/Shop/ShopItemScript.cs" />
     <Compile Include="Assets/Scripts/Core/DeathScreen.cs" />
+    <Compile Include="Assets/Scripts/LocalizeDropdown.cs" />
     <Compile Include="Assets/Scripts/Fruits/SliceTest.cs" />
     <Compile Include="Assets/Scripts/Fruits/BombScript.cs" />
     <Compile Include="Assets/Scripts/Core/ColosseumSceneManager.cs" />
@@ -1136,6 +1137,10 @@
     </Reference>
     <Reference Include="EasyTextEffects">
       <HintPath>Library/ScriptAssemblies/EasyTextEffects.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Localization">
+      <HintPath>Library/ScriptAssemblies/Unity.Localization.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEditor.UI">
