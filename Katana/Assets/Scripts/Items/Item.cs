@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ArtificeToolkit.Attributes;
 using UnityEngine;
 using EasyTextEffects;
+using UnityEngine.Localization;
 
 namespace Assets.Scripts.Items
 {
@@ -19,11 +20,13 @@ namespace Assets.Scripts.Items
         public Material Material;
         [OnValueChanged(nameof(HandlePropertyChanged))]
         public List<GlobalTextEffectEntry> NameTextEffects;
+        [OnValueChanged(nameof(HandlePropertyChanged))]
+        public LocalizedString _localizedString;
 
         public event Action OnPropertyChanged;
 
         private void HandlePropertyChanged() => OnPropertyChanged?.Invoke();
-        
+
         public event Action OnUnlocked;
 
         public bool Unlocked
