@@ -14,25 +14,8 @@ public static class BuildScript
     {
         var buildsDir = Path.GetFullPath(Path.Combine(Application.dataPath, "..", "..", "Builds"));
 
-        //BuildForWindows(buildsDir);
         BuildForLinux(buildsDir);
-    }
-
-    public static void BuildForWindows(string buildsDir)
-    {
-        string path = Path.Combine(buildsDir, "Windows");
-        EnsureDirectoryExists(path);
-
-        BuildPlayerOptions options = new BuildPlayerOptions
-        {
-            scenes = scenes,
-            target = BuildTarget.StandaloneWindows64,
-            locationPathName = Path.Combine(path, $"{GameName}.exe"),
-            options = BuildOptions.None
-        };
-
-        var result = BuildPipeline.BuildPlayer(options);
-        Debug.Log("Windows build result: " + result.summary.result);
+        BuildForWindows(buildsDir);
     }
 
     public static void BuildForLinux(string buildsDir)
@@ -50,6 +33,23 @@ public static class BuildScript
 
         var result = BuildPipeline.BuildPlayer(options);
         Debug.Log("Linux build result: " + result.summary.result);
+    }
+
+    public static void BuildForWindows(string buildsDir)
+    {
+        string path = Path.Combine(buildsDir, "Windows");
+        EnsureDirectoryExists(path);
+
+        BuildPlayerOptions options = new BuildPlayerOptions
+        {
+            scenes = scenes,
+            target = BuildTarget.StandaloneWindows64,
+            locationPathName = Path.Combine(path, $"{GameName}.exe"),
+            options = BuildOptions.None
+        };
+
+        var result = BuildPipeline.BuildPlayer(options);
+        Debug.Log("Windows build result: " + result.summary.result);
     }
 
     private static string[] FindEnabledEditorScenes() =>
