@@ -58,18 +58,23 @@ namespace Assets.Scripts.MainMenu.Shop
                 _nameLocalizeStringEvent.OnUpdateString.AddListener(UpdateNameText);
         }
         
-        private void UpdateNameText(string localizedText) => _nameTMP.text = localizedText;
+        private void UpdateNameText(string localizedText)
+        {
+            _nameTMP.text = localizedText;
+            ApplyNameEffects();
+        }
 
         private void UpdateCoins() => _coinsTMP.text = $@"₦{ItemManager.Coins}";
 
         private void UpdateKatana()
         {
             _katana.sharedMaterial = ItemManager.SelectedItem?.Material;
-            //_nameLocalizeStringEvent.StringReference = ItemManager.SelectedItem?.LocalizedString;
             var ls = ItemManager.SelectedItem?.LocalizedString;
-            _nameLocalizeStringEvent.StringReference.SetReference(ls.TableReference, ls.TableEntryReference);
+            //_nameLocalizeStringEvent.StringReference = ls;
+            _nameLocalizeStringEvent.StringReference
+                                    .SetReference(ls.TableReference, ls.TableEntryReference);
+            ls.RefreshString();
             _nameLocalizeStringEvent.RefreshString();
-            ApplyNameEffects();
         }
 
         private void ApplyNameEffects()

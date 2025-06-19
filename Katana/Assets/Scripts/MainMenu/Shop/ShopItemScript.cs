@@ -80,7 +80,14 @@ namespace Assets.Scripts.MainMenu.Shop
         {
             _nameLocalizeStringEvent = _nameTMP?.GetComponent<LocalizeStringEvent>();
             if (_nameLocalizeStringEvent)
-                _nameLocalizeStringEvent.StringReference = _item.LocalizedString;
+            {
+                var ls = _item.LocalizedString;
+                //_nameLocalizeStringEvent.StringReference = ls;
+                _nameLocalizeStringEvent.StringReference
+                                        .SetReference(ls.TableReference, ls.TableEntryReference);
+                ls.RefreshString();
+                _nameLocalizeStringEvent.RefreshString();
+            }
 
             _nameEffect = _nameTMP?.GetComponent<TextEffect>();
             if (_nameTMP) _nameTMP.text = _item?.Name;
