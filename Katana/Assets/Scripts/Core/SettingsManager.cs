@@ -1,9 +1,13 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using ArtificeToolkit.Attributes;
 using Assets.Scripts.Player.Camera;
+using Scripts;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
@@ -33,6 +37,11 @@ namespace Assets.Scripts.Core
             MotionBlur = PlayerPrefs.GetFloat("MotionBlur", 1);
             Perspective = (Perspective)Enum.Parse(typeof(Perspective),
                 PlayerPrefs.GetString("Perspective", "First"));
+
+            var localeCode = PlayerPrefs.GetString("Locale",
+                                               LocalizationSettings.SelectedLocale.Identifier.Code);
+            Locale = LocalizationSettings.AvailableLocales.Locales
+                                          .FirstOrDefault(x => x.Identifier.Code == localeCode);
 
             // Takes care of updating the UI
             MasterVolume = PlayerPrefs.GetFloat("MasterVolume", 0.5f);
@@ -67,6 +76,7 @@ namespace Assets.Scripts.Core
                     menuDOF.active = _useDOF;
                 
                 PlayerPrefs.SetInt("UseDOF", UseDOF ? 1 : 0);
+                PlayerPrefs.Save();
             }
         }
         
@@ -90,6 +100,7 @@ namespace Assets.Scripts.Core
                     mb.intensity.value = _motionBlur;
                 
                 PlayerPrefs.SetFloat("MotionBlur", value);
+                PlayerPrefs.Save();
             }
         }
         
@@ -111,9 +122,31 @@ namespace Assets.Scripts.Core
                 if (_perspective == value) return;
                 _perspective = value;
                 PlayerPrefs.SetString("Perspective", _perspective.ToString());
+                PlayerPrefs.Save();
             }
         }
         
+        #endregion
+ 
+        #region Locales
+        
+        private Locale _locale;
+        public Locale Locale
+        {
+            get => _locale;
+            set
+            {
+                if (_locale == value) return;
+                _locale = value;
+                LocalizationSettings.SelectedLocale = _locale;
+                PlayerPrefs.SetString("Locale", _locale.Identifier.Code);
+                PlayerPrefs.Save();
+            }
+        }
+
+        public void SetLocale(int index) =>
+            Locale = LocalizationSettings.AvailableLocales.Locales[index];
+
         #endregion
         
         #region Volume
@@ -136,6 +169,7 @@ namespace Assets.Scripts.Core
                 _masterVolume = value;
                 _master.audioMixer.SetFloat("MasterVolume", GetVolume(value));
                 PlayerPrefs.SetFloat("MasterVolume", value);
+                PlayerPrefs.Save();
             }
         }
 
@@ -149,6 +183,7 @@ namespace Assets.Scripts.Core
                 _sfxVolume = value;
                 _sfx.audioMixer.SetFloat("SFXVolume", GetVolume(value));
                 PlayerPrefs.SetFloat("SFXVolume", value);
+                PlayerPrefs.Save();
             }
         }
 
@@ -162,6 +197,7 @@ namespace Assets.Scripts.Core
                 _musicVolume = value;
                 _music.audioMixer.SetFloat("MusicVolume", GetVolume(value));
                 PlayerPrefs.SetFloat("MusicVolume", value);
+                PlayerPrefs.Save();
             }
         }
 

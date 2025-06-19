@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
@@ -14,8 +15,9 @@ public class LocalizeDropdown : MonoBehaviour
     {
         if (_tmpDropdown == null)
             _tmpDropdown = GetComponent<TMP_Dropdown>();
-
     }
+
+    private void Start() => ChangedLocale(LocalizationSettings.SelectedLocale);
 
     private void OnEnable() => LocalizationSettings.SelectedLocaleChanged += ChangedLocale;
 
@@ -23,9 +25,11 @@ public class LocalizeDropdown : MonoBehaviour
 
     private void ChangedLocale(Locale newLocale)
     {
-        List<TMP_Dropdown.OptionData> tmpDropdownOptions = new();
-        foreach (var dropdownOption in _dropdownOptions)
-            tmpDropdownOptions.Add(new TMP_Dropdown.OptionData(dropdownOption.GetLocalizedString()));
+        var tmpDropdownOptions = _dropdownOptions
+                                 .Select(dropdownOption =>
+                                             new TMP_Dropdown.OptionData(
+                                                 dropdownOption.GetLocalizedString()))
+                                 .ToList();
         _tmpDropdown.options = tmpDropdownOptions;
     }
 }
