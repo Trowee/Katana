@@ -21,7 +21,7 @@ namespace Assets.Scripts.Items
         [OnValueChanged(nameof(HandlePropertyChanged))]
         public List<GlobalTextEffectEntry> NameTextEffects;
         [OnValueChanged(nameof(HandlePropertyChanged))]
-        public LocalizedString _localizedString;
+        public LocalizedString LocalizedString;
 
         public event Action OnPropertyChanged;
 

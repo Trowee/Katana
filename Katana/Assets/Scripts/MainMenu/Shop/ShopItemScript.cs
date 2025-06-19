@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Globalization;
 using ArtificeToolkit.Attributes;
 using Assets.Scripts.Core;
 using Assets.Scripts.Items;
@@ -8,6 +6,7 @@ using EasyTextEffects;
 using NnUtils.Scripts;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization.Components;
 using Color = UnityEngine.Color;
 
 namespace Assets.Scripts.MainMenu.Shop
@@ -35,18 +34,14 @@ namespace Assets.Scripts.MainMenu.Shop
         private RectTransform _uiPanel;
 
         [FoldoutGroup("Components"), SerializeField, Required]
-        [OnValueChanged(nameof(HandleNameChanged))]
+        [OnValueChanged(nameof(HandleNameTMPChanged))]
         private TMP_Text _nameTMP;
-        
+
         [SerializeField, HideInInspector]
         private TextEffect _nameEffect;
-
-        private void HandleNameChanged()
-        {
-            _nameEffect = _nameTMP?.GetComponent<TextEffect>();
-            if (_nameTMP) _nameTMP.text = _item?.Name;
-            ApplyNameEffects();
-        }
+        
+        [SerializeField, HideInInspector]
+        private LocalizeStringEvent _nameLocalizeStringEvent;
 
         [FoldoutGroup("Components"), SerializeField, Required]
         private TMP_Text _priceTMP;
@@ -65,8 +60,8 @@ namespace Assets.Scripts.MainMenu.Shop
 
         private void Start()
         {
-            if (Application.isEditor) return;
-            
+            if (!Application.isPlaying) return;
+
             // Make the ui invisible
             _uiPanel.localScale = Vector3.zero;
 
@@ -76,7 +71,20 @@ namespace Assets.Scripts.MainMenu.Shop
 
         private void OnEnable()
         {
+            _nameLocalizeStringEvent = _nameTMP?.GetComponent<LocalizeStringEvent>();
+            _nameEffect = _nameTMP?.GetComponent<TextEffect>();
             HandleItemChanged();
+        }
+
+        private void HandleNameTMPChanged()
+        {
+            _nameLocalizeStringEvent = _nameTMP?.GetComponent<LocalizeStringEvent>();
+            if (_nameLocalizeStringEvent)
+                _nameLocalizeStringEvent.StringReference = _item.LocalizedString;
+
+            _nameEffect = _nameTMP?.GetComponent<TextEffect>();
+            if (_nameTMP) _nameTMP.text = _item?.Name;
+            ApplyNameEffects();
         }
 
         private void HandleItemChanged()
@@ -84,13 +92,15 @@ namespace Assets.Scripts.MainMenu.Shop
             if (_previousItem) _previousItem.OnPropertyChanged -= HandleItemChanged;
             if (_item) _item.OnPropertyChanged += HandleItemChanged;
             _previousItem = _item;
-            if (_item) HandleItemPropertyChanged();
+            HandleItemPropertyChanged();
         }
 
         private void HandleItemPropertyChanged()
         {
             if (_itemRenderer) _itemRenderer.GetComponent<Renderer>().material = _item?.Material;
             if (_nameTMP) _nameTMP.text = _item?.Name;
+            if (_nameLocalizeStringEvent)
+                _nameLocalizeStringEvent.StringReference = _item?.LocalizedString;
             if (_priceTMP) _priceTMP.text = $"₦{_item?.Price.ToString()}";
             ApplyNameEffects();
         }
