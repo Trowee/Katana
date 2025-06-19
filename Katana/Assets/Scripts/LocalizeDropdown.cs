@@ -15,8 +15,11 @@ public class LocalizeDropdown : MonoBehaviour
         if (_tmpDropdown == null)
             _tmpDropdown = GetComponent<TMP_Dropdown>();
 
-        LocalizationSettings.SelectedLocaleChanged += ChangedLocale;
     }
+
+    private void OnEnable() => LocalizationSettings.SelectedLocaleChanged += ChangedLocale;
+
+    private void OnDisable() => LocalizationSettings.SelectedLocaleChanged -= ChangedLocale;
 
     private void ChangedLocale(Locale newLocale)
     {
