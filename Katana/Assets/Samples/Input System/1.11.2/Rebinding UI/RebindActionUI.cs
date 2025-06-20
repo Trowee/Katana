@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
 ////TODO: localization support
 
@@ -55,7 +55,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
         /// <summary>
         /// Text component that receives the name of the action. Optional.
         /// </summary>
-        public Text actionLabel
+        public TMP_Text actionLabel
         {
             get => m_ActionLabel;
             set
@@ -69,7 +69,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
         /// Text component that receives the display string of the binding. Can be <c>null</c> in which
         /// case the component entirely relies on <see cref="updateBindingUIEvent"/>.
         /// </summary>
-        public Text bindingText
+        public TMP_Text bindingText
         {
             get => m_BindingText;
             set
@@ -77,34 +77,6 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
                 m_BindingText = value;
                 UpdateBindingDisplay();
             }
-        }
-
-        /// <summary>
-        /// Optional text component that receives a text prompt when waiting for a control to be actuated.
-        /// </summary>
-        /// <seealso cref="startRebindEvent"/>
-        /// <seealso cref="rebindOverlay"/>
-        public Text rebindPrompt
-        {
-            get => m_RebindText;
-            set => m_RebindText = value;
-        }
-
-        /// <summary>
-        /// Optional UI that is activated when an interactive rebind is started and deactivated when the rebind
-        /// is finished. This is normally used to display an overlay over the current UI while the system is
-        /// waiting for a control to be actuated.
-        /// </summary>
-        /// <remarks>
-        /// If neither <see cref="rebindPrompt"/> nor <c>rebindOverlay</c> is set, the component will temporarily
-        /// replaced the <see cref="bindingText"/> (if not <c>null</c>) with <c>"Waiting..."</c>.
-        /// </remarks>
-        /// <seealso cref="startRebindEvent"/>
-        /// <seealso cref="rebindPrompt"/>
-        public GameObject rebindOverlay
-        {
-            get => m_RebindOverlay;
-            set => m_RebindOverlay = value;
         }
 
         /// <summary>
@@ -272,16 +244,12 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
                     operation =>
                     {
                         m_RebindStopEvent?.Invoke(this, operation);
-                        if (m_RebindOverlay != null)
-                            m_RebindOverlay.SetActive(false);
                         UpdateBindingDisplay();
                         CleanUp();
                     })
                 .OnComplete(
                     operation =>
                     {
-                        if (m_RebindOverlay != null)
-                            m_RebindOverlay.SetActive(false);
                         m_RebindStopEvent?.Invoke(this, operation);
                         UpdateBindingDisplay();
                         CleanUp();
@@ -301,20 +269,8 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
             if (action.bindings[bindingIndex].isPartOfComposite)
                 partName = $"Binding '{action.bindings[bindingIndex].name}'. ";
 
-            // Bring up rebind overlay, if we have one.
-            m_RebindOverlay?.SetActive(true);
-            if (m_RebindText != null)
-            {
-                var text = !string.IsNullOrEmpty(m_RebindOperation.expectedControlType)
-                    ? $"{partName}Waiting for {m_RebindOperation.expectedControlType} input..."
-                    : $"{partName}Waiting for input...";
-                m_RebindText.text = text;
-            }
-
-            // If we have no rebind overlay and no callback but we have a binding text label,
-            // temporarily set the binding text label to "<Waiting>".
-            if (m_RebindOverlay == null && m_RebindText == null && m_RebindStartEvent == null && m_BindingText != null)
-                m_BindingText.text = "<Waiting...>";
+            // Temporarily set the binding text label to "<Waiting>".
+            m_BindingText.text = "Waiting For Input";
 
             // Give listeners a chance to act on the rebind starting.
             m_RebindStartEvent?.Invoke(this, m_RebindOperation);
@@ -384,19 +340,11 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
         [Tooltip("Text label that will receive the name of the action. Optional. Set to None to have the "
             + "rebind UI not show a label for the action.")]
         [SerializeField]
-        private Text m_ActionLabel;
+        private TMP_Text m_ActionLabel;
 
         [Tooltip("Text label that will receive the current, formatted binding string.")]
         [SerializeField]
-        private Text m_BindingText;
-
-        [Tooltip("Optional UI that will be shown while a rebind is in progress.")]
-        [SerializeField]
-        private GameObject m_RebindOverlay;
-
-        [Tooltip("Optional text label that will be updated with prompt for user input.")]
-        [SerializeField]
-        private Text m_RebindText;
+        private TMP_Text m_BindingText;
 
         [Tooltip("Event that is triggered when the way the binding is display should be updated. This allows displaying "
             + "bindings in custom ways, e.g. using images instead of text.")]
@@ -419,14 +367,14 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
 
         // We want the label for the action name to update in edit mode, too, so
         // we kick that off from here.
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         protected void OnValidate()
         {
             UpdateActionLabel();
             UpdateBindingDisplay();
         }
 
-        #endif
+#endif
 
         private void UpdateActionLabel()
         {
