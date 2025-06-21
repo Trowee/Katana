@@ -151,7 +151,7 @@ namespace Assets.Scripts.Rebind
 
             // Set on label (if any).
             if (m_BindingText)
-                m_BindingText.text = controlPath;
+                m_BindingText.text = controlPath?.ToUpper();
 
             // Give listeners a chance to configure UI in response.
             m_UpdateBindingUIEvent?.Invoke(this, displayString, deviceLayoutName, controlPath);
