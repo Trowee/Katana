@@ -15,7 +15,7 @@ namespace Assets.Scripts.Player
         private static SettingsManager Settings => GameManager.SettingsManager;
 
         private InputAction _dashAction, _dodgeAction, _flipAction, _perspectiveAction;
-        [FoldoutGroup("Components"), SerializeField] private InputActionAsset _inputActionAsset;
+
         [FoldoutGroup("Components"), SerializeField] private Rigidbody _rb;
         [FoldoutGroup("Components"), SerializeField] private Collider _collider;
         [FoldoutGroup("Components"), SerializeField] private GameObject _katanaObject;
@@ -56,20 +56,17 @@ namespace Assets.Scripts.Player
         private void Start()
         {
             _renderer.sharedMaterial = GameManager.ItemManager.SelectedItem.Material;
-            ColosseumSceneManager.CameraManager.SwitchCameraHandler(Settings.Perspective, _cameraSwitchDuration,
+            ColosseumSceneManager.CameraManager.SwitchCameraHandler(
+                Settings.Perspective, _cameraSwitchDuration,
                 _cameraSwitchEasing, unscaled: true);
             GetStuck(null);
+            
+            InitializeInputs();
         }
 
         private void Update()
         {
-            if (ColosseumSceneManager.Instance.IsDead) return;
-
             Tilt();
-            if (Input.GetKeyDown(KeyCode.Q)) ToggleCamera();
-            if (Input.GetKeyDown(KeyCode.Space)) Flip();
-            if (Input.GetKeyDown(KeyCode.Mouse0)) Dash();
-            if (Input.GetKeyDown(KeyCode.LeftShift)) Dodge();
         }
 
         private void OnCollisionEnter(Collision col)
@@ -99,6 +96,29 @@ namespace Assets.Scripts.Player
 
             // Try to stick
             if ((_stickMask & 1 << layer) != 0) Stick(col);
+        }
+
+        private void InitializeInputs()
+        {
+            _dashAction = InputSystem.actions.FindAction("Dash");
+            _dashAction.performed += OnDash;
+            
+            _dodgeAction = InputSystem.actions.FindAction("Dodge");
+            _dodgeAction.performed += OnDodge;
+            
+            _flipAction = InputSystem.actions.FindAction("Flip");
+            _flipAction.performed += OnFlip;
+            
+            _perspectiveAction = InputSystem.actions.FindAction("Perspective");
+            _perspectiveAction.performed += OnPerspective;
+        }
+
+        private void UninitializeInputs()
+        {
+            _dashAction.performed -= OnDash;
+            _dodgeAction.performed -= OnDodge;
+            _flipAction.performed -= OnFlip;
+            _perspectiveAction.performed -= OnPerspective;
         }
 
         private void Stick(Collision col)
@@ -158,6 +178,8 @@ namespace Assets.Scripts.Player
 
         private void Tilt()
         {
+            if (ColosseumSceneManager.Instance.IsDead) return;
+            
             // Return if stuck
             if (IsStuck) return;
 
@@ -175,8 +197,10 @@ namespace Assets.Scripts.Player
             _rb.MoveRotation(_rb.rotation * deltaRot);
         }
 
-        private void ToggleCamera()
+        private void ChangePerspective()
         {
+            if (ColosseumSceneManager.Instance.IsDead) return;
+            
             Settings.Perspective = Settings.Perspective switch
             {
                 Perspective.First => Perspective.Right,
@@ -190,6 +214,8 @@ namespace Assets.Scripts.Player
 
         private void Flip()
         {
+            if (ColosseumSceneManager.Instance.IsDead) return;
+            
             GetUnstuck();
 
             // Store forward
@@ -207,8 +233,15 @@ namespace Assets.Scripts.Player
             GameManager.TimeScaleManager.UpdateTimeScale(_flipTimeScale);
         }
 
+        private void OnDash(InputAction.CallbackContext ctx) => Dash();
+        private void OnDodge(InputAction.CallbackContext ctx) => Dodge();
+        private void OnFlip(InputAction.CallbackContext ctx)  => Flip();
+        private void OnPerspective(InputAction.CallbackContext ctx) => ChangePerspective();
+        
         private void Dash()
         {
+            if (ColosseumSceneManager.Instance.IsDead) return;
+            
             GetUnstuck();
 
             // Reset velocity
@@ -224,6 +257,8 @@ namespace Assets.Scripts.Player
 
         private void Dodge()
         {
+            if (ColosseumSceneManager.Instance.IsDead) return;
+            
             GetUnstuck();
 
             // Reset velocity
@@ -246,6 +281,7 @@ namespace Assets.Scripts.Player
             _katanaObject.SetActive(false);
             _rb.isKinematic = true;
             _collider.enabled = false;
+            UninitializeInputs();
             ColosseumSceneManager.Instance.Die();
         }
     }

@@ -64,7 +64,6 @@ namespace Assets.Scripts.Fruits
                 var frag = fragment.AddComponent<FragmentScript>();
                 frag.CopySettings(_fragmentSettings);
                 frag.GetDestroyed();
-                Debug.Log($"Destroying: {frag.name}");
             });
 
             Destroy(fragments[0].transform.parent.gameObject, _fragmentSettings.Lifetime + 1);
