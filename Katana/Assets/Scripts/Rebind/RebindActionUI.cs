@@ -23,7 +23,7 @@ namespace Assets.Scripts.Rebind
             set
             {
                 m_Action = value;
-                UpdateActionLabel();
+                //UpdateActionLabel();
                 UpdateBindingDisplay();
             }
         }
@@ -61,7 +61,7 @@ namespace Assets.Scripts.Rebind
             set
             {
                 m_ActionLabel = value;
-                UpdateActionLabel();
+                //UpdateActionLabel();
             }
         }
 
@@ -151,7 +151,7 @@ namespace Assets.Scripts.Rebind
 
             // Set on label (if any).
             if (m_BindingText)
-                m_BindingText.text = displayString;
+                m_BindingText.text = controlPath;
 
             // Give listeners a chance to configure UI in response.
             m_UpdateBindingUIEvent?.Invoke(this, displayString, deviceLayoutName, controlPath);
@@ -347,7 +347,7 @@ namespace Assets.Scripts.Rebind
 #if UNITY_EDITOR
         protected void OnValidate()
         {
-            UpdateActionLabel();
+            //UpdateActionLabel();
             UpdateBindingDisplay();
         }
 
