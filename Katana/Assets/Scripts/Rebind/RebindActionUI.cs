@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
+using Assets.Scripts.Core;
+using NnUtils.Scripts;
 using TMPro;
+using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
-////TODO: localization support
-
-////TODO: deal with composites that have parts bound in different control schemes
-
-namespace UnityEngine.InputSystem.Samples.RebindUI
+namespace Assets.Scripts.Rebind
 {
     /// <summary>
     /// A reusable component with a self-contained UI for rebinding a single action.
@@ -83,41 +83,17 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
         /// Event that is triggered every time the UI updates to reflect the current binding.
         /// This can be used to tie custom visualizations to bindings.
         /// </summary>
-        public UpdateBindingUIEvent updateBindingUIEvent
-        {
-            get
-            {
-                if (m_UpdateBindingUIEvent == null)
-                    m_UpdateBindingUIEvent = new UpdateBindingUIEvent();
-                return m_UpdateBindingUIEvent;
-            }
-        }
+        public UpdateBindingUIEvent updateBindingUIEvent => m_UpdateBindingUIEvent ??= new();
 
         /// <summary>
         /// Event that is triggered when an interactive rebind is started on the action.
         /// </summary>
-        public InteractiveRebindEvent startRebindEvent
-        {
-            get
-            {
-                if (m_RebindStartEvent == null)
-                    m_RebindStartEvent = new InteractiveRebindEvent();
-                return m_RebindStartEvent;
-            }
-        }
+        public InteractiveRebindEvent startRebindEvent => m_RebindStartEvent ??= new();
 
         /// <summary>
         /// Event that is triggered when an interactive rebind has been completed or canceled.
         /// </summary>
-        public InteractiveRebindEvent stopRebindEvent
-        {
-            get
-            {
-                if (m_RebindStopEvent == null)
-                    m_RebindStopEvent = new InteractiveRebindEvent();
-                return m_RebindStopEvent;
-            }
-        }
+        public InteractiveRebindEvent stopRebindEvent => m_RebindStopEvent ??= new();
 
         /// <summary>
         /// When an interactive rebind is in progress, this is the rebind operation controller.
@@ -174,7 +150,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
             }
 
             // Set on label (if any).
-            if (m_BindingText != null)
+            if (m_BindingText)
                 m_BindingText.text = displayString;
 
             // Give listeners a chance to configure UI in response.
@@ -233,13 +209,16 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
                 m_RebindOperation?.Dispose();
                 m_RebindOperation = null;
                 action.Enable();
+                this.ExecuteNextFrame(() => GameManager.SettingsManager.IsRebinding = false);
             }
 
             //Fixes the "InvalidOperationException: Cannot rebind action x while it is enabled" error
             action.Disable();
+            GameManager.SettingsManager.IsRebinding = true;
 
             // Configure the rebind.
             m_RebindOperation = action.PerformInteractiveRebinding(bindingIndex)
+                .WithCancelingThrough("<Keyboard>/escape")
                 .OnCancel(
                     operation =>
                     {
@@ -280,8 +259,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
 
         protected void OnEnable()
         {
-            if (s_RebindActionUIs == null)
-                s_RebindActionUIs = new List<RebindActionUI>();
+            s_RebindActionUIs ??= new List<RebindActionUI>();
             s_RebindActionUIs.Add(this);
             if (s_RebindActionUIs.Count == 1)
                 InputSystem.onActionChange += OnActionChange;
@@ -313,15 +291,14 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
             var actionMap = action?.actionMap ?? obj as InputActionMap;
             var actionAsset = actionMap?.asset ?? obj as InputActionAsset;
 
-            for (var i = 0; i < s_RebindActionUIs.Count; ++i)
+            foreach (var component in s_RebindActionUIs)
             {
-                var component = s_RebindActionUIs[i];
                 var referencedAction = component.actionReference?.action;
                 if (referencedAction == null)
                     continue;
 
-                if (referencedAction == action ||
-                    referencedAction.actionMap == actionMap ||
+                if (referencedAction                  == action    ||
+                    referencedAction.actionMap        == actionMap ||
                     referencedAction.actionMap?.asset == actionAsset)
                     component.UpdateBindingDisplay();
             }
@@ -378,11 +355,9 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
 
         private void UpdateActionLabel()
         {
-            if (m_ActionLabel != null)
-            {
-                var action = m_Action?.action;
-                m_ActionLabel.text = action != null ? action.name : string.Empty;
-            }
+            if (!m_ActionLabel) return;
+            var action = m_Action?.action;
+            m_ActionLabel.text = action != null ? action.name : string.Empty;
         }
 
         [Serializable]

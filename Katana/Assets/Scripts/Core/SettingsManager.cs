@@ -1,9 +1,8 @@
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using ArtificeToolkit.Attributes;
 using Assets.Scripts.Player.Camera;
-using Scripts;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Localization;
@@ -15,13 +14,15 @@ namespace Assets.Scripts.Core
 {
     public class SettingsManager : MonoBehaviour
     {
+        public bool IsRebinding;
+
         [SerializeField, Required, FoldoutGroup("Volume Profiles")]
         private VolumeProfile _dofProfile;
         [SerializeField, Required, FoldoutGroup("Volume Profiles")]
         private VolumeProfile _menuDOFProfile;
         [SerializeField, Required, FoldoutGroup("Volume Profiles")]
         private VolumeProfile _motionBlurProfile;
-        
+
         [SerializeField, Required, FoldoutGroup("Audio")]
         private AudioMixerGroup _master;
         [SerializeField, Required, FoldoutGroup("Audio")]
@@ -47,20 +48,20 @@ namespace Assets.Scripts.Core
             MasterVolume = PlayerPrefs.GetFloat("MasterVolume", 0.5f);
             SFXVolume = PlayerPrefs.GetFloat("SFXVolume", 1f);
             MusicVolume = PlayerPrefs.GetFloat("MusicVolume", 1f);
-            
+
             // Wait a bit before updating the audio mixer cuz unity devs are competent
             await Task.Delay(TimeSpan.FromSeconds(0.01f));
-            
+
             MasterVolume = PlayerPrefs.GetFloat("MasterVolume", 0.5f);
             SFXVolume = PlayerPrefs.GetFloat("SFXVolume", 1f);
             MusicVolume = PlayerPrefs.GetFloat("MusicVolume", 1f);
         }
-        
+
         #region DOF
-        
+
         [Button, FoldoutGroup("Settings")]
         public void ChangeDOF(bool useDOF) => UseDOF = useDOF;
-        
+
         private bool _useDOF;
         public bool UseDOF
         {
@@ -68,25 +69,25 @@ namespace Assets.Scripts.Core
             private set
             {
                 if (_useDOF == value) return;
-                
+
                 _useDOF = value;
                 if (_menuDOFProfile && _dofProfile.TryGet(out DepthOfField dof))
                     dof.active = _useDOF;
                 if (_menuDOFProfile && _menuDOFProfile.TryGet(out DepthOfField menuDOF))
                     menuDOF.active = _useDOF;
-                
+
                 PlayerPrefs.SetInt("UseDOF", UseDOF ? 1 : 0);
                 PlayerPrefs.Save();
             }
         }
-        
+
         #endregion
 
         #region MotionBlur
-        
+
         [Button, FoldoutGroup("Settings")]
         public void ChangeMotionBlur(float mb) => MotionBlur = mb;
-        
+
         private float _motionBlur;
         public float MotionBlur
         {
@@ -94,27 +95,27 @@ namespace Assets.Scripts.Core
             private set
             {
                 if (Mathf.Approximately(_motionBlur, value)) return;
-                
+
                 _motionBlur = value;
                 if (_motionBlurProfile && _motionBlurProfile.TryGet(out MotionBlur mb))
                     mb.intensity.value = _motionBlur;
-                
+
                 PlayerPrefs.SetFloat("MotionBlur", value);
                 PlayerPrefs.Save();
             }
         }
-        
+
         #endregion
 
         #region Perspective
 
         [Button, FoldoutGroup("Settings")]
         public void ChangePerspective(Perspective p) => Perspective = p;
-        
+
         public void ChangePerspective(int p) => Perspective = (Perspective)p;
-        
+
         private Perspective _perspective;
-        public Perspective Perspective 
+        public Perspective Perspective
         {
             get => _perspective;
             set
@@ -125,11 +126,11 @@ namespace Assets.Scripts.Core
                 PlayerPrefs.Save();
             }
         }
-        
+
         #endregion
- 
+
         #region Locales
-        
+
         private Locale _locale;
         public Locale Locale
         {
@@ -148,9 +149,9 @@ namespace Assets.Scripts.Core
             Locale = LocalizationSettings.AvailableLocales.Locales[index];
 
         #endregion
-        
+
         #region Volume
-        
+
         private float GetVolume(float t) => Mathf.Lerp(-80, 0, t);
         [Button, FoldoutGroup("Settings/Audio")]
         public void ChangeMasterVolume(float vol) => MasterVolume = vol;
@@ -158,7 +159,7 @@ namespace Assets.Scripts.Core
         public void ChangeSFXVolume(float vol) => SFXVolume = vol;
         [Button, FoldoutGroup("Settings/Audio")]
         public void ChangeMusicVolume(float vol) => MusicVolume = vol;
-        
+
         private float _masterVolume;
         public float MasterVolume
         {

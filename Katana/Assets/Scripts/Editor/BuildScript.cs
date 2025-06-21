@@ -7,7 +7,7 @@ using System.Linq;
 public static class BuildScript
 {
     private static readonly string[] scenes = FindEnabledEditorScenes();
-    private const string GameName = "Escapeon";
+    private const string GameName = "Katana";
 
     [MenuItem("File/Build")]
     public static void Build()
