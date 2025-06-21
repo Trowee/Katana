@@ -1,4 +1,5 @@
 #if UNITY_EDITOR
+using System;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
@@ -19,8 +20,6 @@ namespace Assets.Scripts.Rebind.Editor
             m_BindingIdProperty = serializedObject.FindProperty("m_BindingId");
             m_ActionLabelProperty = serializedObject.FindProperty("m_ActionLabel");
             m_BindingTextProperty = serializedObject.FindProperty("m_BindingText");
-            m_RebindOverlayProperty = serializedObject.FindProperty("m_RebindOverlay");
-            m_RebindTextProperty = serializedObject.FindProperty("m_RebindText");
             m_UpdateBindingUIEventProperty = serializedObject.FindProperty("m_UpdateBindingUIEvent");
             m_RebindStartEventProperty = serializedObject.FindProperty("m_RebindStartEvent");
             m_RebindStopEventProperty = serializedObject.FindProperty("m_RebindStopEvent");
@@ -60,8 +59,6 @@ namespace Assets.Scripts.Rebind.Editor
             {
                 EditorGUILayout.PropertyField(m_ActionLabelProperty);
                 EditorGUILayout.PropertyField(m_BindingTextProperty);
-                EditorGUILayout.PropertyField(m_RebindOverlayProperty);
-                EditorGUILayout.PropertyField(m_RebindTextProperty);
             }
 
             // Events section.
@@ -88,8 +85,8 @@ namespace Assets.Scripts.Rebind.Editor
 
             if (action == null)
             {
-                m_BindingOptions = new GUIContent[0];
-                m_BindingOptionValues = new string[0];
+                m_BindingOptions = Array.Empty<GUIContent>();
+                m_BindingOptionValues = Array.Empty<string>();
                 m_SelectedBindingOption = -1;
                 return;
             }
@@ -123,7 +120,7 @@ namespace Assets.Scripts.Rebind.Editor
                 if (binding.isPartOfComposite)
                     displayString = $"{ObjectNames.NicifyVariableName(binding.name)}: {displayString}";
 
-                // Some composites use '/' as a separator. When used in popup, this will lead to to submenus. Prevent
+                // Some composites use '/' as a separator. When used in popup, this will lead to submenus. Prevent
                 // by instead using a backlash.
                 displayString = displayString.Replace('/', '\\');
 
@@ -131,7 +128,7 @@ namespace Assets.Scripts.Rebind.Editor
                 if (haveBindingGroups)
                 {
                     var asset = action.actionMap?.asset;
-                    if (asset != null)
+                    if (asset)
                     {
                         var controlSchemes = string.Join(", ",
                             binding.groups.Split(InputBinding.Separator)
@@ -153,8 +150,6 @@ namespace Assets.Scripts.Rebind.Editor
         private SerializedProperty m_BindingIdProperty;
         private SerializedProperty m_ActionLabelProperty;
         private SerializedProperty m_BindingTextProperty;
-        private SerializedProperty m_RebindOverlayProperty;
-        private SerializedProperty m_RebindTextProperty;
         private SerializedProperty m_RebindStartEventProperty;
         private SerializedProperty m_RebindStopEventProperty;
         private SerializedProperty m_UpdateBindingUIEventProperty;
