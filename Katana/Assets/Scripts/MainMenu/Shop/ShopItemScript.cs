@@ -11,7 +11,6 @@ using Color = UnityEngine.Color;
 
 namespace Assets.Scripts.MainMenu.Shop
 {
-    // TODO: Add ChildGameObjectsOnly attribute to fields when fixed
     [ExecuteAlways]
     public class ShopItemScript : MonoBehaviour
     {
@@ -23,17 +22,17 @@ namespace Assets.Scripts.MainMenu.Shop
 
         private Item _previousItem;
 
-        [FoldoutGroup("Components"), SerializeField, Required]
+        [FoldoutGroup("Components"), ChildGameObjectsOnly, SerializeField, Required]
         private Transform _itemObject;
 
-        [FoldoutGroup("Components"), SerializeField, Required]
+        [FoldoutGroup("Components"), ChildGameObjectsOnly, SerializeField, Required]
         [OnValueChanged(nameof(HandleItemChanged))]
         private Renderer _itemRenderer;
 
-        [FoldoutGroup("Components"), SerializeField, Required]
+        [FoldoutGroup("Components"), ChildGameObjectsOnly, SerializeField, Required]
         private RectTransform _uiPanel;
 
-        [FoldoutGroup("Components"), SerializeField, Required]
+        [FoldoutGroup("Components"), ChildGameObjectsOnly, SerializeField, Required]
         [OnValueChanged(nameof(HandleNameTMPChanged))]
         private TMP_Text _nameTMP;
 
@@ -43,7 +42,7 @@ namespace Assets.Scripts.MainMenu.Shop
         [SerializeField, HideInInspector]
         private LocalizeStringEvent _nameLocalizeStringEvent;
 
-        [FoldoutGroup("Components"), SerializeField, Required]
+        [FoldoutGroup("Components"), ChildGameObjectsOnly, SerializeField, Required]
         private TMP_Text _priceTMP;
 
         [FoldoutGroup("Animation"), SerializeField]

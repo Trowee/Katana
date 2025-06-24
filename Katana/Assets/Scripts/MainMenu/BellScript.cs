@@ -14,6 +14,7 @@ namespace Assets.Scripts.MainMenu
             _animator = GetComponentInChildren<Animator>();
         }
 
+        [FoldoutGroup("Test")]
         [Button]
         public void Ring()
         {

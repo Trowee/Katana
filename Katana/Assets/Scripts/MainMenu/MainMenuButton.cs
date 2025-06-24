@@ -6,7 +6,6 @@ using UnityEngine;
 
 namespace Assets.Scripts.MainMenu
 {
-    // TODO: Add buttons to a foldout when fixed
     public class MainMenuButton : MonoBehaviour
     {
         [SerializeField, Required] private Transform _mesh;
