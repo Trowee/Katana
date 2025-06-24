@@ -15,7 +15,7 @@ namespace Assets.Scripts.MainMenu
         }
 
         [Button]
-        private void Ring()
+        public void Ring()
         {
             _animator.SetTrigger(RingTrigger);
         }
