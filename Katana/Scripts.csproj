@@ -49,9 +49,13 @@
   <ItemGroup>
     <Compile Include="Assets/Scripts/Items/Item.cs" />
     <Compile Include="Assets/Scripts/Player/PlayerScript.cs" />
+    <Compile Include="Assets/Scripts/Audio/ClipItem.cs" />
+    <Compile Include="Assets/Scripts/Audio/ClipAssignmentType.cs" />
     <Compile Include="Assets/Scripts/Player/Camera/Perspective.cs" />
     <Compile Include="Assets/Scripts/MainMenu/Shop/ShopItemScript.cs" />
     <Compile Include="Assets/Scripts/Core/DeathScreen.cs" />
+    <Compile Include="Assets/Scripts/Audio/ItemSettings.cs" />
+    <Compile Include="Assets/Scripts/Audio/Type.cs" />
     <Compile Include="Assets/Scripts/LocalizeDropdown.cs" />
     <Compile Include="Assets/Scripts/Fruits/SliceTest.cs" />
     <Compile Include="Assets/Scripts/Fruits/BombScript.cs" />
@@ -71,14 +75,17 @@
     <Compile Include="Assets/Scripts/MainMenu/BellScript.cs" />
     <Compile Include="Assets/Scripts/Core/DynamicDOF.cs" />
     <Compile Include="Assets/Scripts/MainMenu/Shop/SpotlightRotatorScript.cs" />
+    <Compile Include="Assets/Scripts/Audio/ItemSettingsPreset.cs" />
     <Compile Include="Assets/Scripts/MainMenu/SettingsMenu.cs" />
     <Compile Include="Assets/Scripts/Core/ScoreScript.cs" />
+    <Compile Include="Assets/Scripts/Audio/AudioManager.cs" />
     <Compile Include="Assets/Scripts/Rebind/RebindActionUI.cs" />
     <Compile Include="Assets/Scripts/TimeScale/TimeScaleKeys.cs" />
     <Compile Include="Assets/Scripts/Fruits/FruitScript.cs" />
     <Compile Include="Assets/Scripts/Rebind/Editor/RebindActionUIEditor.cs" />
     <Compile Include="Assets/Scripts/Player/Camera/CameraManager.cs" />
     <Compile Include="Assets/Scripts/Core/SettingsManager.cs" />
+    <Compile Include="Assets/Scripts/Audio/Item.cs" />
     <Compile Include="Assets/Scripts/Fruits/CannonScript.cs" />
     <Compile Include="Assets/Scripts/Core/IDestructible.cs" />
     <Compile Include="Assets/Scripts/Core/GameManager.cs" />
