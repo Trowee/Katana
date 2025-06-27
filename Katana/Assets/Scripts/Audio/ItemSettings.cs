@@ -42,6 +42,7 @@ namespace Assets.Scripts.Audio
         public float Spread;
         
         [FoldoutGroup("3D")]
+        [UnityEngine.EnumButtons]
         public UnityEngine.AudioRolloffMode RolloffMode;
         
         [FoldoutGroup("3D")]

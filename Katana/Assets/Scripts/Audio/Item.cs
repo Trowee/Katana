@@ -1,6 +1,5 @@
 using System;
 using ArtificeToolkit.Attributes;
-using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -10,6 +9,9 @@ namespace Assets.Scripts.Audio
     [Serializable]
     public class Item
     {
+        [Title("Clip")]
+
+        [EnumButtons]
         public ClipAssignmentType ClipAssignmentType;
 
         [ValidateInput(nameof(ValidateClipItem))]
@@ -17,7 +19,7 @@ namespace Assets.Scripts.Audio
         public ClipItem ClipItem;
         private bool ValidateClipItem =>
             ClipAssignmentType != ClipAssignmentType.ClipItem || ClipItem;
-        
+
         [ValidateInput(nameof(ValidateClip))]
         [EnableIf(nameof(ClipAssignmentType), ClipAssignmentType.Clip)]
         public AudioClip Clip;
@@ -29,32 +31,40 @@ namespace Assets.Scripts.Audio
         public string ClipName;
         private bool ValidateClipName => !string.IsNullOrEmpty(ClipName);
 
+        [Title("Mixer")]
+
         public AudioMixerGroup MixerGroup;
 
-        public Type Type;
+        [Title("Type")]
 
-        [EnableIf(nameof(Type), Type.Positional)]
+        [EnumButtons]
+        public SourceType SourceType;
+
+        [EnableIf(nameof(SourceType), SourceType.Positional)]
         public Vector3 Position;
 
-        [EnableIf(nameof(Type), Type.Attached)]
+        [EnableIf(nameof(SourceType), SourceType.Attached)]
         public bool AssignTargetAtRuntime;
-        
+
         // TODO: Replace with a single EnableIf when implemented
         [ValidateInput(nameof(ValidateTarget))]
-        [EnableIf(nameof(Type), Type.Attached)]
+        [EnableIf(nameof(SourceType), SourceType.Attached)]
         [EnableIf(nameof(AssignTargetAtRuntime), false)]
         public GameObject Target;
-        private bool ValidateTarget => Type != Type.Attached || AssignTargetAtRuntime || Target;
-        
+        private bool ValidateTarget =>
+            SourceType != SourceType.Attached || AssignTargetAtRuntime || Target;
+
+        [Title("Settings")]
+
         public bool UseSettingsPreset;
-        
+
         [EnableIf(nameof(UseSettingsPreset), false)]
         public ItemSettings Settings;
-        
+
         [ValidateInput(nameof(ValidateSettingsPreset))]
         [EnableIf(nameof(UseSettingsPreset), true)]
         [PreviewScriptable]
         public ItemSettingsPreset SettingsPreset;
-        private bool ValidateSettingsPreset =>  !UseSettingsPreset || SettingsPreset;
+        private bool ValidateSettingsPreset => !UseSettingsPreset || SettingsPreset;
     }
 }

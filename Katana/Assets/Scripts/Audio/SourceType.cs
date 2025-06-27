@@ -3,7 +3,7 @@ using System;
 namespace Assets.Scripts.Audio
 {
     [Serializable]
-    public enum Type
+    public enum SourceType
     {
         Normal,
         Positional,
