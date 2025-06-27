@@ -49,7 +49,7 @@ namespace Assets.Scripts.Audio
         public bool UseSettingsPreset;
         
         [EnableIf(nameof(UseSettingsPreset), false)]
-        public AudioSettings Settings;
+        public ItemSettings Settings;
         
         [ValidateInput(nameof(ValidateSettingsPreset))]
         [EnableIf(nameof(UseSettingsPreset), true)]
