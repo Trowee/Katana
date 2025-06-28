@@ -92,11 +92,13 @@ namespace Assets.Scripts.Audio
         private GameObject GetOrCreateTarget(AudioItem audioItem) =>
             audioItem.SourceType switch
             {
-                SourceType.Manager or SourceType.Positional
-                    => SourceObjects.TryGetValue(
-                           audioItem.Name, out var target)
-                           ? target
-                           : new(audioItem.Name) { transform = { parent = SourceParent } },
+                SourceType.Manager =>
+                    SourceObjects.TryGetValue(
+                        audioItem.Name, out var target)
+                        ? target
+                        : new(audioItem.Name) { transform = { parent = SourceParent } },
+                SourceType.Positional =>
+                    new(audioItem.Name) { transform = { parent = SourceParent } },
                 SourceType.Object => audioItem.Target,
                 _ => throw new ArgumentOutOfRangeException()
             };
