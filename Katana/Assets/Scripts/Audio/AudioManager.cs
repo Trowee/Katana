@@ -8,11 +8,17 @@ namespace Assets.Scripts.Audio
 {
     public class AudioManager : MonoBehaviour
     {
-        public Dictionary<AudioClipItem, AudioSource> ClipItemSources = new();
-        public Dictionary<AudioClip, AudioSource> ClipSources = new();
+        private Transform SourceParent;
+        
+        private readonly Dictionary<AudioItem, GameObject> _audioSourceObjects = new();
+        public readonly Dictionary<AudioClipItem, AudioSource> ClipItemSources = new();
+        public readonly Dictionary<AudioClip, AudioSource> ClipSources = new();
 
         private void Awake()
         {
+            SourceParent = new GameObject("AudioSources").transform;
+            SourceParent.SetParent(transform);
+            
             LoadClipItems();
         }
 
@@ -77,6 +83,7 @@ namespace Assets.Scripts.Audio
                     }
 
                     break;
+
                 case ClipAssignmentType.Clip:
                     if (!ClipSources.TryGetValue(audioItem.Clip, out source))
                     {
@@ -86,6 +93,7 @@ namespace Assets.Scripts.Audio
                     }
 
                     break;
+
                 case ClipAssignmentType.Name:
                     source = ClipItemSources
                              .FirstOrDefault(x => x.Key.Name == audioItem.ClipName).Value;
@@ -93,9 +101,11 @@ namespace Assets.Scripts.Audio
                         throw new KeyNotFoundException(
                             $"Audio Item named '{audioItem.ClipName}' wasn't be found");
                     break;
+
                 case ClipAssignmentType.Manual:
                     throw new InvalidOperationException(
                         "Audio Item Clip Assignment Type must not be set to 'Manual' at the time of calling the Play function");
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -106,7 +116,9 @@ namespace Assets.Scripts.Audio
         private GameObject GetOrCreateTarget(AudioItem audioItem) =>
             audioItem.SourceType switch
             {
-                SourceType.Manager => gameObject,
+                SourceType.Manager => (new GameObject(audioItem.Name)
+                                       .transform.parent = SourceParent)
+                                      .GetChild(SourceParent.childCount).gameObject,
                 SourceType.Positional => new($"{audioItem.Name}_AudioSource"),
                 SourceType.Attached => audioItem.AttachTarget,
                 _ => throw new ArgumentOutOfRangeException()
