@@ -1,4 +1,5 @@
 using ArtificeToolkit.Attributes;
+using Assets.Scripts.Audio;
 using Assets.Scripts.Items;
 using Assets.Scripts.TimeScale;
 using NnUtils.Scripts;
@@ -9,6 +10,7 @@ namespace Assets.Scripts.Core
 {
     [RequireComponent(typeof(SettingsManager))]
     [RequireComponent(typeof(TimeScaleManager))]
+    [RequireComponent(typeof(AudioManager))]
     [RequireComponent(typeof(ItemManager))]
     public class GameManager : MonoBehaviour
     {
@@ -30,19 +32,23 @@ namespace Assets.Scripts.Core
             }
         }
 
-        [ReadOnly, SerializeField, Required] private SettingsManager _settingsManager;
+        [SerializeField, Required] private SettingsManager _settingsManager;
         public static SettingsManager SettingsManager => Instance._settingsManager;
 
-        [ReadOnly, SerializeField, Required] private TimeScaleManager _timeScaleManager;
+        [SerializeField, Required] private TimeScaleManager _timeScaleManager;
         public static TimeScaleManager TimeScaleManager => Instance._timeScaleManager;
+        
+        [SerializeField, Required] private AudioManager _audioManager;
+        public static AudioManager AudioManager => Instance._audioManager;
 
-        [ReadOnly, SerializeField, Required] private ItemManager _itemManager;
+        [SerializeField, Required] private ItemManager _itemManager;
         public static ItemManager ItemManager => Instance._itemManager;
 
         private void Reset()
         {
             _settingsManager = GetComponent<SettingsManager>();
             _timeScaleManager = gameObject.GetOrAddComponent<TimeScaleManager>();
+            _audioManager = gameObject.GetOrAddComponent<AudioManager>();
             _itemManager = gameObject.GetOrAddComponent<ItemManager>();
         }
 

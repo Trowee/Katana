@@ -1,20 +1,20 @@
 using ArtificeToolkit.Attributes;
+using Assets.Scripts.Audio;
+using Assets.Scripts.Core;
 using UnityEngine;
 
 namespace Assets.Scripts.MainMenu
 {
     [ExecuteAlways]
-    [RequireComponent(typeof(AudioSource))]
     public class BellScript : MonoBehaviour
     {
         private static readonly int RingTrigger = Animator.StringToHash("Ring");
         [SerializeField, Required] private Animator _animator;
-        [SerializeField, Required] private AudioSource _ringAudioSource;
+        [SerializeField] private AudioItem _ringAudioItem;
 
         private void Reset()
         {
             _animator = GetComponentInChildren<Animator>();
-            _ringAudioSource = GetComponent<AudioSource>();
         }
 
         [FoldoutGroup("Test")]
@@ -22,7 +22,7 @@ namespace Assets.Scripts.MainMenu
         public void Ring()
         {
             _animator.SetTrigger(RingTrigger);
-            _ringAudioSource.Play();
+            GameManager.AudioManager.Play(_ringAudioItem);
         }
     }
 }
