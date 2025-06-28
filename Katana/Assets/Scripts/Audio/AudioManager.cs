@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using EasyTextEffects.Editor.MyBoxCopy.Extensions;
 using UnityEngine;
 
@@ -9,21 +8,24 @@ namespace Assets.Scripts.Audio
     public class AudioManager : MonoBehaviour
     {
         private Transform SourceParent;
-        
-        private readonly Dictionary<AudioItem, GameObject> _audioSourceObjects = new();
-        public readonly Dictionary<AudioClipItem, AudioSource> ClipItemSources = new();
-        public readonly Dictionary<AudioClip, AudioSource> ClipSources = new();
+
+        public readonly Dictionary<string, AudioSource> Sources = new();
 
         private void Awake()
         {
             SourceParent = new GameObject("AudioSources").transform;
             SourceParent.SetParent(transform);
-            
+
             LoadClipItems();
         }
 
         private void LoadClipItems() =>
-            Resources.LoadAll<AudioClipItem>("").ForEach(x => AddSource(x, gameObject));
+            Resources.LoadAll<AudioResourceItem>("").ForEach(resourceItem =>
+            {
+                GameObject target = new(resourceItem.Name);
+                target.transform.SetParent(SourceParent);
+                Sources.Add(resourceItem.Name, target.AddComponent<AudioSource>());
+            });
 
         public AudioSource Play(AudioItem audioItem)
         {
@@ -34,13 +36,14 @@ namespace Assets.Scripts.Audio
 
         public AudioSource GetOrCreateSource(AudioItem audioItem)
         {
-            if (audioItem.ClipAssignmentType == ClipAssignmentType.Manual)
+            if (audioItem.ResourceAssignmentType == ResourceAssignmentType.Manual)
             {
                 Debug.LogError(
-                    "(Audio Manager) Audio Item Clip Assignment Type must not be set to 'Manual' at the time of calling the Play function");
+                    "(Audio Manager) AudioItem ResourceAssignmentType must not be set to 'Manual' at the time of AudioSource creation");
                 return null;
             }
 
+            
             GameObject target;
             try
             {
@@ -49,7 +52,8 @@ namespace Assets.Scripts.Audio
             catch (Exception e)
             {
                 Debug.LogException(new(
-                    $"(Audio Manager) Failed to get or create target for '{audioItem.Name}'", e));
+                                       $"(Audio Manager) Failed to get or create target for '{audioItem.Name}'",
+                                       e));
                 return null;
             }
 
@@ -61,54 +65,22 @@ namespace Assets.Scripts.Audio
             catch (Exception e)
             {
                 Debug.LogException(new(
-                    $"(Audio Manager) Failed to get or create source for '{audioItem.Name}'", e));
+                                       $"(Audio Manager) Failed to get or create source for '{audioItem.Name}'",
+                                       e));
                 return null;
             }
 
             return source;
         }
 
+
         private AudioSource GetOrCreateSource(AudioItem audioItem, GameObject target)
         {
-            AudioSource source;
+            if (Sources.TryGetValue(audioItem.Name, out var source)) return source;
 
-            switch (audioItem.ClipAssignmentType)
-            {
-                case ClipAssignmentType.ClipItem:
-                    if (!ClipItemSources.TryGetValue(audioItem.AudioClipItem, out source))
-                    {
-                        source = AddSource(audioItem.AudioClipItem, target);
-                        if (audioItem.SourceType == SourceType.Manager)
-                            ClipItemSources.Add(audioItem.AudioClipItem, source);
-                    }
-
-                    break;
-
-                case ClipAssignmentType.Clip:
-                    if (!ClipSources.TryGetValue(audioItem.Clip, out source))
-                    {
-                        source = AddSource(audioItem.Clip, target);
-                        if (audioItem.SourceType == SourceType.Manager)
-                            ClipSources.Add(audioItem.Clip, source);
-                    }
-
-                    break;
-
-                case ClipAssignmentType.Name:
-                    source = ClipItemSources
-                             .FirstOrDefault(x => x.Key.Name == audioItem.ClipName).Value;
-                    if (!source)
-                        throw new KeyNotFoundException(
-                            $"Audio Item named '{audioItem.ClipName}' wasn't be found");
-                    break;
-
-                case ClipAssignmentType.Manual:
-                    throw new InvalidOperationException(
-                        "Audio Item Clip Assignment Type must not be set to 'Manual' at the time of calling the Play function");
-
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            source = target.AddComponent<AudioSource>();
+            if (audioItem.SourceType == SourceType.Manager)
+                Sources.Add(audioItem.Name, source);
 
             return source;
         }
@@ -123,22 +95,5 @@ namespace Assets.Scripts.Audio
                 SourceType.Attached => audioItem.AttachTarget,
                 _ => throw new ArgumentOutOfRangeException()
             };
-
-        private static AudioSource AddSource(AudioClipItem item, GameObject target)
-        {
-            if (!item) throw new NullReferenceException("Audio Clip Item can't be null");
-            return AddSource(item.Clip, target);
-        }
-
-        private static AudioSource AddSource(AudioClip clip, GameObject target)
-        {
-            if (!clip) throw new NullReferenceException("Audio Clip can't be null");
-
-            var source = target.AddComponent<AudioSource>();
-            source.playOnAwake = false;
-            source.clip = clip;
-
-            return source;
-        }
     }
 }

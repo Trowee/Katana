@@ -9,30 +9,30 @@ namespace Assets.Scripts.Audio
     [Serializable]
     public class AudioItem
     {
-        [Title("Clip Assignment Type")]
+        [Title("Resource Assignment Type")]
         [HideLabel]
         [EnumToggle]
-        public ClipAssignmentType ClipAssignmentType;
+        public ResourceAssignmentType ResourceAssignmentType;
 
         [HideLabel]
-        [ValidateInput(nameof(ValidateClipItem))]
-        [EnableIf(nameof(ClipAssignmentType), ClipAssignmentType.ClipItem)]
-        public AudioClipItem AudioClipItem;
-        private bool ValidateClipItem =>
-            ClipAssignmentType != ClipAssignmentType.ClipItem || AudioClipItem;
+        [ValidateInput(nameof(ValidateResourceItem))]
+        [EnableIf(nameof(ResourceAssignmentType), ResourceAssignmentType.ResourceItem)]
+        public AudioResourceItem AudioResourceItem;
+        private bool ValidateResourceItem =>
+            ResourceAssignmentType != ResourceAssignmentType.ResourceItem || AudioResourceItem;
 
         [HideLabel]
-        [ValidateInput(nameof(ValidateClip))]
-        [EnableIf(nameof(ClipAssignmentType), ClipAssignmentType.Clip)]
-        public AudioClip Clip;
-        private bool ValidateClip =>
-            ClipAssignmentType != ClipAssignmentType.Clip || Clip;
+        [ValidateInput(nameof(ValidateResource))]
+        [EnableIf(nameof(ResourceAssignmentType), ResourceAssignmentType.Resource)]
+        public AudioResource Resource;
+        private bool ValidateResource =>
+            ResourceAssignmentType != ResourceAssignmentType.Resource || Resource;
 
         [HideLabel]
-        [ValidateInput(nameof(ValidateClipName), "Clip Name can't be empty")]
-        [EnableIf(nameof(ClipAssignmentType), ClipAssignmentType.Name)]
-        public string ClipName;
-        private bool ValidateClipName => !string.IsNullOrEmpty(ClipName);
+        [ValidateInput(nameof(ValidateResourceName), "Resource Name can't be empty")]
+        [EnableIf(nameof(ResourceAssignmentType), ResourceAssignmentType.Name)]
+        public string ResourceName;
+        private bool ValidateResourceName => !string.IsNullOrEmpty(ResourceName);
 
 
         [Title("Mixer Group")]
@@ -83,12 +83,12 @@ namespace Assets.Scripts.Audio
         private bool ValidateSettingsPreset => !UseSettingsPreset || SettingsPreset;
         
         public string Name =>
-            ClipAssignmentType switch
+            ResourceAssignmentType switch
             {
-                ClipAssignmentType.ClipItem => AudioClipItem.Name,
-                ClipAssignmentType.Clip => Clip.name,
-                ClipAssignmentType.Name => ClipName,
-                _ => throw new ArgumentOutOfRangeException(nameof(ClipAssignmentType))
+                ResourceAssignmentType.ResourceItem => AudioResourceItem.Name,
+                ResourceAssignmentType.Resource => Resource.name,
+                ResourceAssignmentType.Name => ResourceName,
+                _ => throw new ArgumentOutOfRangeException(nameof(ResourceAssignmentType))
             };
     }
 }
