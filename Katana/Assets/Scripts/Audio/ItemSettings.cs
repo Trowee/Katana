@@ -1,5 +1,7 @@
 using System;
+using UnityEngine;
 using ArtificeToolkit.Attributes;
+using Assets.NnUtils.Scripts.MinMax;
 
 namespace Assets.Scripts.Audio
 {
@@ -15,37 +17,38 @@ namespace Assets.Scripts.Audio
 
         public bool Loop;
 
-        [Range(0, 256)]
+        [UnityEngine.Range(0, 256)]
         public int Priority = 128;
         
-        [Range(0, 1)]
-        public float Volume = 1;
+        [MinMax(0, 1)]
+        public Vector2 Volume = Vector2.one;
         
-        [Range(-3, 3)]
-        public float Pitch = 1;
+        [MinMax(-3, 3)]
+        public Vector2 Pitch = Vector2.one;
         
-        [Range(-1, 1)]
-        public float StereoPan;
+        [MinMax(-1, 1)]
+        public Vector2 StereoPan;
         
-        [Range(0, 1)]
-        public float SpatialBlend;
+        [MinMax(0, 1)]
+        public Vector2 SpatialBlendRange;
         
-        [Range(0, 1.1f)]
-        public float ReverbZoneMix = 1;
-        
-        [FoldoutGroup("3D")]
-        [Range(0, 5)]
-        public float DopplerLevel = 1;
+        [MinMax(0, 1.1f)]
+        public Vector2 ReverbZoneMixRange = Vector2.one;
         
         [FoldoutGroup("3D")]
-        [Range(0, 360)]
-        public float Spread;
+        [MinMax(0, 5)]
+        public Vector2 DopplerLevelRange = Vector2.one;
         
         [FoldoutGroup("3D")]
-        [UnityEngine.EnumButtons]
-        public UnityEngine.AudioRolloffMode RolloffMode;
+        [MinMax(0, 360)]
+        public Vector2 SpreadRange;
         
         [FoldoutGroup("3D")]
-        public UnityEngine.Vector2 DistanceRange = new(1, 500);
+        [EnumButtons]
+        public AudioRolloffMode RolloffMode;
+        
+        [FoldoutGroup("3D")]
+        [MinMax(0, 10000)]
+        public Vector2 DistanceRange = new(1, 500);
     }
 }
