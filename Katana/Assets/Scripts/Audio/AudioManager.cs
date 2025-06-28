@@ -81,7 +81,10 @@ namespace Assets.Scripts.Audio
 
             source = target.AddComponent<AudioSource>();
             if (audioItem.SourceType == SourceType.Manager)
+            {
                 Sources.Add(audioItem.Name, source);
+                SourceObjects.Add(audioItem.Name, target);
+            }
 
             return source;
         }
