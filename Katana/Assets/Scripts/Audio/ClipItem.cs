@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace Assets.Scripts.Audio
@@ -7,6 +6,7 @@ namespace Assets.Scripts.Audio
                      menuName = "NnUtils/AudioManager/ClipItem")]
     public class ClipItem : ScriptableObject
     {
-        
+        public string Name;
+        public AudioClip Clip;
     }
 }

@@ -5,7 +5,7 @@ namespace Assets.Scripts.Audio
     [Serializable]
     public enum SourceType
     {
-        Normal,
+        Manager,
         Positional,
         Attached
     }

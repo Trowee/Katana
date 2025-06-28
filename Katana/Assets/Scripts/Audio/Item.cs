@@ -9,37 +9,42 @@ namespace Assets.Scripts.Audio
     [Serializable]
     public class Item
     {
-        [Title("Clip")]
-
-        [EnumButtons]
+        [Title("Clip Assignment Type")]
+        [HideLabel]
+        [EnumToggle]
         public ClipAssignmentType ClipAssignmentType;
 
+        [HideLabel]
         [ValidateInput(nameof(ValidateClipItem))]
         [EnableIf(nameof(ClipAssignmentType), ClipAssignmentType.ClipItem)]
         public ClipItem ClipItem;
         private bool ValidateClipItem =>
             ClipAssignmentType != ClipAssignmentType.ClipItem || ClipItem;
 
+        [HideLabel]
         [ValidateInput(nameof(ValidateClip))]
         [EnableIf(nameof(ClipAssignmentType), ClipAssignmentType.Clip)]
         public AudioClip Clip;
         private bool ValidateClip =>
             ClipAssignmentType != ClipAssignmentType.Clip || Clip;
 
+        [HideLabel]
         [ValidateInput(nameof(ValidateClipName), "Clip Name can't be empty")]
         [EnableIf(nameof(ClipAssignmentType), ClipAssignmentType.Name)]
         public string ClipName;
         private bool ValidateClipName => !string.IsNullOrEmpty(ClipName);
 
-        [Title("Mixer")]
 
+        [Title("Mixer Group")]
+        [HideLabel]
         public AudioMixerGroup MixerGroup;
 
-        [Title("Type")]
-
-        [EnumButtons]
+        [Title("Source Type")]
+        [HideLabel]
+        [EnumToggle]
         public SourceType SourceType;
 
+        [HideLabel]
         [EnableIf(nameof(SourceType), SourceType.Positional)]
         public Vector3 Position;
 
@@ -47,15 +52,15 @@ namespace Assets.Scripts.Audio
         public bool AssignTargetAtRuntime;
 
         // TODO: Replace with a single EnableIf when implemented
-        [ValidateInput(nameof(ValidateTarget))]
+        [HideLabel]
+        [ValidateInput(nameof(ValidateAttachTarget))]
         [EnableIf(nameof(SourceType), SourceType.Attached)]
         [EnableIf(nameof(AssignTargetAtRuntime), false)]
-        public GameObject Target;
-        private bool ValidateTarget =>
-            SourceType != SourceType.Attached || AssignTargetAtRuntime || Target;
+        public GameObject AttachTarget;
+        private bool ValidateAttachTarget =>
+            SourceType != SourceType.Attached || AssignTargetAtRuntime || AttachTarget;
 
         [Title("Settings")]
-
         public bool UseSettingsPreset;
 
         [EnableIf(nameof(UseSettingsPreset), false)]
