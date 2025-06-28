@@ -39,10 +39,20 @@ namespace Assets.Scripts.Audio
         [HideLabel]
         public AudioMixerGroup MixerGroup;
 
-        [Title("Source Type")]
+        [Title("Source")]
         [HideLabel]
         [EnumToggle]
         public SourceType SourceType;
+
+        [HorizontalGroup("Destroy")]
+        [Title("Destroy Source On Finished")]
+        [HideLabel]
+        public bool DestroySourceOnFinished;
+        
+        [HorizontalGroup("Destroy")]
+        [Title("Destroy Target On Finished")]
+        [HideLabel]
+        public bool DestroyTargetOnFinished;
 
         [HideLabel]
         [EnableIf(nameof(SourceType), SourceType.Positional)]
@@ -71,5 +81,14 @@ namespace Assets.Scripts.Audio
         [PreviewScriptable]
         public AudioItemSettingsPreset SettingsPreset;
         private bool ValidateSettingsPreset => !UseSettingsPreset || SettingsPreset;
+        
+        public string Name =>
+            ClipAssignmentType switch
+            {
+                ClipAssignmentType.ClipItem => AudioClipItem.Name,
+                ClipAssignmentType.Clip => Clip.name,
+                ClipAssignmentType.Name => ClipName,
+                _ => throw new ArgumentOutOfRangeException(nameof(ClipAssignmentType))
+            };
     }
 }
