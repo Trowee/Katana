@@ -7,7 +7,7 @@ namespace Assets.Scripts.Audio
 {
     // TODO: Replace ValidateInput with Required when fixed for EnableIf
     [Serializable]
-    public class Item
+    public class AudioItem
     {
         [Title("Clip Assignment Type")]
         [HideLabel]
@@ -17,9 +17,9 @@ namespace Assets.Scripts.Audio
         [HideLabel]
         [ValidateInput(nameof(ValidateClipItem))]
         [EnableIf(nameof(ClipAssignmentType), ClipAssignmentType.ClipItem)]
-        public ClipItem ClipItem;
+        public AudioClipItem AudioClipItem;
         private bool ValidateClipItem =>
-            ClipAssignmentType != ClipAssignmentType.ClipItem || ClipItem;
+            ClipAssignmentType != ClipAssignmentType.ClipItem || AudioClipItem;
 
         [HideLabel]
         [ValidateInput(nameof(ValidateClip))]
@@ -64,12 +64,12 @@ namespace Assets.Scripts.Audio
         public bool UseSettingsPreset;
 
         [EnableIf(nameof(UseSettingsPreset), false)]
-        public ItemSettings Settings;
+        public AudioItemSettings Settings;
 
         [ValidateInput(nameof(ValidateSettingsPreset))]
         [EnableIf(nameof(UseSettingsPreset), true)]
         [PreviewScriptable]
-        public ItemSettingsPreset SettingsPreset;
+        public AudioItemSettingsPreset SettingsPreset;
         private bool ValidateSettingsPreset => !UseSettingsPreset || SettingsPreset;
     }
 }

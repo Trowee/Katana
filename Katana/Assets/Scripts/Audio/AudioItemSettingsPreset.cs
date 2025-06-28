@@ -1,12 +1,11 @@
 using UnityEngine;
-using ArtificeToolkit;
 
 namespace Assets.Scripts.Audio
 {
-    [CreateAssetMenu(fileName = "ItemSettingsPreset",
-                     menuName = "NnUtils/AudioManager/Item Settings Preset")]
-    public class ItemSettingsPreset : ScriptableObject
+    [CreateAssetMenu(fileName = "AudioItemSettingsPreset",
+                     menuName = "NnUtils/Audio Manager/Item Settings Preset")]
+    public class AudioItemSettingsPreset : ScriptableObject
     {
-        public ItemSettings Settings;
+        public AudioItemSettings Settings;
     }
 }

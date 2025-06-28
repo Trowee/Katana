@@ -6,7 +6,7 @@ using Assets.NnUtils.Scripts.MinMax;
 namespace Assets.Scripts.Audio
 {
     [Serializable]
-    public class ItemSettings
+    public class AudioItemSettings
     {
         [HorizontalGroup("1")]
         [HideLabel]
