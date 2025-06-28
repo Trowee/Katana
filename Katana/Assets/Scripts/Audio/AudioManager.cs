@@ -22,7 +22,7 @@ namespace Assets.Scripts.Audio
         public AudioSource Play(AudioItem audioItem)
         {
             var source = GetOrCreateSource(audioItem);
-            source.Play();
+            source?.Play();
             return source;
         }
 
@@ -31,7 +31,7 @@ namespace Assets.Scripts.Audio
             if (audioItem.ClipAssignmentType == ClipAssignmentType.Manual)
             {
                 Debug.LogError(
-                    "Audio Manager: Audio Item Clip Assignment Type must not be set to 'Manual' at the time of calling the Play function");
+                    "(Audio Manager) Audio Item Clip Assignment Type must not be set to 'Manual' at the time of calling the Play function");
                 return null;
             }
 
@@ -42,8 +42,8 @@ namespace Assets.Scripts.Audio
             }
             catch (Exception e)
             {
-                Debug.LogError(
-                    $"Audio Manager: Failed to get or create target for '{audioItem.Name}'\n{e}");
+                Debug.LogException(new(
+                    $"(Audio Manager) Failed to get or create target for '{audioItem.Name}'", e));
                 return null;
             }
 
@@ -54,8 +54,8 @@ namespace Assets.Scripts.Audio
             }
             catch (Exception e)
             {
-                Debug.LogError(
-                    $"Audio Manager: Failed to get or create source for '{audioItem.Name}'\n{e}");
+                Debug.LogException(new(
+                    $"(Audio Manager) Failed to get or create source for '{audioItem.Name}'", e));
                 return null;
             }
 
@@ -69,19 +69,26 @@ namespace Assets.Scripts.Audio
             switch (audioItem.ClipAssignmentType)
             {
                 case ClipAssignmentType.ClipItem:
-                    source = ClipItemSources[audioItem.AudioClipItem];
-                    source ??= AddSource(audioItem.AudioClipItem, target);
-                    if (source && audioItem.SourceType == SourceType.Manager)
-                        ClipItemSources.Add(audioItem.AudioClipItem, source);
+                    if (!ClipItemSources.TryGetValue(audioItem.AudioClipItem, out source))
+                    {
+                        source = AddSource(audioItem.AudioClipItem, target);
+                        if (audioItem.SourceType == SourceType.Manager)
+                            ClipItemSources.Add(audioItem.AudioClipItem, source);
+                    }
+
                     break;
                 case ClipAssignmentType.Clip:
-                    source = ClipSources[audioItem.Clip];
-                    source ??= AddSource(audioItem.Clip, target);
-                    if (source && audioItem.SourceType == SourceType.Manager)
-                        ClipSources.Add(audioItem.Clip, source);
+                    if (!ClipSources.TryGetValue(audioItem.Clip, out source))
+                    {
+                        source = AddSource(audioItem.Clip, target);
+                        if (audioItem.SourceType == SourceType.Manager)
+                            ClipSources.Add(audioItem.Clip, source);
+                    }
+
                     break;
                 case ClipAssignmentType.Name:
-                    source = ClipItemSources.FirstOrDefault(x => x.Key.Name == audioItem.ClipName).Value;
+                    source = ClipItemSources
+                             .FirstOrDefault(x => x.Key.Name == audioItem.ClipName).Value;
                     if (!source)
                         throw new KeyNotFoundException(
                             $"Audio Item named '{audioItem.ClipName}' wasn't be found");
