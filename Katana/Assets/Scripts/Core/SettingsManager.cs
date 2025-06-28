@@ -59,7 +59,7 @@ namespace Assets.Scripts.Core
 
         #region DOF
 
-        [Button, FoldoutGroup("Settings")]
+        [FoldoutGroup("Settings")]
         public void ChangeDOF(bool useDOF) => UseDOF = useDOF;
 
         private bool _useDOF;
@@ -85,7 +85,7 @@ namespace Assets.Scripts.Core
 
         #region MotionBlur
 
-        [Button, FoldoutGroup("Settings")]
+        [FoldoutGroup("Settings")]
         public void ChangeMotionBlur(float mb) => MotionBlur = mb;
 
         private float _motionBlur;
@@ -109,7 +109,7 @@ namespace Assets.Scripts.Core
 
         #region Perspective
 
-        [Button, FoldoutGroup("Settings")]
+        [FoldoutGroup("Settings")]
         public void ChangePerspective(Perspective p) => Perspective = p;
 
         public void ChangePerspective(int p) => Perspective = (Perspective)p;
@@ -153,11 +153,11 @@ namespace Assets.Scripts.Core
         #region Volume
 
         private float GetVolume(float t) => Mathf.Lerp(-80, 0, t);
-        [Button, FoldoutGroup("Settings/Audio")]
+        [FoldoutGroup("Settings/Audio")]
         public void ChangeMasterVolume(float vol) => MasterVolume = vol;
-        [Button, FoldoutGroup("Settings/Audio")]
+        [FoldoutGroup("Settings/Audio")]
         public void ChangeSFXVolume(float vol) => SFXVolume = vol;
-        [Button, FoldoutGroup("Settings/Audio")]
+        [FoldoutGroup("Settings/Audio")]
         public void ChangeMusicVolume(float vol) => MusicVolume = vol;
 
         private float _masterVolume;
