@@ -10,6 +10,7 @@ namespace Assets.Scripts.Audio
         private Transform SourceParent;
 
         public readonly Dictionary<string, AudioSource> Sources = new();
+        private readonly Dictionary<string, GameObject> SourceObjects = new();
 
         private void Awake()
         {
@@ -25,6 +26,7 @@ namespace Assets.Scripts.Audio
                 GameObject target = new(resourceItem.Name);
                 target.transform.SetParent(SourceParent);
                 Sources.Add(resourceItem.Name, target.AddComponent<AudioSource>());
+                SourceObjects.Add(resourceItem.Name, target);
             });
 
         public AudioSource Play(AudioItem audioItem)
@@ -73,7 +75,6 @@ namespace Assets.Scripts.Audio
             return source;
         }
 
-
         private AudioSource GetOrCreateSource(AudioItem audioItem, GameObject target)
         {
             if (Sources.TryGetValue(audioItem.Name, out var source)) return source;
@@ -88,11 +89,12 @@ namespace Assets.Scripts.Audio
         private GameObject GetOrCreateTarget(AudioItem audioItem) =>
             audioItem.SourceType switch
             {
-                SourceType.Manager => (new GameObject(audioItem.Name)
-                                       .transform.parent = SourceParent)
-                                      .GetChild(SourceParent.childCount - 1).gameObject,
-                SourceType.Positional => new($"{audioItem.Name}_AudioSource"),
-                SourceType.Attached => audioItem.AttachTarget,
+                SourceType.Manager or SourceType.Positional
+                    => SourceObjects.TryGetValue(
+                           audioItem.Name, out var target)
+                           ? target
+                           : new(audioItem.Name) { transform = { parent = SourceParent } },
+                SourceType.Object => audioItem.Target,
                 _ => throw new ArgumentOutOfRangeException()
             };
     }

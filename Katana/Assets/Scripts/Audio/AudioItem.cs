@@ -58,17 +58,17 @@ namespace Assets.Scripts.Audio
         [EnableIf(nameof(SourceType), SourceType.Positional)]
         public Vector3 Position;
 
-        [EnableIf(nameof(SourceType), SourceType.Attached)]
+        [EnableIf(nameof(SourceType), SourceType.Object)]
         public bool AssignTargetAtRuntime;
 
         // TODO: Replace with a single EnableIf when implemented
         [HideLabel]
         [ValidateInput(nameof(ValidateAttachTarget))]
-        [EnableIf(nameof(SourceType), SourceType.Attached)]
+        [EnableIf(nameof(SourceType), SourceType.Object)]
         [EnableIf(nameof(AssignTargetAtRuntime), false)]
-        public GameObject AttachTarget;
+        public GameObject Target;
         private bool ValidateAttachTarget =>
-            SourceType != SourceType.Attached || AssignTargetAtRuntime || AttachTarget;
+            SourceType != SourceType.Object || AssignTargetAtRuntime || Target;
 
         [Title("Settings")]
         public bool UseSettingsPreset;
