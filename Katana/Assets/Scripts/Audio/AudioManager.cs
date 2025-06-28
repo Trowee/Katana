@@ -90,7 +90,7 @@ namespace Assets.Scripts.Audio
             {
                 SourceType.Manager => (new GameObject(audioItem.Name)
                                        .transform.parent = SourceParent)
-                                      .GetChild(SourceParent.childCount).gameObject,
+                                      .GetChild(SourceParent.childCount - 1).gameObject,
                 SourceType.Positional => new($"{audioItem.Name}_AudioSource"),
                 SourceType.Attached => audioItem.AttachTarget,
                 _ => throw new ArgumentOutOfRangeException()
