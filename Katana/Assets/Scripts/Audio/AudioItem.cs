@@ -34,8 +34,12 @@ namespace Assets.Scripts.Audio
         public string AudioResourceName;
         private bool ValidateResourceName => !string.IsNullOrEmpty(AudioResourceName);
 
+        [HideInInspector]
+        public bool OverrideMixerGroup;
+
         [Title("Mixer Group")]
         [HideLabel]
+        [Optional(nameof(OverrideMixerGroup), "")]
         public AudioMixerGroup MixerGroup;
 
         [Title("Source")]
@@ -48,16 +52,20 @@ namespace Assets.Scripts.Audio
         [HideLabel]
         public bool ReuseSource;
 
+        [HideInInspector]
+        public bool OverridePlayOnAwake;
+
         [HorizontalGroup("Play")]
         [Title("Play On Awake")]
         [HideLabel]
+        [Optional(nameof(OverridePlayOnAwake), "")]
         public bool PlayOnAwake;
 
         [HorizontalGroup("Destroy")]
         [Title("Destroy Source On Finished")]
         [HideLabel]
         public bool DestroySourceOnFinished;
-        
+
         [HorizontalGroup("Destroy")]
         [Title("Destroy Target On Finished")]
         [HideLabel]
@@ -79,33 +87,44 @@ namespace Assets.Scripts.Audio
         private bool ValidateAttachTarget =>
             SourceType != SourceType.Object || AssignTargetAtRuntime || Target;
 
+        [HideInInspector]
+        public bool OverrideSettings;
+
         [Title("Settings")]
+        [Optional(nameof(OverrideSettings))]
         public bool UseItemSettingsPreset;
 
         [EnableIf(nameof(UseItemSettingsPreset), false)]
+        [Optional(nameof(OverrideSettings))]
         public AudioItemSettings ItemSettings;
 
         [ValidateInput(nameof(ValidateItemSettingsPreset))]
         [EnableIf(nameof(UseItemSettingsPreset), true)]
         [PreviewScriptable]
+        [Optional(nameof(OverrideSettings))]
         public AudioItemSettingsPreset ItemSettingsPreset;
         private bool ValidateItemSettingsPreset => !UseItemSettingsPreset || ItemSettingsPreset;
 
-        public AudioItem() : this(reuseSource: true) { }
-        
+        public AudioItem() : this(reuseSource: true)
+        {
+        }
+
         public AudioItem(ResourceAssignmentType resourceAssignmentType = default,
                          AudioResourceItem audioResourceItem = null,
                          AudioResource audioResource = null,
                          string audioResourceName = null,
+                         bool overrideMixerGroup = false,
                          AudioMixerGroup mixerGroup = null,
                          SourceType sourceType = default,
                          bool reuseSource = true,
+                         bool overridePlayOnAwake = false,
                          bool playOnAwake = false,
                          bool destroySourceOnFinished = false,
                          bool destroyTargetOnFinished = false,
                          Vector3 position = default,
                          bool assignTargetAtRuntime = false,
                          GameObject target = null,
+                         bool overrideSettings = false,
                          bool useItemSettingsPreset = false,
                          AudioItemSettings itemSettings = null,
                          AudioItemSettingsPreset itemSettingsPreset = null)
@@ -115,14 +134,17 @@ namespace Assets.Scripts.Audio
             AudioResourceItem = audioResourceItem;
             AudioResource = audioResource;
             AudioResourceName = audioResourceName;
+            OverrideMixerGroup = overrideMixerGroup;
             MixerGroup = mixerGroup;
             SourceType = sourceType;
+            OverridePlayOnAwake = overridePlayOnAwake;
             PlayOnAwake = playOnAwake;
             DestroySourceOnFinished = destroySourceOnFinished;
             DestroyTargetOnFinished = destroyTargetOnFinished;
             Position = position;
             AssignTargetAtRuntime = assignTargetAtRuntime;
             Target = target;
+            OverrideSettings = overrideSettings;
             UseItemSettingsPreset = useItemSettingsPreset;
             ItemSettings = itemSettings ?? new();
             ItemSettingsPreset = itemSettingsPreset;
@@ -152,11 +174,13 @@ namespace Assets.Scripts.Audio
 
         public AudioSource ApplySettingsToSource(AudioSource source)
         {
-            source.playOnAwake = PlayOnAwake;
-            source.outputAudioMixerGroup = MixerGroup;
+            if (OverridePlayOnAwake) source.playOnAwake = PlayOnAwake;
+            if (OverrideMixerGroup) source.outputAudioMixerGroup = MixerGroup;
             source.resource = GetAudioResource(source);
-            return (UseItemSettingsPreset ? ItemSettingsPreset.Settings : ItemSettings)
-                .ApplyToSource(source);
+            return !OverrideSettings
+                       ? source
+                       : (UseItemSettingsPreset ? ItemSettingsPreset.Settings : ItemSettings)
+                       .ApplyToSource(source);
         }
     }
 }

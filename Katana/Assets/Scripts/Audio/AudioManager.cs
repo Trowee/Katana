@@ -10,9 +10,7 @@ namespace Assets.Scripts.Audio
     {
         private Transform SourceParent;
 
-        //public readonly Dictionary<AudioManagerKey, AudioManagerItem> Items = new();
         public readonly Dictionary<AudioManagerKey, HashSet<AudioManagerItem>> Items = new();
-        //public readonly Dictionary<SourceType, Dictionary<string, AudioManagerItem>> Items = new();
 
         private void Awake()
         {
