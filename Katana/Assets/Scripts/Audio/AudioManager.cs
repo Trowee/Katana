@@ -73,7 +73,8 @@ namespace Assets.Scripts.Audio
 
         private AudioSource GetOrCreateSource(AudioItem audioItem, GameObject target)
         {
-            if (Sources.TryGetValue(audioItem.Name, out var source)) return source;
+            if (audioItem.SourceType == SourceType.Manager &&
+                Sources.TryGetValue(audioItem.Name, out var source)) return source;
 
             source = target.AddComponent<AudioSource>();
             if (audioItem.SourceType == SourceType.Manager)
@@ -113,7 +114,6 @@ namespace Assets.Scripts.Audio
             Debug.LogError(
                 "(Audio Manager) AudioItem ResourceAssignmentType must not be set to 'Manual' at the time of AudioSource creation");
             return false;
-
         }
     }
 }
