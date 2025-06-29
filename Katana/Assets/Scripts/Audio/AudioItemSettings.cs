@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using ArtificeToolkit.Attributes;
 using Assets.NnUtils.Scripts.MinMax;
+using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.Audio
 {
@@ -74,5 +75,28 @@ namespace Assets.Scripts.Audio
         [Title("Distance Range")]
         [MinMax(0, 10000, "")]
         public Vector2 DistanceRange = new(1, 500);
+
+        public AudioSource ApplyToSource(AudioSource source)
+        {
+            source.bypassEffects = BypassEffects;
+            source.bypassListenerEffects = BypassListenerEffects;
+            source.bypassReverbZones = BypassReverbZones;
+            source.loop = Loop;
+            source.priority = Priority;
+            
+            source.volume = Random.Range(Volume.x, Volume.y);
+            source.pitch = Random.Range(Pitch.x, Pitch.y);
+            source.panStereo = Random.Range(StereoPan.x, StereoPan.y);
+            source.spatialBlend = Random.Range(SpatialBlendRange.x, SpatialBlendRange.y);
+            source.reverbZoneMix = Random.Range(ReverbZoneMixRange.x, ReverbZoneMixRange.y);
+            
+            source.dopplerLevel = Random.Range(DopplerLevelRange.x, DopplerLevelRange.y);
+            source.spread = Random.Range(SpreadRange.x, SpreadRange.y);
+            source.rolloffMode = RolloffMode;
+            source.minDistance = DistanceRange.x;
+            source.maxDistance = DistanceRange.y;
+
+            return source;
+        }
     }
 }

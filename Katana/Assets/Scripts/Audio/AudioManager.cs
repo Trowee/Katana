@@ -31,20 +31,16 @@ namespace Assets.Scripts.Audio
 
         public AudioSource Play(AudioItem audioItem)
         {
-            var source = GetOrCreateSource(audioItem);
+            if (!IsResourceAssignmentTypeValid(audioItem.ResourceAssignmentType)) return null;
+            
+            var source = audioItem.ApplySettingsToSource(GetOrCreateSource(audioItem));
             source?.Play();
             return source;
         }
 
         public AudioSource GetOrCreateSource(AudioItem audioItem)
         {
-            if (audioItem.ResourceAssignmentType == ResourceAssignmentType.Manual)
-            {
-                Debug.LogError(
-                    "(Audio Manager) AudioItem ResourceAssignmentType must not be set to 'Manual' at the time of AudioSource creation");
-                return null;
-            }
-
+            if (!IsResourceAssignmentTypeValid(audioItem.ResourceAssignmentType)) return null;
             
             GameObject target;
             try
@@ -98,9 +94,26 @@ namespace Assets.Scripts.Audio
                         ? target
                         : new(audioItem.Name) { transform = { parent = SourceParent } },
                 SourceType.Positional =>
-                    new(audioItem.Name) { transform = { parent = SourceParent } },
+                    new(audioItem.Name)
+                    {
+                        transform =
+                        {
+                            parent = SourceParent,
+                            position = audioItem.Position
+                        }
+                    },
                 SourceType.Object => audioItem.Target,
                 _ => throw new ArgumentOutOfRangeException()
             };
+
+        private bool IsResourceAssignmentTypeValid(ResourceAssignmentType rat)
+        {
+            if (rat != ResourceAssignmentType.Manual) return true;
+            
+            Debug.LogError(
+                "(Audio Manager) AudioItem ResourceAssignmentType must not be set to 'Manual' at the time of AudioSource creation");
+            return false;
+
+        }
     }
 }

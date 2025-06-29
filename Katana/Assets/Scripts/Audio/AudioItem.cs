@@ -22,18 +22,17 @@ namespace Assets.Scripts.Audio
             ResourceAssignmentType != ResourceAssignmentType.ResourceItem || AudioResourceItem;
 
         [HideLabel]
-        [ValidateInput(nameof(ValidateResource))]
+        [ValidateInput(nameof(ValidateAudioResource))]
         [EnableIf(nameof(ResourceAssignmentType), ResourceAssignmentType.Resource)]
-        public AudioResource Resource;
-        private bool ValidateResource =>
-            ResourceAssignmentType != ResourceAssignmentType.Resource || Resource;
+        public AudioResource AudioResource;
+        private bool ValidateAudioResource =>
+            ResourceAssignmentType != ResourceAssignmentType.Resource || AudioResource;
 
         [HideLabel]
-        [ValidateInput(nameof(ValidateResourceName), "Resource Name can't be empty")]
+        [ValidateInput(nameof(ValidateResourceName), "Audio Resource Name can't be empty")]
         [EnableIf(nameof(ResourceAssignmentType), ResourceAssignmentType.Name)]
-        public string ResourceName;
-        private bool ValidateResourceName => !string.IsNullOrEmpty(ResourceName);
-
+        public string AudioResourceName;
+        private bool ValidateResourceName => !string.IsNullOrEmpty(AudioResourceName);
 
         [Title("Mixer Group")]
         [HideLabel]
@@ -44,12 +43,17 @@ namespace Assets.Scripts.Audio
         [EnumToggle]
         public SourceType SourceType;
 
-        [HorizontalGroup("Destroy")]
+        [HorizontalGroup("Source Settings")]
+        [Title("Play On Awake")]
+        [HideLabel]
+        public bool PlayOnAwake;
+
+        [HorizontalGroup("Source Settings")]
         [Title("Destroy Source On Finished")]
         [HideLabel]
         public bool DestroySourceOnFinished;
         
-        [HorizontalGroup("Destroy")]
+        [HorizontalGroup("Source Settings")]
         [Title("Destroy Target On Finished")]
         [HideLabel]
         public bool DestroyTargetOnFinished;
@@ -71,24 +75,46 @@ namespace Assets.Scripts.Audio
             SourceType != SourceType.Object || AssignTargetAtRuntime || Target;
 
         [Title("Settings")]
-        public bool UseSettingsPreset;
+        public bool UseItemSettingsPreset;
 
-        [EnableIf(nameof(UseSettingsPreset), false)]
-        public AudioItemSettings Settings;
+        [EnableIf(nameof(UseItemSettingsPreset), false)]
+        public AudioItemSettings ItemSettings;
 
-        [ValidateInput(nameof(ValidateSettingsPreset))]
-        [EnableIf(nameof(UseSettingsPreset), true)]
+        [ValidateInput(nameof(ValidateItemSettingsPreset))]
+        [EnableIf(nameof(UseItemSettingsPreset), true)]
         [PreviewScriptable]
-        public AudioItemSettingsPreset SettingsPreset;
-        private bool ValidateSettingsPreset => !UseSettingsPreset || SettingsPreset;
+        public AudioItemSettingsPreset ItemSettingsPreset;
+        private bool ValidateItemSettingsPreset => !UseItemSettingsPreset || ItemSettingsPreset;
         
         public string Name =>
             ResourceAssignmentType switch
             {
                 ResourceAssignmentType.ResourceItem => AudioResourceItem.Name,
-                ResourceAssignmentType.Resource => Resource.name,
-                ResourceAssignmentType.Name => ResourceName,
+                ResourceAssignmentType.Resource => AudioResource.name,
+                ResourceAssignmentType.Name => AudioResourceName,
                 _ => throw new ArgumentOutOfRangeException(nameof(ResourceAssignmentType))
             };
+
+        public AudioItemSettings Settings =>
+            UseItemSettingsPreset ? ItemSettingsPreset.Settings : ItemSettings;
+
+        public AudioResource GetAudioResource(AudioSource source) =>
+            ResourceAssignmentType switch
+            {
+                ResourceAssignmentType.ResourceItem => AudioResourceItem.Resource,
+                ResourceAssignmentType.Resource => AudioResource,
+                ResourceAssignmentType.Name => source.resource,
+                _ => throw new(
+                         "(Audio Item) ResourceAssignmentType must not be set to 'Manual' at the time of calling the GetAudioResource function")
+            };
+
+        public AudioSource ApplySettingsToSource(AudioSource source)
+        {
+            source.playOnAwake = PlayOnAwake;
+            source.outputAudioMixerGroup = MixerGroup;
+            source.resource = GetAudioResource(source);
+            return (UseItemSettingsPreset ? ItemSettingsPreset.Settings : ItemSettings)
+                .ApplyToSource(source);
+        }
     }
 }
