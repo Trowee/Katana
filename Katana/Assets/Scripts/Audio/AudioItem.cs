@@ -43,17 +43,22 @@ namespace Assets.Scripts.Audio
         [EnumToggle]
         public SourceType SourceType;
 
-        [HorizontalGroup("Source Settings")]
+        [HorizontalGroup("Play")]
+        [Title("Reuse Source")]
+        [HideLabel]
+        public bool ReuseSource;
+
+        [HorizontalGroup("Play")]
         [Title("Play On Awake")]
         [HideLabel]
         public bool PlayOnAwake;
 
-        [HorizontalGroup("Source Settings")]
+        [HorizontalGroup("Destroy")]
         [Title("Destroy Source On Finished")]
         [HideLabel]
         public bool DestroySourceOnFinished;
         
-        [HorizontalGroup("Source Settings")]
+        [HorizontalGroup("Destroy")]
         [Title("Destroy Target On Finished")]
         [HideLabel]
         public bool DestroyTargetOnFinished;
@@ -85,7 +90,44 @@ namespace Assets.Scripts.Audio
         [PreviewScriptable]
         public AudioItemSettingsPreset ItemSettingsPreset;
         private bool ValidateItemSettingsPreset => !UseItemSettingsPreset || ItemSettingsPreset;
+
+        public AudioItem() : this(reuseSource: true) { }
         
+        public AudioItem(ResourceAssignmentType resourceAssignmentType = default,
+                         AudioResourceItem audioResourceItem = null,
+                         AudioResource audioResource = null,
+                         string audioResourceName = null,
+                         AudioMixerGroup mixerGroup = null,
+                         SourceType sourceType = default,
+                         bool reuseSource = true,
+                         bool playOnAwake = false,
+                         bool destroySourceOnFinished = false,
+                         bool destroyTargetOnFinished = false,
+                         Vector3 position = default,
+                         bool assignTargetAtRuntime = false,
+                         GameObject target = null,
+                         bool useItemSettingsPreset = false,
+                         AudioItemSettings itemSettings = null,
+                         AudioItemSettingsPreset itemSettingsPreset = null)
+        {
+            ReuseSource = reuseSource;
+            ResourceAssignmentType = resourceAssignmentType;
+            AudioResourceItem = audioResourceItem;
+            AudioResource = audioResource;
+            AudioResourceName = audioResourceName;
+            MixerGroup = mixerGroup;
+            SourceType = sourceType;
+            PlayOnAwake = playOnAwake;
+            DestroySourceOnFinished = destroySourceOnFinished;
+            DestroyTargetOnFinished = destroyTargetOnFinished;
+            Position = position;
+            AssignTargetAtRuntime = assignTargetAtRuntime;
+            Target = target;
+            UseItemSettingsPreset = useItemSettingsPreset;
+            ItemSettings = itemSettings ?? new();
+            ItemSettingsPreset = itemSettingsPreset;
+        }
+
         public string Name =>
             ResourceAssignmentType switch
             {

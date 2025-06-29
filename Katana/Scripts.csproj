@@ -53,6 +53,7 @@
     <Compile Include="Assets/Scripts/Audio/AudioItemSettingsPreset.cs" />
     <Compile Include="Assets/Scripts/Player/Camera/Perspective.cs" />
     <Compile Include="Assets/Scripts/MainMenu/Shop/ShopItemScript.cs" />
+    <Compile Include="Assets/Scripts/Audio/AudioManagerItem.cs" />
     <Compile Include="Assets/Scripts/Core/DeathScreen.cs" />
     <Compile Include="Assets/Scripts/LocalizeDropdown.cs" />
     <Compile Include="Assets/Scripts/Fruits/SliceTest.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Assets/Scripts/Player/Camera/CameraManager.cs" />
     <Compile Include="Assets/Scripts/Core/SettingsManager.cs" />
     <Compile Include="Assets/Scripts/Audio/AudioResourceItem.cs" />
+    <Compile Include="Assets/Scripts/Audio/AudioManagerKey.cs" />
     <Compile Include="Assets/Scripts/Audio/AudioItem.cs" />
     <Compile Include="Assets/Scripts/Fruits/CannonScript.cs" />
     <Compile Include="Assets/Scripts/Core/IDestructible.cs" />

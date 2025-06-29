@@ -33,19 +33,19 @@ namespace Assets.Scripts.Audio
         [Title("Priority")]
         [HideLabel]
         [UnityEngine.Range(0, 256)]
-        public int Priority = 128;
+        public int Priority;
         
-        [Title("Volume")]
+        [Title("Volume Range")]
         [MinMax(0, 1, "")]
-        public Vector2 Volume = Vector2.one;
+        public Vector2 VolumeRange;
         
-        [Title("Pitch")]
+        [Title("Pitch Range")]
         [MinMax(-3, 3, "")]
-        public Vector2 Pitch = Vector2.one;
+        public Vector2 PitchRange;
         
-        [Title("Stereo Pan")]
+        [Title("Stereo Pan Range")]
         [MinMax(-1, 1, "")]
-        public Vector2 StereoPan;
+        public Vector2 StereoPanRange;
         
         [Title("Spatial Blend Range")]
         [MinMax(0, 1, "")]
@@ -53,12 +53,12 @@ namespace Assets.Scripts.Audio
         
         [Title("Reverb Zone Mix Range")]
         [MinMax(0, 1.1f, "")]
-        public Vector2 ReverbZoneMixRange = Vector2.one;
+        public Vector2 ReverbZoneMixRange;
         
         [FoldoutGroup("3D")]
-        [Title("DopplerLevel Range")]
+        [Title("Doppler Level Range")]
         [MinMax(0, 5, "")]
-        public Vector2 DopplerLevelRange = Vector2.one;
+        public Vector2 DopplerLevelRange;
         
         [FoldoutGroup("3D")]
         [Title("Spread Range")]
@@ -74,7 +74,7 @@ namespace Assets.Scripts.Audio
         [FoldoutGroup("3D")]
         [Title("Distance Range")]
         [MinMax(0, 10000, "")]
-        public Vector2 DistanceRange = new(1, 500);
+        public Vector2 DistanceRange;
 
         public AudioSource ApplyToSource(AudioSource source)
         {
@@ -84,9 +84,9 @@ namespace Assets.Scripts.Audio
             source.loop = Loop;
             source.priority = Priority;
             
-            source.volume = Random.Range(Volume.x, Volume.y);
-            source.pitch = Random.Range(Pitch.x, Pitch.y);
-            source.panStereo = Random.Range(StereoPan.x, StereoPan.y);
+            source.volume = Random.Range(VolumeRange.x, VolumeRange.y);
+            source.pitch = Random.Range(PitchRange.x, PitchRange.y);
+            source.panStereo = Random.Range(StereoPanRange.x, StereoPanRange.y);
             source.spatialBlend = Random.Range(SpatialBlendRange.x, SpatialBlendRange.y);
             source.reverbZoneMix = Random.Range(ReverbZoneMixRange.x, ReverbZoneMixRange.y);
             
@@ -97,6 +97,50 @@ namespace Assets.Scripts.Audio
             source.maxDistance = DistanceRange.y;
 
             return source;
+        }
+
+        public AudioItemSettings() : this(priority: 128,
+                                          volumeRange: Vector2.one,
+                                          pitchRange: Vector2.one,
+                                          stereoPanRange: Vector2.zero,
+                                          spatialBlendRange: Vector2.zero,
+                                          reverbZoneMixRange: Vector2.one,
+                                          dopplerLevelRange: Vector2.one,
+                                          spreadRange: Vector2.zero,
+                                          rolloffMode: AudioRolloffMode.Logarithmic,
+                                          distanceRange: new(1, 500)) { }
+
+        public AudioItemSettings(bool bypassEffects = false,
+                                 bool bypassListenerEffects = false,
+                                 bool bypassReverbZones = false,
+                                 bool loop = false,
+                                 int priority = 128,
+                                 Vector2? volumeRange = null,
+                                 Vector2? pitchRange = null,
+                                 Vector2? stereoPanRange = null,
+                                 Vector2? spatialBlendRange = null,
+                                 Vector2? reverbZoneMixRange = null,
+                                 Vector2? dopplerLevelRange = null,
+                                 Vector2? spreadRange = null,
+                                 AudioRolloffMode rolloffMode = AudioRolloffMode.Logarithmic,
+                                 Vector2? distanceRange = null)
+        {
+            BypassEffects = bypassEffects;
+            BypassListenerEffects = bypassListenerEffects;
+            BypassReverbZones = bypassReverbZones;
+            Loop = loop;
+            Priority = priority;
+
+            VolumeRange = volumeRange ?? Vector2.one;
+            PitchRange = pitchRange ?? Vector2.one;
+            StereoPanRange = stereoPanRange ?? Vector2.zero;
+            SpatialBlendRange = spatialBlendRange ?? Vector2.zero;
+            ReverbZoneMixRange = reverbZoneMixRange ?? Vector2.zero;
+
+            DopplerLevelRange = dopplerLevelRange ?? Vector2.zero;
+            SpreadRange = spreadRange ?? Vector2.zero;
+            RolloffMode = rolloffMode;
+            DistanceRange = distanceRange ?? new(1, 500);
         }
     }
 }

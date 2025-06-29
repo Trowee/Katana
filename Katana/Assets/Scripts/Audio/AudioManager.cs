@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using EasyTextEffects.Editor.MyBoxCopy.Extensions;
 using UnityEngine;
 
@@ -9,8 +10,9 @@ namespace Assets.Scripts.Audio
     {
         private Transform SourceParent;
 
-        public readonly Dictionary<string, AudioSource> Sources = new();
-        private readonly Dictionary<string, GameObject> SourceObjects = new();
+        //public readonly Dictionary<AudioManagerKey, AudioManagerItem> Items = new();
+        public readonly Dictionary<AudioManagerKey, HashSet<AudioManagerItem>> Items = new();
+        //public readonly Dictionary<SourceType, Dictionary<string, AudioManagerItem>> Items = new();
 
         private void Awake()
         {
@@ -23,97 +25,140 @@ namespace Assets.Scripts.Audio
         private void LoadClipItems() =>
             Resources.LoadAll<AudioResourceItem>("").ForEach(resourceItem =>
             {
-                GameObject target = new(resourceItem.Name);
-                target.transform.SetParent(SourceParent);
-                Sources.Add(resourceItem.Name, target.AddComponent<AudioSource>());
-                SourceObjects.Add(resourceItem.Name, target);
+                AudioItem audioItem = new(ResourceAssignmentType.ResourceItem,
+                                          audioResourceItem: resourceItem,
+                                          sourceType: SourceType.Manager);
+                GetOrCreateItem(audioItem);
             });
 
-        public AudioSource Play(AudioItem audioItem)
+        public AudioManagerItem Play(AudioItem audioItem)
         {
-            if (!IsResourceAssignmentTypeValid(audioItem.ResourceAssignmentType)) return null;
+            if (!AreAudioItemSettingsValid(audioItem)) return null;
             
-            var source = audioItem.ApplySettingsToSource(GetOrCreateSource(audioItem));
-            source?.Play();
-            return source;
+            var item = GetOrCreateItem(audioItem);
+            item?.Source?.Play();
+            return item;
         }
 
-        public AudioSource GetOrCreateSource(AudioItem audioItem)
+        public AudioManagerItem GetOrCreateItem(AudioItem audioItem)
         {
-            if (!IsResourceAssignmentTypeValid(audioItem.ResourceAssignmentType)) return null;
+            if (!AreAudioItemSettingsValid(audioItem)) return null;
+
+            AudioManagerKey key = new(audioItem.SourceType, audioItem.Name);
+            AudioManagerItem item = new(audioItem);
+            item = GetItem(key, item, out var existingItem)
+                       ? existingItem
+                       : CreateItem(key, item);
             
-            GameObject target;
+            audioItem.ApplySettingsToSource(item.Source);
+            return item;
+        }
+
+        private AudioManagerItem CreateItem(AudioManagerKey key, AudioManagerItem item)
+        {
             try
             {
-                target = GetOrCreateTarget(audioItem);
+                item.Object = CreateSourceObject(key, item);
             }
             catch (Exception e)
             {
                 Debug.LogException(new(
-                                       $"(Audio Manager) Failed to get or create target for '{audioItem.Name}'",
+                                       $"(Audio Manager) Failed to create target for '{item.AudioItem.Name}'",
                                        e));
                 return null;
             }
 
-            AudioSource source;
             try
             {
-                source = GetOrCreateSource(audioItem, target);
+                CreateSource(key, item);
             }
             catch (Exception e)
             {
                 Debug.LogException(new(
-                                       $"(Audio Manager) Failed to get or create source for '{audioItem.Name}'",
+                                       $"(Audio Manager) Failed to create source for '{item.AudioItem.Name}'",
                                        e));
                 return null;
             }
 
-            return source;
+            return item;
         }
 
-        private AudioSource GetOrCreateSource(AudioItem audioItem, GameObject target)
+        private bool GetItem(AudioManagerKey key, AudioManagerItem item,
+                             out AudioManagerItem existingItem)
         {
-            if (audioItem.SourceType == SourceType.Manager &&
-                Sources.TryGetValue(audioItem.Name, out var source)) return source;
+            existingItem = null;
+            if (!item.AudioItem.ReuseSource) return false;
 
-            source = target.AddComponent<AudioSource>();
-            if (audioItem.SourceType == SourceType.Manager)
+            if (!Items.TryGetValue(key, out var items)) return false;
+            
+            existingItem = items.FirstOrDefault(x => x.AudioItem.Name == key.Name);
+            if (existingItem == null) return false;
+
+            if (item.AudioItem.SourceType == SourceType.Object &&
+                existingItem.Object != item.Object)
             {
-                Sources.Add(audioItem.Name, source);
-                SourceObjects.Add(audioItem.Name, target);
+                existingItem = null;
+                return false;
             }
 
-            return source;
+            return true;
         }
 
-        private GameObject GetOrCreateTarget(AudioItem audioItem) =>
-            audioItem.SourceType switch
+        private AudioSource CreateSource(AudioManagerKey key, AudioManagerItem item)
+        {
+            item.Source = item.Object.AddComponent<AudioSource>();
+
+            if (item.AudioItem.ReuseSource)
             {
-                SourceType.Manager =>
-                    SourceObjects.TryGetValue(
-                        audioItem.Name, out var target)
-                        ? target
-                        : new(audioItem.Name) { transform = { parent = SourceParent } },
+                if (!Items.TryGetValue(key, out var items))
+                {
+                    items = new();
+                    Items.Add(key, items);
+                }
+
+                items.Add(item);
+            }
+
+            return item.AudioItem.ApplySettingsToSource(item.Source);
+        }
+
+        private GameObject CreateSourceObject(AudioManagerKey key, AudioManagerItem item) =>
+            key.SourceType switch
+            {
+                SourceType.Manager => new(key.Name) { transform = { parent = SourceParent } },
                 SourceType.Positional =>
-                    new(audioItem.Name)
+                    new(key.Name)
                     {
                         transform =
                         {
                             parent = SourceParent,
-                            position = audioItem.Position
+                            position = item.AudioItem.Position
                         }
                     },
-                SourceType.Object => audioItem.Target,
+                SourceType.Object => item.AudioItem.Target,
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-        private bool IsResourceAssignmentTypeValid(ResourceAssignmentType rat)
+        private bool AreAudioItemSettingsValid(AudioItem audioItem)
         {
-            if (rat != ResourceAssignmentType.Manual) return true;
-            
-            Debug.LogError(
-                "(Audio Manager) AudioItem ResourceAssignmentType must not be set to 'Manual' at the time of AudioSource creation");
-            return false;
+            var rat = audioItem.ResourceAssignmentType;
+
+            if (rat == ResourceAssignmentType.Manual)
+            {
+                Debug.LogError(
+                    $"(Audio Manager) AudioItem ResourceAssignmentType must not be set to '{rat}' at the time of AudioSource creation");
+                return false;
+            }
+
+            if (rat == ResourceAssignmentType.Name &&
+                audioItem.SourceType != SourceType.Manager)
+            {
+                Debug.LogError(
+                    $"(Audio Manager) AudioItem ResourceAssignmentType must not be set to '{rat}' when SourceType is not set to {SourceType.Manager}");
+                return false;
+            }
+
+            return true;
         }
     }
 }
