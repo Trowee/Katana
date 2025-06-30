@@ -27,9 +27,7 @@ namespace Assets.Scripts.Audio.Effects
             filter.distortionLevel = Level;
         }
 
-        public override void ClearEffect(AudioManagerItem item)
-        {
+        public override void ClearEffect(AudioManagerItem item) =>
             item.EffectCounts[typeof(AudioDistortionFilter)].Remove(this);
-        }
     }
 }

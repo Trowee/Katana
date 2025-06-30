@@ -31,9 +31,7 @@ namespace Assets.Scripts.Audio.Effects
             filter.lowpassResonanceQ = LowPassResonanceQ;
         }
 
-        public override void ClearEffect(AudioManagerItem item)
-        {
+        public override void ClearEffect(AudioManagerItem item) =>
             item.EffectCounts[typeof(AudioLowPassFilter)].Remove(this);
-        }
     }
 }

@@ -51,9 +51,7 @@ namespace Assets.Scripts.Audio.Effects
             filter.depth = Depth;
         }
 
-        public override void ClearEffect(AudioManagerItem item)
-        {
+        public override void ClearEffect(AudioManagerItem item) =>
             item.EffectCounts[typeof(AudioChorusFilter)].Remove(this);
-        }
     }
 }

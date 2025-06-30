@@ -38,6 +38,8 @@ namespace Assets.Scripts.Audio.Effects
         public HighPass HighPass;
 
         public LowPass Lowpass;
+        
+        public Reverb Reverb;
 
         public void ApplyEffects(AudioManagerItem item)
         {
@@ -47,6 +49,7 @@ namespace Assets.Scripts.Audio.Effects
             Echo.ApplyEffect(item);
             HighPass.ApplyEffect(item);
             Lowpass.ApplyEffect(item);
+            Reverb.ApplyEffect(item);
         }
 
         public void ClearEffects(AudioManagerItem item)
@@ -56,6 +59,7 @@ namespace Assets.Scripts.Audio.Effects
             Echo.ClearEffect(item);
             HighPass.ClearEffect(item);
             Lowpass.ClearEffect(item);
+            Reverb.ClearEffect(item);
         }
     }
 }

@@ -101,6 +101,7 @@
     <Compile Include="Assets/Scripts/Audio/Effects/AudioEffectsPreset.cs" />
     <Compile Include="Assets/Scripts/Core/IDestructible.cs" />
     <Compile Include="Assets/Scripts/Core/GameManager.cs" />
+    <Compile Include="Assets/Scripts/Audio/Effects/Reverb.cs" />
     <Compile Include="Assets/Scripts/Player/Camera/CameraHandlerScript.cs" />
     <None Include="Assets/Scripts/Scripts.asmdef" />
     <Reference Include="UnityEngine">

@@ -25,7 +25,8 @@ namespace Assets.Scripts.Audio
             { typeof(AudioDistortionFilter), new() },
             { typeof(AudioEchoFilter), new() },
             { typeof(AudioHighPassFilter), new() },
-            { typeof(AudioLowPassFilter), new() }
+            { typeof(AudioLowPassFilter), new() },
+            { typeof(AudioReverbFilter), new() }
         };
 
         public AudioManagerItem ApplySettings(bool initial = false)
@@ -48,10 +49,7 @@ namespace Assets.Scripts.Audio
                 if (OriginalAudioItem != AudioItem)
                     AudioItem.Effects.ApplyEffects(this);
             }
-            else
-            {
-                AudioItem.Effects.ClearEffects(this);
-            }
+            else AudioItem.Effects.ClearEffects(this);
 
             foreach (var ec in EffectCounts)
                 if (EffectCounts[ec.Key].Count < 1 &&

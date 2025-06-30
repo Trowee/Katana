@@ -39,9 +39,7 @@ namespace Assets.Scripts.Audio.Effects
             filter.wetMix = WetMix;
         }
 
-        public override void ClearEffect(AudioManagerItem item)
-        {
+        public override void ClearEffect(AudioManagerItem item) =>
             item.EffectCounts[typeof(AudioEchoFilter)].Remove(this);
-        }
     }
 }
