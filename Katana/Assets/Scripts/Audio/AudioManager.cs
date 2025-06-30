@@ -56,18 +56,20 @@ namespace Assets.Scripts.Audio
             if (!AreAudioItemSettingsValid(audioItem)) return null;
 
             AudioManagerKey key = new(audioItem.SourceType, audioItem.Name);
-            AudioManagerItem item = new(audioItem);
-            
-            item = GetItem(key, item, out var existingItem)
-                       ? existingItem
-                       : CreateItem(key, item);
+
+            var item = GetItem(key, audioItem, out var existingItem)
+                           ? existingItem
+                           : CreateItem(key, audioItem);
 
             if (item != null && item.Source != null)
             {
                 // OverrideItemSettings check is needed here too
                 // It ensures settings aren't reloaded if audioItem doesn't reload every play
-                if (audioItem.OverrideItemSettings && audioItem.ReloadSettingsEveryPlay)
-                    audioItem.ApplySettingsToSource(item.Source);
+                if (audioItem.OverrideItemSettings)
+                {
+                    if (audioItem.ReloadSettingsEveryPlay)
+                        audioItem.ApplySettingsToSource(item.Source);
+                }
                 else if (item.AudioItem.ReloadSettingsEveryPlay)
                     item.AudioItem.ApplySettingsToSource(item.Source);
             }
@@ -75,51 +77,55 @@ namespace Assets.Scripts.Audio
             return item;
         }
 
-        private AudioManagerItem CreateItem(AudioManagerKey key, AudioManagerItem item)
+        private AudioManagerItem CreateItem(AudioManagerKey key, AudioItem audioItem)
         {
+            AudioManagerItem item;
+            
             try
             {
-                item.Object = CreateSourceObject(key, item);
+                item = CreateSourceObject(key, audioItem).AddComponent<AudioManagerItem>();
             }
             catch (Exception e)
             {
                 Debug.LogException(new(
-                                       $"(Audio Manager) Failed to create target for '{item.AudioItem.Name}'",
+                                       $"(Audio Manager) Failed to create target for '{audioItem.Name}'",
                                        e));
                 return null;
             }
+            
+            item.AudioItem = audioItem;
 
             try
             {
-                CreateSource(key, item);
+                item.Source = CreateSource(key, item);
             }
             catch (Exception e)
             {
                 Debug.LogException(new(
-                                       $"(Audio Manager) Failed to create source for '{item.AudioItem.Name}'",
+                                       $"(Audio Manager) Failed to create source for '{audioItem.Name}'",
                                        e));
                 return null;
             }
 
-            item.AudioItem.ApplySettingsToSource(item.Source);
+            audioItem.ApplySettingsToSource(item.Source);
             return item;
         }
 
-        private bool GetItem(AudioManagerKey key, AudioManagerItem item,
-                             out AudioManagerItem existingItem)
+        private bool GetItem(AudioManagerKey key, AudioItem audioItem,
+                             out AudioManagerItem item)
         {
-            existingItem = null;
-            if (!item.AudioItem.ReuseSource) return false;
+            item = null;
+            if (!audioItem.ReuseSource) return false;
 
             if (!Items.TryGetValue(key, out var items)) return false;
             
-            existingItem = items.FirstOrDefault(x => x.AudioItem.Name == key.Name);
-            if (existingItem == null) return false;
+            item = items.FirstOrDefault(x => x.AudioItem.Name == key.Name);
+            if (item == null) return false;
 
-            if (item.AudioItem.SourceType == SourceType.Object &&
-                existingItem.Object != item.Object)
+            if (audioItem.SourceType == SourceType.Object &&
+                item.gameObject != audioItem.Target)
             {
-                existingItem = null;
+                item = null;
                 return false;
             }
             
@@ -128,7 +134,7 @@ namespace Assets.Scripts.Audio
 
         private AudioSource CreateSource(AudioManagerKey key, AudioManagerItem item)
         {
-            item.Source = item.Object.AddComponent<AudioSource>();
+            item.Source = item.gameObject.AddComponent<AudioSource>();
 
             if (item.AudioItem.ReuseSource)
             {
@@ -144,7 +150,7 @@ namespace Assets.Scripts.Audio
             return item.AudioItem.ApplySettingsToSource(item.Source);
         }
 
-        private GameObject CreateSourceObject(AudioManagerKey key, AudioManagerItem item) =>
+        private GameObject CreateSourceObject(AudioManagerKey key, AudioItem audioItem) =>
             key.SourceType switch
             {
                 SourceType.Manager => new(key.Name) { transform = { parent = _sourceParent } },
@@ -154,10 +160,10 @@ namespace Assets.Scripts.Audio
                         transform =
                         {
                             parent = _sourceParent,
-                            position = item.AudioItem.Position
+                            position = audioItem.Position
                         }
                     },
-                SourceType.Object => item.AudioItem.Target,
+                SourceType.Object => audioItem.Target,
                 _ => throw new ArgumentOutOfRangeException()
             };
 
