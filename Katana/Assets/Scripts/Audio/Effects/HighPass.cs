@@ -1,4 +1,5 @@
 using System;
+using NnUtils.Scripts;
 using UnityEngine;
 
 namespace Assets.Scripts.Audio.Effects
@@ -20,12 +21,8 @@ namespace Assets.Scripts.Audio.Effects
                 return;
             }
 
-            var filter = item.gameObject.GetComponent<AudioHighPassFilter>();
-            if (filter == null)
-            {
-                filter = item.gameObject.AddComponent<AudioHighPassFilter>();
-                item.EffectCounts[typeof(AudioHighPassFilter)].Add(this);
-            }
+            var filter = item.gameObject.GetOrAddComponent<AudioHighPassFilter>();
+            item.EffectCounts[typeof(AudioHighPassFilter)].Add(this);
 
             filter.cutoffFrequency = HighPassCutoffFrequency;
             filter.highpassResonanceQ = HighPassResonanceQ;

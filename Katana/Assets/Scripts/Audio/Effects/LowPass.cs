@@ -1,4 +1,5 @@
 using System;
+using NnUtils.Scripts;
 using UnityEngine;
 
 namespace Assets.Scripts.Audio.Effects
@@ -20,12 +21,8 @@ namespace Assets.Scripts.Audio.Effects
                 return;
             }
 
-            var filter = item.gameObject.GetComponent<AudioLowPassFilter>();
-            if (filter == null)
-            {
-                filter = item.gameObject.AddComponent<AudioLowPassFilter>();
-                item.EffectCounts[typeof(AudioLowPassFilter)].Add(this);
-            }
+            var filter = item.gameObject.GetOrAddComponent<AudioLowPassFilter>();
+            item.EffectCounts[typeof(AudioLowPassFilter)].Add(this);
 
             filter.cutoffFrequency = LowPassCutoffFrequency;
             filter.lowpassResonanceQ = LowPassResonanceQ;

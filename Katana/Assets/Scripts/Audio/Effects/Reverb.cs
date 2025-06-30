@@ -1,5 +1,6 @@
 using System;
 using ArtificeToolkit.Attributes;
+using NnUtils.Scripts;
 using UnityEngine;
 
 namespace Assets.Scripts.Audio.Effects
@@ -74,12 +75,8 @@ namespace Assets.Scripts.Audio.Effects
                 return;
             }
 
-            var filter = item.gameObject.GetComponent<AudioReverbFilter>();
-            if (filter == null)
-            {
-                filter = item.gameObject.AddComponent<AudioReverbFilter>();
-                item.EffectCounts[typeof(AudioReverbFilter)].Add(this);
-            }
+            var filter = item.gameObject.GetOrAddComponent<AudioReverbFilter>();
+            item.EffectCounts[typeof(AudioReverbFilter)].Add(this);
 
             filter.reverbPreset = Preset;
             if (Preset != AudioReverbPreset.User) return;

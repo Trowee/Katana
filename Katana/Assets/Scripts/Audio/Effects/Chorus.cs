@@ -1,4 +1,5 @@
 using System;
+using NnUtils.Scripts;
 using UnityEngine;
 
 namespace Assets.Scripts.Audio.Effects
@@ -35,12 +36,8 @@ namespace Assets.Scripts.Audio.Effects
                 return;
             }
 
-            var filter = item.gameObject.GetComponent<AudioChorusFilter>();
-            if (filter == null)
-            {
-                filter = item.gameObject.AddComponent<AudioChorusFilter>();
-                item.EffectCounts[typeof(AudioChorusFilter)].Add(this);
-            }
+            var filter = item.gameObject.GetOrAddComponent<AudioChorusFilter>();
+            item.EffectCounts[typeof(AudioChorusFilter)].Add(this);
 
             filter.dryMix = DryMix;
             filter.wetMix1 = WetMix1;

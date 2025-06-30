@@ -1,4 +1,5 @@
 using System;
+using NnUtils.Scripts;
 using UnityEngine;
 
 namespace Assets.Scripts.Audio.Effects
@@ -26,12 +27,8 @@ namespace Assets.Scripts.Audio.Effects
                 return;
             }
 
-            var filter = item.gameObject.GetComponent<AudioEchoFilter>();
-            if (filter == null)
-            {
-                filter = item.gameObject.AddComponent<AudioEchoFilter>();
-                item.EffectCounts[typeof(AudioEchoFilter)].Add(this);
-            }
+            var filter = item.gameObject.GetOrAddComponent<AudioEchoFilter>();
+            item.EffectCounts[typeof(AudioEchoFilter)].Add(this);
 
             filter.delay = Delay;
             filter.decayRatio = DecayRatio;
