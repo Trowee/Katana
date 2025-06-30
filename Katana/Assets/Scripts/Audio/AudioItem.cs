@@ -90,7 +90,7 @@ namespace Assets.Scripts.Audio
 
         [Title("Settings")]
         public bool OverrideItemSettings;
-
+        public bool ReloadSettingsEveryPlay;
         public bool UseItemSettingsPreset;
 
         [EnableIf(nameof(UseItemSettingsPreset), false)]
@@ -102,7 +102,7 @@ namespace Assets.Scripts.Audio
         public AudioItemSettingsPreset ItemSettingsPreset;
         private bool ValidateItemSettingsPreset => !UseItemSettingsPreset || ItemSettingsPreset;
 
-        public AudioItem() : this(reuseSource: true)
+        public AudioItem() : this(ResourceAssignmentType.ResourceItem)
         {
         }
 
@@ -121,6 +121,7 @@ namespace Assets.Scripts.Audio
                          Vector3 position = default,
                          bool assignTargetAtRuntime = false,
                          GameObject target = null,
+                         bool reloadSettingsEveryPlay = true,
                          bool overrideItemSettings = false,
                          bool useItemSettingsPreset = false,
                          AudioItemSettings itemSettings = null,
@@ -142,6 +143,7 @@ namespace Assets.Scripts.Audio
             AssignTargetAtRuntime = assignTargetAtRuntime;
             Target = target;
             OverrideItemSettings = overrideItemSettings;
+            ReloadSettingsEveryPlay = reloadSettingsEveryPlay;
             UseItemSettingsPreset = useItemSettingsPreset;
             ItemSettings = itemSettings ?? new();
             ItemSettingsPreset = itemSettingsPreset;

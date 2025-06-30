@@ -8,14 +8,14 @@ namespace Assets.Scripts.Audio
 {
     public class AudioManager : MonoBehaviour
     {
-        private Transform SourceParent;
+        private Transform _sourceParent;
 
         public readonly Dictionary<AudioManagerKey, HashSet<AudioManagerItem>> Items = new();
 
         private void Awake()
         {
-            SourceParent = new GameObject("AudioSources").transform;
-            SourceParent.SetParent(transform);
+            _sourceParent = new GameObject("AudioSources").transform;
+            _sourceParent.SetParent(transform);
 
             LoadClipItems();
         }
@@ -23,19 +23,21 @@ namespace Assets.Scripts.Audio
         private void LoadClipItems() =>
             Resources.LoadAll<AudioResourceItem>("").ForEach(resourceItem =>
             {
-                AudioItem audioItem = new(ResourceAssignmentType.ResourceItem,
-                                          audioResourceItem: resourceItem,
-                                          overrideMixerGroup: true,
-                                          mixerGroup: resourceItem.MixerGroup,
-                                          sourceType: SourceType.Manager,
-                                          reuseSource: true,
-                                          overridePlayOnAwake: true,
-                                          playOnAwake: resourceItem.PlayOnAwake,
-                                          position: resourceItem.Position,
-                                          overrideItemSettings: true,
-                                          useItemSettingsPreset: resourceItem.UseItemSettingsPreset,
-                                          itemSettings: resourceItem.ItemSettings,
-                                          itemSettingsPreset: resourceItem.ItemSettingsPreset);
+                AudioItem audioItem =
+                    new(ResourceAssignmentType.ResourceItem,
+                        audioResourceItem: resourceItem,
+                        overrideMixerGroup: true,
+                        mixerGroup: resourceItem.MixerGroup,
+                        sourceType: SourceType.Manager,
+                        reuseSource: true,
+                        overridePlayOnAwake: true,
+                        playOnAwake: resourceItem.PlayOnAwake,
+                        position: resourceItem.Position,
+                        overrideItemSettings: true,
+                        reloadSettingsEveryPlay: resourceItem.ReloadSettingsEveryPlay,
+                        useItemSettingsPreset: resourceItem.UseItemSettingsPreset,
+                        itemSettings: resourceItem.ItemSettings,
+                        itemSettingsPreset: resourceItem.ItemSettingsPreset);
                 GetOrCreateItem(audioItem);
             });
 
@@ -44,6 +46,7 @@ namespace Assets.Scripts.Audio
             if (!AreAudioItemSettingsValid(audioItem)) return null;
             
             var item = GetOrCreateItem(audioItem);
+                
             item?.Source?.Play();
             return item;
         }
@@ -54,11 +57,24 @@ namespace Assets.Scripts.Audio
 
             AudioManagerKey key = new(audioItem.SourceType, audioItem.Name);
             AudioManagerItem item = new(audioItem);
+            
             item = GetItem(key, item, out var existingItem)
                        ? existingItem
                        : CreateItem(key, item);
-            
-            audioItem.ApplySettingsToSource(item.Source);
+
+            if (item != null && item.Source != null)
+            {
+                // Check is needed here too
+                // It ensures settings aren't reloaded if audioItem doesn't reload every play
+                if (audioItem.OverrideItemSettings)
+                {
+                    if (audioItem.ReloadSettingsEveryPlay)
+                        audioItem.ApplySettingsToSource(item.Source);
+                }
+                else if (item.AudioItem.ReloadSettingsEveryPlay) 
+                    item.AudioItem.ApplySettingsToSource(item.Source);
+            }
+
             return item;
         }
 
@@ -88,6 +104,7 @@ namespace Assets.Scripts.Audio
                 return null;
             }
 
+            item.AudioItem.ApplySettingsToSource(item.Source);
             return item;
         }
 
@@ -108,7 +125,7 @@ namespace Assets.Scripts.Audio
                 existingItem = null;
                 return false;
             }
-
+            
             return true;
         }
 
@@ -133,13 +150,13 @@ namespace Assets.Scripts.Audio
         private GameObject CreateSourceObject(AudioManagerKey key, AudioManagerItem item) =>
             key.SourceType switch
             {
-                SourceType.Manager => new(key.Name) { transform = { parent = SourceParent } },
+                SourceType.Manager => new(key.Name) { transform = { parent = _sourceParent } },
                 SourceType.Positional =>
                     new(key.Name)
                     {
                         transform =
                         {
-                            parent = SourceParent,
+                            parent = _sourceParent,
                             position = item.AudioItem.Position
                         }
                     },

@@ -32,6 +32,8 @@ namespace Assets.Scripts.Audio
         [EnableIf(nameof(SourceType), SourceType.Positional)]
         public Vector3 Position;
 
+        [Title("Settings")]
+        public bool ReloadSettingsEveryPlay;
         public bool UseItemSettingsPreset;
 
         [EnableIf(nameof(UseItemSettingsPreset), false)]
