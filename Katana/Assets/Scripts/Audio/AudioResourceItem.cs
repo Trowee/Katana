@@ -1,5 +1,6 @@
 using ArtificeToolkit.Attributes;
 using Assets.Scripts.Audio.Effects;
+using NnUtils.Modules.Easings;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -12,6 +13,7 @@ namespace Assets.Scripts.Audio
         public string Name;
         public AudioResource Resource;
 
+        [HorizontalGroup("Play")]
         [Title("Play On Awake")]
         [HideLabel]
         public bool PlayOnAwake;
@@ -35,6 +37,29 @@ namespace Assets.Scripts.Audio
         [HideLabel]
         [EnableIf(nameof(SourceType), SourceType.Positional)]
         public Vector3 Position;
+        
+        [TabGroup("Fade In")]
+        public bool FadeIn;
+
+        [TabGroup("Fade In")]
+        [Optional(nameof(FadeIn), displayCheckbox: false)]
+        public float FadeInTime;
+
+        [TabGroup("Fade In")]
+        [Optional(nameof(FadeIn), displayCheckbox: false)]
+        public Easings.Type FadeInEasing;
+        
+        [TabGroup("Fade Out")]
+        [Optional(nameof(FadeOut))]
+        public bool FadeOut;
+
+        [TabGroup("Fade Out")]
+        [Optional(nameof(FadeOut), displayCheckbox: false)]
+        public float FadeOutTime;
+
+        [TabGroup("Fade Out")]
+        [Optional(nameof(FadeOut), displayCheckbox: false)]
+        public Easings.Type FadeOutEasing;
 
         [Title("Settings")]
         public bool ReloadSettingsEveryPlay;

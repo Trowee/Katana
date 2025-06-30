@@ -175,6 +175,14 @@ namespace Assets.Scripts.Audio
             overrideScaled: true,
             scaled: resourceItem.Scaled,
             position: resourceItem.Position,
+            overrideFadeIn: true,
+            fadeIn: resourceItem.FadeIn,
+            fadeInTime: resourceItem.FadeInTime,
+            fadeInEasing: resourceItem.FadeInEasing,
+            overrideFadeOut: true,
+            fadeOut: resourceItem.FadeOut,
+            fadeOutTime: resourceItem.FadeOutTime,
+            fadeOutEasing: resourceItem.FadeOutEasing,
             overrideSettings: true,
             reloadSettingsEveryPlay: resourceItem.ReloadSettingsEveryPlay,
             useSettingsPreset: resourceItem.UseSettingsPreset,
@@ -204,6 +212,14 @@ namespace Assets.Scripts.Audio
                          Vector3 position = default,
                          bool assignTargetAtRuntime = false,
                          GameObject target = null,
+                         bool overrideFadeIn = false,
+                         bool fadeIn = false,
+                         float fadeInTime = 0,
+                         Easings.Type fadeInEasing = Easings.Type.Linear,
+                         bool overrideFadeOut = false,
+                         bool fadeOut = false,
+                         float fadeOutTime = 0,
+                         Easings.Type fadeOutEasing = Easings.Type.Linear,
                          bool reloadSettingsEveryPlay = true,
                          bool overrideSettings = false,
                          bool useSettingsPreset = false,
@@ -264,9 +280,8 @@ namespace Assets.Scripts.Audio
                 _ => throw new ArgumentOutOfRangeException(nameof(ResourceAssignmentType))
             };
 
-        public AudioResource GetAudioResource(AudioSource source)
-        {
-            return ResourceAssignmentType switch
+        public AudioResource GetAudioResource(AudioSource source) =>
+            ResourceAssignmentType switch
             {
                 ResourceAssignmentType.ResourceItem => AudioResourceItem.Resource,
                 ResourceAssignmentType.Resource => AudioResource,
@@ -274,14 +289,12 @@ namespace Assets.Scripts.Audio
                 _ => throw new(
                          "(Audio Item) ResourceAssignmentType must not be set to 'Manual' at the time of calling the GetAudioResource function")
             };
-        }
 
         public AudioSource ApplySettingsToSource(AudioSource source)
         {
             if (OverridePlayOnAwake) source.playOnAwake = PlayOnAwake;
             if (OverrideMixerGroup) source.outputAudioMixerGroup = MixerGroup;
             source.resource = GetAudioResource(source);
-
             return !OverrideSettings ? source : Settings.ApplyToSource(source);
         }
     }

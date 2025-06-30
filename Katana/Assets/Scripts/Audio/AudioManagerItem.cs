@@ -141,20 +141,16 @@ namespace Assets.Scripts.Audio
         public AudioManagerItem TweenVolume(float from, float to,
                                             float duration, out Coroutine routine,
                                             Easings.Type easing = Easings.Type.Linear,
-                                            bool scaled = true)
-        {
-            return TweenProperty(0, from, to, duration, easing, scaled,
-                                 x => Source.volume = x, out routine);
-        }
+                                            bool scaled = true) =>
+            TweenProperty(0, from, to, duration, easing, scaled,
+                          x => Source.volume = x, out routine);
 
         public AudioManagerItem TweenPitch(float from, float to,
                                            float duration, out Coroutine routine,
                                            Easings.Type easing = Easings.Type.Linear,
-                                           bool scaled = true)
-        {
-            return TweenProperty(0, from, to, duration, easing, scaled,
-                                 x => Source.pitch = x, out routine);
-        }
+                                           bool scaled = true) =>
+            TweenProperty(0, from, to, duration, easing, scaled,
+                          x => Source.pitch = x, out routine);
 
         private readonly Dictionary<int, Coroutine> _tweenRoutines = new();
         
