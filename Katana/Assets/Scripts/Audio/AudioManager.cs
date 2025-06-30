@@ -108,6 +108,7 @@ namespace Assets.Scripts.Audio
             }
 
             audioItem.ApplySettingsToSource(item.Source);
+            if (item.Source.playOnAwake) item.Source.Play();
             return item;
         }
 
