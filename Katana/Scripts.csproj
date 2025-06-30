@@ -76,6 +76,7 @@
     <Compile Include="Assets/Scripts/Core/DynamicDOF.cs" />
     <Compile Include="Assets/Scripts/Audio/OptionalAttribute.cs" />
     <Compile Include="Assets/Scripts/MainMenu/Shop/SpotlightRotatorScript.cs" />
+    <Compile Include="Assets/Scripts/Audio/AudioEffects.cs" />
     <Compile Include="Assets/Scripts/MainMenu/SettingsMenu.cs" />
     <Compile Include="Assets/Scripts/Core/ScoreScript.cs" />
     <Compile Include="Assets/Scripts/Audio/AudioManager.cs" />

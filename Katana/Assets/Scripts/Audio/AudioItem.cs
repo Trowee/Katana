@@ -90,17 +90,26 @@ namespace Assets.Scripts.Audio
 
         [Title("Settings")]
         public bool OverrideItemSettings;
+        
+        [Optional(nameof(OverrideItemSettings), displayCheckbox: false)]
         public bool ReloadSettingsEveryPlay;
+        
+        [Optional(nameof(OverrideItemSettings), displayCheckbox: false)]
         public bool UseItemSettingsPreset;
 
         [EnableIf(nameof(UseItemSettingsPreset), false)]
+        [Optional(nameof(OverrideItemSettings), displayCheckbox: false)]
         public AudioItemSettings ItemSettings;
 
         [ValidateInput(nameof(ValidateItemSettingsPreset))]
         [EnableIf(nameof(UseItemSettingsPreset), true)]
+        [Optional(nameof(OverrideItemSettings), displayCheckbox: false)]
         [PreviewScriptable]
         public AudioItemSettingsPreset ItemSettingsPreset;
         private bool ValidateItemSettingsPreset => !UseItemSettingsPreset || ItemSettingsPreset;
+        
+        public AudioEffects AudioEffects;
+        
 
         public AudioItem() : this(ResourceAssignmentType.ResourceItem)
         {
