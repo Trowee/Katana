@@ -1,4 +1,5 @@
 using ArtificeToolkit.Attributes;
+using Assets.Scripts.Audio.Effects;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -45,6 +46,11 @@ namespace Assets.Scripts.Audio
         public AudioSettingsPreset SettingsPreset;
         private bool ValidateItemSettingsPreset => !UseSettingsPreset || SettingsPreset;
 
+        public bool UseEffectsPreset;
+        
+        [EnableIf(nameof(UseEffectsPreset), false)]
+        public AudioEffects AudioEffects;
+        
         public AudioSource ApplySettingsToSource(AudioSource source)
         {
             source.playOnAwake = PlayOnAwake;
@@ -53,5 +59,11 @@ namespace Assets.Scripts.Audio
             return (UseSettingsPreset ? SettingsPreset.Settings : Settings)
                 .ApplyToSource(source);
         }
+        
+        [ValidateInput(nameof(ValidateEffectsPreset))]
+        [EnableIf(nameof(UseEffectsPreset), true)]
+        [PreviewScriptable]
+        public AudioEffectsPreset AudioEffectsPreset;
+        private bool ValidateEffectsPreset => !UseEffectsPreset || AudioEffectsPreset;
     }
 }

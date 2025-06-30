@@ -37,7 +37,11 @@ namespace Assets.Scripts.Audio
                         reloadSettingsEveryPlay: resourceItem.ReloadSettingsEveryPlay,
                         useSettingsPreset: resourceItem.UseSettingsPreset,
                         settings: resourceItem.Settings,
-                        audioSettingsPreset: resourceItem.SettingsPreset);
+                        audioSettingsPreset: resourceItem.SettingsPreset,
+                        overrideEffects: true,
+                        useEffectsPreset: resourceItem.UseEffectsPreset,
+                        audioEffects: resourceItem.AudioEffects,
+                        audioEffectsPreset: resourceItem.AudioEffectsPreset);
                 GetOrCreateItem(audioItem);
             });
 

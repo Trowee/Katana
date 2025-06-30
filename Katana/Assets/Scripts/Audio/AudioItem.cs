@@ -156,7 +156,11 @@ namespace Assets.Scripts.Audio
                          bool overrideSettings = false,
                          bool useSettingsPreset = false,
                          AudioSettings settings = null,
-                         AudioSettingsPreset audioSettingsPreset = null)
+                         AudioSettingsPreset audioSettingsPreset = null,
+                         bool overrideEffects = false,
+                         bool useEffectsPreset = false,
+                         AudioEffects audioEffects = null,
+                         AudioEffectsPreset audioEffectsPreset = null)
         {
             ReuseSource = reuseSource;
             ResourceAssignmentType = resourceAssignmentType;
@@ -178,6 +182,10 @@ namespace Assets.Scripts.Audio
             UseSettingsPreset = useSettingsPreset;
             AudioSettings = settings ?? new();
             AudioSettingsPreset = audioSettingsPreset;
+            OverrideEffects = overrideEffects;
+            UseEffectsPreset = useEffectsPreset;
+            AudioEffects = audioEffects ?? new();
+            AudioEffectsPreset = audioEffectsPreset;
         }
 
         public string Name =>
