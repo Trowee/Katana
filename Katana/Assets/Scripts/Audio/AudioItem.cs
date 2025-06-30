@@ -17,6 +17,7 @@ namespace Assets.Scripts.Audio
         [HideLabel]
         [ValidateInput(nameof(ValidateResourceItem))]
         [EnableIf(nameof(ResourceAssignmentType), ResourceAssignmentType.ResourceItem)]
+        [PreviewScriptable]
         public AudioResourceItem AudioResourceItem;
         private bool ValidateResourceItem =>
             ResourceAssignmentType != ResourceAssignmentType.ResourceItem || AudioResourceItem;
@@ -173,6 +174,8 @@ namespace Assets.Scripts.Audio
             if (OverridePlayOnAwake) source.playOnAwake = PlayOnAwake;
             if (OverrideMixerGroup) source.outputAudioMixerGroup = MixerGroup;
             source.resource = GetAudioResource(source);
+            
+            if (!OverrideSettings) return source;
             return !OverrideSettings
                        ? source
                        : (UseItemSettingsPreset ? ItemSettingsPreset.Settings : ItemSettings)
