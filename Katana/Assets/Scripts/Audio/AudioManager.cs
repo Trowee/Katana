@@ -64,14 +64,11 @@ namespace Assets.Scripts.Audio
 
             if (item != null && item.Source != null)
             {
-                // Check is needed here too
+                // OverrideItemSettings check is needed here too
                 // It ensures settings aren't reloaded if audioItem doesn't reload every play
-                if (audioItem.OverrideItemSettings)
-                {
-                    if (audioItem.ReloadSettingsEveryPlay)
-                        audioItem.ApplySettingsToSource(item.Source);
-                }
-                else if (item.AudioItem.ReloadSettingsEveryPlay) 
+                if (audioItem.OverrideItemSettings && audioItem.ReloadSettingsEveryPlay)
+                    audioItem.ApplySettingsToSource(item.Source);
+                else if (item.AudioItem.ReloadSettingsEveryPlay)
                     item.AudioItem.ApplySettingsToSource(item.Source);
             }
 
