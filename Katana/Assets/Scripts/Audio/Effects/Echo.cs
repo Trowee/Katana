@@ -21,20 +21,25 @@ namespace Assets.Scripts.Audio.Effects
         
         public override void ApplyEffect(AudioManagerItem item)
         {
-            var filter = item.gameObject.GetComponent<AudioEchoFilter>();
             if (!Enabled)
             {
-                var count = item.EffectCounts[typeof(Echo)]--;
-                if (count < 1 && filter != null) Object.DestroyImmediate(filter);
+                ClearEffect(item);
                 return;
             }
-            if (filter == null) filter = item.gameObject.AddComponent<AudioEchoFilter>();
-            item.EffectCounts[typeof(Echo)]++;
+            var filter = item.gameObject.GetComponent<AudioEchoFilter>();
+            if (filter == null)
+            {
+                filter = item.gameObject.AddComponent<AudioEchoFilter>();
+                item.EffectCounts[typeof(AudioEchoFilter)].Add(this);
+            }
             
             filter.delay = Delay;
             filter.decayRatio = DecayRatio;
             filter.dryMix = DryMix;
             filter.wetMix = WetMix;
         }
+
+        public override void ClearEffect(AudioManagerItem item) =>
+            item.EffectCounts[typeof(AudioEchoFilter)].Remove(this);
     }
 }

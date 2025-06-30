@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Audio.Effects;
+using EasyTextEffects.Editor.MyBoxCopy.Extensions;
 using NnUtils.Modules.Easings;
 using NnUtils.Scripts;
 using UnityEngine;
@@ -29,27 +30,33 @@ namespace Assets.Scripts.Audio
             return this;
         }
         
-        public readonly Dictionary<Type, int> EffectCounts = new()
+        public readonly Dictionary<Type, HashSet<AudioEffect>> EffectCounts = new()
         {
-            { typeof(Chorus), 0 },
-            { typeof(Distortion), 0 },
-            { typeof(Echo), 0},
-            { typeof(HighPass), 0 },
-            { typeof(LowPass), 0 },
+            { typeof(AudioChorusFilter), new() },
+            { typeof(AudioDistortionFilter), new() },
+            { typeof(AudioEchoFilter), new() },
+            { typeof(AudioHighPassFilter), new() },
+            { typeof(AudioLowPassFilter), new() }
         };
         
         public AudioManagerItem ApplyEffects()
         {
-            if (!OriginalAudioItem.OverrideEffects && !AudioItem.OverrideEffects)
-            {
-                AudioItem.Effects.ClearEffects(this);
-                return this;
-            }
-
             if (OriginalAudioItem.OverrideEffects)
                 OriginalAudioItem.Effects.ApplyEffects(this);
-            if (OriginalAudioItem != AudioItem && AudioItem.OverrideEffects)
-                AudioItem.Effects.ApplyEffects(this);
+            else OriginalAudioItem.Effects.ClearEffects(this);
+
+            if (AudioItem.OverrideEffects)
+            {
+                if (OriginalAudioItem != AudioItem)
+                    AudioItem.Effects.ApplyEffects(this);
+            }
+            else AudioItem.Effects.ClearEffects(this);
+            
+            foreach (var ec in EffectCounts)
+                if (EffectCounts[ec.Key].Count < 1 &&
+                    gameObject.TryGetComponent(ec.Key, out var effect))
+                    DestroyImmediate(effect);
+
             return this;
         }
         

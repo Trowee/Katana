@@ -53,18 +53,11 @@ namespace Assets.Scripts.Audio.Effects
 
         public void ClearEffects(AudioManagerItem item)
         {
-            ClearEffect(item, typeof(AudioChorusFilter));
-            ClearEffect(item, typeof(AudioDistortionFilter));
-            ClearEffect(item, typeof(AudioEchoFilter));
-            ClearEffect(item, typeof(AudioHighPassFilter));
-            ClearEffect(item, typeof(AudioLowPassFilter));
-            ClearEffect(item, typeof(AudioReverbFilter));
-        }
-
-        private void ClearEffect(AudioManagerItem item, Type effectType)
-        {
-            if (item.gameObject.TryGetComponent(effectType, out var effect))
-                Object.DestroyImmediate(effect);
+            Chorus.ClearEffect(item);
+            Distortion.ClearEffect(item);
+            Echo.ClearEffect(item);
+            HighPass.ClearEffect(item);
+            Lowpass.ClearEffect(item);
         }
     }
 }

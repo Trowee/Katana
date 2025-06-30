@@ -15,18 +15,23 @@ namespace Assets.Scripts.Audio.Effects
         
         public override void ApplyEffect(AudioManagerItem item)
         {
-            var filter = item.gameObject.GetComponent<AudioLowPassFilter>();
             if (!Enabled)
             {
-                var count = item.EffectCounts[typeof(LowPass)]--;
-                if (count < 1 && filter != null) Object.DestroyImmediate(filter);
+                ClearEffect(item);
                 return;
             }
-            if (filter == null) filter = item.gameObject.AddComponent<AudioLowPassFilter>();
-            item.EffectCounts[typeof(LowPass)]++;
+            var filter = item.gameObject.GetComponent<AudioLowPassFilter>();
+            if (filter == null)
+            {
+                filter = item.gameObject.AddComponent<AudioLowPassFilter>();
+                item.EffectCounts[typeof(AudioLowPassFilter)].Add(this);
+            }
             
             filter.cutoffFrequency = LowPassCutoffFrequency;
             filter.lowpassResonanceQ =  LowPassResonanceQ;
         }
+
+        public override void ClearEffect(AudioManagerItem item) =>
+            item.EffectCounts[typeof(AudioLowPassFilter)].Remove(this);
     }
 }

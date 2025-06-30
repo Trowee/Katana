@@ -30,15 +30,17 @@ namespace Assets.Scripts.Audio.Effects
         
         public override void ApplyEffect(AudioManagerItem item)
         {
-            var filter = item.gameObject.GetComponent<AudioChorusFilter>();
             if (!Enabled)
             {
-                var count = item.EffectCounts[typeof(Chorus)]--;
-                if (count < 1 && filter != null) Object.DestroyImmediate(filter);
+                ClearEffect(item);
                 return;
             }
-            if (filter == null) filter = item.gameObject.AddComponent<AudioChorusFilter>();
-            item.EffectCounts[typeof(Chorus)]++;
+            var filter = item.gameObject.GetComponent<AudioChorusFilter>();
+            if (filter == null)
+            {
+                filter = item.gameObject.AddComponent<AudioChorusFilter>();
+                item.EffectCounts[typeof(AudioChorusFilter)].Add(this);
+            }
             
             filter.dryMix = DryMix;
             filter.wetMix1 = WetMix1;
@@ -48,5 +50,8 @@ namespace Assets.Scripts.Audio.Effects
             filter.rate = Rate;
             filter.depth = Depth;
         }
+
+        public override void ClearEffect(AudioManagerItem item) =>
+            item.EffectCounts[typeof(AudioChorusFilter)].Remove(this);
     }
 }

@@ -12,17 +12,22 @@ namespace Assets.Scripts.Audio.Effects
         
         public override void ApplyEffect(AudioManagerItem item)
         {
-            var filter = item.gameObject.GetComponent<AudioDistortionFilter>();
             if (!Enabled)
             {
-                var count = item.EffectCounts[typeof(Distortion)]--;
-                if (count < 1 && filter != null) Object.DestroyImmediate(filter);
+                ClearEffect(item);
                 return;
             }
-            if (filter == null) filter = item.gameObject.AddComponent<AudioDistortionFilter>();
-            item.EffectCounts[typeof(Distortion)]++;
+            var filter = item.gameObject.GetComponent<AudioDistortionFilter>();
+            if (filter == null)
+            {
+                filter = item.gameObject.AddComponent<AudioDistortionFilter>();
+                item.EffectCounts[typeof(AudioDistortionFilter)].Add(this);
+            }
             
             filter.distortionLevel = Level;
         }
+
+        public override void ClearEffect(AudioManagerItem item) =>
+            item.EffectCounts[typeof(AudioDistortionFilter)].Remove(this);
     }
 }
