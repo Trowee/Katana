@@ -89,7 +89,7 @@ namespace Assets.Scripts.Audio
             SourceType != SourceType.Object || AssignTargetAtRuntime || Target;
 
         [Title("Settings")]
-        public bool OverrideSettings;
+        public bool OverrideItemSettings;
 
         public bool UseItemSettingsPreset;
 
@@ -121,7 +121,7 @@ namespace Assets.Scripts.Audio
                          Vector3 position = default,
                          bool assignTargetAtRuntime = false,
                          GameObject target = null,
-                         bool overrideSettings = false,
+                         bool overrideItemSettings = false,
                          bool useItemSettingsPreset = false,
                          AudioItemSettings itemSettings = null,
                          AudioItemSettingsPreset itemSettingsPreset = null)
@@ -141,7 +141,7 @@ namespace Assets.Scripts.Audio
             Position = position;
             AssignTargetAtRuntime = assignTargetAtRuntime;
             Target = target;
-            OverrideSettings = overrideSettings;
+            OverrideItemSettings = overrideItemSettings;
             UseItemSettingsPreset = useItemSettingsPreset;
             ItemSettings = itemSettings ?? new();
             ItemSettingsPreset = itemSettingsPreset;
@@ -175,8 +175,7 @@ namespace Assets.Scripts.Audio
             if (OverrideMixerGroup) source.outputAudioMixerGroup = MixerGroup;
             source.resource = GetAudioResource(source);
             
-            if (!OverrideSettings) return source;
-            return !OverrideSettings
+            return !OverrideItemSettings
                        ? source
                        : (UseItemSettingsPreset ? ItemSettingsPreset.Settings : ItemSettings)
                        .ApplyToSource(source);

@@ -31,9 +31,6 @@ namespace Assets.Scripts.Audio
         [HideLabel]
         [EnableIf(nameof(SourceType), SourceType.Positional)]
         public Vector3 Position;
-        
-        [Title("Settings")]
-        public bool OverrideSettings;
 
         public bool UseItemSettingsPreset;
 
@@ -51,12 +48,8 @@ namespace Assets.Scripts.Audio
             source.playOnAwake = PlayOnAwake;
             source.outputAudioMixerGroup = MixerGroup;
             source.resource = Resource;
-            
-            if (!OverrideSettings) return source;
-            return !OverrideSettings
-                       ? source
-                       : (UseItemSettingsPreset ? ItemSettingsPreset.Settings : ItemSettings)
-                       .ApplyToSource(source);
+            return (UseItemSettingsPreset ? ItemSettingsPreset.Settings : ItemSettings)
+                .ApplyToSource(source);
         }
     }
 }

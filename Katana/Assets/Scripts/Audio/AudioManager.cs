@@ -25,7 +25,17 @@ namespace Assets.Scripts.Audio
             {
                 AudioItem audioItem = new(ResourceAssignmentType.ResourceItem,
                                           audioResourceItem: resourceItem,
-                                          sourceType: SourceType.Manager);
+                                          overrideMixerGroup: true,
+                                          mixerGroup: resourceItem.MixerGroup,
+                                          sourceType: SourceType.Manager,
+                                          reuseSource: true,
+                                          overridePlayOnAwake: true,
+                                          playOnAwake: resourceItem.PlayOnAwake,
+                                          position: resourceItem.Position,
+                                          overrideItemSettings: true,
+                                          useItemSettingsPreset: resourceItem.UseItemSettingsPreset,
+                                          itemSettings: resourceItem.ItemSettings,
+                                          itemSettingsPreset: resourceItem.ItemSettingsPreset);
                 GetOrCreateItem(audioItem);
             });
 
