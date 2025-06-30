@@ -1,33 +1,10 @@
 using System;
-using ArtificeToolkit.Attributes;
-using NnUtils.Modules.Easings;
 
 namespace Assets.Scripts.Audio.Effects
 {
     [Serializable]
     public class AudioEffects
     {
-        [TabGroup("Fade In")]
-        public bool FadeIn;
-
-        [TabGroup("Fade In")]
-        [Optional(nameof(FadeIn), displayCheckbox: false)]
-        public float FadeInTime;
-
-        [TabGroup("Fade In")]
-        [Optional(nameof(FadeIn), displayCheckbox: false)]
-        public Easings.Type FadeInEasing;
-
-        [TabGroup("Fade Out")]
-        public bool FadeOut;
-
-        [TabGroup("Fade Out")]
-        [Optional(nameof(FadeOut), displayCheckbox: false)]
-        public float FadeOutTime;
-
-        [TabGroup("Fade Out")]
-        [Optional(nameof(FadeOut), displayCheckbox: false)]
-        public Easings.Type FadeOutEasing;
 
         public Chorus Chorus;
 
@@ -43,7 +20,6 @@ namespace Assets.Scripts.Audio.Effects
 
         public void ApplyEffects(AudioManagerItem item)
         {
-            // TODO: Fade in and out
             Chorus.ApplyEffect(item);
             Distortion.ApplyEffect(item);
             Echo.ApplyEffect(item);

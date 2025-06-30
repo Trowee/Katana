@@ -1,6 +1,7 @@
 using System;
 using ArtificeToolkit.Attributes;
 using Assets.Scripts.Audio.Effects;
+using NnUtils.Modules.Easings;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -58,6 +59,15 @@ namespace Assets.Scripts.Audio
         [Optional(nameof(OverridePlayOnAwake), "")]
         public bool PlayOnAwake;
 
+        [HideInInspector]
+        public bool OverrideScaled;
+
+        [HorizontalGroup("Play")]
+        [Title("Scaled")]
+        [HideLabel]
+        [Optional(nameof(OverrideScaled), "")]
+        public bool Scaled;
+
         [HorizontalGroup("Destroy")]
         [Title("Destroy Source On Finished")]
         [HideLabel]
@@ -81,6 +91,36 @@ namespace Assets.Scripts.Audio
         [EnableIf(nameof(SourceType), SourceType.Object)]
         [EnableIf(nameof(AssignTargetAtRuntime), false)]
         public GameObject Target;
+        
+        [HideInInspector]
+        public bool OverrideFadeIn;
+        
+        [TabGroup("Fade In")]
+        [Optional(nameof(OverrideFadeIn))]
+        public bool FadeIn;
+
+        [TabGroup("Fade In")]
+        [Optional(nameof(OverrideFadeIn), displayCheckbox: false)]
+        public float FadeInTime;
+
+        [TabGroup("Fade In")]
+        [Optional(nameof(OverrideFadeIn), displayCheckbox: false)]
+        public Easings.Type FadeInEasing;
+
+        [HideInInspector]
+        public bool OverrideFadeOut;
+        
+        [TabGroup("Fade Out")]
+        [Optional(nameof(OverrideFadeOut))]
+        public bool FadeOut;
+
+        [TabGroup("Fade Out")]
+        [Optional(nameof(OverrideFadeOut), displayCheckbox: false)]
+        public float FadeOutTime;
+
+        [TabGroup("Fade Out")]
+        [Optional(nameof(OverrideFadeOut), displayCheckbox: false)]
+        public Easings.Type FadeOutEasing;
 
         [Title("Settings")]
         public bool OverrideSettings;
@@ -132,6 +172,8 @@ namespace Assets.Scripts.Audio
             reuseSource: true,
             overridePlayOnAwake: true,
             playOnAwake: resourceItem.PlayOnAwake,
+            overrideScaled: true,
+            scaled: resourceItem.Scaled,
             position: resourceItem.Position,
             overrideSettings: true,
             reloadSettingsEveryPlay: resourceItem.ReloadSettingsEveryPlay,
@@ -155,6 +197,8 @@ namespace Assets.Scripts.Audio
                          bool reuseSource = true,
                          bool overridePlayOnAwake = false,
                          bool playOnAwake = false,
+                         bool overrideScaled = false,
+                         bool scaled = true,
                          bool destroySourceOnFinished = false,
                          bool destroyTargetOnFinished = false,
                          Vector3 position = default,

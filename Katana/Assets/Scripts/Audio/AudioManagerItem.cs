@@ -17,8 +17,45 @@ namespace Assets.Scripts.Audio
         public AudioItem AudioItem;
 
         public AudioSource Source;
-        private readonly Dictionary<int, Coroutine> _routines = new();
 
+        #region Audio Item Property Getters
+
+        private T GetOverrideValue<T>(
+            bool audioOverride, T audioValue,
+            bool originalOverride, T originalValue,
+            T defaultValue) =>
+            audioOverride ? audioValue : originalOverride ? originalValue : defaultValue;
+
+        public bool PlayOnAwake => GetOverrideValue(
+            AudioItem.OverridePlayOnAwake, AudioItem.PlayOnAwake,
+            OriginalAudioItem.OverridePlayOnAwake, OriginalAudioItem.PlayOnAwake, false);
+
+        public bool Scaled => GetOverrideValue(
+            AudioItem.OverrideScaled, AudioItem.Scaled,
+            OriginalAudioItem.OverrideScaled, OriginalAudioItem.Scaled, false);
+
+        public bool FadeIn => GetOverrideValue(
+            AudioItem.OverrideFadeIn, AudioItem.FadeIn,
+            OriginalAudioItem.OverrideFadeIn, OriginalAudioItem.FadeIn, false);
+        public float FadeInTime => GetOverrideValue(
+            AudioItem.OverrideFadeIn, AudioItem.FadeInTime,
+            OriginalAudioItem.OverrideFadeIn, OriginalAudioItem.FadeInTime, 0);
+        public Easings.Type FadeInEasing => GetOverrideValue(
+            AudioItem.OverrideFadeIn, AudioItem.FadeInEasing,
+            OriginalAudioItem.OverrideFadeIn, OriginalAudioItem.FadeInEasing, Easings.Type.Linear);
+
+        public bool FadeOut => GetOverrideValue(
+            AudioItem.OverrideFadeOut, AudioItem.FadeOut,
+            OriginalAudioItem.OverrideFadeOut, OriginalAudioItem.FadeOut, false);
+        public float FadeOutTime => GetOverrideValue(
+            AudioItem.OverrideFadeOut, AudioItem.FadeOutTime,
+            OriginalAudioItem.OverrideFadeOut, OriginalAudioItem.FadeOutTime, 0);
+        public Easings.Type FadeOutEasing => GetOverrideValue(
+            AudioItem.OverrideFadeOut, AudioItem.FadeOutEasing,
+            OriginalAudioItem.OverrideFadeOut, OriginalAudioItem.FadeOutEasing, Easings.Type.Linear);
+        
+        #endregion
+        
         public readonly Dictionary<Type, HashSet<AudioEffect>> EffectCounts = new()
         {
             { typeof(AudioChorusFilter), new() },
@@ -59,6 +96,48 @@ namespace Assets.Scripts.Audio
             return this;
         }
 
+        public AudioManagerItem Play()
+        {
+            Stop();
+            _playRoutine = StartCoroutine(PlayRoutine());
+            return this;
+        }
+
+        public AudioManagerItem Stop()
+        {
+            if (_playRoutine != null)
+            {
+                Source.Stop();
+                StopCoroutine(_playRoutine);
+            }
+            foreach (var routine in _tweenRoutines) StopCoroutine(_tweenRoutines[routine.Key]);
+            return this;
+        }
+
+        private Coroutine _playRoutine;
+        
+        private IEnumerator PlayRoutine()
+        {
+            if (FadeIn) TweenVolume(0, Source.volume, FadeInTime, out _, FadeInEasing);
+            Source.Play();
+            
+            var length = Source.clip.length;
+            if (FadeOut)
+            {
+                var timeBeforeFadeOut = length - FadeOutTime;
+                yield return Scaled
+                                 ? new WaitForSeconds(timeBeforeFadeOut)
+                                 : new WaitForSecondsRealtime(timeBeforeFadeOut);
+                yield return TweenVolume(Source.volume, 0, FadeOutTime, out _, FadeOutEasing);
+            }
+            else
+                yield return Scaled
+                                 ? new WaitForSeconds(length)
+                                 : new WaitForSecondsRealtime(length);
+
+            yield return null;
+        }
+
         public AudioManagerItem TweenVolume(float from, float to,
                                             float duration, out Coroutine routine,
                                             Easings.Type easing = Easings.Type.Linear,
@@ -77,15 +156,15 @@ namespace Assets.Scripts.Audio
                                  x => Source.pitch = x, out routine);
         }
 
+        private readonly Dictionary<int, Coroutine> _tweenRoutines = new();
+        
         private AudioManagerItem TweenProperty(int key, float from, float to,
                                                float duration, Easings.Type easing, bool scaled,
                                                Action<float> callback, out Coroutine routine)
         {
-            if (_routines.TryGetValue(key, out routine)) StopCoroutine(routine);
-
-            _routines[key] = routine = StartCoroutine(
+            if (_tweenRoutines.TryGetValue(key, out routine)) StopCoroutine(routine);
+            _tweenRoutines[key] = routine = StartCoroutine(
                                  TweenProperty(key, from, to, duration, easing, scaled, callback));
-
             return this;
         }
 
@@ -101,7 +180,7 @@ namespace Assets.Scripts.Audio
                 yield return null;
             }
 
-            _routines.Remove(key);
+            _tweenRoutines.Remove(key);
         }
     }
 }

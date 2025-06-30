@@ -28,10 +28,8 @@ namespace Assets.Scripts.Audio
         public AudioManagerItem Play(AudioItem audioItem)
         {
             if (!AreAudioItemSettingsValid(audioItem)) return null;
-
             var item = GetOrCreateItem(audioItem);
-
-            item?.Source?.Play();
+            item?.Play();
             return item;
         }
 
@@ -44,7 +42,7 @@ namespace Assets.Scripts.Audio
             var item = foundItem ? existingItem : CreateItem(key, audioItem);
 
             item.ApplySettings(!foundItem).ApplyEffects();
-            if (!foundItem && item.Source.playOnAwake) item.Source.Play();
+            if (!foundItem && item.PlayOnAwake) item.Play();
             return item;
         }
 

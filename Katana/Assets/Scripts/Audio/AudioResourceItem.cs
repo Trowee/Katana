@@ -16,6 +16,11 @@ namespace Assets.Scripts.Audio
         [HideLabel]
         public bool PlayOnAwake;
 
+        [HorizontalGroup("Play")]
+        [Title("Scaled")]
+        [HideLabel]
+        public bool Scaled;
+
         [Title("Mixer Group")]
         [HideLabel]
         public AudioMixerGroup MixerGroup;
