@@ -111,13 +111,13 @@ namespace Assets.Scripts.Audio
         public Vector2 SpreadRange;
 
         [FoldoutGroup("3D")]
-        [HorizontalGroup("RolloffMode", 0.1f)]
+        [HorizontalGroup("RolloffMode")]
         [Title("Rolloff")]
         [HideLabel]
         public bool OverrideRolloffMode;
         
         [FoldoutGroup("3D")]
-        [HorizontalGroup("RolloffMode", 0.9f)]
+        [HorizontalGroup("RolloffMode")]
         [Title("Mode")]
         [EnableIf(nameof(OverrideRolloffMode), true)]
         [EnumToggle]
