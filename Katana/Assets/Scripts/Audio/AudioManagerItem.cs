@@ -11,8 +11,20 @@ namespace Assets.Scripts.Audio
     {
         private readonly Dictionary<int, Coroutine> _routines = new();
         
+        /// AudioItem this Item was created from
+        public AudioItem OriginalAudioItem;
+        
+        /// Current AudioItem
         public AudioItem AudioItem;
+        
         public AudioSource Source;
+
+        public AudioManagerItem ApplyEffects()
+        {
+            if (OriginalAudioItem.OverrideEffects)
+                OriginalAudioItem.AudioEffects.ApplyEffects(this);
+            return this;
+        }
         
         public AudioManagerItem TweenVolume(float from, float to,
                                             float duration, out Coroutine routine,

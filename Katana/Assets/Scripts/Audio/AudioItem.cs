@@ -95,21 +95,42 @@ namespace Assets.Scripts.Audio
         public bool ReloadSettingsEveryPlay;
         
         [Optional(nameof(OverrideItemSettings), displayCheckbox: false)]
-        public bool UseItemSettingsPreset;
+        public bool UseSettingsPreset;
 
-        [EnableIf(nameof(UseItemSettingsPreset), false)]
-        [Optional(nameof(OverrideItemSettings), displayCheckbox: false)]
-        public AudioItemSettings ItemSettings;
+        [EnableIf(nameof(UseSettingsPreset), false)]
+        // TODO: Report to artifice, it doesn't work under optional
+        //[Optional(nameof(OverrideItemSettings), displayCheckbox: false)]
+        public AudioSettings AudioSettings;
 
-        [ValidateInput(nameof(ValidateItemSettingsPreset))]
-        [EnableIf(nameof(UseItemSettingsPreset), true)]
+        [ValidateInput(nameof(ValidateSettingsPreset))]
+        [EnableIf(nameof(UseSettingsPreset), true)]
         [Optional(nameof(OverrideItemSettings), displayCheckbox: false)]
         [PreviewScriptable]
-        public AudioItemSettingsPreset ItemSettingsPreset;
-        private bool ValidateItemSettingsPreset => !UseItemSettingsPreset || ItemSettingsPreset;
+        public AudioSettingsPreset AudioSettingsPreset;
+        private bool ValidateSettingsPreset => !UseSettingsPreset || AudioSettingsPreset;
+
+        public AudioSettings Settings =>
+            UseSettingsPreset ? AudioSettingsPreset.Settings : AudioSettings;
+
+        [Title("Effects")]
+        public bool OverrideEffects;
+
+        [Optional(nameof(OverrideEffects), displayCheckbox: false)]
+        public bool UseEffectsPreset;
         
+        [EnableIf(nameof(UseEffectsPreset), false)]
+        // TODO: Report to artifice, it doesn't work under optional
+        //[Optional(nameof(OverrideEffects), displayCheckbox: false)]
         public AudioEffects AudioEffects;
         
+        [ValidateInput(nameof(ValidateEffectsPreset))]
+        [EnableIf(nameof(UseEffectsPreset), true)]
+        [Optional(nameof(OverrideEffects), displayCheckbox: false)]
+        [PreviewScriptable]
+        public AudioEffectsPreset AudioEffectsPreset;
+        private bool ValidateEffectsPreset => !UseEffectsPreset || AudioEffectsPreset;
+
+        public AudioEffects Effects => UseEffectsPreset ? AudioEffectsPreset.Effects : AudioEffects;
 
         public AudioItem() : this(ResourceAssignmentType.ResourceItem)
         {
@@ -132,9 +153,9 @@ namespace Assets.Scripts.Audio
                          GameObject target = null,
                          bool reloadSettingsEveryPlay = true,
                          bool overrideItemSettings = false,
-                         bool useItemSettingsPreset = false,
-                         AudioItemSettings itemSettings = null,
-                         AudioItemSettingsPreset itemSettingsPreset = null)
+                         bool useSettingsPreset = false,
+                         AudioSettings settings = null,
+                         AudioSettingsPreset audioSettingsPreset = null)
         {
             ReuseSource = reuseSource;
             ResourceAssignmentType = resourceAssignmentType;
@@ -153,9 +174,9 @@ namespace Assets.Scripts.Audio
             Target = target;
             OverrideItemSettings = overrideItemSettings;
             ReloadSettingsEveryPlay = reloadSettingsEveryPlay;
-            UseItemSettingsPreset = useItemSettingsPreset;
-            ItemSettings = itemSettings ?? new();
-            ItemSettingsPreset = itemSettingsPreset;
+            UseSettingsPreset = useSettingsPreset;
+            AudioSettings = settings ?? new();
+            AudioSettingsPreset = audioSettingsPreset;
         }
 
         public string Name =>
@@ -166,9 +187,6 @@ namespace Assets.Scripts.Audio
                 ResourceAssignmentType.Name => AudioResourceName,
                 _ => throw new ArgumentOutOfRangeException(nameof(ResourceAssignmentType))
             };
-
-        public AudioItemSettings Settings =>
-            UseItemSettingsPreset ? ItemSettingsPreset.Settings : ItemSettings;
 
         public AudioResource GetAudioResource(AudioSource source) =>
             ResourceAssignmentType switch
@@ -186,10 +204,7 @@ namespace Assets.Scripts.Audio
             if (OverrideMixerGroup) source.outputAudioMixerGroup = MixerGroup;
             source.resource = GetAudioResource(source);
             
-            return !OverrideItemSettings
-                       ? source
-                       : (UseItemSettingsPreset ? ItemSettingsPreset.Settings : ItemSettings)
-                       .ApplyToSource(source);
+            return !OverrideItemSettings ? source : Settings.ApplyToSource(source);
         }
     }
 }

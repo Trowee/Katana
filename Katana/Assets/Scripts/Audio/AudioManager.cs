@@ -35,9 +35,9 @@ namespace Assets.Scripts.Audio
                         position: resourceItem.Position,
                         overrideItemSettings: true,
                         reloadSettingsEveryPlay: resourceItem.ReloadSettingsEveryPlay,
-                        useItemSettingsPreset: resourceItem.UseItemSettingsPreset,
-                        itemSettings: resourceItem.ItemSettings,
-                        itemSettingsPreset: resourceItem.ItemSettingsPreset);
+                        useSettingsPreset: resourceItem.UseItemSettingsPreset,
+                        settings: resourceItem.Settings,
+                        audioSettingsPreset: resourceItem.SettingsPreset);
                 GetOrCreateItem(audioItem);
             });
 
@@ -93,7 +93,7 @@ namespace Assets.Scripts.Audio
                 return null;
             }
             
-            item.AudioItem = audioItem;
+            item.OriginalAudioItem = item.AudioItem = audioItem;
 
             try
             {
