@@ -137,6 +137,28 @@ namespace Assets.Scripts.Audio
         {
         }
 
+        public AudioItem(AudioResourceItem resourceItem) : this(
+            ResourceAssignmentType.ResourceItem,
+            audioResourceItem: resourceItem,
+            overrideMixerGroup: true,
+            mixerGroup: resourceItem.MixerGroup,
+            sourceType: SourceType.Manager,
+            reuseSource: true,
+            overridePlayOnAwake: true,
+            playOnAwake: resourceItem.PlayOnAwake,
+            position: resourceItem.Position,
+            overrideSettings: true,
+            reloadSettingsEveryPlay: resourceItem.ReloadSettingsEveryPlay,
+            useSettingsPreset: resourceItem.UseSettingsPreset,
+            settings: resourceItem.Settings,
+            audioSettingsPreset: resourceItem.SettingsPreset,
+            overrideEffects: true,
+            useEffectsPreset: resourceItem.UseEffectsPreset,
+            audioEffects: resourceItem.AudioEffects,
+            audioEffectsPreset: resourceItem.AudioEffectsPreset)
+        {
+        }
+
         public AudioItem(ResourceAssignmentType resourceAssignmentType = default,
                          AudioResourceItem audioResourceItem = null,
                          AudioResource audioResource = null,

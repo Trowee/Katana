@@ -18,10 +18,12 @@ namespace Assets.Scripts.Audio.Effects
             var filter = item.gameObject.GetComponent<AudioLowPassFilter>();
             if (!Enabled)
             {
-                if (filter != null) Object.DestroyImmediate(filter);
+                var count = item.EffectCounts[typeof(LowPass)]--;
+                if (count < 1 && filter != null) Object.DestroyImmediate(filter);
                 return;
             }
             if (filter == null) filter = item.gameObject.AddComponent<AudioLowPassFilter>();
+            item.EffectCounts[typeof(LowPass)]++;
             
             filter.cutoffFrequency = LowPassCutoffFrequency;
             filter.lowpassResonanceQ =  LowPassResonanceQ;

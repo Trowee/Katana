@@ -24,10 +24,12 @@ namespace Assets.Scripts.Audio.Effects
             var filter = item.gameObject.GetComponent<AudioEchoFilter>();
             if (!Enabled)
             {
-                if (filter != null) Object.DestroyImmediate(filter);
+                var count = item.EffectCounts[typeof(Echo)]--;
+                if (count < 1 && filter != null) Object.DestroyImmediate(filter);
                 return;
             }
             if (filter == null) filter = item.gameObject.AddComponent<AudioEchoFilter>();
+            item.EffectCounts[typeof(Echo)]++;
             
             filter.delay = Delay;
             filter.decayRatio = DecayRatio;

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Audio.Effects;
 using NnUtils.Modules.Easings;
 using NnUtils.Scripts;
 using UnityEngine;
@@ -28,10 +29,17 @@ namespace Assets.Scripts.Audio
             return this;
         }
         
+        public readonly Dictionary<Type, int> EffectCounts = new()
+        {
+            { typeof(Chorus), 0 },
+            { typeof(Distortion), 0 },
+            { typeof(Echo), 0},
+            { typeof(HighPass), 0 },
+            { typeof(LowPass), 0 },
+        };
+        
         public AudioManagerItem ApplyEffects()
         {
-            Debug.Log(OriginalAudioItem == AudioItem);
-            
             if (!OriginalAudioItem.OverrideEffects && !AudioItem.OverrideEffects)
             {
                 AudioItem.Effects.ClearEffects(this);

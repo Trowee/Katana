@@ -21,30 +21,9 @@ namespace Assets.Scripts.Audio
         }
 
         private void LoadClipItems() =>
-            Resources.LoadAll<AudioResourceItem>("").ForEach(resourceItem =>
-            {
-                AudioItem audioItem =
-                    new(ResourceAssignmentType.ResourceItem,
-                        audioResourceItem: resourceItem,
-                        overrideMixerGroup: true,
-                        mixerGroup: resourceItem.MixerGroup,
-                        sourceType: SourceType.Manager,
-                        reuseSource: true,
-                        overridePlayOnAwake: true,
-                        playOnAwake: resourceItem.PlayOnAwake,
-                        position: resourceItem.Position,
-                        overrideSettings: true,
-                        reloadSettingsEveryPlay: resourceItem.ReloadSettingsEveryPlay,
-                        useSettingsPreset: resourceItem.UseSettingsPreset,
-                        settings: resourceItem.Settings,
-                        audioSettingsPreset: resourceItem.SettingsPreset,
-                        overrideEffects: true,
-                        useEffectsPreset: resourceItem.UseEffectsPreset,
-                        audioEffects: resourceItem.AudioEffects,
-                        audioEffectsPreset: resourceItem.AudioEffectsPreset);
-                GetOrCreateItem(audioItem);
-            });
-
+            Resources.LoadAll<AudioResourceItem>("")
+                     .ForEach(resourceItem => GetOrCreateItem(new(resourceItem)));
+        
         public AudioManagerItem Play(AudioItem audioItem)
         {
             if (!AreAudioItemSettingsValid(audioItem)) return null;
@@ -63,7 +42,6 @@ namespace Assets.Scripts.Audio
             var foundItem = GetItem(key, audioItem, out var existingItem);
             var item = foundItem ? existingItem : CreateItem(key, audioItem);
 
-            item.AudioItem = audioItem;
             item.ApplySettings(!foundItem).ApplyEffects();
             if (!foundItem && item.Source.playOnAwake) item.Source.Play();
             return item;
@@ -87,6 +65,7 @@ namespace Assets.Scripts.Audio
                 return false;
             }
             
+            item.AudioItem = audioItem;
             return true;
         }
 
@@ -106,7 +85,11 @@ namespace Assets.Scripts.Audio
                 return null;
             }
             
-            item.OriginalAudioItem = item.AudioItem = audioItem;
+            item.AudioItem = audioItem;
+            item.OriginalAudioItem =
+                audioItem.ResourceAssignmentType == ResourceAssignmentType.ResourceItem
+                    ? new(audioItem.AudioResourceItem)
+                    : audioItem;
 
             try
             {

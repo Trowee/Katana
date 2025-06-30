@@ -33,10 +33,12 @@ namespace Assets.Scripts.Audio.Effects
             var filter = item.gameObject.GetComponent<AudioChorusFilter>();
             if (!Enabled)
             {
-                if (filter != null) Object.DestroyImmediate(filter);
+                var count = item.EffectCounts[typeof(Chorus)]--;
+                if (count < 1 && filter != null) Object.DestroyImmediate(filter);
                 return;
             }
             if (filter == null) filter = item.gameObject.AddComponent<AudioChorusFilter>();
+            item.EffectCounts[typeof(Chorus)]++;
             
             filter.dryMix = DryMix;
             filter.wetMix1 = WetMix1;
