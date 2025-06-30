@@ -1,5 +1,6 @@
 using System;
 using ArtificeToolkit.Attributes;
+using Assets.Scripts.Audio.Effects;
 using UnityEngine;
 using UnityEngine.Audio;
 
