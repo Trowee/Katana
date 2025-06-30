@@ -36,9 +36,11 @@ namespace Assets.Scripts.Audio
             EditorGUI.BeginProperty(position, label, property);
 
             var toggleRect = new Rect(position.x, position.y, 20, position.height);
-            var fieldRect = new Rect(position.x + 25, position.y, position.width - 25, position.height);
+            var fieldRect = new Rect(position.x + (optionalAttr.DisplayCheckbox ? 25 : 0),
+                                     position.y, position.width - 25, position.height);
 
-            boolProp.boolValue = EditorGUI.Toggle(toggleRect, boolProp.boolValue);
+            if (optionalAttr.DisplayCheckbox)
+                boolProp.boolValue = EditorGUI.Toggle(toggleRect, boolProp.boolValue);
 
             using (new EditorGUI.DisabledScope(!boolProp.boolValue))
             {
