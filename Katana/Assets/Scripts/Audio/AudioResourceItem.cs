@@ -34,23 +34,23 @@ namespace Assets.Scripts.Audio
 
         [Title("Settings")]
         public bool ReloadSettingsEveryPlay;
-        public bool UseItemSettingsPreset;
+        public bool UseSettingsPreset;
 
-        [EnableIf(nameof(UseItemSettingsPreset), false)]
+        [EnableIf(nameof(UseSettingsPreset), false)]
         public AudioSettings Settings;
 
         [ValidateInput(nameof(ValidateItemSettingsPreset))]
-        [EnableIf(nameof(UseItemSettingsPreset), true)]
+        [EnableIf(nameof(UseSettingsPreset), true)]
         [PreviewScriptable]
         public AudioSettingsPreset SettingsPreset;
-        private bool ValidateItemSettingsPreset => !UseItemSettingsPreset || SettingsPreset;
+        private bool ValidateItemSettingsPreset => !UseSettingsPreset || SettingsPreset;
 
         public AudioSource ApplySettingsToSource(AudioSource source)
         {
             source.playOnAwake = PlayOnAwake;
             source.outputAudioMixerGroup = MixerGroup;
             source.resource = Resource;
-            return (UseItemSettingsPreset ? SettingsPreset.Settings : Settings)
+            return (UseSettingsPreset ? SettingsPreset.Settings : Settings)
                 .ApplyToSource(source);
         }
     }

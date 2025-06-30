@@ -35,7 +35,7 @@ namespace Assets.Scripts.Audio
                         position: resourceItem.Position,
                         overrideSettings: true,
                         reloadSettingsEveryPlay: resourceItem.ReloadSettingsEveryPlay,
-                        useSettingsPreset: resourceItem.UseItemSettingsPreset,
+                        useSettingsPreset: resourceItem.UseSettingsPreset,
                         settings: resourceItem.Settings,
                         audioSettingsPreset: resourceItem.SettingsPreset);
                 GetOrCreateItem(audioItem);

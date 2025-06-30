@@ -21,12 +21,10 @@ namespace Assets.Scripts.Audio
 
         public AudioManagerItem ApplySettings(bool initial = false)
         {
-            if (OriginalAudioItem.OverrideSettings)
-                if (initial || OriginalAudioItem.ReloadSettingsEveryPlay)
-                    AudioItem.Settings.ApplyToSource(Source);
+            OriginalAudioItem.ApplySettingsToSource(Source);
             if (AudioItem.OverrideSettings)
                 if (initial || AudioItem.ReloadSettingsEveryPlay)
-                    AudioItem.Settings.ApplyToSource(Source);
+                    AudioItem.ApplySettingsToSource(Source);
             return this;
         }
         
