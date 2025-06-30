@@ -63,6 +63,7 @@ namespace Assets.Scripts.Audio
             var foundItem = GetItem(key, audioItem, out var existingItem);
             var item = foundItem ? existingItem : CreateItem(key, audioItem);
 
+            item.AudioItem = audioItem;
             item.ApplySettings(!foundItem).ApplyEffects();
             if (!foundItem && item.Source.playOnAwake) item.Source.Play();
             return item;

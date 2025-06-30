@@ -30,6 +30,8 @@ namespace Assets.Scripts.Audio
         
         public AudioManagerItem ApplyEffects()
         {
+            Debug.Log(OriginalAudioItem == AudioItem);
+            
             if (!OriginalAudioItem.OverrideEffects && !AudioItem.OverrideEffects)
             {
                 AudioItem.Effects.ClearEffects(this);
