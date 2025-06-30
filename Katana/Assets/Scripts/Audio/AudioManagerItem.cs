@@ -19,10 +19,23 @@ namespace Assets.Scripts.Audio
         
         public AudioSource Source;
 
+        public AudioManagerItem ApplySettings(bool initial = false)
+        {
+            if (OriginalAudioItem.OverrideSettings)
+                if (initial || OriginalAudioItem.ReloadSettingsEveryPlay)
+                    AudioItem.Settings.ApplyToSource(Source);
+            if (AudioItem.OverrideSettings)
+                if (initial || AudioItem.ReloadSettingsEveryPlay)
+                    AudioItem.Settings.ApplyToSource(Source);
+            return this;
+        }
+        
         public AudioManagerItem ApplyEffects()
         {
             if (OriginalAudioItem.OverrideEffects)
-                OriginalAudioItem.AudioEffects.ApplyEffects(this);
+                OriginalAudioItem.Effects.ApplyEffects(this);
+            if (OriginalAudioItem != AudioItem && AudioItem.OverrideEffects)
+                AudioItem.Effects.ApplyEffects(this);
             return this;
         }
         

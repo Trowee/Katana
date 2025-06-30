@@ -89,22 +89,22 @@ namespace Assets.Scripts.Audio
             SourceType != SourceType.Object || AssignTargetAtRuntime || Target;
 
         [Title("Settings")]
-        public bool OverrideItemSettings;
+        public bool OverrideSettings;
         
-        [Optional(nameof(OverrideItemSettings), displayCheckbox: false)]
+        [Optional(nameof(OverrideSettings), displayCheckbox: false)]
         public bool ReloadSettingsEveryPlay;
         
-        [Optional(nameof(OverrideItemSettings), displayCheckbox: false)]
+        [Optional(nameof(OverrideSettings), displayCheckbox: false)]
         public bool UseSettingsPreset;
 
         [EnableIf(nameof(UseSettingsPreset), false)]
         // TODO: Report to artifice, it doesn't work under optional
-        //[Optional(nameof(OverrideItemSettings), displayCheckbox: false)]
+        //[Optional(nameof(OverrideSettings), displayCheckbox: false)]
         public AudioSettings AudioSettings;
 
         [ValidateInput(nameof(ValidateSettingsPreset))]
         [EnableIf(nameof(UseSettingsPreset), true)]
-        [Optional(nameof(OverrideItemSettings), displayCheckbox: false)]
+        [Optional(nameof(OverrideSettings), displayCheckbox: false)]
         [PreviewScriptable]
         public AudioSettingsPreset AudioSettingsPreset;
         private bool ValidateSettingsPreset => !UseSettingsPreset || AudioSettingsPreset;
@@ -152,7 +152,7 @@ namespace Assets.Scripts.Audio
                          bool assignTargetAtRuntime = false,
                          GameObject target = null,
                          bool reloadSettingsEveryPlay = true,
-                         bool overrideItemSettings = false,
+                         bool overrideSettings = false,
                          bool useSettingsPreset = false,
                          AudioSettings settings = null,
                          AudioSettingsPreset audioSettingsPreset = null)
@@ -172,7 +172,7 @@ namespace Assets.Scripts.Audio
             Position = position;
             AssignTargetAtRuntime = assignTargetAtRuntime;
             Target = target;
-            OverrideItemSettings = overrideItemSettings;
+            OverrideSettings = overrideSettings;
             ReloadSettingsEveryPlay = reloadSettingsEveryPlay;
             UseSettingsPreset = useSettingsPreset;
             AudioSettings = settings ?? new();
@@ -204,7 +204,7 @@ namespace Assets.Scripts.Audio
             if (OverrideMixerGroup) source.outputAudioMixerGroup = MixerGroup;
             source.resource = GetAudioResource(source);
             
-            return !OverrideItemSettings ? source : Settings.ApplyToSource(source);
+            return !OverrideSettings ? source : Settings.ApplyToSource(source);
         }
     }
 }

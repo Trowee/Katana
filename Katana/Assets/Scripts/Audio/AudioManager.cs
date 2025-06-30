@@ -33,7 +33,7 @@ namespace Assets.Scripts.Audio
                         overridePlayOnAwake: true,
                         playOnAwake: resourceItem.PlayOnAwake,
                         position: resourceItem.Position,
-                        overrideItemSettings: true,
+                        overrideSettings: true,
                         reloadSettingsEveryPlay: resourceItem.ReloadSettingsEveryPlay,
                         useSettingsPreset: resourceItem.UseItemSettingsPreset,
                         settings: resourceItem.Settings,
@@ -46,7 +46,7 @@ namespace Assets.Scripts.Audio
             if (!AreAudioItemSettingsValid(audioItem)) return null;
             
             var item = GetOrCreateItem(audioItem);
-                
+            
             item?.Source?.Play();
             return item;
         }
@@ -56,25 +56,33 @@ namespace Assets.Scripts.Audio
             if (!AreAudioItemSettingsValid(audioItem)) return null;
 
             AudioManagerKey key = new(audioItem.SourceType, audioItem.Name);
+            var foundItem = GetItem(key, audioItem, out var existingItem);
+            var item = foundItem ? existingItem : CreateItem(key, audioItem);
 
-            var item = GetItem(key, audioItem, out var existingItem)
-                           ? existingItem
-                           : CreateItem(key, audioItem);
-
-            if (item != null && item.Source != null)
-            {
-                // OverrideItemSettings check is needed here too
-                // It ensures settings aren't reloaded if audioItem doesn't reload every play
-                if (audioItem.OverrideItemSettings)
-                {
-                    if (audioItem.ReloadSettingsEveryPlay)
-                        audioItem.ApplySettingsToSource(item.Source);
-                }
-                else if (item.AudioItem.ReloadSettingsEveryPlay)
-                    item.AudioItem.ApplySettingsToSource(item.Source);
-            }
-
+            item.ApplySettings(!foundItem).ApplyEffects();
+            if (!foundItem && item.Source.playOnAwake) item.Source.Play();
             return item;
+        }
+
+        private bool GetItem(AudioManagerKey key, AudioItem audioItem,
+                             out AudioManagerItem item)
+        {
+            item = null;
+            if (!audioItem.ReuseSource) return false;
+
+            if (!Items.TryGetValue(key, out var items)) return false;
+            
+            item = items.FirstOrDefault(x => x.AudioItem.Name == key.Name);
+            if (item == null) return false;
+
+            if (audioItem.SourceType == SourceType.Object &&
+                item.gameObject != audioItem.Target)
+            {
+                item = null;
+                return false;
+            }
+            
+            return true;
         }
 
         private AudioManagerItem CreateItem(AudioManagerKey key, AudioItem audioItem)
@@ -107,30 +115,7 @@ namespace Assets.Scripts.Audio
                 return null;
             }
 
-            audioItem.ApplySettingsToSource(item.Source);
-            if (item.Source.playOnAwake) item.Source.Play();
             return item;
-        }
-
-        private bool GetItem(AudioManagerKey key, AudioItem audioItem,
-                             out AudioManagerItem item)
-        {
-            item = null;
-            if (!audioItem.ReuseSource) return false;
-
-            if (!Items.TryGetValue(key, out var items)) return false;
-            
-            item = items.FirstOrDefault(x => x.AudioItem.Name == key.Name);
-            if (item == null) return false;
-
-            if (audioItem.SourceType == SourceType.Object &&
-                item.gameObject != audioItem.Target)
-            {
-                item = null;
-                return false;
-            }
-            
-            return true;
         }
 
         private AudioSource CreateSource(AudioManagerKey key, AudioManagerItem item)
@@ -148,7 +133,7 @@ namespace Assets.Scripts.Audio
                 items.Add(item);
             }
 
-            return item.AudioItem.ApplySettingsToSource(item.Source);
+            return item.Source;
         }
 
         private GameObject CreateSourceObject(AudioManagerKey key, AudioItem audioItem) =>
