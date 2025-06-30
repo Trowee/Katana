@@ -50,7 +50,6 @@ namespace Assets.Scripts.Audio
         public Easings.Type FadeInEasing;
         
         [TabGroup("Fade Out")]
-        [Optional(nameof(FadeOut))]
         public bool FadeOut;
 
         [TabGroup("Fade Out")]

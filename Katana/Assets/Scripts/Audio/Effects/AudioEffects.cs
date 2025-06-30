@@ -5,17 +5,11 @@ namespace Assets.Scripts.Audio.Effects
     [Serializable]
     public class AudioEffects
     {
-
         public Chorus Chorus;
-
         public Distortion Distortion;
-
         public Echo Echo;
-
         public HighPass HighPass;
-
         public LowPass Lowpass;
-        
         public Reverb Reverb;
 
         public void ApplyEffects(AudioManagerItem item)
