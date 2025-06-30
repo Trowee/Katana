@@ -87,21 +87,17 @@ namespace Assets.Scripts.Audio
         private bool ValidateAttachTarget =>
             SourceType != SourceType.Object || AssignTargetAtRuntime || Target;
 
-        [HideInInspector]
+        [Title("Settings")]
         public bool OverrideSettings;
 
-        [Title("Settings")]
-        [Optional(nameof(OverrideSettings))]
         public bool UseItemSettingsPreset;
 
         [EnableIf(nameof(UseItemSettingsPreset), false)]
-        [Optional(nameof(OverrideSettings))]
         public AudioItemSettings ItemSettings;
 
         [ValidateInput(nameof(ValidateItemSettingsPreset))]
         [EnableIf(nameof(UseItemSettingsPreset), true)]
         [PreviewScriptable]
-        [Optional(nameof(OverrideSettings))]
         public AudioItemSettingsPreset ItemSettingsPreset;
         private bool ValidateItemSettingsPreset => !UseItemSettingsPreset || ItemSettingsPreset;
 
