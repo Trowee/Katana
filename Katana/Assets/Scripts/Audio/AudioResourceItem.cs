@@ -15,7 +15,7 @@ namespace Assets.Scripts.Audio
         [Title("Play On Awake")]
         [HideLabel]
         public bool PlayOnAwake;
-        
+
         [Title("Mixer Group")]
         [HideLabel]
         public AudioMixerGroup MixerGroup;
@@ -26,8 +26,6 @@ namespace Assets.Scripts.Audio
         [HideLabel]
         [EnumToggle]
         public SourceType SourceType;
-
-        private bool ValidateSourceType => SourceType != SourceType.Object;
 
         [HideLabel]
         [EnableIf(nameof(SourceType), SourceType.Positional)]
@@ -44,13 +42,21 @@ namespace Assets.Scripts.Audio
         [EnableIf(nameof(UseSettingsPreset), true)]
         [PreviewScriptable]
         public AudioSettingsPreset SettingsPreset;
-        private bool ValidateItemSettingsPreset => !UseSettingsPreset || SettingsPreset;
 
         public bool UseEffectsPreset;
-        
+
         [EnableIf(nameof(UseEffectsPreset), false)]
         public AudioEffects AudioEffects;
-        
+
+        [ValidateInput(nameof(ValidateEffectsPreset))]
+        [EnableIf(nameof(UseEffectsPreset), true)]
+        [PreviewScriptable]
+        public AudioEffectsPreset AudioEffectsPreset;
+
+        private bool ValidateSourceType => SourceType != SourceType.Object;
+        private bool ValidateItemSettingsPreset => !UseSettingsPreset || SettingsPreset;
+        private bool ValidateEffectsPreset => !UseEffectsPreset || AudioEffectsPreset;
+
         public AudioSource ApplySettingsToSource(AudioSource source)
         {
             source.playOnAwake = PlayOnAwake;
@@ -59,11 +65,5 @@ namespace Assets.Scripts.Audio
             return (UseSettingsPreset ? SettingsPreset.Settings : Settings)
                 .ApplyToSource(source);
         }
-        
-        [ValidateInput(nameof(ValidateEffectsPreset))]
-        [EnableIf(nameof(UseEffectsPreset), true)]
-        [PreviewScriptable]
-        public AudioEffectsPreset AudioEffectsPreset;
-        private bool ValidateEffectsPreset => !UseEffectsPreset || AudioEffectsPreset;
     }
 }

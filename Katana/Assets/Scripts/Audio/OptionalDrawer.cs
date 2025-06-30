@@ -13,7 +13,7 @@ namespace Assets.Scripts.Audio
             var labelText = optionalAttr.Label;
             label.text = labelText ?? label.text;
             SerializedProperty boolProp = null;
-            
+
             var propertyPath = property.propertyPath;
             var lastDotIndex = propertyPath.LastIndexOf('.');
             if (lastDotIndex >= 0)
@@ -29,7 +29,8 @@ namespace Assets.Scripts.Audio
 
             if (boolProp == null)
             {
-                EditorGUI.LabelField(position, label.text, $"Bool field '{optionalAttr.BoolFieldName}' not found");
+                EditorGUI.LabelField(position, label.text,
+                                     $"Bool field '{optionalAttr.BoolFieldName}' not found");
                 return;
             }
 

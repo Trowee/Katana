@@ -13,14 +13,19 @@ namespace Assets.Scripts.Audio
             Name = name;
         }
 
-        public bool Equals(AudioManagerKey other) =>
-            SourceType == other.SourceType && Name == other.Name;
+        public bool Equals(AudioManagerKey other)
+        {
+            return SourceType == other.SourceType && Name == other.Name;
+        }
 
-        public override bool Equals(object obj) => obj is AudioManagerKey other && Equals(other);
+        public override bool Equals(object obj)
+        {
+            return obj is AudioManagerKey other && Equals(other);
+        }
 
         public override int GetHashCode()
         {
-            int hash = 17;
+            var hash = 17;
             hash = hash * 23 + SourceType.GetHashCode();
             hash = hash * 23 + (Name?.GetHashCode() ?? 0);
             return hash;

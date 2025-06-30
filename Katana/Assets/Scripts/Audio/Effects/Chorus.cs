@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace Assets.Scripts.Audio.Effects
 {
@@ -27,7 +26,7 @@ namespace Assets.Scripts.Audio.Effects
 
         [Range(0, 1)]
         public float Depth = 0.03f;
-        
+
         public override void ApplyEffect(AudioManagerItem item)
         {
             if (!Enabled)
@@ -35,13 +34,14 @@ namespace Assets.Scripts.Audio.Effects
                 ClearEffect(item);
                 return;
             }
+
             var filter = item.gameObject.GetComponent<AudioChorusFilter>();
             if (filter == null)
             {
                 filter = item.gameObject.AddComponent<AudioChorusFilter>();
                 item.EffectCounts[typeof(AudioChorusFilter)].Add(this);
             }
-            
+
             filter.dryMix = DryMix;
             filter.wetMix1 = WetMix1;
             filter.wetMix2 = WetMix2;
@@ -51,7 +51,9 @@ namespace Assets.Scripts.Audio.Effects
             filter.depth = Depth;
         }
 
-        public override void ClearEffect(AudioManagerItem item) =>
+        public override void ClearEffect(AudioManagerItem item)
+        {
             item.EffectCounts[typeof(AudioChorusFilter)].Remove(this);
+        }
     }
 }

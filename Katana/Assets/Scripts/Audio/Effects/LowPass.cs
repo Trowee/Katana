@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace Assets.Scripts.Audio.Effects
 {
@@ -12,7 +11,7 @@ namespace Assets.Scripts.Audio.Effects
 
         [Range(1, 10)]
         public float LowPassResonanceQ = 1;
-        
+
         public override void ApplyEffect(AudioManagerItem item)
         {
             if (!Enabled)
@@ -20,18 +19,21 @@ namespace Assets.Scripts.Audio.Effects
                 ClearEffect(item);
                 return;
             }
+
             var filter = item.gameObject.GetComponent<AudioLowPassFilter>();
             if (filter == null)
             {
                 filter = item.gameObject.AddComponent<AudioLowPassFilter>();
                 item.EffectCounts[typeof(AudioLowPassFilter)].Add(this);
             }
-            
+
             filter.cutoffFrequency = LowPassCutoffFrequency;
-            filter.lowpassResonanceQ =  LowPassResonanceQ;
+            filter.lowpassResonanceQ = LowPassResonanceQ;
         }
 
-        public override void ClearEffect(AudioManagerItem item) =>
+        public override void ClearEffect(AudioManagerItem item)
+        {
             item.EffectCounts[typeof(AudioLowPassFilter)].Remove(this);
+        }
     }
 }

@@ -8,9 +8,8 @@ namespace Assets.Scripts.Audio
 {
     public class AudioManager : MonoBehaviour
     {
-        private Transform _sourceParent;
-
         public readonly Dictionary<AudioManagerKey, HashSet<AudioManagerItem>> Items = new();
+        private Transform _sourceParent;
 
         private void Awake()
         {
@@ -20,16 +19,18 @@ namespace Assets.Scripts.Audio
             LoadClipItems();
         }
 
-        private void LoadClipItems() =>
+        private void LoadClipItems()
+        {
             Resources.LoadAll<AudioResourceItem>("")
                      .ForEach(resourceItem => GetOrCreateItem(new(resourceItem)));
-        
+        }
+
         public AudioManagerItem Play(AudioItem audioItem)
         {
             if (!AreAudioItemSettingsValid(audioItem)) return null;
-            
+
             var item = GetOrCreateItem(audioItem);
-            
+
             item?.Source?.Play();
             return item;
         }
@@ -54,7 +55,7 @@ namespace Assets.Scripts.Audio
             if (!audioItem.ReuseSource) return false;
 
             if (!Items.TryGetValue(key, out var items)) return false;
-            
+
             item = items.FirstOrDefault(x => x.AudioItem.Name == key.Name);
             if (item == null) return false;
 
@@ -64,7 +65,7 @@ namespace Assets.Scripts.Audio
                 item = null;
                 return false;
             }
-            
+
             item.AudioItem = audioItem;
             return true;
         }
@@ -72,7 +73,7 @@ namespace Assets.Scripts.Audio
         private AudioManagerItem CreateItem(AudioManagerKey key, AudioItem audioItem)
         {
             AudioManagerItem item;
-            
+
             try
             {
                 item = CreateSourceObject(key, audioItem).AddComponent<AudioManagerItem>();
@@ -84,7 +85,7 @@ namespace Assets.Scripts.Audio
                                        e));
                 return null;
             }
-            
+
             item.AudioItem = audioItem;
             item.OriginalAudioItem =
                 audioItem.ResourceAssignmentType == ResourceAssignmentType.ResourceItem
@@ -124,8 +125,9 @@ namespace Assets.Scripts.Audio
             return item.Source;
         }
 
-        private GameObject CreateSourceObject(AudioManagerKey key, AudioItem audioItem) =>
-            key.SourceType switch
+        private GameObject CreateSourceObject(AudioManagerKey key, AudioItem audioItem)
+        {
+            return key.SourceType switch
             {
                 SourceType.Manager => new(key.Name) { transform = { parent = _sourceParent } },
                 SourceType.Positional =>
@@ -140,6 +142,7 @@ namespace Assets.Scripts.Audio
                 SourceType.Object => audioItem.Target,
                 _ => throw new ArgumentOutOfRangeException()
             };
+        }
 
         private bool AreAudioItemSettingsValid(AudioItem audioItem)
         {

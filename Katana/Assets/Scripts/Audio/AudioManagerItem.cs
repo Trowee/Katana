@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Audio.Effects;
-using EasyTextEffects.Editor.MyBoxCopy.Extensions;
 using NnUtils.Modules.Easings;
 using NnUtils.Scripts;
 using UnityEngine;
@@ -11,15 +10,23 @@ namespace Assets.Scripts.Audio
 {
     public class AudioManagerItem : MonoBehaviour
     {
-        private readonly Dictionary<int, Coroutine> _routines = new();
-        
         /// AudioItem this Item was created from
         public AudioItem OriginalAudioItem;
-        
+
         /// Current AudioItem
         public AudioItem AudioItem;
-        
+
         public AudioSource Source;
+        private readonly Dictionary<int, Coroutine> _routines = new();
+
+        public readonly Dictionary<Type, HashSet<AudioEffect>> EffectCounts = new()
+        {
+            { typeof(AudioChorusFilter), new() },
+            { typeof(AudioDistortionFilter), new() },
+            { typeof(AudioEchoFilter), new() },
+            { typeof(AudioHighPassFilter), new() },
+            { typeof(AudioLowPassFilter), new() }
+        };
 
         public AudioManagerItem ApplySettings(bool initial = false)
         {
@@ -29,16 +36,7 @@ namespace Assets.Scripts.Audio
                     AudioItem.ApplySettingsToSource(Source);
             return this;
         }
-        
-        public readonly Dictionary<Type, HashSet<AudioEffect>> EffectCounts = new()
-        {
-            { typeof(AudioChorusFilter), new() },
-            { typeof(AudioDistortionFilter), new() },
-            { typeof(AudioEchoFilter), new() },
-            { typeof(AudioHighPassFilter), new() },
-            { typeof(AudioLowPassFilter), new() }
-        };
-        
+
         public AudioManagerItem ApplyEffects()
         {
             if (OriginalAudioItem.OverrideEffects)
@@ -50,8 +48,11 @@ namespace Assets.Scripts.Audio
                 if (OriginalAudioItem != AudioItem)
                     AudioItem.Effects.ApplyEffects(this);
             }
-            else AudioItem.Effects.ClearEffects(this);
-            
+            else
+            {
+                AudioItem.Effects.ClearEffects(this);
+            }
+
             foreach (var ec in EffectCounts)
                 if (EffectCounts[ec.Key].Count < 1 &&
                     gameObject.TryGetComponent(ec.Key, out var effect))
@@ -59,33 +60,34 @@ namespace Assets.Scripts.Audio
 
             return this;
         }
-        
+
         public AudioManagerItem TweenVolume(float from, float to,
                                             float duration, out Coroutine routine,
                                             Easings.Type easing = Easings.Type.Linear,
-                                            bool scaled = true) =>
-            TweenProperty(0, from, to, duration, easing, scaled,
-                          x => Source.volume = x, out routine);
+                                            bool scaled = true)
+        {
+            return TweenProperty(0, from, to, duration, easing, scaled,
+                                 x => Source.volume = x, out routine);
+        }
 
         public AudioManagerItem TweenPitch(float from, float to,
-                                            float duration, out Coroutine routine,
-                                            Easings.Type easing = Easings.Type.Linear,
-                                            bool scaled = true) =>
-            TweenProperty(0, from, to, duration, easing, scaled,
-                          x => Source.pitch = x, out routine);
+                                           float duration, out Coroutine routine,
+                                           Easings.Type easing = Easings.Type.Linear,
+                                           bool scaled = true)
+        {
+            return TweenProperty(0, from, to, duration, easing, scaled,
+                                 x => Source.pitch = x, out routine);
+        }
 
         private AudioManagerItem TweenProperty(int key, float from, float to,
-                                                float duration, Easings.Type easing, bool scaled,
-                                                Action<float> callback, out Coroutine routine)
+                                               float duration, Easings.Type easing, bool scaled,
+                                               Action<float> callback, out Coroutine routine)
         {
-            if (_routines.TryGetValue(key, out routine))
-            {
-                StopCoroutine(routine);
-            }
+            if (_routines.TryGetValue(key, out routine)) StopCoroutine(routine);
 
             _routines[key] = routine = StartCoroutine(
-                TweenProperty(key, from, to, duration, easing, scaled, callback));
-            
+                                 TweenProperty(key, from, to, duration, easing, scaled, callback));
+
             return this;
         }
 

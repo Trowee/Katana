@@ -1,8 +1,6 @@
 using System;
 using ArtificeToolkit.Attributes;
 using NnUtils.Modules.Easings;
-using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace Assets.Scripts.Audio.Effects
 {
@@ -38,7 +36,7 @@ namespace Assets.Scripts.Audio.Effects
         public Echo Echo;
 
         public HighPass HighPass;
-        
+
         public LowPass Lowpass;
 
         public void ApplyEffects(AudioManagerItem item)

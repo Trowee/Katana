@@ -20,21 +20,16 @@ namespace Assets.Scripts.Audio
         [EnableIf(nameof(ResourceAssignmentType), ResourceAssignmentType.ResourceItem)]
         [PreviewScriptable]
         public AudioResourceItem AudioResourceItem;
-        private bool ValidateResourceItem =>
-            ResourceAssignmentType != ResourceAssignmentType.ResourceItem || AudioResourceItem;
 
         [HideLabel]
         [ValidateInput(nameof(ValidateAudioResource))]
         [EnableIf(nameof(ResourceAssignmentType), ResourceAssignmentType.Resource)]
         public AudioResource AudioResource;
-        private bool ValidateAudioResource =>
-            ResourceAssignmentType != ResourceAssignmentType.Resource || AudioResource;
 
         [HideLabel]
         [ValidateInput(nameof(ValidateResourceName), "Audio Resource Name can't be empty")]
         [EnableIf(nameof(ResourceAssignmentType), ResourceAssignmentType.Name)]
         public string AudioResourceName;
-        private bool ValidateResourceName => !string.IsNullOrEmpty(AudioResourceName);
 
         [HideInInspector]
         public bool OverrideMixerGroup;
@@ -86,15 +81,13 @@ namespace Assets.Scripts.Audio
         [EnableIf(nameof(SourceType), SourceType.Object)]
         [EnableIf(nameof(AssignTargetAtRuntime), false)]
         public GameObject Target;
-        private bool ValidateAttachTarget =>
-            SourceType != SourceType.Object || AssignTargetAtRuntime || Target;
 
         [Title("Settings")]
         public bool OverrideSettings;
-        
+
         [Optional(nameof(OverrideSettings), displayCheckbox: false)]
         public bool ReloadSettingsEveryPlay;
-        
+
         [Optional(nameof(OverrideSettings), displayCheckbox: false)]
         public bool UseSettingsPreset;
 
@@ -108,30 +101,23 @@ namespace Assets.Scripts.Audio
         [Optional(nameof(OverrideSettings), displayCheckbox: false)]
         [PreviewScriptable]
         public AudioSettingsPreset AudioSettingsPreset;
-        private bool ValidateSettingsPreset => !UseSettingsPreset || AudioSettingsPreset;
-
-        public AudioSettings Settings =>
-            UseSettingsPreset ? AudioSettingsPreset.Settings : AudioSettings;
 
         [Title("Effects")]
         public bool OverrideEffects;
 
         [Optional(nameof(OverrideEffects), displayCheckbox: false)]
         public bool UseEffectsPreset;
-        
+
         [EnableIf(nameof(UseEffectsPreset), false)]
         // TODO: Report to artifice, it doesn't work under optional
         //[Optional(nameof(OverrideEffects), displayCheckbox: false)]
         public AudioEffects AudioEffects;
-        
+
         [ValidateInput(nameof(ValidateEffectsPreset))]
         [EnableIf(nameof(UseEffectsPreset), true)]
         [Optional(nameof(OverrideEffects), displayCheckbox: false)]
         [PreviewScriptable]
         public AudioEffectsPreset AudioEffectsPreset;
-        private bool ValidateEffectsPreset => !UseEffectsPreset || AudioEffectsPreset;
-
-        public AudioEffects Effects => UseEffectsPreset ? AudioEffectsPreset.Effects : AudioEffects;
 
         public AudioItem() : this(ResourceAssignmentType.ResourceItem)
         {
@@ -139,7 +125,7 @@ namespace Assets.Scripts.Audio
 
         public AudioItem(AudioResourceItem resourceItem) : this(
             ResourceAssignmentType.ResourceItem,
-            audioResourceItem: resourceItem,
+            resourceItem,
             overrideMixerGroup: true,
             mixerGroup: resourceItem.MixerGroup,
             sourceType: SourceType.Manager,
@@ -210,6 +196,21 @@ namespace Assets.Scripts.Audio
             AudioEffectsPreset = audioEffectsPreset;
         }
 
+        private bool ValidateResourceItem =>
+            ResourceAssignmentType != ResourceAssignmentType.ResourceItem || AudioResourceItem;
+        private bool ValidateAudioResource =>
+            ResourceAssignmentType != ResourceAssignmentType.Resource || AudioResource;
+        private bool ValidateResourceName => !string.IsNullOrEmpty(AudioResourceName);
+        private bool ValidateAttachTarget =>
+            SourceType != SourceType.Object || AssignTargetAtRuntime || Target;
+        private bool ValidateSettingsPreset => !UseSettingsPreset || AudioSettingsPreset;
+
+        public AudioSettings Settings =>
+            UseSettingsPreset ? AudioSettingsPreset.Settings : AudioSettings;
+        private bool ValidateEffectsPreset => !UseEffectsPreset || AudioEffectsPreset;
+
+        public AudioEffects Effects => UseEffectsPreset ? AudioEffectsPreset.Effects : AudioEffects;
+
         public string Name =>
             ResourceAssignmentType switch
             {
@@ -219,8 +220,9 @@ namespace Assets.Scripts.Audio
                 _ => throw new ArgumentOutOfRangeException(nameof(ResourceAssignmentType))
             };
 
-        public AudioResource GetAudioResource(AudioSource source) =>
-            ResourceAssignmentType switch
+        public AudioResource GetAudioResource(AudioSource source)
+        {
+            return ResourceAssignmentType switch
             {
                 ResourceAssignmentType.ResourceItem => AudioResourceItem.Resource,
                 ResourceAssignmentType.Resource => AudioResource,
@@ -228,13 +230,14 @@ namespace Assets.Scripts.Audio
                 _ => throw new(
                          "(Audio Item) ResourceAssignmentType must not be set to 'Manual' at the time of calling the GetAudioResource function")
             };
+        }
 
         public AudioSource ApplySettingsToSource(AudioSource source)
         {
             if (OverridePlayOnAwake) source.playOnAwake = PlayOnAwake;
             if (OverrideMixerGroup) source.outputAudioMixerGroup = MixerGroup;
             source.resource = GetAudioResource(source);
-            
+
             return !OverrideSettings ? source : Settings.ApplyToSource(source);
         }
     }
