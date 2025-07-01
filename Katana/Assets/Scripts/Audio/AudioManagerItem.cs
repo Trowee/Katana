@@ -109,33 +109,29 @@ namespace Assets.Scripts.Audio
             {
                 Source.Stop();
                 StopCoroutine(_playRoutine);
+                _playRoutine = null;
             }
             foreach (var routine in _tweenRoutines) StopCoroutine(_tweenRoutines[routine.Key]);
             return this;
         }
 
         private Coroutine _playRoutine;
-        
         private IEnumerator PlayRoutine()
         {
             if (FadeIn) TweenVolume(0, Source.volume, FadeInTime, out _, FadeInEasing);
             Source.Play();
             
-            var length = Source.clip.length;
             if (FadeOut)
             {
-                var timeBeforeFadeOut = length - FadeOutTime;
-                yield return Scaled
-                                 ? new WaitForSeconds(timeBeforeFadeOut)
-                                 : new WaitForSecondsRealtime(timeBeforeFadeOut);
+                var fadeOutSample = Source.clip.samples -
+                                    Mathf.RoundToInt(Source.clip.frequency * (FadeOutTime + 1.05f));
+                
+                yield return new WaitUntil(() => Source.timeSamples >= fadeOutSample);
                 yield return TweenVolume(Source.volume, 0, FadeOutTime, out _, FadeOutEasing);
             }
-            else
-                yield return Scaled
-                                 ? new WaitForSeconds(length)
-                                 : new WaitForSecondsRealtime(length);
-
-            yield return null;
+            
+            yield return new WaitWhile(() => Source.isPlaying);
+            Stop();
         }
 
         public AudioManagerItem TweenVolume(float from, float to,
