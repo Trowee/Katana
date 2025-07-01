@@ -50,6 +50,7 @@
     <Compile Include="Assets/Scripts/Items/Item.cs" />
     <Compile Include="Assets/Scripts/Player/PlayerScript.cs" />
     <Compile Include="Assets/Scripts/Audio/AudioSettings.cs" />
+    <Compile Include="Assets/Scripts/Audio/AudioManagerItemExtensions.cs" />
     <Compile Include="Assets/Scripts/Audio/Effects/AudioEffect.cs" />
     <Compile Include="Assets/Scripts/Audio/SourceType.cs" />
     <Compile Include="Assets/Scripts/Player/Camera/Perspective.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Assets/Scripts/Audio/AudioSettingsPreset.cs" />
     <Compile Include="Assets/Scripts/TimeScale/TimeScaleKey.cs" />
     <Compile Include="Assets/Scripts/MainMenu/MainMenuButton.cs" />
+    <Compile Include="Assets/Scripts/Audio/AmbiencePlayer.cs" />
     <Compile Include="Assets/Scripts/AssemblyAttributes.cs" />
     <Compile Include="Assets/Scripts/Editor/BuildScript.cs" />
     <Compile Include="Assets/Scripts/Fruits/FragmentScript.cs" />
@@ -95,6 +97,7 @@
     <Compile Include="Assets/Scripts/Audio/AudioResourceItem.cs" />
     <Compile Include="Assets/Scripts/Audio/AudioManagerKey.cs" />
     <Compile Include="Assets/Scripts/Audio/Effects/Chorus.cs" />
+    <Compile Include="Assets/Scripts/Audio/Utils.cs" />
     <Compile Include="Assets/Scripts/Audio/AudioItem.cs" />
     <Compile Include="Assets/Scripts/Fruits/CannonScript.cs" />
     <Compile Include="Assets/Scripts/Audio/OptionalDrawer.cs" />
@@ -103,8 +106,6 @@
     <Compile Include="Assets/Scripts/Core/GameManager.cs" />
     <Compile Include="Assets/Scripts/Audio/Effects/Reverb.cs" />
     <Compile Include="Assets/Scripts/Player/Camera/CameraHandlerScript.cs" />
-    <Compile Include="Assets\Scripts\Audio\AudioManagerItemExtensions.cs" />
-    <Compile Include="Assets\Scripts\Audio\Utils.cs" />
     <None Include="Assets/Scripts/Scripts.asmdef" />
     <Reference Include="UnityEngine">
       <HintPath>/home/nnra/Unity/Hub/Editor/6000.0.34f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
