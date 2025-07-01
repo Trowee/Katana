@@ -22,13 +22,13 @@ namespace Assets.Scripts.Audio.Effects
             }
 
             var filter = item.gameObject.GetOrAddComponent<AudioHighPassFilter>();
-            item.EffectCounts[typeof(AudioHighPassFilter)].Add(this);
+            item.EffectsByType[typeof(AudioHighPassFilter)].Add(this);
 
             filter.cutoffFrequency = HighPassCutoffFrequency;
             filter.highpassResonanceQ = HighPassResonanceQ;
         }
 
         public override void ClearEffect(AudioManagerItem item) =>
-            item.EffectCounts[typeof(AudioHighPassFilter)].Remove(this);
+            item.EffectsByType[typeof(AudioHighPassFilter)].Remove(this);
     }
 }

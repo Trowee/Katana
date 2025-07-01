@@ -37,7 +37,7 @@ namespace Assets.Scripts.Audio.Effects
             }
 
             var filter = item.gameObject.GetOrAddComponent<AudioChorusFilter>();
-            item.EffectCounts[typeof(AudioChorusFilter)].Add(this);
+            item.EffectsByType[typeof(AudioChorusFilter)].Add(this);
 
             filter.dryMix = DryMix;
             filter.wetMix1 = WetMix1;
@@ -49,6 +49,6 @@ namespace Assets.Scripts.Audio.Effects
         }
 
         public override void ClearEffect(AudioManagerItem item) =>
-            item.EffectCounts[typeof(AudioChorusFilter)].Remove(this);
+            item.EffectsByType[typeof(AudioChorusFilter)].Remove(this);
     }
 }

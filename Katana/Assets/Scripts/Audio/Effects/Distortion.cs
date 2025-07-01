@@ -19,12 +19,12 @@ namespace Assets.Scripts.Audio.Effects
             }
 
             var filter = item.gameObject.GetOrAddComponent<AudioDistortionFilter>();
-            item.EffectCounts[typeof(AudioDistortionFilter)].Add(this);
+            item.EffectsByType[typeof(AudioDistortionFilter)].Add(this);
 
             filter.distortionLevel = Level;
         }
 
         public override void ClearEffect(AudioManagerItem item) =>
-            item.EffectCounts[typeof(AudioDistortionFilter)].Remove(this);
+            item.EffectsByType[typeof(AudioDistortionFilter)].Remove(this);
     }
 }

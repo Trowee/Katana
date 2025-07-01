@@ -92,6 +92,7 @@ namespace Assets.Scripts.Audio
                 return null;
             }
 
+            item.Key = key;
             item.OriginalAudioItem =
                 audioItem.ResourceAssignmentType == ResourceAssignmentType.ResourceItem
                     ? new(audioItem.AudioResourceItem)
@@ -112,6 +113,8 @@ namespace Assets.Scripts.Audio
 
             return item;
         }
+
+        public void RemoveItem(AudioManagerItem item) => Items[item.Key].Remove(item);
 
         private AudioSource CreateSource(AudioManagerKey key, AudioManagerItem item)
         {

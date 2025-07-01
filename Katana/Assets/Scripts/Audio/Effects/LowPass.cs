@@ -22,13 +22,13 @@ namespace Assets.Scripts.Audio.Effects
             }
 
             var filter = item.gameObject.GetOrAddComponent<AudioLowPassFilter>();
-            item.EffectCounts[typeof(AudioLowPassFilter)].Add(this);
+            item.EffectsByType[typeof(AudioLowPassFilter)].Add(this);
 
             filter.cutoffFrequency = LowPassCutoffFrequency;
             filter.lowpassResonanceQ = LowPassResonanceQ;
         }
 
         public override void ClearEffect(AudioManagerItem item) =>
-            item.EffectCounts[typeof(AudioLowPassFilter)].Remove(this);
+            item.EffectsByType[typeof(AudioLowPassFilter)].Remove(this);
     }
 }

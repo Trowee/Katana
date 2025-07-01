@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.Audio.Effects;
+using Assets.Scripts.Core;
 using NnUtils.Modules.Easings;
 using UnityEngine;
 
@@ -15,6 +17,8 @@ namespace Assets.Scripts.Audio
             Pitch
         }
 
+        public AudioManagerKey Key;
+        
         /// AudioItem this Item was created from
         public AudioItem OriginalAudioItem;
 
@@ -30,7 +34,7 @@ namespace Assets.Scripts.Audio
         /// Unscaled Pitch
         public float Pitch { get; private set; } = 1;
 
-        public readonly Dictionary<Type, HashSet<AudioEffect>> EffectCounts = new()
+        public readonly Dictionary<Type, HashSet<AudioEffect>> EffectsByType = new()
         {
             { typeof(AudioChorusFilter), new() },
             { typeof(AudioDistortionFilter), new() },
@@ -44,8 +48,12 @@ namespace Assets.Scripts.Audio
 
         private void Update()
         {
-            // Update Source Pitch
             if (Source.isPlaying) Source.pitch = this.Scaled() ? Pitch * Time.timeScale : Pitch;
+        }
+
+        private void OnDestroy()
+        {
+            GameManager.AudioManager.RemoveItem(this);
         }
 
         public AudioManagerItem ApplySettings(bool initial = false)
@@ -75,8 +83,8 @@ namespace Assets.Scripts.Audio
             }
             else AudioItem.Effects.ClearEffects(this);
 
-            foreach (var ec in EffectCounts)
-                if (EffectCounts[ec.Key].Count < 1 &&
+            foreach (var ec in EffectsByType)
+                if (EffectsByType[ec.Key].Count < 1 &&
                     gameObject.TryGetComponent(ec.Key, out var effect))
                     DestroyImmediate(effect);
 
@@ -86,12 +94,12 @@ namespace Assets.Scripts.Audio
         public AudioManagerItem Play()
         {
             if (Paused) return Resume();
-            Stop();
+            if (_playRoutine != null) Stop();
             _playRoutine = StartCoroutine(PlayRoutine());
             return this;
         }
 
-        public AudioManagerItem Stop()
+        public AudioManagerItem Stop(bool finished = false)
         {
             if (_playRoutine != null)
             {
@@ -101,13 +109,30 @@ namespace Assets.Scripts.Audio
                 Paused = false;
             }
 
-            foreach (var routine in _tweenRoutines)
-                if (routine.Value != null)
-                    StopCoroutine(routine.Value);
+            foreach (var routine in _tweenRoutines.Where(routine => routine.Value != null))
+                StopCoroutine(routine.Value);
+
+            if (!finished) return this;
 
             if (AudioItem.DestroyTargetOnFinished) DestroyImmediate(gameObject);
-            else if (AudioItem.DestroySourceOnFinished) DestroyImmediate(Source);
+            else if (AudioItem.DestroySourceOnFinished)
+            {
+                DestroyEffects();
+                DestroyImmediate(Source);
+                DestroyImmediate(this);
+            }
+
             return this;
+        }
+
+        private void DestroyEffects()
+        {
+            foreach (var (type, effects) in EffectsByType)
+            {
+                effects.Clear();
+                if (gameObject.TryGetComponent(type, out var effect))
+                    DestroyImmediate(effect);
+            }
         }
 
         public AudioManagerItem Pause()
@@ -160,7 +185,7 @@ namespace Assets.Scripts.Audio
             }
 
             yield return new WaitWhile(() => Source.isPlaying);
-            Stop();
+            Stop(true);
         }
 
         public AudioManagerItem TweenVolume(float from, float to,

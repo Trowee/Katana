@@ -76,7 +76,7 @@ namespace Assets.Scripts.Audio.Effects
             }
 
             var filter = item.gameObject.GetOrAddComponent<AudioReverbFilter>();
-            item.EffectCounts[typeof(AudioReverbFilter)].Add(this);
+            item.EffectsByType[typeof(AudioReverbFilter)].Add(this);
 
             filter.reverbPreset = Preset;
             if (Preset != AudioReverbPreset.User) return;
@@ -98,6 +98,6 @@ namespace Assets.Scripts.Audio.Effects
         }
 
         public override void ClearEffect(AudioManagerItem item) =>
-            item.EffectCounts[typeof(AudioReverbFilter)].Remove(this);
+            item.EffectsByType[typeof(AudioReverbFilter)].Remove(this);
     }
 }

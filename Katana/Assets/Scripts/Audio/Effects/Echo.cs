@@ -28,7 +28,7 @@ namespace Assets.Scripts.Audio.Effects
             }
 
             var filter = item.gameObject.GetOrAddComponent<AudioEchoFilter>();
-            item.EffectCounts[typeof(AudioEchoFilter)].Add(this);
+            item.EffectsByType[typeof(AudioEchoFilter)].Add(this);
 
             filter.delay = Delay;
             filter.decayRatio = DecayRatio;
@@ -37,6 +37,6 @@ namespace Assets.Scripts.Audio.Effects
         }
 
         public override void ClearEffect(AudioManagerItem item) =>
-            item.EffectCounts[typeof(AudioEchoFilter)].Remove(this);
+            item.EffectsByType[typeof(AudioEchoFilter)].Remove(this);
     }
 }
