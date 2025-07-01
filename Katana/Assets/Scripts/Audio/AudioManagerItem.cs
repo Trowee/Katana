@@ -16,7 +16,20 @@ namespace Assets.Scripts.Audio
         /// Current AudioItem
         public AudioItem AudioItem;
 
+        /// Audio Source
         public AudioSource Source;
+
+        /// Whether Source is paused
+        public bool Paused;
+
+        /// Unscaled Pitch
+        public float Pitch = 1;
+
+        public enum TweenType
+        {
+            Volume,
+            Pitch
+        }
 
         #region Audio Item Property Getters
 
@@ -66,12 +79,23 @@ namespace Assets.Scripts.Audio
             { typeof(AudioReverbFilter), new() }
         };
 
+        private void Update()
+        {
+            // Update Source Pitch
+            if (Source.isPlaying) Source.pitch = Scaled ? Pitch * Time.timeScale: Pitch;
+        }
+
         public AudioManagerItem ApplySettings(bool initial = false)
         {
             OriginalAudioItem.ApplySettingsToSource(Source);
             if (AudioItem.OverrideSettings)
                 if (initial || AudioItem.ReloadSettingsEveryPlay)
                     AudioItem.ApplySettingsToSource(Source);
+            
+            // Update pitch once before playing
+            Pitch = Source.pitch;
+            Source.pitch = Scaled ? Pitch * Time.timeScale : Pitch;
+            
             return this;
         }
 
@@ -98,6 +122,7 @@ namespace Assets.Scripts.Audio
 
         public AudioManagerItem Play()
         {
+            if (Paused) return Resume();
             Stop();
             _playRoutine = StartCoroutine(PlayRoutine());
             return this;
@@ -110,15 +135,35 @@ namespace Assets.Scripts.Audio
                 Source.Stop();
                 StopCoroutine(_playRoutine);
                 _playRoutine = null;
+                Paused = false;
             }
             foreach (var routine in _tweenRoutines) StopCoroutine(_tweenRoutines[routine.Key]);
+            
+            if (AudioItem.DestroyTargetOnFinished) DestroyImmediate(gameObject);
+            else if (AudioItem.DestroySourceOnFinished) DestroyImmediate(Source);
+            return this;
+        }
+
+        public AudioManagerItem Pause()
+        {
+            if (Paused) return this;
+            Paused = true;
+            Source.Pause();
+            return this;
+        }
+
+        public AudioManagerItem Resume()
+        {
+            if (!Paused) return this;
+            Paused = false;
+            Source.UnPause();
             return this;
         }
 
         private Coroutine _playRoutine;
         private IEnumerator PlayRoutine()
         {
-            if (FadeIn) TweenVolume(0, Source.volume, FadeInTime, out _, FadeInEasing);
+            if (FadeIn) TweenVolume(0, Source.volume, FadeInTime, out _, FadeInEasing, Scaled);
             Source.Play();
             
             if (FadeOut)
@@ -133,34 +178,35 @@ namespace Assets.Scripts.Audio
             yield return new WaitWhile(() => Source.isPlaying);
             Stop();
         }
-
+        
         public AudioManagerItem TweenVolume(float from, float to,
                                             float duration, out Coroutine routine,
                                             Easings.Type easing = Easings.Type.Linear,
                                             bool scaled = true) =>
-            TweenProperty(0, from, to, duration, easing, scaled,
+            TweenProperty(TweenType.Volume, from, to, duration, easing, scaled,
                           x => Source.volume = x, out routine);
 
         public AudioManagerItem TweenPitch(float from, float to,
                                            float duration, out Coroutine routine,
                                            Easings.Type easing = Easings.Type.Linear,
                                            bool scaled = true) =>
-            TweenProperty(0, from, to, duration, easing, scaled,
-                          x => Source.pitch = x, out routine);
+            TweenProperty(TweenType.Pitch, from, to, duration, easing, scaled,
+                          x => Pitch = x, out routine);
 
-        private readonly Dictionary<int, Coroutine> _tweenRoutines = new();
+        private readonly Dictionary<TweenType, Coroutine> _tweenRoutines = new();
         
-        private AudioManagerItem TweenProperty(int key, float from, float to,
+        private AudioManagerItem TweenProperty(TweenType type, float from, float to,
                                                float duration, Easings.Type easing, bool scaled,
                                                Action<float> callback, out Coroutine routine)
         {
-            if (_tweenRoutines.TryGetValue(key, out routine)) StopCoroutine(routine);
-            _tweenRoutines[key] = routine = StartCoroutine(
-                                 TweenProperty(key, from, to, duration, easing, scaled, callback));
+            routine = _tweenRoutines[type];
+            if (routine != null) StopCoroutine(routine);
+            _tweenRoutines[type] = routine = StartCoroutine(
+                                 TweenProperty(type, from, to, duration, easing, scaled, callback));
             return this;
         }
 
-        private IEnumerator TweenProperty(int key, float from, float to,
+        private IEnumerator TweenProperty(TweenType type, float from, float to,
                                           float duration, Easings.Type easing,
                                           bool scaled, Action<float> callback)
         {
@@ -172,7 +218,7 @@ namespace Assets.Scripts.Audio
                 yield return null;
             }
 
-            _tweenRoutines.Remove(key);
+            _tweenRoutines[type] = null;
         }
     }
 }
