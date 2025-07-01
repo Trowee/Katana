@@ -32,6 +32,8 @@ namespace Assets.Scripts.MainMenu
         private Slider _sfxVolume;
         [FoldoutGroup("Audio"), SerializeField, Required]
         private Slider _musicVolume;
+        [FoldoutGroup("Audio"), SerializeField, Required]
+        private Slider _ambienceVolume;
         
         [FoldoutGroup("Tabs"), SerializeField, Required]
         private RectTransform _tabsPanel;
@@ -67,6 +69,7 @@ namespace Assets.Scripts.MainMenu
             _masterVolume.value = Settings.MasterVolume;
             _sfxVolume.value    = Settings.SFXVolume;
             _musicVolume.value  = Settings.MusicVolume;
+            _ambienceVolume.value  = Settings.AmbienceVolume;
         }
 
         public void SwitchTab(int tabIndex) =>
@@ -98,5 +101,6 @@ namespace Assets.Scripts.MainMenu
         public void SetMasterVolume(float value) => Settings.ChangeMasterVolume(value);
         public void SetSFXVolume(float value) => Settings.ChangeSFXVolume(value);
         public void SetMusicVolume(float value) => Settings.ChangeMusicVolume(value);
+        public void SetAmbienceVolume(float value) => Settings.ChangeAmbienceVolume(value);
     }
 }

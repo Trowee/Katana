@@ -29,6 +29,8 @@ namespace Assets.Scripts.Core
         private AudioMixerGroup _sfx;
         [SerializeField, Required, FoldoutGroup("Audio")]
         private AudioMixerGroup _music;
+        [SerializeField, Required, FoldoutGroup("Audio")]
+        private AudioMixerGroup _ambience;
 
         private void Awake() => LoadSettings();
 
@@ -48,13 +50,14 @@ namespace Assets.Scripts.Core
             MasterVolume = PlayerPrefs.GetFloat("MasterVolume", 0.5f);
             SFXVolume = PlayerPrefs.GetFloat("SFXVolume", 1f);
             MusicVolume = PlayerPrefs.GetFloat("MusicVolume", 1f);
+            AmbienceVolume = PlayerPrefs.GetFloat("AmbienceVolume", 1f);
 
             // Wait a bit before updating the audio mixer cuz unity devs are competent
             await Task.Delay(TimeSpan.FromSeconds(0.01f));
-
             MasterVolume = PlayerPrefs.GetFloat("MasterVolume", 0.5f);
             SFXVolume = PlayerPrefs.GetFloat("SFXVolume", 1f);
             MusicVolume = PlayerPrefs.GetFloat("MusicVolume", 1f);
+            AmbienceVolume = PlayerPrefs.GetFloat("AmbienceVolume", 1f);
         }
 
         #region DOF
@@ -159,6 +162,8 @@ namespace Assets.Scripts.Core
         public void ChangeSFXVolume(float vol) => SFXVolume = vol;
         [FoldoutGroup("Settings/Audio")]
         public void ChangeMusicVolume(float vol) => MusicVolume = vol;
+        [FoldoutGroup("Settings/Audio")]
+        public void ChangeAmbienceVolume(float vol) => AmbienceVolume = vol;
 
         private float _masterVolume;
         public float MasterVolume
@@ -198,6 +203,20 @@ namespace Assets.Scripts.Core
                 _musicVolume = value;
                 _music.audioMixer.SetFloat("MusicVolume", GetVolume(value));
                 PlayerPrefs.SetFloat("MusicVolume", value);
+                PlayerPrefs.Save();
+            }
+        }
+
+        private float _ambienceVolume;
+        public float AmbienceVolume
+        {
+            get => _ambienceVolume;
+            private set
+            {
+                if (Mathf.Approximately(_ambienceVolume, value)) return;
+                _ambienceVolume = value;
+                _ambience.audioMixer.SetFloat("AmbienceVolume", GetVolume(value));
+                PlayerPrefs.SetFloat("AmbienceVolume", value);
                 PlayerPrefs.Save();
             }
         }
