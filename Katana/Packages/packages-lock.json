@@ -7,7 +7,7 @@
       "dependencies": {
         "com.unity.editorcoroutines": "1.0.0"
       },
-      "hash": "ca419306407b16f8e5df52d9111be7017cf0ee4c"
+      "hash": "b472c5cbc88fe1e36bb5998a41a23f91527a0773"
     },
     "com.bgtools.playerprefseditor": {
       "version": "https://github.com/Dysman/bgTools-playerPrefsEditor.git#upm",
@@ -23,7 +23,7 @@
       "dependencies": {
         "com.unity.ugui": "1.0.0"
       },
-      "hash": "ec57c2a994addfc0ed4e3389aeae94d782c253c3"
+      "hash": "16be53e14523e0af6dbba849a196b93f7b7c9e0e"
     },
     "com.cqf.urpvolumetricfog": {
       "version": "https://github.com/CristianQiu/Unity-URP-Volumetric-Light.git",
@@ -37,7 +37,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "6d239742f8ba76e54dfea987ca93b02b3be9487c"
+      "hash": "ffaaf440162da1c9c2b600c703ea0dec135cc89e"
     },
     "com.github-glitchenzo.nugetforunity": {
       "version": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity",
@@ -51,7 +51,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "9be7355b279cd6a4e402621a41b37fbb5b96efac"
+      "hash": "7a46df16b9dc89d34244c7bd1ff7f09b9e7609d7"
     },
     "com.jimmycushnie.noisynodes": {
       "version": "https://github.com/JimmyCushnie/Noisy-Nodes.git",
@@ -224,11 +224,11 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.localization": {
-      "version": "1.5.4",
+      "version": "1.5.5",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.addressables": "1.22.2",
+        "com.unity.addressables": "1.25.0",
         "com.unity.nuget.newtonsoft-json": "3.0.2"
       },
       "url": "https://packages.unity.com"
