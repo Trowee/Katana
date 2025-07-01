@@ -17,6 +17,8 @@ namespace Assets.Scripts.Audio
             Pitch
         }
 
+        public AudioManager Manager;
+        
         public AudioManagerKey Key;
         
         /// AudioItem this Item was created from
@@ -25,10 +27,9 @@ namespace Assets.Scripts.Audio
         /// Current AudioItem
         public AudioItem AudioItem;
 
-        /// Audio Source
         public AudioSource Source;
 
-        /// Whether Source is paused
+        /// Whether item is paused
         public bool Paused { get; private set; }
 
         /// Unscaled Pitch
@@ -51,10 +52,7 @@ namespace Assets.Scripts.Audio
             if (Source.isPlaying) Source.pitch = this.Scaled() ? Pitch * Time.timeScale : Pitch;
         }
 
-        private void OnDestroy()
-        {
-            GameManager.AudioManager.RemoveItem(this);
-        }
+        private void OnDestroy() => Manager.RemoveItem(this);
 
         public AudioManagerItem ApplySettings(bool initial = false)
         {

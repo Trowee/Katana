@@ -83,6 +83,9 @@ namespace Assets.Scripts.Audio
         public Vector3 Position;
 
         [EnableIf(nameof(SourceType), SourceType.Object)]
+        public bool AsChildObject;
+
+        [EnableIf(nameof(SourceType), SourceType.Object)]
         public bool AssignTargetAtRuntime;
 
         // TODO: Replace with a single EnableIf when implemented
@@ -230,6 +233,7 @@ namespace Assets.Scripts.Audio
                          bool destroySourceOnFinished = false,
                          bool destroyTargetOnFinished = false,
                          Vector3 position = default,
+                         bool asChildObject = true,
                          bool assignTargetAtRuntime = false,
                          GameObject target = null,
                          bool overrideFadeIn = false,
@@ -269,6 +273,7 @@ namespace Assets.Scripts.Audio
             DestroySourceOnFinished = destroySourceOnFinished;
             DestroyTargetOnFinished = destroyTargetOnFinished;
             Position = position;
+            AsChildObject = asChildObject;
             AssignTargetAtRuntime = assignTargetAtRuntime;
             Target = target;
             OverrideFadeIn = overrideFadeIn;

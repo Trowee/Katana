@@ -92,6 +92,7 @@ namespace Assets.Scripts.Audio
                 return null;
             }
 
+            item.Manager = this;
             item.Key = key;
             item.OriginalAudioItem =
                 audioItem.ResourceAssignmentType == ResourceAssignmentType.ResourceItem
@@ -148,7 +149,10 @@ namespace Assets.Scripts.Audio
                             position = audioItem.Position
                         }
                     },
-                SourceType.Object => audioItem.Target,
+                SourceType.Object => audioItem.AsChildObject
+                                         ? new(key.Name)
+                                             { transform = { parent = audioItem.Target.transform } }
+                                         : audioItem.Target,
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
