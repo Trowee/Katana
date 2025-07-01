@@ -104,6 +104,7 @@
     <Compile Include="Assets/Scripts/Audio/Effects/Reverb.cs" />
     <Compile Include="Assets/Scripts/Player/Camera/CameraHandlerScript.cs" />
     <Compile Include="Assets\Scripts\Audio\AudioManagerItemExtensions.cs" />
+    <Compile Include="Assets\Scripts\Audio\Utils.cs" />
     <None Include="Assets/Scripts/Scripts.asmdef" />
     <Reference Include="UnityEngine">
       <HintPath>/home/nnra/Unity/Hub/Editor/6000.0.34f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
