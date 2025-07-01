@@ -85,14 +85,5 @@ namespace Assets.Scripts.Audio
         private bool ValidateSourceType => SourceType != SourceType.Object;
         private bool ValidateItemSettingsPreset => !UseSettingsPreset || SettingsPreset;
         private bool ValidateEffectsPreset => !UseEffectsPreset || AudioEffectsPreset;
-
-        public AudioSource ApplySettingsToSource(AudioSource source)
-        {
-            source.playOnAwake = PlayOnAwake;
-            source.outputAudioMixerGroup = MixerGroup;
-            source.resource = Resource;
-            return (UseSettingsPreset ? SettingsPreset.Settings : Settings)
-                .ApplyToSource(source);
-        }
     }
 }

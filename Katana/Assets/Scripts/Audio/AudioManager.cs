@@ -65,6 +65,14 @@ namespace Assets.Scripts.Audio
             }
 
             item.AudioItem = audioItem;
+            
+            // This should only get overriden if using an AudioResourceItem
+            // It allows for predictable settings stacking between AudioItem and OriginalAudioItem
+            // Also allows for settings reload each play
+            item.OriginalAudioItem =
+                audioItem.ResourceAssignmentType == ResourceAssignmentType.ResourceItem
+                    ? new(audioItem.AudioResourceItem)
+                    : item.OriginalAudioItem;
             return true;
         }
 
