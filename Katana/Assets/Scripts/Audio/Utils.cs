@@ -7,12 +7,12 @@ namespace Assets.Scripts.Audio
     {
         public static float Tween(ref float lerpPos, float lerpTime = 1,
                                   Easings.Type easingType = Easings.Type.Linear,
-                                  bool unscaled = false, float multiplier = 1)
+                                  bool scaled = true, float multiplier = 1)
         {
             if (lerpTime == 0) lerpPos = 1;
             else
                 lerpPos = Mathf.Clamp01(lerpPos +=
-                                            ((unscaled ? Time.unscaledDeltaTime : Time.deltaTime) /
+                                            ((scaled ? Time.deltaTime : Time.unscaledDeltaTime) /
                                              lerpTime) * multiplier);
             return Easings.Ease(lerpPos, easingType);
         }

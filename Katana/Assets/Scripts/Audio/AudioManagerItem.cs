@@ -128,26 +128,33 @@ namespace Assets.Scripts.Audio
         private Coroutine _playRoutine;
         private IEnumerator PlayRoutine()
         {
-            var scaled = this.Scaled();
             var fadeInTime = this.FadeInTime();
             var fadeInEasing = this.FadeInEasing();
+            var fadeInScale = this.FadeInScale();
+            var fadeInScaleWithPitch = this.FadeInScaleWithPitch();
 
             if (this.FadeIn())
-                TweenVolume(0, Source.volume, fadeInTime, out _, fadeInEasing, scaled, true);
+                TweenVolume(0, Source.volume, fadeInTime, out _, fadeInEasing,
+                            fadeInScale, fadeInScaleWithPitch);
             Source.Play();
             
             if (this.FadeOut())
             {
                 var fadeOutTime = this.FadeOutTime();
                 var fadeOutEasing = this.FadeOutEasing();
+                var fadeOutScale = this.FadeOutScale();
+                var fadeOutScaleWithPitch = this.FadeOutScaleWithPitch();
 
                 int fadeOutSample() =>
-                    Source.clip.samples - Mathf.RoundToInt(Source.clip.frequency *
-                                                           (fadeOutTime / Source.pitch + 0.05f));
+                    Source.clip.samples -
+                    Mathf.RoundToInt(Source.clip.frequency *
+                                     (fadeOutTime / (fadeOutScale ? Time.timeScale : 1) /
+                                      (fadeOutScaleWithPitch ? Pitch : 1) +
+                                      0.05f));
 
                 yield return new WaitUntil(() => Source.timeSamples >= fadeOutSample());
                 yield return TweenVolume(Source.volume, 0, fadeOutTime, out _,
-                                         fadeOutEasing, scaled, true);
+                                         fadeOutEasing, fadeOutScale, fadeOutScaleWithPitch);
             }
             
             yield return new WaitWhile(() => Source.isPlaying);
@@ -170,34 +177,35 @@ namespace Assets.Scripts.Audio
         
         private AudioManagerItem TweenProperty(TweenType type, float from, float to,
                                                float duration, Easings.Type easing,
-                                               bool scaled, bool accountForPitch,
+                                               bool scaled, bool scaleWithPitch,
                                                Action<float> callback, out Coroutine routine)
         {
             if (_tweenRoutines.TryGetValue(type, out routine) && routine != null)
                 StopCoroutine(routine);
             _tweenRoutines[type] = routine = StartCoroutine(
                                        TweenProperty(type, from, to, duration, easing,
-                                                     scaled, accountForPitch, callback));
+                                                     scaled, scaleWithPitch, callback));
             return this;
         }
 
         private IEnumerator TweenProperty(TweenType type, float from, float to,
                                           float duration, Easings.Type easing,
-                                          bool scaled, bool accountForPitch, Action<float> callback)
+                                          bool scaled, bool scaleWithPitch, Action<float> callback)
         {
-            float totalTime = 0;
+            Debug.Log($"Fade Time: {duration}");
+            float time = 0;
             float lerpPos = 0;
             while (lerpPos < 1)
             {
                 // Using unscaled pitch intentionally as this is alr scaled if the source is scaled
-                totalTime += Time.deltaTime;
-                var t = Utils.Tween(ref lerpPos, duration, easing, !scaled,
-                                    accountForPitch ? Pitch : 1);
+                time += Time.unscaledDeltaTime;
+                var t = Utils.Tween(ref lerpPos, duration, easing, scaled,
+                                    scaleWithPitch ? Pitch : 1);
                 callback(Mathf.Lerp(from, to, t));
                 yield return null;
             }
 
-            Debug.Log(totalTime);
+            Debug.Log(time);
             _tweenRoutines[type] = null;
         }
     }

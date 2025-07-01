@@ -21,7 +21,7 @@ namespace Assets.Scripts.Audio
         [HorizontalGroup("Play")]
         [Title("Scaled")]
         [HideLabel]
-        public bool Scaled;
+        public bool Scaled = true;
 
         [Title("Mixer Group")]
         [HideLabel]
@@ -37,7 +37,7 @@ namespace Assets.Scripts.Audio
         [HideLabel]
         [EnableIf(nameof(SourceType), SourceType.Positional)]
         public Vector3 Position;
-        
+
         [TabGroup("Fade In")]
         public bool FadeIn;
 
@@ -48,7 +48,13 @@ namespace Assets.Scripts.Audio
         [TabGroup("Fade In")]
         [Optional(nameof(FadeIn), displayCheckbox: false)]
         public Easings.Type FadeInEasing;
-        
+
+        [TabGroup("Fade In")]
+        public bool FadeInScale = true;
+
+        [TabGroup("Fade In")]
+        public bool FadeInScaleWithPitch = true;
+
         [TabGroup("Fade Out")]
         public bool FadeOut;
 
@@ -60,9 +66,15 @@ namespace Assets.Scripts.Audio
         [Optional(nameof(FadeOut), displayCheckbox: false)]
         public Easings.Type FadeOutEasing;
 
+        [TabGroup("Fade Out")]
+        public bool FadeOutScale = true;
+
+        [TabGroup("Fade Out")]
+        public bool FadeOutScaleWithPitch = true;
+
         [Title("Settings")]
         public bool ReloadSettingsEveryPlay;
-        public bool UseSettingsPreset;
+        public bool UseSettingsPreset = true;
 
         [EnableIf(nameof(UseSettingsPreset), false)]
         public AudioSettings Settings;
@@ -72,7 +84,7 @@ namespace Assets.Scripts.Audio
         [PreviewScriptable]
         public AudioSettingsPreset SettingsPreset;
 
-        public bool UseEffectsPreset;
+        public bool UseEffectsPreset = true;
 
         [EnableIf(nameof(UseEffectsPreset), false)]
         public AudioEffects AudioEffects;

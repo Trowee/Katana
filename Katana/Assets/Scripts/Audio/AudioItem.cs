@@ -107,6 +107,14 @@ namespace Assets.Scripts.Audio
         [Optional(nameof(OverrideFadeIn), displayCheckbox: false)]
         public Easings.Type FadeInEasing;
 
+        [TabGroup("Fade In")]
+        [Optional(nameof(OverrideFadeIn), displayCheckbox: false)]
+        public bool FadeInScale;
+
+        [TabGroup("Fade In")]
+        [Optional(nameof(OverrideFadeIn), displayCheckbox: false)]
+        public bool FadeInScaleWithPitch;
+
         [HideInInspector]
         public bool OverrideFadeOut;
         
@@ -121,6 +129,14 @@ namespace Assets.Scripts.Audio
         [TabGroup("Fade Out")]
         [Optional(nameof(OverrideFadeOut), displayCheckbox: false)]
         public Easings.Type FadeOutEasing;
+
+        [TabGroup("Fade Out")]
+        [Optional(nameof(OverrideFadeOut), displayCheckbox: false)]
+        public bool FadeOutScale;
+
+        [TabGroup("Fade Out")]
+        [Optional(nameof(OverrideFadeOut), displayCheckbox: false)]
+        public bool FadeOutScaleWithPitch;
 
         [Title("Settings")]
         public bool OverrideSettings;
@@ -179,10 +195,14 @@ namespace Assets.Scripts.Audio
             fadeIn: resourceItem.FadeIn,
             fadeInTime: resourceItem.FadeInTime,
             fadeInEasing: resourceItem.FadeInEasing,
+            fadeInScale: resourceItem.FadeInScale,
+            fadeInScaleWithPitch:  resourceItem.FadeInScaleWithPitch,
             overrideFadeOut: true,
             fadeOut: resourceItem.FadeOut,
             fadeOutTime: resourceItem.FadeOutTime,
             fadeOutEasing: resourceItem.FadeOutEasing,
+            fadeOutScale: resourceItem.FadeOutScale,
+            fadeOutScaleWithPitch: resourceItem.FadeOutScaleWithPitch,
             overrideSettings: true,
             reloadSettingsEveryPlay: resourceItem.ReloadSettingsEveryPlay,
             useSettingsPreset: resourceItem.UseSettingsPreset,
@@ -216,17 +236,21 @@ namespace Assets.Scripts.Audio
                          bool fadeIn = false,
                          float fadeInTime = 0,
                          Easings.Type fadeInEasing = Easings.Type.Linear,
+                         bool fadeInScale = true,
+                         bool fadeInScaleWithPitch = true,
                          bool overrideFadeOut = false,
                          bool fadeOut = false,
                          float fadeOutTime = 0,
                          Easings.Type fadeOutEasing = Easings.Type.Linear,
+                         bool fadeOutScale = true,
+                         bool fadeOutScaleWithPitch = true,
                          bool reloadSettingsEveryPlay = true,
                          bool overrideSettings = false,
-                         bool useSettingsPreset = false,
+                         bool useSettingsPreset = true,
                          AudioSettings settings = null,
                          AudioSettingsPreset audioSettingsPreset = null,
                          bool overrideEffects = false,
-                         bool useEffectsPreset = false,
+                         bool useEffectsPreset = true,
                          AudioEffects audioEffects = null,
                          AudioEffectsPreset audioEffectsPreset = null)
         {
@@ -251,10 +275,14 @@ namespace Assets.Scripts.Audio
             FadeIn = fadeIn;
             FadeInTime = fadeInTime;
             FadeInEasing = fadeInEasing;
+            FadeInScale = fadeInScale;
+            FadeInScaleWithPitch = fadeInScaleWithPitch;
             OverrideFadeOut = overrideFadeOut;
             FadeOut = fadeOut;
             FadeOutTime = fadeOutTime;
             FadeOutEasing = fadeOutEasing;
+            FadeOutScale = fadeOutScale;
+            FadeOutScaleWithPitch = fadeOutScaleWithPitch;
             OverrideSettings = overrideSettings;
             ReloadSettingsEveryPlay = reloadSettingsEveryPlay;
             UseSettingsPreset = useSettingsPreset;
@@ -296,8 +324,9 @@ namespace Assets.Scripts.Audio
                 ResourceAssignmentType.ResourceItem => AudioResourceItem.Resource,
                 ResourceAssignmentType.Resource => AudioResource,
                 ResourceAssignmentType.Name => source.resource,
-                _ => throw new(
-                         "(Audio Item) ResourceAssignmentType must not be set to 'Manual' at the time of calling the GetAudioResource function")
+                ResourceAssignmentType.Manual => throw new(
+                                                     "(Audio Item) ResourceAssignmentType must not be set to 'Manual' at the time of calling the GetAudioResource function"),
+                _ => throw new ArgumentOutOfRangeException()
             };
 
         public AudioSource ApplySettingsToSource(AudioSource source)

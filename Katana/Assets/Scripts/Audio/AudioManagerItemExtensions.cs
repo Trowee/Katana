@@ -33,6 +33,16 @@ namespace Assets.Scripts.Audio
             item.OriginalAudioItem.OverrideFadeIn, item.OriginalAudioItem.FadeInEasing,
             Easings.Type.Linear);
 
+        public static bool FadeInScale(this AudioManagerItem item) => GetOverrideValue(
+            item.AudioItem.OverrideFadeIn, item.AudioItem.FadeInScale,
+            item.OriginalAudioItem.OverrideFadeIn, item.OriginalAudioItem.FadeInScale,
+            true);
+
+        public static bool FadeInScaleWithPitch(this AudioManagerItem item) => GetOverrideValue(
+            item.AudioItem.OverrideFadeIn, item.AudioItem.FadeInScaleWithPitch,
+            item.OriginalAudioItem.OverrideFadeIn, item.OriginalAudioItem.FadeInScaleWithPitch,
+            true);
+
         public static bool FadeOut(this AudioManagerItem item) => GetOverrideValue(
             item.AudioItem.OverrideFadeOut, item.AudioItem.FadeOut,
             item.OriginalAudioItem.OverrideFadeOut, item.OriginalAudioItem.FadeOut, false);
@@ -45,6 +55,16 @@ namespace Assets.Scripts.Audio
             item.AudioItem.OverrideFadeOut, item.AudioItem.FadeOutEasing,
             item.OriginalAudioItem.OverrideFadeOut, item.OriginalAudioItem.FadeOutEasing,
             Easings.Type.Linear);
+
+        public static bool FadeOutScale(this AudioManagerItem item) => GetOverrideValue(
+            item.AudioItem.OverrideFadeOut, item.AudioItem.FadeOutScale,
+            item.OriginalAudioItem.OverrideFadeOut, item.OriginalAudioItem.FadeOutScale,
+            true);
+
+        public static bool FadeOutScaleWithPitch(this AudioManagerItem item) => GetOverrideValue(
+            item.AudioItem.OverrideFadeOut, item.AudioItem.FadeOutScaleWithPitch,
+            item.OriginalAudioItem.OverrideFadeOut, item.OriginalAudioItem.FadeOutScaleWithPitch,
+            true);
 
         #endregion
     }
