@@ -42,7 +42,7 @@ namespace Assets.Scripts.Audio
             var item = foundItem ? existingItem : CreateItem(key, audioItem);
 
             item.ApplySettings(!foundItem).ApplyEffects();
-            if (!foundItem && item.PlayOnAwake) item.Play();
+            if (!foundItem && item.PlayOnAwake()) item.Play();
             return item;
         }
 
