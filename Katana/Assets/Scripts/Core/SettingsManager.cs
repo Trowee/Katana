@@ -155,7 +155,7 @@ namespace Assets.Scripts.Core
 
         #region Volume
 
-        private float GetVolume(float t) => Mathf.Lerp(-80, 0, t);
+        private float GetVolume(float t) => t <= 0 ? -80 : 20 * Mathf.Log10(t);
         [FoldoutGroup("Settings/Audio")]
         public void ChangeMasterVolume(float vol) => MasterVolume = vol;
         [FoldoutGroup("Settings/Audio")]
