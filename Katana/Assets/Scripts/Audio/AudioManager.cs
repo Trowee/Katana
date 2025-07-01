@@ -135,9 +135,8 @@ namespace Assets.Scripts.Audio
             return item.Source;
         }
 
-        private GameObject CreateSourceObject(AudioManagerKey key, AudioItem audioItem)
-        {
-            return key.SourceType switch
+        private GameObject CreateSourceObject(AudioManagerKey key, AudioItem audioItem) =>
+            key.SourceType switch
             {
                 SourceType.Manager => new(key.Name) { transform = { parent = _sourceParent } },
                 SourceType.Positional =>
@@ -155,7 +154,6 @@ namespace Assets.Scripts.Audio
                                          : audioItem.Target,
                 _ => throw new ArgumentOutOfRangeException()
             };
-        }
 
         private bool AreAudioItemSettingsValid(AudioItem audioItem)
         {

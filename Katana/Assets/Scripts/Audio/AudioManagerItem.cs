@@ -92,18 +92,18 @@ namespace Assets.Scripts.Audio
         public AudioManagerItem Play()
         {
             if (Paused) return Resume();
-            if (_playRoutine != null) Stop();
-            _playRoutine = StartCoroutine(PlayRoutine());
+            if (PlayRoutine != null) Stop();
+            PlayRoutine = StartCoroutine(PlayCoroutine());
             return this;
         }
 
         public AudioManagerItem Stop(bool finished = false)
         {
-            if (_playRoutine != null)
+            if (PlayRoutine != null)
             {
                 Source.Stop();
-                StopCoroutine(_playRoutine);
-                _playRoutine = null;
+                StopCoroutine(PlayRoutine);
+                PlayRoutine = null;
                 Paused = false;
             }
 
@@ -149,9 +149,9 @@ namespace Assets.Scripts.Audio
             return this;
         }
 
-        private Coroutine _playRoutine;
+        public Coroutine PlayRoutine;
 
-        private IEnumerator PlayRoutine()
+        private IEnumerator PlayCoroutine()
         {
             var fadeInTime = this.FadeInTime();
             var fadeInEasing = this.FadeInEasing();
