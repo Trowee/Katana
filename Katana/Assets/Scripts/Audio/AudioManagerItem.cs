@@ -170,14 +170,14 @@ namespace Assets.Scripts.Audio
                 var fadeOutScale = this.FadeOutScale();
                 var fadeOutScaleWithPitch = this.FadeOutScaleWithPitch();
 
-                int fadeOutSample() =>
+                int FadeOutSample() =>
                     Source.clip.samples -
                     Mathf.RoundToInt(Source.clip.frequency *
                                      (fadeOutTime / (fadeOutScale ? Time.timeScale : 1) /
                                       (fadeOutScaleWithPitch ? Pitch : 1) +
                                       0.05f));
 
-                yield return new WaitUntil(() => Source.timeSamples >= fadeOutSample());
+                yield return new WaitUntil(() => Source.timeSamples >= FadeOutSample());
                 yield return TweenVolume(Source.volume, 0, fadeOutTime, out _,
                                          fadeOutEasing, fadeOutScale, fadeOutScaleWithPitch);
             }

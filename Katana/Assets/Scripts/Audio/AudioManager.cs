@@ -115,7 +115,10 @@ namespace Assets.Scripts.Audio
             return item;
         }
 
-        public void RemoveItem(AudioManagerItem item) => Items[item.Key].Remove(item);
+        public void RemoveItem(AudioManagerItem item)
+        {
+            if (Items.TryGetValue(item.Key, out var items)) items.Remove(item);
+        }
 
         private AudioSource CreateSource(AudioManagerKey key, AudioManagerItem item)
         {
