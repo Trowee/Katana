@@ -63,8 +63,6 @@ namespace Assets.Scripts.Audio
                 item = null;
                 return false;
             }
-
-            item.AudioItem = audioItem;
             
             // This should only get overriden if using an AudioResourceItem
             // It allows for predictable settings stacking between AudioItem and OriginalAudioItem
@@ -73,6 +71,8 @@ namespace Assets.Scripts.Audio
                 audioItem.ResourceAssignmentType == ResourceAssignmentType.ResourceItem
                     ? new(audioItem.AudioResourceItem)
                     : item.OriginalAudioItem;
+            item.AudioItem = audioItem;
+            
             return true;
         }
 
@@ -92,11 +92,11 @@ namespace Assets.Scripts.Audio
                 return null;
             }
 
-            item.AudioItem = audioItem;
             item.OriginalAudioItem =
                 audioItem.ResourceAssignmentType == ResourceAssignmentType.ResourceItem
                     ? new(audioItem.AudioResourceItem)
                     : audioItem;
+            item.AudioItem = audioItem;
 
             try
             {
