@@ -14,7 +14,7 @@ namespace Assets.Scripts.Audio
             Volume,
             Pitch
         }
-        
+
         /// AudioItem this Item was created from
         public AudioItem OriginalAudioItem;
 
@@ -41,11 +41,11 @@ namespace Assets.Scripts.Audio
         };
 
         private readonly Dictionary<TweenType, Coroutine> _tweenRoutines = new();
-        
+
         private void Update()
         {
             // Update Source Pitch
-            if (Source.isPlaying) Source.pitch = this.Scaled() ? Pitch * Time.timeScale: Pitch;
+            if (Source.isPlaying) Source.pitch = this.Scaled() ? Pitch * Time.timeScale : Pitch;
         }
 
         public AudioManagerItem ApplySettings(bool initial = false)
@@ -54,11 +54,11 @@ namespace Assets.Scripts.Audio
             if (AudioItem.OverrideSettings)
                 if (initial || AudioItem.ReloadSettingsEveryPlay)
                     AudioItem.ApplySettingsToSource(Source);
-            
+
             // Update pitch once before playing
             Pitch = Source.pitch;
             Source.pitch = this.Scaled() ? Pitch * Time.timeScale : Pitch;
-            
+
             return this;
         }
 
@@ -100,10 +100,11 @@ namespace Assets.Scripts.Audio
                 _playRoutine = null;
                 Paused = false;
             }
-            
+
             foreach (var routine in _tweenRoutines)
-                if (routine.Value != null) StopCoroutine(routine.Value);
-            
+                if (routine.Value != null)
+                    StopCoroutine(routine.Value);
+
             if (AudioItem.DestroyTargetOnFinished) DestroyImmediate(gameObject);
             else if (AudioItem.DestroySourceOnFinished) DestroyImmediate(Source);
             return this;
@@ -126,6 +127,7 @@ namespace Assets.Scripts.Audio
         }
 
         private Coroutine _playRoutine;
+
         private IEnumerator PlayRoutine()
         {
             var fadeInTime = this.FadeInTime();
@@ -137,7 +139,7 @@ namespace Assets.Scripts.Audio
                 TweenVolume(0, Source.volume, fadeInTime, out _, fadeInEasing,
                             fadeInScale, fadeInScaleWithPitch);
             Source.Play();
-            
+
             if (this.FadeOut())
             {
                 var fadeOutTime = this.FadeOutTime();
@@ -156,11 +158,11 @@ namespace Assets.Scripts.Audio
                 yield return TweenVolume(Source.volume, 0, fadeOutTime, out _,
                                          fadeOutEasing, fadeOutScale, fadeOutScaleWithPitch);
             }
-            
+
             yield return new WaitWhile(() => Source.isPlaying);
             Stop();
         }
-        
+
         public AudioManagerItem TweenVolume(float from, float to,
                                             float duration, out Coroutine routine,
                                             Easings.Type easing = Easings.Type.Linear,
@@ -174,7 +176,7 @@ namespace Assets.Scripts.Audio
                                            bool scaled = true, bool accountForPitch = false) =>
             TweenProperty(TweenType.Pitch, from, to, duration, easing, scaled, accountForPitch,
                           x => Pitch = x, out routine);
-        
+
         private AudioManagerItem TweenProperty(TweenType type, float from, float to,
                                                float duration, Easings.Type easing,
                                                bool scaled, bool scaleWithPitch,
@@ -192,20 +194,16 @@ namespace Assets.Scripts.Audio
                                           float duration, Easings.Type easing,
                                           bool scaled, bool scaleWithPitch, Action<float> callback)
         {
-            Debug.Log($"Fade Time: {duration}");
-            float time = 0;
             float lerpPos = 0;
             while (lerpPos < 1)
             {
                 // Using unscaled pitch intentionally as this is alr scaled if the source is scaled
-                time += Time.unscaledDeltaTime;
                 var t = Utils.Tween(ref lerpPos, duration, easing, scaled,
                                     scaleWithPitch ? Pitch : 1);
                 callback(Mathf.Lerp(from, to, t));
                 yield return null;
             }
 
-            Debug.Log(time);
             _tweenRoutines[type] = null;
         }
     }
