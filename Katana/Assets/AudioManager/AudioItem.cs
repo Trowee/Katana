@@ -61,11 +61,20 @@ namespace AudioManager
         [HideInInspector]
         public bool OverrideScaled;
 
-        [HorizontalGroup("Play")]
+        [HorizontalGroup("Settings")]
         [Title("Scaled")]
         [HideLabel]
         [Optional(nameof(OverrideScaled), "")]
         public bool Scaled;
+
+        [HideInInspector]
+        public bool OverrideLoop;
+        
+        [HorizontalGroup("Settings")]
+        [HideLabel]
+        [Title("Loop")]
+        [Optional(nameof(OverrideLoop), "")]
+        public bool Loop;
 
         [HorizontalGroup("Destroy")]
         [Title("Destroy Source On Finished")]
@@ -190,6 +199,8 @@ namespace AudioManager
             reuseSource: true,
             overridePlayOnAwake: true,
             playOnAwake: resourceItem.PlayOnAwake,
+            overrideLoop: true,
+            loop: resourceItem.Loop,
             overrideScaled: true,
             scaled: resourceItem.Scaled,
             position: resourceItem.Position,
@@ -227,6 +238,8 @@ namespace AudioManager
                          bool reuseSource = true,
                          bool overridePlayOnAwake = false,
                          bool playOnAwake = false,
+                         bool overrideLoop = false,
+                         bool loop = false,
                          bool overrideScaled = false,
                          bool scaled = true,
                          bool destroySourceOnFinished = false,
@@ -267,6 +280,8 @@ namespace AudioManager
             SourceType = sourceType;
             OverridePlayOnAwake = overridePlayOnAwake;
             PlayOnAwake = playOnAwake;
+            OverrideLoop = overrideLoop;
+            Loop = overrideLoop;
             OverrideScaled = overrideScaled;
             Scaled = scaled;
             DestroySourceOnFinished = destroySourceOnFinished;
@@ -336,6 +351,7 @@ namespace AudioManager
         public AudioSource ApplySettingsToSource(AudioSource source)
         {
             if (OverridePlayOnAwake) source.playOnAwake = PlayOnAwake;
+            if (OverrideLoop) source.loop = Loop;
             if (OverrideMixerGroup) source.outputAudioMixerGroup = MixerGroup;
             source.resource = GetAudioResource(source);
             return !OverrideSettings ? source : Settings.ApplyToSource(source);

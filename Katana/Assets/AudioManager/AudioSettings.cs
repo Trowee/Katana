@@ -36,15 +36,6 @@ namespace AudioManager
         public bool BypassReverbZones;
 
         [HideInInspector]
-        public bool OverrideLoop;
-
-        [HorizontalGroup("2")]
-        [HideLabel]
-        [Title("Loop")]
-        [Optional(nameof(OverrideLoop), "")]
-        public bool Loop;
-
-        [HideInInspector]
         public bool OverridePriority;
 
         [Title("Priority")]
@@ -152,8 +143,6 @@ namespace AudioManager
                              bool bypassListenerEffects = false,
                              bool overrideBypassReverbZones = false,
                              bool bypassReverbZones = false,
-                             bool overrideLoop = false,
-                             bool loop = false,
                              bool overridePriority = false,
                              int priority = 128,
                              bool overrideVolume = false,
@@ -181,8 +170,6 @@ namespace AudioManager
             BypassListenerEffects = bypassListenerEffects;
             OverrideBypassReverbZones = overrideBypassReverbZones;
             BypassReverbZones = bypassReverbZones;
-            OverrideLoop = overrideLoop;
-            Loop = loop;
             OverridePriority = overridePriority;
             Priority = priority;
 
@@ -215,8 +202,6 @@ namespace AudioManager
                 source.bypassListenerEffects = BypassListenerEffects;
             if (OverrideBypassReverbZones)
                 source.bypassReverbZones = BypassReverbZones;
-            if (OverrideLoop)
-                source.loop = Loop;
             if (OverridePriority)
                 source.priority = Priority;
 

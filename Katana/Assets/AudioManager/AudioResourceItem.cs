@@ -18,6 +18,11 @@ namespace AudioManager
         public bool PlayOnAwake;
 
         [HorizontalGroup("Play")]
+        [Title("Loop")]
+        [HideLabel]
+        public bool Loop;
+
+        [HorizontalGroup("Play")]
         [Title("Scaled")]
         [HideLabel]
         public bool Scaled = true;
