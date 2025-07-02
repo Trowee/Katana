@@ -1,10 +1,10 @@
 using System;
 using ArtificeToolkit.Attributes;
-using Assets.NnUtils.Scripts.MinMax;
+using AudioManager.MinMax;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Assets.Scripts.Audio
+namespace AudioManager
 {
     [Serializable]
     public class AudioSettings

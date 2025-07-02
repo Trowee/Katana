@@ -1,6 +1,7 @@
 using ArtificeToolkit.Attributes;
 using Assets.Scripts.Audio;
 using Assets.Scripts.Core;
+using AudioManager;
 using UnityEngine;
 
 namespace Assets.Scripts.MainMenu

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Assets.Scripts.Audio.Effects
+namespace AudioManager.Effects
 {
     [CreateAssetMenu(fileName = "AudioEffectsPreset",
                      menuName = "NnUtils/Audio Manager/Effects Preset")]

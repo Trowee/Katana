@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Assets.Scripts.Audio
+namespace AudioManager
 {
     [CustomPropertyDrawer(typeof(OptionalAttribute))]
     public class OptionalAttributeDrawer : PropertyDrawer

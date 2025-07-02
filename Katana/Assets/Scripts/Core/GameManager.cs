@@ -10,7 +10,7 @@ namespace Assets.Scripts.Core
 {
     [RequireComponent(typeof(SettingsManager))]
     [RequireComponent(typeof(TimeScaleManager))]
-    [RequireComponent(typeof(AudioManager))]
+    [RequireComponent(typeof(AudioManager.AudioManager))]
     [RequireComponent(typeof(ItemManager))]
     public class GameManager : MonoBehaviour
     {
@@ -38,8 +38,8 @@ namespace Assets.Scripts.Core
         [SerializeField, Required] private TimeScaleManager _timeScaleManager;
         public static TimeScaleManager TimeScaleManager => Instance._timeScaleManager;
         
-        [SerializeField, Required] private AudioManager _audioManager;
-        public static AudioManager AudioManager => Instance._audioManager;
+        [SerializeField, Required] private AudioManager.AudioManager _audioManager;
+        public static AudioManager.AudioManager AudioManager => Instance._audioManager;
 
         [SerializeField, Required] private ItemManager _itemManager;
         public static ItemManager ItemManager => Instance._itemManager;
@@ -48,7 +48,7 @@ namespace Assets.Scripts.Core
         {
             _settingsManager = GetComponent<SettingsManager>();
             _timeScaleManager = gameObject.GetOrAddComponent<TimeScaleManager>();
-            _audioManager = gameObject.GetOrAddComponent<AudioManager>();
+            _audioManager = gameObject.GetOrAddComponent<AudioManager.AudioManager>();
             _itemManager = gameObject.GetOrAddComponent<ItemManager>();
         }
 

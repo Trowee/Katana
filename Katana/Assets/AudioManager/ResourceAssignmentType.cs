@@ -1,4 +1,4 @@
-namespace Assets.Scripts.Audio
+namespace AudioManager
 {
     public enum ResourceAssignmentType
     {

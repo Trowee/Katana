@@ -1,11 +1,10 @@
 using System;
 using ArtificeToolkit.Attributes;
-using Assets.Scripts.Audio.Effects;
-using NnUtils.Modules.Easings;
+using AudioManager.Effects;
 using UnityEngine;
 using UnityEngine.Audio;
 
-namespace Assets.Scripts.Audio
+namespace AudioManager
 {
     // TODO: Replace ValidateInput with Required when fixed for EnableIf
     [Serializable]

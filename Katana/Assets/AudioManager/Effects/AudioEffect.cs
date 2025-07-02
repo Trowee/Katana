@@ -1,6 +1,6 @@
 using System;
 
-namespace Assets.Scripts.Audio.Effects
+namespace AudioManager.Effects
 {
     [Serializable]
     public abstract class AudioEffect

@@ -1,8 +1,7 @@
 using System;
-using NnUtils.Scripts;
 using UnityEngine;
 
-namespace Assets.Scripts.Audio.Effects
+namespace AudioManager.Effects
 {
     [Serializable]
     public class Chorus : AudioEffect

@@ -1,6 +1,4 @@
-using NnUtils.Modules.Easings;
-
-namespace Assets.Scripts.Audio
+namespace AudioManager
 {
     public static class AudioManagerItemExtensions
     {

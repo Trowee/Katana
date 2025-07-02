@@ -1,10 +1,9 @@
 using ArtificeToolkit.Attributes;
-using Assets.Scripts.Audio.Effects;
-using NnUtils.Modules.Easings;
+using AudioManager.Effects;
 using UnityEngine;
 using UnityEngine.Audio;
 
-namespace Assets.Scripts.Audio
+namespace AudioManager
 {
     [CreateAssetMenu(fileName = "ResourceItem",
                      menuName = "NnUtils/Audio Manager/Audio Resource Item")]

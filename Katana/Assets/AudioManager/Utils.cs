@@ -1,9 +1,8 @@
-using NnUtils.Modules.Easings;
 using UnityEngine;
 
-namespace Assets.Scripts.Audio
+namespace AudioManager
 {
-    public class Utils
+    public static class Utils
     {
         public static float Tween(ref float lerpPos, float lerpTime = 1,
                                   Easings.Type easingType = Easings.Type.Linear,
@@ -15,6 +14,13 @@ namespace Assets.Scripts.Audio
                                             ((scaled ? Time.deltaTime : Time.unscaledDeltaTime) /
                                              lerpTime) * multiplier);
             return Easings.Ease(lerpPos, easingType);
+        }
+        
+        public static T GetOrAddComponent<T>(this GameObject gameObject) where T : Component
+        {
+            T component = gameObject.GetComponent<T>();
+            if (component == null) component = gameObject.AddComponent<T>();
+            return component;
         }
     }
 }

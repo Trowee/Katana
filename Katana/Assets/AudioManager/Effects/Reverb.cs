@@ -1,9 +1,8 @@
 using System;
 using ArtificeToolkit.Attributes;
-using NnUtils.Scripts;
 using UnityEngine;
 
-namespace Assets.Scripts.Audio.Effects
+namespace AudioManager.Effects
 {
     [Serializable]
     public class Reverb : AudioEffect

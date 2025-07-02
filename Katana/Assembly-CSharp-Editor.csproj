@@ -1087,6 +1087,10 @@
       <Project>{d7b54722-11de-b296-c362-573c906d90f6}</Project>
       <Name>Scripts</Name>
     </ProjectReference>
+    <ProjectReference Include="nnra.AudioManager.csproj">
+      <Project>{d0ec2517-aaef-498b-53be-28db0ceb30a1}</Project>
+      <Name>nnra.AudioManager</Name>
+    </ProjectReference>
     <ProjectReference Include="nnra.NnUtils.csproj">
       <Project>{b68e8857-48ed-d1eb-7e8b-69c8a9ec45c8}</Project>
       <Name>nnra.NnUtils</Name>

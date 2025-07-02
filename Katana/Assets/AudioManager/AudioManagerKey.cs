@@ -1,6 +1,6 @@
 using System;
 
-namespace Assets.Scripts.Audio
+namespace AudioManager
 {
     public struct AudioManagerKey : IEquatable<AudioManagerKey>
     {

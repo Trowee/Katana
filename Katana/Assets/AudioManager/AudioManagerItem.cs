@@ -2,12 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.Audio.Effects;
-using Assets.Scripts.Core;
-using NnUtils.Modules.Easings;
+using AudioManager.Effects;
 using UnityEngine;
 
-namespace Assets.Scripts.Audio
+namespace AudioManager
 {
     public class AudioManagerItem : MonoBehaviour
     {

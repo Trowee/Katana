@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using EasyTextEffects.Editor.MyBoxCopy.Extensions;
 using UnityEngine;
 
-namespace Assets.Scripts.Audio
+namespace AudioManager
 {
     public class AudioManager : MonoBehaviour
     {
@@ -21,8 +20,8 @@ namespace Assets.Scripts.Audio
 
         private void LoadClipItems()
         {
-            Resources.LoadAll<AudioResourceItem>("")
-                     .ForEach(resourceItem => GetOrCreateItem(new(resourceItem)));
+            foreach (var resourceItem in Resources.LoadAll<AudioResourceItem>(""))
+                GetOrCreateItem(new(resourceItem));
         }
 
         public AudioManagerItem Play(AudioItem audioItem)
