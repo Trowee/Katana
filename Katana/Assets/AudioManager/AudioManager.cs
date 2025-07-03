@@ -64,8 +64,8 @@ namespace AudioManager
             }
             
             // This should only get overriden if using an AudioResourceItem
-            // It allows for predictable settings stacking between AudioItem and OriginalAudioItem
-            // Also allows for settings reload each play
+            // It allows for predictable tweaks stacking between AudioItem and OriginalAudioItem
+            // Also allows for tweaks reload each play
             item.OriginalAudioItem =
                 audioItem.ResourceAssignmentType == ResourceAssignmentType.ResourceItem
                     ? new(audioItem.AudioResourceItem)

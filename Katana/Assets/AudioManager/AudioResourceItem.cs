@@ -1,5 +1,6 @@
 using ArtificeToolkit.Attributes;
 using AudioManager.Effects;
+using AudioManager.Tweaks;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -76,12 +77,12 @@ namespace AudioManager
         [TabGroup("Fade Out")]
         public bool FadeOutScaleWithPitch = true;
 
-        [Title("Settings")]
+        [Title("Tweaks")]
         public bool ReloadSettingsEveryPlay;
         public bool UseSettingsPreset = true;
 
         [EnableIf(nameof(UseSettingsPreset), false)]
-        public AudioSettings Settings;
+        public AudioTweaks Tweaks;
 
         [ValidateInput(nameof(ValidateItemSettingsPreset))]
         [EnableIf(nameof(UseSettingsPreset), true)]

@@ -1,6 +1,7 @@
 using System;
 using ArtificeToolkit.Attributes;
 using AudioManager.Effects;
+using AudioManager.Tweaks;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -61,7 +62,7 @@ namespace AudioManager
         [HideInInspector]
         public bool OverrideScaled;
 
-        [HorizontalGroup("Settings")]
+        [HorizontalGroup("Tweaks")]
         [Title("Scaled")]
         [HideLabel]
         [Optional(nameof(OverrideScaled), "")]
@@ -70,7 +71,7 @@ namespace AudioManager
         [HideInInspector]
         public bool OverrideLoop;
         
-        [HorizontalGroup("Settings")]
+        [HorizontalGroup("Tweaks")]
         [HideLabel]
         [Title("Loop")]
         [Optional(nameof(OverrideLoop), "")]
@@ -149,7 +150,7 @@ namespace AudioManager
         [Optional(nameof(OverrideFadeOut), displayCheckbox: false)]
         public bool FadeOutScaleWithPitch;
 
-        [Title("Settings")]
+        [Title("Tweaks")]
         public bool OverrideSettings;
 
         [Optional(nameof(OverrideSettings), displayCheckbox: false)]
@@ -161,7 +162,7 @@ namespace AudioManager
         [EnableIf(nameof(UseSettingsPreset), false)]
         // TODO: Report to artifice, it doesn't work under optional
         //[Optional(nameof(OverrideSettings), displayCheckbox: false)]
-        public AudioSettings AudioSettings;
+        public AudioTweaks AudioTweaks;
 
         [ValidateInput(nameof(ValidateSettingsPreset))]
         [EnableIf(nameof(UseSettingsPreset), true)]
@@ -219,7 +220,7 @@ namespace AudioManager
             overrideSettings: true,
             reloadSettingsEveryPlay: resourceItem.ReloadSettingsEveryPlay,
             useSettingsPreset: resourceItem.UseSettingsPreset,
-            settings: resourceItem.Settings,
+            tweaks: resourceItem.Tweaks,
             audioSettingsPreset: resourceItem.SettingsPreset,
             overrideEffects: true,
             useEffectsPreset: resourceItem.UseEffectsPreset,
@@ -263,7 +264,7 @@ namespace AudioManager
                          bool reloadSettingsEveryPlay = true,
                          bool overrideSettings = false,
                          bool useSettingsPreset = true,
-                         AudioSettings settings = null,
+                         AudioTweaks tweaks = null,
                          AudioSettingsPreset audioSettingsPreset = null,
                          bool overrideEffects = false,
                          bool useEffectsPreset = true,
@@ -305,7 +306,7 @@ namespace AudioManager
             OverrideSettings = overrideSettings;
             ReloadSettingsEveryPlay = reloadSettingsEveryPlay;
             UseSettingsPreset = useSettingsPreset;
-            AudioSettings = settings ?? new();
+            AudioTweaks = tweaks ?? new();
             AudioSettingsPreset = audioSettingsPreset;
             OverrideEffects = overrideEffects;
             UseEffectsPreset = useEffectsPreset;
@@ -322,8 +323,8 @@ namespace AudioManager
             SourceType != SourceType.Object || AssignTargetAtRuntime || Target;
         private bool ValidateSettingsPreset => !UseSettingsPreset || AudioSettingsPreset;
 
-        public AudioSettings Settings =>
-            UseSettingsPreset ? AudioSettingsPreset.Settings : AudioSettings;
+        public AudioTweaks Tweaks =>
+            UseSettingsPreset ? AudioSettingsPreset.Tweaks : AudioTweaks;
         private bool ValidateEffectsPreset => !UseEffectsPreset || AudioEffectsPreset;
 
         public AudioEffects Effects => UseEffectsPreset ? AudioEffectsPreset.Effects : AudioEffects;
@@ -354,7 +355,7 @@ namespace AudioManager
             if (OverrideLoop) source.loop = Loop;
             if (OverrideMixerGroup) source.outputAudioMixerGroup = MixerGroup;
             source.resource = GetAudioResource(source);
-            return !OverrideSettings ? source : Settings.ApplyToSource(source);
+            return !OverrideSettings ? source : Tweaks.ApplyToSource(source);
         }
     }
 }

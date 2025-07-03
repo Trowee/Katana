@@ -1,11 +1,12 @@
+using AudioManager.Tweaks;
 using UnityEngine;
 
 namespace AudioManager
 {
     [CreateAssetMenu(fileName = "AudioSettingsPreset",
-                     menuName = "NnUtils/Audio Manager/Settings Preset")]
+                     menuName = "NnUtils/Audio Manager/Tweaks Preset")]
     public class AudioSettingsPreset : ScriptableObject
     {
-        public AudioSettings Settings;
+        public AudioTweaks Tweaks;
     }
 }
