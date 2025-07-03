@@ -46,14 +46,19 @@ namespace Assets.Scripts.Core
             Locale = LocalizationSettings.AvailableLocales.Locales
                                           .FirstOrDefault(x => x.Identifier.Code == localeCode);
 
-            // Takes care of updating the UI
+            // Update values for the UI
             MasterVolume = PlayerPrefs.GetFloat("MasterVolume", 0.5f);
             SFXVolume = PlayerPrefs.GetFloat("SFXVolume", 1f);
             MusicVolume = PlayerPrefs.GetFloat("MusicVolume", 1f);
             AmbienceVolume = PlayerPrefs.GetFloat("AmbienceVolume", 1f);
 
             // Wait a bit before updating the audio mixer cuz unity devs are competent
-            await Task.Delay(TimeSpan.FromSeconds(0.01f));
+            while (_master.audioMixer == null ||
+                   _sfx.audioMixer == null ||
+                   _music.audioMixer == null ||
+                   _ambience.audioMixer == null)
+                await Task.Delay(10);
+
             MasterVolume = PlayerPrefs.GetFloat("MasterVolume", 0.5f);
             SFXVolume = PlayerPrefs.GetFloat("SFXVolume", 1f);
             MusicVolume = PlayerPrefs.GetFloat("MusicVolume", 1f);
@@ -171,7 +176,6 @@ namespace Assets.Scripts.Core
             get => _masterVolume;
             private set
             {
-                if (Mathf.Approximately(_masterVolume, value)) return;
                 _masterVolume = value;
                 _master.audioMixer.SetFloat("MasterVolume", GetVolume(value));
                 PlayerPrefs.SetFloat("MasterVolume", value);
@@ -185,7 +189,6 @@ namespace Assets.Scripts.Core
             get => _sfxVolume;
             private set
             {
-                if (Mathf.Approximately(_sfxVolume, value)) return;
                 _sfxVolume = value;
                 _sfx.audioMixer.SetFloat("SFXVolume", GetVolume(value));
                 PlayerPrefs.SetFloat("SFXVolume", value);
@@ -199,7 +202,6 @@ namespace Assets.Scripts.Core
             get => _musicVolume;
             private set
             {
-                if (Mathf.Approximately(_musicVolume, value)) return;
                 _musicVolume = value;
                 _music.audioMixer.SetFloat("MusicVolume", GetVolume(value));
                 PlayerPrefs.SetFloat("MusicVolume", value);
@@ -213,7 +215,6 @@ namespace Assets.Scripts.Core
             get => _ambienceVolume;
             private set
             {
-                if (Mathf.Approximately(_ambienceVolume, value)) return;
                 _ambienceVolume = value;
                 _ambience.audioMixer.SetFloat("AmbienceVolume", GetVolume(value));
                 PlayerPrefs.SetFloat("AmbienceVolume", value);
