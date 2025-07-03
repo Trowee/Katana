@@ -78,6 +78,8 @@ namespace AudioManager
         [TabGroup("Fade Out")]
         public bool FadeOutScaleWithPitch = true;
 
+        [SerializeReference]
+        [ForceArtifice]
         public List<ITweak<AudioSource>> Tweaks;
 
         public bool UseEffectsPreset = true;
