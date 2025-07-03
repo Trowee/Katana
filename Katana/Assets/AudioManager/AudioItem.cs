@@ -194,6 +194,7 @@ namespace AudioManager
             fadeOutEasing: resourceItem.FadeOutEasing,
             fadeOutScale: resourceItem.FadeOutScale,
             fadeOutScaleWithPitch: resourceItem.FadeOutScaleWithPitch,
+            tweaks: resourceItem.Tweaks,
             overrideEffects: true,
             useEffectsPreset: resourceItem.UseEffectsPreset,
             audioEffects: resourceItem.AudioEffects,
@@ -232,6 +233,7 @@ namespace AudioManager
                          bool fadeOutScale = true,
                          bool fadeOutScaleWithPitch = true,
                          bool reloadTweaksEveryPlay = true,
+                         List<ITweak<AudioSource>> tweaks = null,
                          bool overrideEffects = false,
                          bool useEffectsPreset = true,
                          AudioEffects audioEffects = null,
@@ -246,7 +248,7 @@ namespace AudioManager
             OverridePlayOnAwake = overridePlayOnAwake;
             PlayOnAwake = playOnAwake;
             OverrideLoop = overrideLoop;
-            Loop = overrideLoop;
+            Loop = loop;
             OverrideScaled = overrideScaled;
             Scaled = scaled;
             DestroySourceOnFinished = destroySourceOnFinished;
@@ -268,6 +270,7 @@ namespace AudioManager
             FadeOutScale = fadeOutScale;
             FadeOutScaleWithPitch = fadeOutScaleWithPitch;
             ReloadTweaksEveryPlay = reloadTweaksEveryPlay;
+            Tweaks = tweaks;
             OverrideEffects = overrideEffects;
             UseEffectsPreset = useEffectsPreset;
             AudioEffects = audioEffects ?? new();
