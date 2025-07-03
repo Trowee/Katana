@@ -143,6 +143,7 @@ namespace AudioManager
         [Optional(nameof(OverrideFadeOut), displayCheckbox: false)]
         public bool FadeOutScaleWithPitch;
 
+        [Title("Tweaks")]
         public bool ReloadTweaksEveryPlay;
 
         [SerializeReference]
