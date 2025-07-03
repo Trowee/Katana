@@ -6,15 +6,12 @@ using Random = UnityEngine.Random;
 namespace AudioManager.Tweaks
 {
     [Serializable]
-    public class PitchRangeTweak :  Tweak
+    public class PitchRangeTweak :  ITweak<AudioSource>
     {
         [MinMax(-3, 3, "")]
         public Vector2 PitchRange = Vector2.one;
-        
-        public override AudioSource Apply(AudioSource source)
-        {
+
+        public void Apply(AudioSource source) =>
             source.pitch = Random.Range(PitchRange.x, PitchRange.y);
-            return source;
-        }
     }
 }

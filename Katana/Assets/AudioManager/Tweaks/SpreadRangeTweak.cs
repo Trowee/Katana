@@ -6,15 +6,11 @@ using Random = UnityEngine.Random;
 namespace AudioManager.Tweaks
 {
     [Serializable]
-    public class SpreadRangeTweak : Tweak
+    public class SpreadRangeTweak : ITweak<AudioSource>
     {
         [MinMax(0, 360, "")]
         public Vector2 SpreadRange;
         
-        public override AudioSource Apply(AudioSource source)
-        {
-            source.spread = Random.Range(SpreadRange.x, SpreadRange.y);
-            return source;
-        }
+        public void Apply(AudioSource source) => source.spread = Random.Range(SpreadRange.x, SpreadRange.y);
     }
 }

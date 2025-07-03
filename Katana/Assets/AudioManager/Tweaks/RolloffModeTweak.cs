@@ -5,15 +5,11 @@ using UnityEngine;
 namespace AudioManager.Tweaks
 {
     [Serializable]
-    public class RolloffModeTweak : Tweak
+    public class RolloffModeTweak : ITweak<AudioSource>
     {
         [EnumToggle]
         public AudioRolloffMode RolloffMode;
         
-        public override AudioSource Apply(AudioSource source)
-        {
-            source.rolloffMode = RolloffMode;
-            return source;
-        }
+        public void Apply(AudioSource source) => source.rolloffMode = RolloffMode;
     }
 }

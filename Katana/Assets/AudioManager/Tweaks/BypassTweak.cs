@@ -5,7 +5,7 @@ using UnityEngine;
 namespace AudioManager.Tweaks
 {
     [Serializable]
-    public class BypassTweak : Tweak
+    public class BypassTweak : ITweak<AudioSource>
     {
         [HorizontalGroup]
         [HideLabel]
@@ -23,12 +23,11 @@ namespace AudioManager.Tweaks
         [Title("Bypass Reverb Zones")]
         public bool BypassReverbZones;
         
-        public override AudioSource Apply(AudioSource source)
+        public void Apply(AudioSource target)
         {
-            source.bypassEffects = BypassEffects;
-            source.bypassListenerEffects = BypassListenerEffects;
-            source.bypassReverbZones = BypassReverbZones;
-            return source;
+            target.bypassEffects = BypassEffects;
+            target.bypassListenerEffects = BypassListenerEffects;
+            target.bypassReverbZones = BypassReverbZones;
         }
     }
 }

@@ -4,15 +4,11 @@ using UnityEngine;
 namespace AudioManager.Tweaks
 {
     [Serializable]
-    public class StereoPanTweak : Tweak
+    public class StereoPanTweak : ITweak<AudioSource>
     {
         [Range(-1, 1)]
         public float StereoPan;
         
-        public override AudioSource Apply(AudioSource source)
-        {
-            source.panStereo = StereoPan;
-            return source;
-        }
+        public void Apply(AudioSource source) => source.panStereo = StereoPan;
     }
 }

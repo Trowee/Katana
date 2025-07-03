@@ -4,15 +4,11 @@ using UnityEngine;
 namespace AudioManager.Tweaks
 {
     [Serializable]
-    public class ReverbZoneMixTweak : Tweak
+    public class ReverbZoneMixTweak : ITweak<AudioSource>
     {
         [Range(0, 1.1f)]
         public float ReverbZoneMix = 1;
         
-        public override AudioSource Apply(AudioSource source)
-        {
-            source.reverbZoneMix = ReverbZoneMix;
-            return source;
-        }
+        public void Apply(AudioSource source) => source.reverbZoneMix = ReverbZoneMix;
     }
 }

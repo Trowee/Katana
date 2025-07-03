@@ -55,9 +55,8 @@ namespace AudioManager
         public AudioManagerItem ApplySettings(bool initial = false)
         {
             OriginalAudioItem.ApplySettingsToSource(Source);
-            if (AudioItem.OverrideSettings)
-                if (initial || AudioItem.ReloadSettingsEveryPlay)
-                    AudioItem.ApplySettingsToSource(Source);
+            if (initial || AudioItem.ReloadTweaksEveryPlay)
+                AudioItem.ApplySettingsToSource(Source);
 
             // Update pitch once before playing
             Pitch = Source.pitch;

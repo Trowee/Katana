@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using ArtificeToolkit.Attributes;
 using AudioManager.Effects;
 using AudioManager.Tweaks;
@@ -77,17 +78,7 @@ namespace AudioManager
         [TabGroup("Fade Out")]
         public bool FadeOutScaleWithPitch = true;
 
-        [Title("Tweaks")]
-        public bool ReloadSettingsEveryPlay;
-        public bool UseSettingsPreset = true;
-
-        [EnableIf(nameof(UseSettingsPreset), false)]
-        public AudioTweaks Tweaks;
-
-        [ValidateInput(nameof(ValidateItemSettingsPreset))]
-        [EnableIf(nameof(UseSettingsPreset), true)]
-        [PreviewScriptable]
-        public AudioSettingsPreset SettingsPreset;
+        public List<ITweak<AudioSource>> Tweaks;
 
         public bool UseEffectsPreset = true;
 
@@ -100,7 +91,6 @@ namespace AudioManager
         public AudioEffectsPreset AudioEffectsPreset;
 
         private bool ValidateSourceType => SourceType != SourceType.Object;
-        private bool ValidateItemSettingsPreset => !UseSettingsPreset || SettingsPreset;
         private bool ValidateEffectsPreset => !UseEffectsPreset || AudioEffectsPreset;
     }
 }
