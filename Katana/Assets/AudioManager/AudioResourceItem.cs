@@ -29,10 +29,6 @@ namespace AudioManager
         [HideLabel]
         public bool Scaled = true;
 
-        [Title("Mixer Group")]
-        [HideLabel]
-        public AudioMixerGroup MixerGroup;
-
         [Title("Source")]
         [ValidateInput(nameof(ValidateSourceType),
                        "SourceType can't be set to Object on an AudioResourceItem")]
