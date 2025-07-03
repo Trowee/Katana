@@ -37,7 +37,7 @@ namespace AudioManager
             if (!AreAudioItemSettingsValid(audioItem)) return null;
 
             AudioManagerKey key = new(audioItem.SourceType, audioItem.Name);
-            var foundItem = GetItem(key, audioItem, out var existingItem);
+            var foundItem = TryGetItem(key, audioItem, out var existingItem);
             var item = foundItem ? existingItem : CreateItem(key, audioItem);
 
             item.ApplySettings(!foundItem).ApplyEffects();
@@ -45,34 +45,34 @@ namespace AudioManager
             return item;
         }
 
-        private bool GetItem(AudioManagerKey key, AudioItem audioItem,
-                             out AudioManagerItem item)
+        private bool TryGetItem(AudioManagerKey key, AudioItem audioItem,
+                                out AudioManagerItem item)
         {
             item = null;
             if (!audioItem.ReuseSource) return false;
 
             if (!Items.TryGetValue(key, out var items)) return false;
 
-            item = items.FirstOrDefault(x => x.AudioItem.Name == key.Name);
-            if (item == null) return false;
-
-            if (audioItem.SourceType == SourceType.Object &&
-                item.gameObject != audioItem.Target)
+            foreach (var i in items.Where(i => i.AudioItem.Name == audioItem.Name &&
+                                               i.AudioItem.AsChildObject == audioItem.AsChildObject))
             {
-                item = null;
-                return false;
+                if (audioItem.SourceType == SourceType.Object)
+                {
+                    var t = audioItem.AsChildObject ? i.transform.parent.gameObject : i.gameObject;
+                    if (t != audioItem.Target) continue;
+                }
+
+                // This should only get overriden if using an AudioResourceItem
+                // It allows for predictable tweaks stacking between AudioItem and OriginalAudioItem
+                // Also allows for tweaks reload each play
+                if (audioItem.ResourceAssignmentType == ResourceAssignmentType.ResourceItem)
+                    i.OriginalAudioItem = new(audioItem.AudioResourceItem);
+                i.AudioItem = audioItem;
+                item = i;
+                return true;
             }
-            
-            // This should only get overriden if using an AudioResourceItem
-            // It allows for predictable tweaks stacking between AudioItem and OriginalAudioItem
-            // Also allows for tweaks reload each play
-            item.OriginalAudioItem =
-                audioItem.ResourceAssignmentType == ResourceAssignmentType.ResourceItem
-                    ? new(audioItem.AudioResourceItem)
-                    : item.OriginalAudioItem;
-            item.AudioItem = audioItem;
-            
-            return true;
+
+            return false;
         }
 
         private AudioManagerItem CreateItem(AudioManagerKey key, AudioItem audioItem)
