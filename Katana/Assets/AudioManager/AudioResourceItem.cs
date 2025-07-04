@@ -35,7 +35,6 @@ namespace AudioManager
         [EnumToggle]
         public SourceType SourceType;
 
-        [HideLabel]
         [EnableIf(nameof(SourceType), SourceType.Positional)]
         public Vector3 Position;
 

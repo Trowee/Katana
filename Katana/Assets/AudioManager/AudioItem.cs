@@ -32,11 +32,6 @@ namespace AudioManager
         [EnableIf(nameof(ResourceAssignmentType), ResourceAssignmentType.Name)]
         public string AudioResourceName;
 
-        [Title("Source")]
-        [HideLabel]
-        [EnumToggle]
-        public SourceType SourceType;
-
         [HorizontalGroup("Play")]
         [Title("Reuse Source")]
         [HideLabel]
@@ -79,7 +74,11 @@ namespace AudioManager
         [HideLabel]
         public bool DestroyTargetOnFinished;
 
+        [Title("Source")]
         [HideLabel]
+        [EnumToggle]
+        public SourceType SourceType;
+
         [EnableIf(nameof(SourceType), SourceType.Positional)]
         public Vector3 Position;
 
