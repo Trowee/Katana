@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using ArtificeToolkit.Attributes;
 using AudioManager.Effects;
-using AudioManager.Tweaks;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -78,7 +77,7 @@ namespace AudioManager
         [ForceArtifice]
         public List<IAppliable<AudioSource>> Tweaks;
 
-        public bool UseEffectsPreset = true;
+        public bool UseEffectsPreset = false;
 
         [EnableIf(nameof(UseEffectsPreset), false)]
         public AudioEffects AudioEffects;

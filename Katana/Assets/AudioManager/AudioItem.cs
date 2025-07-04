@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using ArtificeToolkit.Attributes;
 using AudioManager.Effects;
-using AudioManager.Tweaks;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -63,7 +62,7 @@ namespace AudioManager
 
         [HideInInspector]
         public bool OverrideLoop;
-        
+
         [HorizontalGroup("Settings")]
         [HideLabel]
         [Title("Loop")]
@@ -96,10 +95,10 @@ namespace AudioManager
         [EnableIf(nameof(SourceType), SourceType.Object)]
         [EnableIf(nameof(AssignTargetAtRuntime), false)]
         public GameObject Target;
-        
+
         [HideInInspector]
         public bool OverrideFadeIn;
-        
+
         [TabGroup("Fade In")]
         [Optional(nameof(OverrideFadeIn))]
         public bool FadeIn;
@@ -122,7 +121,7 @@ namespace AudioManager
 
         [HideInInspector]
         public bool OverrideFadeOut;
-        
+
         [TabGroup("Fade Out")]
         [Optional(nameof(OverrideFadeOut))]
         public bool FadeOut;
@@ -188,7 +187,7 @@ namespace AudioManager
             fadeInTime: resourceItem.FadeInTime,
             fadeInEasing: resourceItem.FadeInEasing,
             fadeInScale: resourceItem.FadeInScale,
-            fadeInScaleWithPitch:  resourceItem.FadeInScaleWithPitch,
+            fadeInScaleWithPitch: resourceItem.FadeInScaleWithPitch,
             overrideFadeOut: true,
             fadeOut: resourceItem.FadeOut,
             fadeOutTime: resourceItem.FadeOutTime,
@@ -236,7 +235,7 @@ namespace AudioManager
                          bool reloadTweaksEveryPlay = true,
                          List<IAppliable<AudioSource>> tweaks = null,
                          bool overrideEffects = false,
-                         bool useEffectsPreset = true,
+                         bool useEffectsPreset = false,
                          AudioEffects audioEffects = null,
                          AudioEffectsPreset audioEffectsPreset = null)
         {
