@@ -4,7 +4,7 @@ using UnityEngine;
 namespace AudioManager.Tweaks
 {
     [Serializable]
-    public class PitchTweak : ITweak<AudioSource>
+    public class PitchTweak : IAppliable<AudioSource>
     {
         [Range(-3, 3)]
         public float Pitch = 1;

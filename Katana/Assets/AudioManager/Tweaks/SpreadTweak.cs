@@ -4,7 +4,7 @@ using UnityEngine;
 namespace AudioManager.Tweaks
 {
     [Serializable]
-    public class SpreadTweak : ITweak<AudioSource>
+    public class SpreadTweak : IAppliable<AudioSource>
     {
         [Range(0, 360)]
         public float Spread;

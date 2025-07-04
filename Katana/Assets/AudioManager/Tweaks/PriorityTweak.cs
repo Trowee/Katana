@@ -5,7 +5,7 @@ using UnityEngine;
 namespace AudioManager.Tweaks
 {
     [Serializable]
-    public class PriorityTweak : ITweak<AudioSource>
+    public class PriorityTweak : IAppliable<AudioSource>
     {
         [Title("Priority")]
         [UnityEngine.Range(0, 256)]

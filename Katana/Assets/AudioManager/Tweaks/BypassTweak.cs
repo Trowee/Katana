@@ -5,7 +5,7 @@ using UnityEngine;
 namespace AudioManager.Tweaks
 {
     [Serializable]
-    public class BypassTweak : ITweak<AudioSource>
+    public class BypassTweak : IAppliable<AudioSource>
     {
         [HorizontalGroup]
         [HideLabel]

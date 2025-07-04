@@ -4,7 +4,7 @@ using UnityEngine;
 namespace AudioManager.Tweaks
 {
     [Serializable]
-    public class VolumeTweak : ITweak<AudioSource>
+    public class VolumeTweak : IAppliable<AudioSource>
     {
         [Range(0, 1)]
         public float Volume = 1;

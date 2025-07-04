@@ -5,7 +5,7 @@ using UnityEngine.Audio;
 namespace AudioManager.Tweaks
 {
     [Serializable]
-    public class MixerGroupTweak : ITweak<AudioSource>
+    public class MixerGroupTweak : IAppliable<AudioSource>
     {
         public AudioMixerGroup MixerGroup;
         

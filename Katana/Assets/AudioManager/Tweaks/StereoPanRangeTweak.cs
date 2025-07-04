@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 namespace AudioManager.Tweaks
 {
     [Serializable]
-    public class StereoPanRangeTweak : ITweak<AudioSource>
+    public class StereoPanRangeTweak : IAppliable<AudioSource>
     {
         [MinMax(-1, 1, "")]
         public Vector2 StereoPanRange;

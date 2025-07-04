@@ -76,7 +76,7 @@ namespace AudioManager
 
         [SerializeReference]
         [ForceArtifice]
-        public List<ITweak<AudioSource>> Tweaks;
+        public List<IAppliable<AudioSource>> Tweaks;
 
         public bool UseEffectsPreset = true;
 

@@ -4,7 +4,7 @@ using UnityEngine;
 namespace AudioManager.Tweaks
 {
     [Serializable]
-    public class SpatialBlendTweak : ITweak<AudioSource>
+    public class SpatialBlendTweak : IAppliable<AudioSource>
     {
         [Range(0, 1)]
         public float SpatialBlend;

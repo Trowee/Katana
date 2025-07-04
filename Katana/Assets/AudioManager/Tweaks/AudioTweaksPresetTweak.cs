@@ -5,7 +5,7 @@ using UnityEngine;
 namespace AudioManager.Tweaks
 {
     [Serializable]
-    public class AudioTweaksPresetTweak :  ITweak<AudioSource>
+    public class AudioTweaksPresetTweak :  IAppliable<AudioSource>
     {
         [PreviewScriptable]
         public AudioTweaksPreset AudioTweaksPreset;

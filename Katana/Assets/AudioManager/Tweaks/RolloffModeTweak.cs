@@ -5,7 +5,7 @@ using UnityEngine;
 namespace AudioManager.Tweaks
 {
     [Serializable]
-    public class RolloffModeTweak : ITweak<AudioSource>
+    public class RolloffModeTweak : IAppliable<AudioSource>
     {
         [EnumToggle]
         public AudioRolloffMode RolloffMode;

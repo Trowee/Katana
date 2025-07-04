@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 namespace AudioManager.Tweaks
 {
     [Serializable]
-    public class VolumeRangeTweak : ITweak<AudioSource>
+    public class VolumeRangeTweak : IAppliable<AudioSource>
     {
         [MinMax(0, 1, "")]
         public Vector2 VolumeRange = Vector2.one;

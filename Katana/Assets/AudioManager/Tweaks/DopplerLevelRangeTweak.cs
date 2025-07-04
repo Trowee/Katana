@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 namespace AudioManager.Tweaks
 {
     [Serializable]
-    public class DopplerLevelRangeTweak : ITweak<AudioSource>
+    public class DopplerLevelRangeTweak : IAppliable<AudioSource>
     {
         [MinMax(0, 5, "")]
         public Vector2 DopplerLevelRange = Vector2.one;

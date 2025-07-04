@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 namespace AudioManager.Tweaks
 {
     [Serializable]
-    public class DistanceRangeTweak : ITweak<AudioSource>
+    public class DistanceRangeTweak : IAppliable<AudioSource>
     {
         [MinMax(0, 10000, "")]
         public Vector2 DistanceRange = new(1, 500);

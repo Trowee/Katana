@@ -4,7 +4,7 @@ using UnityEngine;
 namespace AudioManager.Tweaks
 {
     [Serializable]
-    public class StereoPanTweak : ITweak<AudioSource>
+    public class StereoPanTweak : IAppliable<AudioSource>
     {
         [Range(-1, 1)]
         public float StereoPan;

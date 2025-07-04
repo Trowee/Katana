@@ -148,7 +148,7 @@ namespace AudioManager
 
         [SerializeReference]
         [ForceArtifice]
-        public List<ITweak<AudioSource>> Tweaks;
+        public List<IAppliable<AudioSource>> Tweaks;
 
         [Title("Effects")]
         public bool OverrideEffects;
@@ -234,7 +234,7 @@ namespace AudioManager
                          bool fadeOutScale = true,
                          bool fadeOutScaleWithPitch = true,
                          bool reloadTweaksEveryPlay = true,
-                         List<ITweak<AudioSource>> tweaks = null,
+                         List<IAppliable<AudioSource>> tweaks = null,
                          bool overrideEffects = false,
                          bool useEffectsPreset = true,
                          AudioEffects audioEffects = null,

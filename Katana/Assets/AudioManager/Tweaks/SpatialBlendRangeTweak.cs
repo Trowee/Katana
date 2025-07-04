@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 namespace AudioManager.Tweaks
 {
     [Serializable]
-    public class SpatialBlendRangeTweak : ITweak<AudioSource>
+    public class SpatialBlendRangeTweak : IAppliable<AudioSource>
     {
         [MinMax(0, 1, "")]
         public Vector2 SpatialBlendRange;

@@ -4,7 +4,7 @@ using UnityEngine;
 namespace AudioManager.Tweaks
 {
     [Serializable]
-    public class DopplerLevelTweak : ITweak<AudioSource>
+    public class DopplerLevelTweak : IAppliable<AudioSource>
     {
         [Range(0, 5)]
         public float DopplerLevel = 1;
