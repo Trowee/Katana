@@ -24,13 +24,13 @@ namespace Assets.Scripts.Core
         private VolumeProfile _motionBlurProfile;
 
         [SerializeField, Required, FoldoutGroup("Audio")]
-        private AudioMixerGroup _master;
+        private AudioMixerGroup[] _masterMixers;
         [SerializeField, Required, FoldoutGroup("Audio")]
-        private AudioMixerGroup _sfx;
+        private AudioMixerGroup[] _sfxMixers;
         [SerializeField, Required, FoldoutGroup("Audio")]
-        private AudioMixerGroup _music;
+        private AudioMixerGroup[] _musicMixers;
         [SerializeField, Required, FoldoutGroup("Audio")]
-        private AudioMixerGroup _ambience;
+        private AudioMixerGroup[] _ambienceMixers;
 
         private void Awake() => LoadSettings();
 
@@ -52,12 +52,13 @@ namespace Assets.Scripts.Core
             MusicVolume = PlayerPrefs.GetFloat("MusicVolume", 1f);
             AmbienceVolume = PlayerPrefs.GetFloat("AmbienceVolume", 1f);
 
-            // Wait a bit before updating the audio mixer cuz unity devs are competent
-            while (_master.audioMixer == null ||
-                   _sfx.audioMixer == null ||
-                   _music.audioMixer == null ||
-                   _ambience.audioMixer == null)
-                await Task.Delay(10);
+            // Wait a bit before updating audio mixers cuz unity devs are competent
+            foreach (var mixer in _masterMixers
+                                  .Concat(_sfxMixers)
+                                  .Concat(_musicMixers)
+                                  .Concat(_ambienceMixers))
+                while (mixer.audioMixer == null)
+                    await Task.Delay(10);
 
             MasterVolume = PlayerPrefs.GetFloat("MasterVolume", 0.5f);
             SFXVolume = PlayerPrefs.GetFloat("SFXVolume", 1f);
@@ -170,6 +171,12 @@ namespace Assets.Scripts.Core
         [FoldoutGroup("Settings/Audio")]
         public void ChangeAmbienceVolume(float vol) => AmbienceVolume = vol;
 
+        private void SetMixerVolumes(AudioMixerGroup[] mixers, float volume)
+        {
+            foreach (var mixer in mixers)
+                mixer.audioMixer.SetFloat($"{mixer.name}Volume", GetVolume(volume));
+        }
+        
         private float _masterVolume;
         public float MasterVolume
         {
@@ -177,7 +184,7 @@ namespace Assets.Scripts.Core
             private set
             {
                 _masterVolume = value;
-                _master.audioMixer.SetFloat("MasterVolume", GetVolume(value));
+                SetMixerVolumes(_masterMixers, MasterVolume);
                 PlayerPrefs.SetFloat("MasterVolume", value);
                 PlayerPrefs.Save();
             }
@@ -190,7 +197,7 @@ namespace Assets.Scripts.Core
             private set
             {
                 _sfxVolume = value;
-                _sfx.audioMixer.SetFloat("SFXVolume", GetVolume(value));
+                SetMixerVolumes(_sfxMixers, value);
                 PlayerPrefs.SetFloat("SFXVolume", value);
                 PlayerPrefs.Save();
             }
@@ -203,7 +210,7 @@ namespace Assets.Scripts.Core
             private set
             {
                 _musicVolume = value;
-                _music.audioMixer.SetFloat("MusicVolume", GetVolume(value));
+                SetMixerVolumes(_musicMixers, value);
                 PlayerPrefs.SetFloat("MusicVolume", value);
                 PlayerPrefs.Save();
             }
@@ -216,7 +223,7 @@ namespace Assets.Scripts.Core
             private set
             {
                 _ambienceVolume = value;
-                _ambience.audioMixer.SetFloat("AmbienceVolume", GetVolume(value));
+                SetMixerVolumes(_ambienceMixers, value);
                 PlayerPrefs.SetFloat("AmbienceVolume", value);
                 PlayerPrefs.Save();
             }
