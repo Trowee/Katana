@@ -69,6 +69,7 @@
     <Compile Include="Assets/AudioManager/Effects/Reverb.cs" />
     <Compile Include="Assets/AudioManager/Tweaks/VolumeTweak.cs" />
     <Compile Include="Assets/AudioManager/AudioItem.cs" />
+    <Compile Include="Assets/AudioManager/IAppliable.cs" />
     <Compile Include="Assets/AudioManager/Tweaks/DopplerLevelTweak.cs" />
     <Compile Include="Assets/AudioManager/AudioResourceItem.cs" />
     <Compile Include="Assets/AudioManager/Tweaks/PitchTweak.cs" />
@@ -80,7 +81,6 @@
     <Compile Include="Assets/AudioManager/Effects/AudioEffect.cs" />
     <Compile Include="Assets/AudioManager/OptionalAttribute.cs" />
     <Compile Include="Assets/AudioManager/Tweaks/BypassTweak.cs" />
-    <Compile Include="Assets/AudioManager/Tweaks/ITweak.cs" />
     <Compile Include="Assets/AudioManager/AudioManagerItem.cs" />
     <Compile Include="Assets/AudioManager/Effects/AudioEffects.cs" />
     <Compile Include="Assets/AudioManager/Tweaks/AudioTweaksPresetTweak.cs" />

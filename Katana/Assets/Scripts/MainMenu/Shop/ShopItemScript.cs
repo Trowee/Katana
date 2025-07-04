@@ -2,6 +2,7 @@ using System.Collections;
 using ArtificeToolkit.Attributes;
 using Assets.Scripts.Core;
 using Assets.Scripts.Items;
+using AudioManager;
 using EasyTextEffects;
 using NnUtils.Scripts;
 using TMPro;
@@ -38,7 +39,7 @@ namespace Assets.Scripts.MainMenu.Shop
 
         [SerializeField, HideInInspector]
         private TextEffect _nameEffect;
-        
+
         [SerializeField, HideInInspector]
         private LocalizeStringEvent _nameLocalizeStringEvent;
 
@@ -56,6 +57,12 @@ namespace Assets.Scripts.MainMenu.Shop
 
         [FoldoutGroup("Animation"), SerializeField]
         private float _rotationSpeed = 180;
+
+        [FoldoutGroup("SFX"), SerializeField]
+        private AudioItem _hoverAudioItem;
+
+        [FoldoutGroup("SFX"), SerializeField]
+        private AudioItem _unhoverAudioItem;
 
         private void Start()
         {
@@ -140,20 +147,26 @@ namespace Assets.Scripts.MainMenu.Shop
         {
             this.StopRoutine(ref _deselectRoutine);
             this.RestartRoutine(ref _rotateRoutine, RotateRoutine());
-            this.RestartRoutine(ref _selectRoutine, SelectRoutine());
+            this.RestartRoutine(ref _selectRoutine, HoverRoutine());
+
+            if (!Application.isPlaying) return;
+            GameManager.AudioManager.Play(_hoverAudioItem);
         }
 
         [Button]
         public void Unhover()
         {
-            this.StopRoutine(ref _rotateRoutine);
             this.StopRoutine(ref _selectRoutine);
-            this.RestartRoutine(ref _deselectRoutine, DeselectRoutine());
+            this.StopRoutine(ref _rotateRoutine);
+            this.RestartRoutine(ref _deselectRoutine, UnhoverRoutine());
+
+            if (!Application.isPlaying) return;
+            GameManager.AudioManager.Play(_unhoverAudioItem);
         }
 
         private Coroutine _selectRoutine;
 
-        private IEnumerator SelectRoutine()
+        private IEnumerator HoverRoutine()
         {
             var startPos = _itemObject.localPosition;
             var uiStartPos = _uiPanel.localPosition;
@@ -177,7 +190,7 @@ namespace Assets.Scripts.MainMenu.Shop
 
         private Coroutine _deselectRoutine;
 
-        private IEnumerator DeselectRoutine()
+        private IEnumerator UnhoverRoutine()
         {
             var startPos = _itemObject.localPosition;
             var startRot = _itemObject.localRotation;
