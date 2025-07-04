@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using ArtificeToolkit.Attributes;
 using Assets.Scripts.Core;
@@ -67,6 +68,9 @@ namespace Assets.Scripts.MainMenu.Shop
         private void Start()
         {
             if (!Application.isPlaying) return;
+            
+            GameManager.AudioManager.GetOrCreateItem(_hoverAudioItem);
+            GameManager.AudioManager.GetOrCreateItem(_unhoverAudioItem);
 
             // Make the ui invisible
             _uiPanel.localScale = Vector3.zero;

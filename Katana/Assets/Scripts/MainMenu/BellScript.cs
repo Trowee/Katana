@@ -1,3 +1,4 @@
+using System;
 using ArtificeToolkit.Attributes;
 using Assets.Scripts.Audio;
 using Assets.Scripts.Core;
@@ -16,6 +17,12 @@ namespace Assets.Scripts.MainMenu
         private void Reset()
         {
             _animator = GetComponentInChildren<Animator>();
+        }
+
+        private void Start()
+        {
+            if (!Application.isPlaying) return;
+            GameManager.AudioManager.GetOrCreateItem(_ringAudioItem);
         }
 
         [FoldoutGroup("Test")]
