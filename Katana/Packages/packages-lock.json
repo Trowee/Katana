@@ -7,7 +7,7 @@
       "dependencies": {
         "com.unity.editorcoroutines": "1.0.0"
       },
-      "hash": "14dd2def3c3a0597fa748c3a3fc28f8c3a2383eb"
+      "hash": "03579ad3a0311a4aa6f828330ab3a4a4b4fefe48"
     },
     "com.bgtools.playerprefseditor": {
       "version": "https://github.com/Dysman/bgTools-playerPrefsEditor.git#upm",
@@ -23,7 +23,7 @@
       "dependencies": {
         "com.unity.ugui": "1.0.0"
       },
-      "hash": "16be53e14523e0af6dbba849a196b93f7b7c9e0e"
+      "hash": "6f90044ec83adbd66475a6d2b5baa38e85678809"
     },
     "com.cqf.urpvolumetricfog": {
       "version": "https://github.com/CristianQiu/Unity-URP-Volumetric-Light.git",
@@ -37,14 +37,14 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "ffaaf440162da1c9c2b600c703ea0dec135cc89e"
+      "hash": "f317c81f8644dc41cc62ed55363df9d8d9d2cf4e"
     },
     "com.github-glitchenzo.nugetforunity": {
       "version": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "f789083c31250c83082da9b29be0c976152d699b"
+      "hash": "a7c6b49a0141a5bff9b1983e38137522ef61977d"
     },
     "com.handzlikchris.fastscriptreload": {
       "version": "https://github.com/handzlikchris/FastScriptReload.git?path=Assets",
@@ -69,7 +69,7 @@
       "dependencies": {
         "com.unity.ide.visualstudio": "2.0.20"
       },
-      "hash": "123957fbc104b61dbc5705a1d329ffd275357ea3"
+      "hash": "25f1b97fedb6cf7b4b566c4a83ec8311b68d3e82"
     },
     "com.nnra6864.openfracture": {
       "version": "https://github.com/nnra6864/OpenFracture.git",
