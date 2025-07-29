@@ -7,7 +7,7 @@
       "dependencies": {
         "com.unity.editorcoroutines": "1.0.0"
       },
-      "hash": "03579ad3a0311a4aa6f828330ab3a4a4b4fefe48"
+      "hash": "750813a4469ec36c84e272d1f78ef214848bce8b"
     },
     "com.bgtools.playerprefseditor": {
       "version": "https://github.com/Dysman/bgTools-playerPrefsEditor.git#upm",
