@@ -28,7 +28,10 @@ namespace Assets.Scripts.Player
         [FoldoutGroup("Camera"), SerializeField] private float _cameraSwitchDuration = 1;
         [FoldoutGroup("Camera"), SerializeField] private Easings.Type _cameraSwitchEasing = Easings.Type.ExpoOut;
 
-        [FoldoutGroup("Movement"), SerializeField] private float _tiltSpeed = 1;
+        [FoldoutGroup("Movement/Tilt"), SerializeField] private float _tiltSpeed = 1;
+        [FoldoutGroup("Movement/Tilt"), SerializeField]
+        [Tooltip("% of the angular velocity that remains after 1 second of tilting")]
+        private float _tiltRotationMultiplier = 0.025f;
 
         [FoldoutGroup("Movement/Dash"), SerializeField] private float _dashForce = 100;
         [FoldoutGroup("Movement/Dash"), SerializeField] private TimeScaleKeys _dashTimeScale;
@@ -189,6 +192,9 @@ namespace Assets.Scripts.Player
 
             // Return if there is no input
             if (x == 0 && y == 0) return;
+
+            // Drastically lower the rotation when panning
+            _rb.angularVelocity *= Mathf.Pow(_tiltRotationMultiplier, Time.deltaTime);
 
             // Apply the rotation
             var deltaRotX = Quaternion.AngleAxis(x, Vector3.back);
