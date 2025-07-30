@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using ArtificeToolkit.Attributes;
 using Assets.Scripts.Core;
@@ -56,6 +57,16 @@ namespace Assets.Scripts.Player
             _rb = GetComponent<Rigidbody>();
         }
 
+        private void OnEnable()
+        {
+            InitializeInputs();
+        }
+
+        private void OnDisable()
+        {
+            UninitializeInputs();
+        }
+
         private void Start()
         {
             _renderer.sharedMaterial = GameManager.ItemManager.SelectedItem.Material;
@@ -63,8 +74,6 @@ namespace Assets.Scripts.Player
                 Settings.Perspective, _cameraSwitchDuration,
                 _cameraSwitchEasing, unscaled: true);
             GetStuck(null);
-            
-            InitializeInputs();
         }
 
         private void Update()
