@@ -40,9 +40,14 @@ namespace Assets.Scripts.Player
         [FoldoutGroup("Movement/Dodge"), SerializeField] private float _dodgeForce = 30;
         [FoldoutGroup("Movement/Dodge"), SerializeField] private TimeScaleKeys _dodgeTimeScale;
 
-        [FoldoutGroup("Movement/Flip"), SerializeField] private Vector2 _flipForce = new(20, 25);
-        [FoldoutGroup("Movement/Flip"), SerializeField] private float _flipRotation = 5;
-        [FoldoutGroup("Movement/Flip"), SerializeField] private TimeScaleKeys _flipTimeScale;
+        [FoldoutGroup("Movement/Flip"), SerializeField]
+        private Vector2 _flipForce = new(30, -10);
+        [FoldoutGroup("Movement/Flip"), SerializeField]
+        private Vector2 _flipStuckForce = new(20, 25);
+        [FoldoutGroup("Movement/Flip"), SerializeField]
+        private float _flipRotation = 5;
+        [FoldoutGroup("Movement/Flip"), SerializeField]
+        private TimeScaleKeys _flipTimeScale;
 
         [FoldoutGroup("Movement/Stick"), SerializeField] private LayerMask _stickMask;
         [FoldoutGroup("Movement/Stick"), SerializeField] private float _minStickVelocity = 5;
@@ -231,14 +236,12 @@ namespace Assets.Scripts.Player
         {
             if (ColosseumSceneManager.Instance.IsDead) return;
             
-            GetUnstuck();
-
-            // Store forward
-            var forward = transform.up;
-
             // Calculate forces
-            var zForce = _flipForce.x * forward;
-            var force = new Vector3(0, _flipForce.y) + zForce;
+            var flipForce = IsStuck ? _flipStuckForce : _flipForce;
+            var zForce = flipForce.x * transform.up;
+            var force = new Vector3(0, flipForce.y) + zForce;
+            
+            GetUnstuck();
 
             // Add force and rotation
             _rb.AddForce(force, ForceMode.Impulse);
