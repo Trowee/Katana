@@ -58,9 +58,7 @@ namespace Assets.Scripts.Core
             if (!_instance) Instance = this;
             else if (_instance != this) Destroy(gameObject);
             
-            // TODO: Properly take care of this, it's quite error prone
-            InputSystem.actions.actionMaps[0].Enable();
-            
+            InputSystem.actions.Enable();
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
