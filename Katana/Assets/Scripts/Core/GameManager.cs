@@ -4,6 +4,7 @@ using Assets.Scripts.Items;
 using Assets.Scripts.TimeScale;
 using NnUtils.Scripts;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Core
@@ -56,6 +57,10 @@ namespace Assets.Scripts.Core
         {
             if (!_instance) Instance = this;
             else if (_instance != this) Destroy(gameObject);
+            
+            // TODO: Properly take care of this, it's quite error prone
+            InputSystem.actions.actionMaps[0].Enable();
+            
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
