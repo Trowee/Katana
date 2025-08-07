@@ -1,13 +1,38 @@
 fileFormatVersion: 2
 guid: 15715ff908efe3a428be4c0c24927c2d
 ModelImporter:
-  serializedVersion: 22200
+  serializedVersion: 24200
   internalIDToNameTable: []
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Cage
+    second: {fileID: 2100000, guid: ffb8d105e67ca4a4483330245005134d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ColosseumCage
+    second: {fileID: 2100000, guid: ffb8d105e67ca4a4483330245005134d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ColosseumCageBars
+    second: {fileID: 2100000, guid: 8fa6652f07a1ba841976010e2dde1caf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Main
+    second: {fileID: 2100000, guid: ffb8d105e67ca4a4483330245005134d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SphereBarrier
+    second: {fileID: 2100000, guid: ffb8d105e67ca4a4483330245005134d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Stubovi
     second: {fileID: 2100000, guid: ffb8d105e67ca4a4483330245005134d, type: 2}
   materials:
     materialImportMode: 2
@@ -61,6 +86,9 @@ ModelImporter:
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
     optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
