@@ -1,13 +1,13 @@
 using UnityEngine;
 
-namespace Assets.Scripts.Core
+namespace Assets.Scripts.Colosseum
 {
     [ExecuteAlways]
     public class ColosseumSun : MonoBehaviour
     {
         [SerializeField] private Vector2 _tiltRange = new(-60, 60);
-        [SerializeField] private float _tiltCycleTime = 23;
-        [SerializeField] private float _spinTime = 37;
+        [SerializeField] private float _tiltCycleTime = 29;
+        [SerializeField] private float _spinTime = 73;
 
         private float _timeOffset;
 
@@ -17,7 +17,7 @@ namespace Assets.Scripts.Core
         {
             var t = (Mathf.Sin((Time.time + _timeOffset) / _tiltCycleTime) + 1f) / 2f;
             var xRot = Mathf.Lerp(_tiltRange.x, _tiltRange.y, t);
-            var yRot = ((Time.time + _timeOffset) % _spinTime) / _spinTime * 360f;
+            var yRot = (Time.time + _timeOffset) % _spinTime / _spinTime * 360f;
             transform.rotation = Quaternion.Euler(xRot, yRot, 0);
         }
     }

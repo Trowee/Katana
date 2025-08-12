@@ -1,10 +1,11 @@
 using System.Collections;
 using ArtificeToolkit.Attributes;
+using Assets.Scripts.Core;
 using NnUtils.Scripts;
 using TMPro;
 using UnityEngine;
 
-namespace Assets.Scripts.Core
+namespace Assets.Scripts.Colosseum
 {
     public class ScoreScript : MonoBehaviour
     {
@@ -20,7 +21,7 @@ namespace Assets.Scripts.Core
         }
 
         private void OnDestroy() => GameManager.ItemManager.OnCoinsChanged -= UpdateScore;
-        
+
         private void UpdateScore()
         {
             _score.text = $@"₦{GameManager.ItemManager.Coins.ToString()}";

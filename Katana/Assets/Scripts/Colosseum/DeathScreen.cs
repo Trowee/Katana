@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Assets.Scripts.Core
+namespace Assets.Scripts.Colosseum
 {
     public class DeathScreen : MonoBehaviour
     {

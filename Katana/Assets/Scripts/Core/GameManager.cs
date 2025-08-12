@@ -1,6 +1,6 @@
 using ArtificeToolkit.Attributes;
-using Assets.Scripts.Audio;
 using Assets.Scripts.Items;
+using Assets.Scripts.Player;
 using Assets.Scripts.TimeScale;
 using NnUtils.Scripts;
 using UnityEngine;
@@ -38,7 +38,7 @@ namespace Assets.Scripts.Core
 
         [SerializeField, Required] private TimeScaleManager _timeScaleManager;
         public static TimeScaleManager TimeScaleManager => Instance._timeScaleManager;
-        
+
         [SerializeField, Required] private AudioManager.AudioManager _audioManager;
         public static AudioManager.AudioManager AudioManager => Instance._audioManager;
 
@@ -57,7 +57,7 @@ namespace Assets.Scripts.Core
         {
             if (!_instance) Instance = this;
             else if (_instance != this) Destroy(gameObject);
-            
+
             InputSystem.actions.Enable();
             SceneManager.sceneLoaded += OnSceneLoaded;
         }

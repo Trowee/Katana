@@ -4,7 +4,7 @@ using System.Collections;
 using NnUtils.Modules.Easings;
 using UnityEngine.Rendering.Universal;
 
-namespace Assets.Scripts.Core
+namespace Assets.Scripts.Colosseum
 {
     [RequireComponent(typeof(DecalProjector))]
     public class DecalFade : MonoBehaviour
@@ -30,7 +30,7 @@ namespace Assets.Scripts.Core
                 _decalProjector.fadeFactor = t;
                 yield return null;
             }
-            
+
             Destroy(gameObject);
         }
     }
