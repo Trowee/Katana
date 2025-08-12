@@ -5,25 +5,20 @@ namespace Assets.Scripts.Core
     [ExecuteAlways]
     public class ColosseumSun : MonoBehaviour
     {
-        [SerializeField] private Vector2 _tiltRange = new(-25, 30);
-        [SerializeField] private Vector2 _rotationSpeed = new(1, 2.5f);
-        private int _tiltDir = 1;
+        [SerializeField] private Vector2 _tiltRange = new(-60, 60);
+        [SerializeField] private float _tiltCycleTime = 23;
+        [SerializeField] private float _spinTime = 37;
 
-        private void Start()
+        private float _timeOffset;
+
+        private void Start() => _timeOffset = Random.Range(0f, 10000f);
+
+        void Update()
         {
-            transform.rotation = Quaternion.Euler(new(
-                Random.Range(_tiltRange.x, _tiltRange.y),
-                Random.Range(0, 360)));
-        }
-
-        private void Update()
-        {
-            var xRot = transform.eulerAngles.x;
-            if (xRot >= _tiltRange.x &&
-                xRot <= _tiltRange.y) _tiltDir *= -1;
-
-            var rot = new Vector3(_rotationSpeed.x * _tiltDir, _rotationSpeed.y) * Time.deltaTime;
-            transform.localEulerAngles += rot;
+            var t = (Mathf.Sin((Time.time + _timeOffset) / _tiltCycleTime) + 1f) / 2f;
+            var xRot = Mathf.Lerp(_tiltRange.x, _tiltRange.y, t);
+            var yRot = ((Time.time + _timeOffset) % _spinTime) / _spinTime * 360f;
+            transform.rotation = Quaternion.Euler(xRot, yRot, 0);
         }
     }
 }
