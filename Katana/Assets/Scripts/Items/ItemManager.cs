@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Core;
 using UnityEngine;
 
 namespace Assets.Scripts.Items
@@ -53,11 +54,24 @@ namespace Assets.Scripts.Items
             if (!item.Unlocked)
             {
                 if (item.Price > Coins) return;
-                item.Unlocked =  true;
-                Coins         -= item.Price;
+                item.Unlocked = true;
+                Coins -= item.Price;
             }
 
             SelectedItem = item;
+        }
+
+        public void RewardCoins(int amount, bool useMultipliers = true)
+        {
+            var coins = amount;
+            if (useMultipliers) coins *= CalculateMultiplier();
+            Coins += coins;
+        }
+
+        public int CalculateMultiplier()
+        {
+            int multiplpier = 1;
+            return multiplpier;
         }
     }
 }

@@ -63,7 +63,7 @@ namespace Assets.Scripts.Fruits
             HandleFragments(_slice.ComputeSlice(sliceNormal, sliceOrigin), forcePos, _sliceForce);
 
             GetDestroyed();
-            GameManager.ItemManager.Coins += _coins;
+            GameManager.ItemManager.RewardCoins(_coins);
         }
 
         private void HandleFragments(List<GameObject> fragments,
