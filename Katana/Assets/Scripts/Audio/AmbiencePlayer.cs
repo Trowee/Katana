@@ -17,17 +17,16 @@ namespace Assets.Scripts.Audio
 
         private IEnumerator Start()
         {
-            GameObject target = new("Ambience") { transform = { parent = transform } };
-            _ambienceItem.Target = target;
-            
+            _ambienceItem.Target = gameObject;
+
             // Play once with a shorter fade
             var originalFadeInTime = _ambienceItem.FadeInTime;
             _ambienceItem.FadeInTime = 1;
             yield return Play();
-            
+
             // Restore the original fade time
             _ambienceItem.FadeInTime = originalFadeInTime;
-            
+
             while (true)
             {
                 yield return Play();
@@ -40,14 +39,14 @@ namespace Assets.Scripts.Audio
             var fadeOutTime = _ambienceItem.FadeOutTime;
             var fadeOutScale = _ambienceItem.FadeOutScale;
             var fadeOutScaleWithPitch = _ambienceItem.FadeOutScaleWithPitch;
-            
+
             int FadeOutSample() =>
                 item.Source.clip.samples -
                 Mathf.RoundToInt(item.Source.clip.frequency *
                                  (fadeOutTime / (fadeOutScale ? Time.timeScale : 1) /
                                   (fadeOutScaleWithPitch ? item.Pitch : 1) +
                                   0.05f));
-            
+
             yield return new WaitUntil(() => item.Source.timeSamples >= FadeOutSample());
         }
     }
