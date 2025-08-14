@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: a4710c5f2e763cc68a7a3549454c63eb
 ModelImporter:
-  serializedVersion: 22200
+  serializedVersion: 24200
   internalIDToNameTable: []
   externalObjects:
   - first:
@@ -9,6 +9,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: ArenaFix
     second: {fileID: 2100000, guid: 8fdc19f5e2844d1478b9c0f64d6267db, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ColosseumPit
+    second: {fileID: 2100000, guid: 151a1958f8260be0ea449c2a944237ff, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -61,6 +66,9 @@ ModelImporter:
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
     optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
