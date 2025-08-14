@@ -6,12 +6,12 @@ namespace Assets.Scripts.Colosseum
     public class ColosseumSun : MonoBehaviour
     {
         [SerializeField] private Vector2 _tiltRange = new(-60, 60);
-        [SerializeField] private float _tiltCycleTime = 29;
-        [SerializeField] private float _spinTime = 73;
+        [SerializeField] private float _tiltCycleTime = 237.31f;
+        [SerializeField] private float _spinTime = 576.73f;
 
         private float _timeOffset;
 
-        private void Start() => _timeOffset = Random.Range(0f, 10000f);
+        private void Start() => _timeOffset = Random.Range(0f, 100000f);
 
         void Update()
         {
