@@ -7,7 +7,7 @@
       "dependencies": {
         "com.unity.editorcoroutines": "1.0.0"
       },
-      "hash": "750813a4469ec36c84e272d1f78ef214848bce8b"
+      "hash": "234d12d7b9d37bf5d423e5496717e0e3caae0ddc"
     },
     "com.bgtools.playerprefseditor": {
       "version": "https://github.com/Dysman/bgTools-playerPrefsEditor.git#upm",
@@ -37,7 +37,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "f317c81f8644dc41cc62ed55363df9d8d9d2cf4e"
+      "hash": "d887c10ac0e13e0c2e57b03c57aafb54358c428d"
     },
     "com.github-glitchenzo.nugetforunity": {
       "version": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity",
@@ -51,7 +51,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "7a46df16b9dc89d34244c7bd1ff7f09b9e7609d7"
+      "hash": "2018c7615df46777b03b9a87304b65d14e9d0823"
     },
     "com.jimmycushnie.noisynodes": {
       "version": "https://github.com/JimmyCushnie/Noisy-Nodes.git",
@@ -225,7 +225,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.localization": {
-      "version": "1.5.5",
+      "version": "1.5.7",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -368,7 +368,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.timeline": {
-      "version": "1.8.8",
+      "version": "1.8.9",
       "depth": 0,
       "source": "registry",
       "dependencies": {
