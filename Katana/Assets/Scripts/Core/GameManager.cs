@@ -1,6 +1,5 @@
 using ArtificeToolkit.Attributes;
 using Assets.Scripts.Items;
-using Assets.Scripts.Player;
 using Assets.Scripts.TimeScale;
 using NnUtils.Scripts;
 using UnityEngine;

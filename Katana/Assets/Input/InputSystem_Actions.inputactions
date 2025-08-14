@@ -47,7 +47,7 @@
                 {
                     "name": "",
                     "id": "c3f5667b-5953-4b64-8cad-3cfdb6910a52",
-                    "path": "<Keyboard>/d",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
