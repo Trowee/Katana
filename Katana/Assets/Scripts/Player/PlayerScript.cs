@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using ArtificeToolkit.Attributes;
 using Assets.Scripts.Core;
@@ -17,6 +16,18 @@ namespace Assets.Scripts.Player
 
         private InputAction _dashAction, _dodgeAction, _flipAction, _perspectiveAction;
 
+        [FoldoutGroup("Dev")]
+        [ReadOnly]
+        public float ComboDuration;
+        [FoldoutGroup("Dev")]
+        [ReadOnly]
+        public float TimeSinceLastAction;
+        [FoldoutGroup("Dev")]
+        [ReadOnly]
+        public PlayerAction LastAction;
+
+        #region Components
+
         [FoldoutGroup("Components"), SerializeField] private Rigidbody _rb;
         [FoldoutGroup("Components"), SerializeField] private Collider _collider;
         [FoldoutGroup("Components"), SerializeField] private GameObject _katanaObject;
@@ -26,32 +37,47 @@ namespace Assets.Scripts.Player
         [FoldoutGroup("Components"), SerializeField] private Transform _decalPoint;
         [FoldoutGroup("Components"), SerializeField] private LayerMask _sliceLayer;
 
+        #endregion
+
         [FoldoutGroup("Camera"), SerializeField] private float _cameraSwitchDuration = 1;
         [FoldoutGroup("Camera"), SerializeField] private Easings.Type _cameraSwitchEasing = Easings.Type.ExpoOut;
 
-        [FoldoutGroup("Movement/Tilt"), SerializeField] private float _tiltSpeed = 1;
+        #region Movement
+
+        [FoldoutGroup("Movement/Tilt"), SerializeField]
+        private float _tiltSpeed = 1;
         [FoldoutGroup("Movement/Tilt"), SerializeField]
         [Tooltip("% of the angular velocity that remains after 1 second of tilting")]
         private float _tiltRotationMultiplier = 0.025f;
 
-        [FoldoutGroup("Movement/Dash"), SerializeField] private float _dashForce = 100;
-        [FoldoutGroup("Movement/Dash"), SerializeField] private TimeScaleKeys _dashTimeScale;
+        [FoldoutGroup("Movement/Dash"), SerializeField]
+        private Vector3 _dashForce = new(0, 800, 0);
+        [FoldoutGroup("Movement/Dash"), SerializeField]
+        private TimeScaleKeys _dashTimeScale;
 
-        [FoldoutGroup("Movement/Dodge"), SerializeField] private float _dodgeForce = 30;
-        [FoldoutGroup("Movement/Dodge"), SerializeField] private TimeScaleKeys _dodgeTimeScale;
+        [FoldoutGroup("Movement/Dodge"), SerializeField]
+        private Vector3 _dodgeForce = new(0, -300, 0);
+        [FoldoutGroup("Movement/Dodge"), SerializeField]
+        private TimeScaleKeys _dodgeTimeScale;
 
         [FoldoutGroup("Movement/Flip"), SerializeField]
-        private Vector2 _flipForce = new(30, -10);
+        private Vector3 _flipForce = new(0, 500, 20);
         [FoldoutGroup("Movement/Flip"), SerializeField]
-        private Vector2 _flipStuckForce = new(20, 25);
+        private Vector3 _flipStuckForce = new(0, -100, -100);
         [FoldoutGroup("Movement/Flip"), SerializeField]
-        private float _flipRotation = 5;
+        private float _flipRotation = 180;
+        [FoldoutGroup("Movement/Flip"), SerializeField]
+        private float _flipRewardMultiplier = 2;
+        [FoldoutGroup("Movement/Flip"), SerializeField]
+        private float _flipRewardMultiplierTime = 2;
         [FoldoutGroup("Movement/Flip"), SerializeField]
         private TimeScaleKeys _flipTimeScale;
 
         [FoldoutGroup("Movement/Stick"), SerializeField] private LayerMask _stickMask;
         [FoldoutGroup("Movement/Stick"), SerializeField] private float _minStickVelocity = 5;
         [FoldoutGroup("Movement/Stick"), SerializeField] private float _maxStickAngle = 45;
+
+        #endregion
 
         [FoldoutGroup("Death"), SerializeField] private TimeScaleKeys _deathTimeScale;
 
@@ -119,13 +145,13 @@ namespace Assets.Scripts.Player
         {
             _dashAction = InputSystem.actions.FindAction("Dash");
             _dashAction.performed += OnDash;
-            
+
             _dodgeAction = InputSystem.actions.FindAction("Dodge");
             _dodgeAction.performed += OnDodge;
-            
+
             _flipAction = InputSystem.actions.FindAction("Flip");
             _flipAction.performed += OnFlip;
-            
+
             _perspectiveAction = InputSystem.actions.FindAction("Perspective");
             _perspectiveAction.performed += OnPerspective;
         }
@@ -196,7 +222,7 @@ namespace Assets.Scripts.Player
         private void Tilt()
         {
             if (ColosseumSceneManager.Instance.IsDead) return;
-            
+
             // Return if stuck
             if (IsStuck) return;
 
@@ -220,7 +246,7 @@ namespace Assets.Scripts.Player
         private void ChangePerspective()
         {
             if (ColosseumSceneManager.Instance.IsDead) return;
-            
+
             Settings.Perspective = Settings.Perspective switch
             {
                 Perspective.First => Perspective.Right,
@@ -235,31 +261,34 @@ namespace Assets.Scripts.Player
         private void Flip()
         {
             if (ColosseumSceneManager.Instance.IsDead) return;
-            
-            // Calculate forces
-            var flipForce = IsStuck ? _flipStuckForce : _flipForce;
-            var zForce = flipForce.x * transform.up;
-            var force = new Vector3(0, flipForce.y) + zForce;
-            
+
+            LastAction = PlayerAction.Flip;
+            var wasStuck = IsStuck;
             GetUnstuck();
 
             // Add force and rotation
-            _rb.AddForce(force, ForceMode.Impulse);
-            _rb.AddTorque(transform.right * _flipRotation, ForceMode.Impulse);
+            _rb.AddRelativeForce(wasStuck ? _flipStuckForce : _flipForce, ForceMode.VelocityChange);
+            _rb.AddRelativeTorque(new(_flipRotation, 0), ForceMode.Impulse);
 
             // Apply timescale changes
             GameManager.TimeScaleManager.UpdateTimeScale(_flipTimeScale);
         }
 
+        private bool ApplyPlayerFlippedMultiplier =>
+        ColosseumSceneManager.Instance.IsDead &&
+            LastAction == PlayerAction.Flip &&
+            TimeSinceLastAction <= 2;
+
         private void OnDash(InputAction.CallbackContext ctx) => Dash();
         private void OnDodge(InputAction.CallbackContext ctx) => Dodge();
-        private void OnFlip(InputAction.CallbackContext ctx)  => Flip();
+        private void OnFlip(InputAction.CallbackContext ctx) => Flip();
         private void OnPerspective(InputAction.CallbackContext ctx) => ChangePerspective();
-        
+
         private void Dash()
         {
             if (ColosseumSceneManager.Instance.IsDead) return;
-            
+
+            LastAction = PlayerAction.Dash;
             GetUnstuck();
 
             // Reset velocity
@@ -267,7 +296,7 @@ namespace Assets.Scripts.Player
             _rb.angularVelocity = Vector3.zero;
 
             // Add force
-            _rb.AddForce(transform.up * _dashForce, ForceMode.Impulse);
+            _rb.AddRelativeForce(_dashForce, ForceMode.VelocityChange);
 
             // Apply timescale changes
             GameManager.TimeScaleManager.UpdateTimeScale(_dashTimeScale);
@@ -276,7 +305,8 @@ namespace Assets.Scripts.Player
         private void Dodge()
         {
             if (ColosseumSceneManager.Instance.IsDead) return;
-            
+
+            LastAction = PlayerAction.Dodge;
             GetUnstuck();
 
             // Reset velocity
@@ -284,7 +314,7 @@ namespace Assets.Scripts.Player
             _rb.angularVelocity = Vector3.zero;
 
             // Add force
-            _rb.AddForce(-transform.up * _dodgeForce, ForceMode.Impulse);
+            _rb.AddRelativeForce(_dodgeForce, ForceMode.VelocityChange);
 
             // Apply timescale changes
             GameManager.TimeScaleManager.UpdateTimeScale(_dodgeTimeScale);
