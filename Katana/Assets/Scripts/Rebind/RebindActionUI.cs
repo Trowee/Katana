@@ -297,8 +297,8 @@ namespace Assets.Scripts.Rebind
                 if (referencedAction == null)
                     continue;
 
-                if (referencedAction                  == action    ||
-                    referencedAction.actionMap        == actionMap ||
+                if (referencedAction == action ||
+                    referencedAction.actionMap == actionMap ||
                     referencedAction.actionMap?.asset == actionAsset)
                     component.UpdateBindingDisplay();
             }
