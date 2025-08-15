@@ -49,7 +49,6 @@
     <Compile Include="Assets/Scripts/MainMenu/Shop/ShopItemScript.cs" />
     <Compile Include="Assets/Scripts/Modifiers/ModifierManager.cs" />
     <Compile Include="Assets/Scripts/LocalizeDropdown.cs" />
-    <Compile Include="Assets/Scripts/Fruits/SliceTest.cs" />
     <Compile Include="Assets/Scripts/Fruits/BombScript.cs" />
     <Compile Include="Assets/Scripts/Fruits/ExplosionManagerScript.cs" />
     <Compile Include="Assets/Scripts/TimeScale/TimeScaleKey.cs" />
@@ -1191,6 +1190,10 @@
     </Reference>
     <Reference Include="Unity.Localization">
       <HintPath>Library/ScriptAssemblies/Unity.Localization.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="SadnessMonday.BetterPhysics">
+      <HintPath>Library/ScriptAssemblies/SadnessMonday.BetterPhysics.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEditor.UI">

@@ -36,43 +36,46 @@ namespace Assets.Scripts.Fruits
         private void OnCollisionEnter(Collision col) => Explode();
 
         [Button]
-        public void Explode()
+        public List<FragmentScript> Explode()
         {
             if (!Application.isPlaying)
             {
                 Debug.LogWarning("This function can only be ran in Play Mode");
-                return;
+                return new();
             }
 
-            Fracture();
+            var fragments = HandleFragments(_fracture.ComputeFracture());
             DestroyEntities();
             AffectRigidbodies();
             GetDestroyed();
+
+            return fragments;
         }
 
-        public void GetFractured(
+        public List<FragmentScript> GetFractured(
             Vector3? forceOrigin = null, float fractureForce = 0,
             float impactVelocity = -1, GameObject sender = null)
         => Explode();
 
-        public void GetSliced(
+        public List<FragmentScript> GetSliced(
             Vector3 o = default, Vector3 n = default, float v = -1, GameObject sender = null)
         => Explode();
 
-        private void Fracture() => HandleFragments(_fracture.ComputeFracture());
-
-        private void HandleFragments(List<GameObject> fragments)
+        private List<FragmentScript> HandleFragments(List<GameObject> fragments)
         {
-            if (fragments.Count < 1) return;
+            if (fragments.Count < 1) return new();
 
+            List<FragmentScript> frags = new();
             fragments.ForEach(fragment =>
             {
                 var frag = fragment.AddComponent<FragmentScript>();
                 frag.CopySettings(_fragmentSettings);
                 frag.GetDestroyed();
+                frags.Add(frag);
             });
 
             Destroy(fragments[0].transform.parent.gameObject, _fragmentSettings.Lifetime + 1);
+            return frags;
         }
 
         private void GetDestroyed()

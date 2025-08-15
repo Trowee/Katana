@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Core
@@ -11,7 +12,7 @@ namespace Assets.Scripts.Core
         /// <param name="fractureForce">Explosion force of the fracture</param>
         /// <param name="impactVelocity">Velocity that has to surpass a threshold for the fracture to happen(leave at -1 to ignore)</param>
         /// <param name="sender">GameObject that caused the fracture</param>
-        public void GetFractured(
+        public List<FragmentScript> GetFractured(
             Vector3? fractureOrigin = null,
             float fractureForce = 0,
             float impactVelocity = -1,
@@ -24,7 +25,7 @@ namespace Assets.Scripts.Core
         /// <param name="sliceNormal">Normal of the slice</param>
         /// <param name="impactVelocity">Velocity that has to surpass a threshold for the slice to happen(leave at -1 to ignore)</param>
         /// <param name="sender">GameObject that caused the slice</param>
-        public void GetSliced(
+        public List<FragmentScript> GetSliced(
             Vector3 sliceOrigin,
             Vector3 sliceNormal,
             float impactVelocity = -1,

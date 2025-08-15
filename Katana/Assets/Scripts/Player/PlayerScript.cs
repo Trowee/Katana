@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using ArtificeToolkit.Attributes;
 using Assets.Scripts.Core;
@@ -163,12 +164,28 @@ namespace Assets.Scripts.Player
                             break;
                     }
 
-                    if (sliceDir.HasValue)
-                        destructible.GetSliced(
-                            cPos, sliceDir.Value, col.relativeVelocity.magnitude, gameObject);
-                    else
-                        destructible.GetFractured(
-                            cPos, 1, col.relativeVelocity.magnitude, gameObject);
+                    List<FragmentScript> fragments =
+                    sliceDir.HasValue
+                    ? fragments = destructible.GetSliced(
+                        cPos, sliceDir.Value, col.relativeVelocity.magnitude, gameObject)
+                    : fragments = destructible.GetFractured(
+                        cPos, 1, col.relativeVelocity.magnitude, gameObject);
+
+                    var distances = new float[fragments.Count];
+                    var maxDistance = 0f;
+                    for (int i = 0; i < fragments.Count; i++)
+                    {
+                        distances[i] = Vector3.Distance(cPos, fragments[i].transform.position);
+                        if (distances[i] > maxDistance)
+                            maxDistance = distances[i];
+                    }
+                    for (int i = 0; i < fragments.Count; i++)
+                    {
+                        var rb = fragments[i].Rigidbody;
+                        var t = Easings.EaseInExpo(distances[i] / maxDistance);
+                        var force = Vector3.Lerp(Vector3.zero, _rb.linearVelocity, t);
+                        fragments[i].Rigidbody.linearVelocity = force;
+                    }
 
                     break;
                 }
