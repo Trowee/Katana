@@ -32,6 +32,9 @@ namespace Assets.Scripts.Core
             }
         }
 
+        [SerializeField, Required] private InputActionAsset _inputActionAsset;
+        public static InputActionAsset InputActionAsset => Instance._inputActionAsset;
+
         [SerializeField, Required] private SettingsManager _settingsManager;
         public static SettingsManager SettingsManager => Instance._settingsManager;
 
@@ -57,7 +60,7 @@ namespace Assets.Scripts.Core
             if (!_instance) Instance = this;
             else if (_instance != this) Destroy(gameObject);
 
-            InputSystem.actions.Enable();
+            InputActionAsset.Enable();
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
 

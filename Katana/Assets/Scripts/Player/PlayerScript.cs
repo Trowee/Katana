@@ -143,16 +143,18 @@ namespace Assets.Scripts.Player
 
         private void InitializeInputs()
         {
-            _dashAction = InputSystem.actions.FindAction("Dash");
+            var inputActionAsset = GameManager.InputActionAsset;
+
+            _dashAction = inputActionAsset.FindAction("Dash");
             _dashAction.performed += OnDash;
 
-            _dodgeAction = InputSystem.actions.FindAction("Dodge");
+            _dodgeAction = inputActionAsset.FindAction("Dodge");
             _dodgeAction.performed += OnDodge;
 
-            _flipAction = InputSystem.actions.FindAction("Flip");
+            _flipAction = inputActionAsset.FindAction("Flip");
             _flipAction.performed += OnFlip;
 
-            _perspectiveAction = InputSystem.actions.FindAction("Perspective");
+            _perspectiveAction = inputActionAsset.FindAction("Perspective");
             _perspectiveAction.performed += OnPerspective;
         }
 
