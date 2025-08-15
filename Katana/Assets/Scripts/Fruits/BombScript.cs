@@ -44,16 +44,22 @@ namespace Assets.Scripts.Fruits
                 return;
             }
 
-            GetFractured(transform.position, _explosionForce);
+            Fracture();
             DestroyEntities();
             AffectRigidbodies();
             GetDestroyed();
         }
 
-        public void GetFractured(Vector3 forceOrigin = default, float fractureForce = 0)
-            => HandleFragments(_fracture.ComputeFracture());
+        public void GetFractured(
+            Vector3? forceOrigin = null, float fractureForce = 0,
+            float impactVelocity = -1, GameObject sender = null)
+        => Explode();
 
-        public void GetSliced(Vector3 o = default, Vector3 n = default, float v = 0) => Explode();
+        public void GetSliced(
+            Vector3 o = default, Vector3 n = default, float v = -1, GameObject sender = null)
+        => Explode();
+
+        private void Fracture() => HandleFragments(_fracture.ComputeFracture());
 
         private void HandleFragments(List<GameObject> fragments)
         {

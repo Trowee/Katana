@@ -117,22 +117,62 @@ namespace Assets.Scripts.Player
             if (ColosseumSceneManager.Instance.IsDead) return;
 
             if (col.gameObject.TryGetComponent(out IDestructible destructible))
+            {
                 foreach (var c in col.contacts)
                 {
                     var cPos = c.point;
                     var cNorm = c.normal;
 
-                    var hitUp = Vector3.Dot(transform.up, -cNorm) > 0.5f;
-                    var hitForward = Vector3.Dot(transform.forward, -cNorm) > 0.5f;
-                    if (!hitUp && !hitForward) continue;
+                    Vector3[] axes = {
+                        transform.forward,
+                        -transform.forward,
+                        transform.up,
+                        -transform.up,
+                        transform.right,
+                        -transform.right
+                    };
 
-                    var sliceDir = hitUp
-                        ? Vector3.Cross(transform.forward, transform.up).normalized
-                        : Vector3.Cross(transform.up, transform.forward).normalized;
+                    // Find the axis most aligned with the collision normal
+                    float bestDot = -1f;
+                    int bestAxis = -1;
+                    for (int i = 0; i < axes.Length; i++)
+                    {
+                        float dot = Vector3.Dot(axes[i], -cNorm);
+                        if (dot > bestDot)
+                        {
+                            bestDot = dot;
+                            bestAxis = i;
+                        }
+                    }
 
-                    destructible.GetSliced(cPos, sliceDir, col.relativeVelocity.magnitude);
+                    Vector3? sliceDir = null;
+
+                    switch (bestAxis)
+                    {
+                        case 0: // Forward (Blade)
+                            sliceDir = Vector3.Cross(transform.up, transform.forward)
+                            .normalized;
+                            break;
+                        case 1: // Back (Blade Back)
+                            sliceDir = Vector3.Cross(transform.up, -transform.forward)
+                            .normalized;
+                            break;
+                        case 2: // Up (Tip)
+                            sliceDir = Vector3.Cross(transform.forward, transform.up)
+                            .normalized;
+                            break;
+                    }
+
+                    if (sliceDir.HasValue)
+                        destructible.GetSliced(
+                            cPos, sliceDir.Value, col.relativeVelocity.magnitude, gameObject);
+                    else
+                        destructible.GetFractured(
+                            cPos, 1, col.relativeVelocity.magnitude, gameObject);
+
                     break;
                 }
+            }
 
             // Store the col layer
             var layer = col.gameObject.layer;

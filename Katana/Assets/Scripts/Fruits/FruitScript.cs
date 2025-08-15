@@ -13,8 +13,7 @@ namespace Assets.Scripts.Fruits
     {
         [SerializeField, Required] private Collider _collider;
         [SerializeField, Required] private Rigidbody _rigidbody;
-        [SerializeField] private LayerMask _pointsMask;
-        [SerializeField] private float _destroyForce = 25;
+        [SerializeField] private float _destroyForce = 100;
         [SerializeField] private int _coins;
 
         [FoldoutGroup("Destruction")]
@@ -44,26 +43,40 @@ namespace Assets.Scripts.Fruits
 
         private void OnCollisionEnter(Collision col)
         {
-            if ((_pointsMask & 1 << col.gameObject.layer) == 0)
-                GetFractured(transform.position,
-                             _fractureForce * _rigidbody.linearVelocity.magnitude);
+            if (col.gameObject != ColosseumSceneManager.Player.gameObject)
+                GetFractured(transform.position, _fractureForce);
         }
 
-        public void GetFractured(Vector3 forceOrigin = default, float fractureForce = 0)
+        public void GetFractured(
+            Vector3? forceOrigin = null,
+            float fractureForce = 0,
+            float impactVelocity = -1,
+            GameObject sender = null)
         {
-            HandleFragments(_fracture.ComputeFracture(), forceOrigin, fractureForce);
+            if (impactVelocity != -1 && impactVelocity < _destroyForce) return;
+
+            if (sender == ColosseumSceneManager.Player.gameObject)
+                GameManager.ItemManager.RewardCoins(_coins);
+
+            forceOrigin ??= transform.position;
+            HandleFragments(_fracture.ComputeFracture(), (Vector3)forceOrigin, fractureForce);
             GetDestroyed();
         }
 
-        public void GetSliced(Vector3 sliceOrigin, Vector3 sliceNormal, float sliceVelocity)
+        public void GetSliced(
+            Vector3 sliceOrigin,
+            Vector3 sliceNormal,
+            float impactVelocity = -1,
+            GameObject sender = null)
         {
-            if (sliceVelocity < _destroyForce) return;
+            if (impactVelocity != -1 && impactVelocity < _destroyForce) return;
 
-            var forcePos = ColosseumSceneManager.Player.transform.position;
-            HandleFragments(_slice.ComputeSlice(sliceNormal, sliceOrigin), forcePos, _sliceForce);
+            if (sender == ColosseumSceneManager.Player.gameObject)
+                GameManager.ItemManager.RewardCoins(_coins);
 
+            HandleFragments(_slice.ComputeSlice(sliceNormal, sliceOrigin),
+                sliceOrigin, _sliceForce);
             GetDestroyed();
-            GameManager.ItemManager.RewardCoins(_coins);
         }
 
         private void HandleFragments(List<GameObject> fragments,
