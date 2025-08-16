@@ -8,7 +8,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: ColosseumGatesRailing
-    second: {fileID: -5571731869622963715, guid: baca9acb0420d4c7fb93fdca9bcedd58, type: 3}
+    second: {fileID: 2100000, guid: f7f294d1c6ed3aa448bc8820c2e73356, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
