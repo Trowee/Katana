@@ -123,53 +123,9 @@ namespace Assets.Scripts.Player
                 foreach (var c in col.contacts)
                 {
                     var cPos = c.point;
-                    var cNorm = c.normal;
-
-                    Vector3[] axes = {
-                        transform.forward,
-                        -transform.forward,
-                        transform.up,
-                        -transform.up,
-                        transform.right,
-                        -transform.right
-                    };
-
-                    // Find the axis most aligned with the collision normal
-                    float bestDot = -1f;
-                    int bestAxis = -1;
-                    for (int i = 0; i < axes.Length; i++)
-                    {
-                        float dot = Vector3.Dot(axes[i], -cNorm);
-                        if (dot > bestDot)
-                        {
-                            bestDot = dot;
-                            bestAxis = i;
-                        }
-                    }
-
-                    Vector3? sliceDir = null;
-
-                    switch (bestAxis)
-                    {
-                        case 0: // Forward (Blade)
-                            sliceDir = Vector3.Cross(transform.up, transform.forward)
-                            .normalized;
-                            break;
-                        case 1: // Back (Blade Back)
-                            sliceDir = Vector3.Cross(transform.up, -transform.forward)
-                            .normalized;
-                            break;
-                        case 2: // Up (Tip)
-                            sliceDir = Vector3.Cross(transform.forward, transform.up)
-                            .normalized;
-                            break;
-                    }
 
                     List<FragmentScript> fragments =
-                        sliceDir.HasValue
-                        ? fragments = destructible.GetSliced(
-                            cPos, sliceDir.Value, col.relativeVelocity.magnitude, gameObject)
-                        : fragments = destructible.GetFractured(
+                        fragments = destructible.GetFractured(
                             cPos, 1, col.relativeVelocity.magnitude, gameObject);
 
                     // Approximate how much fragments moved since the collision
