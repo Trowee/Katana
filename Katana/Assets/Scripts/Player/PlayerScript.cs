@@ -146,8 +146,8 @@ namespace Assets.Scripts.Player
                     {
                         var rb = fragments[i].Rigidbody;
                         var t = distances[i] / maxDistance;
-                        var force = Vector3.Lerp(Vector3.zero, _rb.linearVelocity, t);
-                        fragments[i].Rigidbody.linearVelocity = force;
+                        var vel = Vector3.Lerp(Vector3.zero, _rb.linearVelocity * 0.5f, t);
+                        fragments[i].Rigidbody.linearVelocity = vel;
                     }
 
                     break;
