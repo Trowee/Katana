@@ -7,6 +7,7 @@ using Assets.Scripts.TimeScale;
 using NnUtils.Modules.Easings;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Vertx.Debugging;
 
 namespace Assets.Scripts.Player
 {
@@ -165,24 +166,30 @@ namespace Assets.Scripts.Player
                     }
 
                     List<FragmentScript> fragments =
-                    sliceDir.HasValue
-                    ? fragments = destructible.GetSliced(
-                        cPos, sliceDir.Value, col.relativeVelocity.magnitude, gameObject)
-                    : fragments = destructible.GetFractured(
-                        cPos, 1, col.relativeVelocity.magnitude, gameObject);
+                        sliceDir.HasValue
+                        ? fragments = destructible.GetSliced(
+                            cPos, sliceDir.Value, col.relativeVelocity.magnitude, gameObject)
+                        : fragments = destructible.GetFractured(
+                            cPos, 1, col.relativeVelocity.magnitude, gameObject);
+
+                    // Approximate how much fragments moved since the collision
+                    var fragPosDelta = fragments[0].transform.position - cPos;
 
                     var distances = new float[fragments.Count];
                     var maxDistance = 0f;
                     for (int i = 0; i < fragments.Count; i++)
                     {
-                        distances[i] = Vector3.Distance(cPos, fragments[i].transform.position);
+                        // We have to use the renderer since origin is at the center of fracture
+                        var fragPos = fragments[i].GetComponent<Renderer>()
+                            .bounds.center - fragPosDelta;
+                        distances[i] = Vector3.Distance(cPos, fragPos);
                         if (distances[i] > maxDistance)
                             maxDistance = distances[i];
                     }
                     for (int i = 0; i < fragments.Count; i++)
                     {
                         var rb = fragments[i].Rigidbody;
-                        var t = Easings.EaseInExpo(distances[i] / maxDistance);
+                        var t = distances[i] / maxDistance;
                         var force = Vector3.Lerp(Vector3.zero, _rb.linearVelocity, t);
                         fragments[i].Rigidbody.linearVelocity = force;
                     }

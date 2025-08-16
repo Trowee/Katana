@@ -31,6 +31,7 @@
     "com.unity.timeline": "1.8.9",
     "com.unity.ugui": "2.0.0",
     "com.unity.visualeffectgraph": "17.3.0",
+    "com.vertx.debugging": "https://github.com/vertxxyz/Vertx.Debugging.git",
     "com.wooshii.hierarchydecorator": "https://github.com/WooshiiDev/HierarchyDecorator.git",
     "com.yasirkula.assetusagedetector": "https://github.com/yasirkula/UnityAssetUsageDetector.git",
     "com.unity.modules.accessibility": "1.0.0",

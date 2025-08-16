@@ -1196,6 +1196,14 @@
       <HintPath>Library/ScriptAssemblies/SadnessMonday.BetterPhysics.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Vertx.Debugging.Runtime">
+      <HintPath>Library/ScriptAssemblies/Vertx.Debugging.Runtime.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Mathematics">
+      <HintPath>Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
       <Private>False</Private>

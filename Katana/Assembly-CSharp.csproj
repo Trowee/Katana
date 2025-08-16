@@ -1249,6 +1249,10 @@
       <HintPath>Library/ScriptAssemblies/Unity.UnifiedRayTracing.Runtime.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="RoyTheunissen.AssetPalette.Runtime">
+      <HintPath>Library/ScriptAssemblies/RoyTheunissen.AssetPalette.Runtime.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="RBG.Mulligan">
       <HintPath>Library/ScriptAssemblies/RBG.Mulligan.dll</HintPath>
       <Private>False</Private>
@@ -1339,6 +1343,10 @@
     </Reference>
     <Reference Include="Unity.Mathematics">
       <HintPath>Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RoyTheunissen.AssetPalette">
+      <HintPath>Library/ScriptAssemblies/RoyTheunissen.AssetPalette.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Shaders">

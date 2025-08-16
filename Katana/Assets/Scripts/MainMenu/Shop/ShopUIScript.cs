@@ -22,7 +22,7 @@ namespace Assets.Scripts.MainMenu.Shop
         [SerializeField, Required, ChildGameObjectsOnly] private TextEffect _nameEffect;
 
         [SerializeField, HideInInspector] private LocalizeStringEvent _nameLocalizeStringEvent;
-       
+
         [SerializeField, Required, ChildGameObjectsOnly] private TMP_Text _coinsTMP;
 
         private void OnEnable()
@@ -33,7 +33,7 @@ namespace Assets.Scripts.MainMenu.Shop
         private void Start()
         {
             if (!Application.isPlaying) return;
-            
+
             ItemManager.OnCoinsChanged += UpdateCoins;
             ItemManager.OnItemChanged += UpdateKatana;
             UpdateCoins();
@@ -55,7 +55,7 @@ namespace Assets.Scripts.MainMenu.Shop
             if (_nameLocalizeStringEvent)
                 _nameLocalizeStringEvent.OnUpdateString.AddListener(UpdateNameText);
         }
-        
+
         private void UpdateNameText(string localizedText)
         {
             _nameTMP.text = localizedText;
