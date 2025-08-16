@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using ArtificeToolkit.Attributes;
 using Assets.Scripts.Core;
@@ -16,12 +15,13 @@ namespace Assets.Scripts.Fruits
     {
         [SerializeField, Required] private Collider _collider;
         [SerializeField, Required] private Rigidbody _rigidbody;
-        [SerializeField, Required] private BetterRigidbody _betterRigidbody;
         [SerializeField] private float _destroyForce = 100;
         [SerializeField] private int _coins;
 
         [FoldoutGroup("Destruction")]
-        [SerializeField, AssetsOnly] FragmentScript _fragmentSettings;
+        [SerializeField, AssetsOnly] private FragmentScript _fragmentSettings;
+        [FoldoutGroup("Destruction")]
+        [SerializeField] private LayerMask _destructionMask;
         [FoldoutGroup("Destruction/Slice")]
         [SerializeField, Required] private Slice _slice;
         [FoldoutGroup("Destruction/Slice")]
@@ -30,6 +30,8 @@ namespace Assets.Scripts.Fruits
         [SerializeField, Required] private Fracture _fracture;
         [FoldoutGroup("Destruction/Fracture")]
         [SerializeField] private float _fractureForce = 5;
+        [FoldoutGroup("Destruction/Fracture")]
+        [SerializeField] private int _fruitFragmentLayer = 5;
 
         [FoldoutGroup("Particles")]
         [SerializeField] private Transform _particles;
@@ -41,14 +43,14 @@ namespace Assets.Scripts.Fruits
         {
             _collider = GetComponent<Collider>();
             _rigidbody = GetComponent<Rigidbody>();
-            _betterRigidbody = GetComponent<BetterRigidbody>();
             _slice = GetComponent<Slice>();
             _fracture = GetComponent<Fracture>();
         }
 
         private void OnCollisionEnter(Collision col)
         {
-            if (col.gameObject != ColosseumSceneManager.Player.gameObject)
+            if (col.gameObject != ColosseumSceneManager.Player.gameObject &&
+                ((1 << col.gameObject.layer) & _destructionMask) != 0)
                 GetFractured(transform.position, _fractureForce);
         }
 
@@ -104,7 +106,7 @@ namespace Assets.Scripts.Fruits
                 frags.Add(frag);
 
                 var brb = fragment.AddComponent<BetterRigidbody>();
-                brb.PhysicsLayer = _betterRigidbody.PhysicsLayer;
+                brb.PhysicsLayer = _fruitFragmentLayer;
 
                 frag.Rigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
                 var forceDir = fragment.transform.position - forcePos;
