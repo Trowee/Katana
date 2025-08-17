@@ -23,7 +23,7 @@ namespace Assets.Scripts.Fruits
         [FoldoutGroup("Destruction/Explosion")]
         [SerializeField] private float _explosionRadius = 10;
         [FoldoutGroup("Destruction/Explosion")]
-        [SerializeField] private float _explosionForce = 50;
+        [SerializeField] private float _explosionForce = 500;
 
         private void Reset()
         {
