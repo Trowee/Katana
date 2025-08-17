@@ -76,6 +76,7 @@
     <Compile Include="Assets/Scripts/Rebind/Editor/RebindActionUIEditor.cs" />
     <Compile Include="Assets/Scripts/Player/Camera/CameraManager.cs" />
     <Compile Include="Assets/Scripts/Core/SettingsManager.cs" />
+    <Compile Include="Assets/Scripts/Fruits/CannonAnimationKey.cs" />
     <Compile Include="Assets/Scripts/Colosseum/ColosseumSceneManager.cs" />
     <Compile Include="Assets/Scripts/Colosseum/ColosseumSun.cs" />
     <Compile Include="Assets/Scripts/Fruits/CannonScript.cs" />

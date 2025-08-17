@@ -9,151 +9,207 @@ namespace Assets.Scripts.Fruits
 {
     public class CannonScript : MonoBehaviour
     {
-        [FoldoutGroup("Cannon Parts"), SerializeField, Required]
+        [FoldoutGroup("Cannon Parts"), SerializeField, Required, ChildGameObjectsOnly]
         private Transform _cannon;
-
-        [FoldoutGroup("Cannon Parts"), SerializeField, Required]
+        [FoldoutGroup("Cannon Parts"), SerializeField, Required, ChildGameObjectsOnly]
         private Transform _barrel;
-
-        [FoldoutGroup("Cannon Parts"), SerializeField, Required]
+        [FoldoutGroup("Cannon Parts"), SerializeField, Required, ChildGameObjectsOnly]
         private Transform _wheels;
-
-        [FoldoutGroup("Cannon Parts"), SerializeField, Required]
+        [FoldoutGroup("Cannon Parts"), SerializeField, Required, ChildGameObjectsOnly]
         private Transform _projectileSpawnPoint;
 
         [FoldoutGroup("Shooting"), SerializeField]
-        private Vector2 _cooldownRange = new(10, 20);
-
+        private int _maxProjectilesPerCycle = 5;
         [FoldoutGroup("Shooting"), SerializeField]
-        private Vector2 _aimCooldownRange = new(0.5f, 1.5f);
-
+        private Vector2 _shootingForceRange = new(400, 500);
         [FoldoutGroup("Shooting"), SerializeField]
-        private Vector2 _shootingForceRange = new(20, 50);
-
+        private Vector2 _shootingTorqueRange = new(-360, 360);
         [FoldoutGroup("Shooting"), SerializeField]
-        private Vector2 _shootingTorqueRange = new(-50, 50);
-
+        private Vector2 _shootingPauseRange = new(1, 3);
         [FoldoutGroup("Shooting"), SerializeField,
-        ValidateInput(nameof(_projectilesValidation), "Cannon must have at least 1 Projectile")]
+            ValidateInput(nameof(_projectilesValidation),
+                "Cannon must have at least 1 Projectile")]
         private List<Rigidbody> _projectiles;
-
         private bool _projectilesValidation() => _projectiles.Count >= 1;
 
-        [FoldoutGroup("Animation/Aim"), SerializeField]
-        private Vector2 _aimAnimTimeRange = new(0.75f, 1.25f);
-
-        [FoldoutGroup("Animation/Aim"), SerializeField]
-        private AnimationCurve _aimCurve;
-
-        [FoldoutGroup("Animation/Aim"), SerializeField]
-        [Tooltip("X - Min X\nY - Max X\nZ - Min Z\nW - Max Z")]
-        private Vector4 _aimPosRange = new(-1.5f, 1.5f, 1, 3);
-
-        [FoldoutGroup("Animation/Aim"), SerializeField, UnityEngine.Range(0, 1)]
-        private float _aimRotIntensity = 0.25f;
-
-        [FoldoutGroup("Animation/Aim"), SerializeField]
-        private Vector2 _aimBarrelRotationRange = new(-20, 0);
-
-        [FoldoutGroup("Animation/Aim"), SerializeField]
-        private float _wheelRotIntensity = 40;
-
-        [FoldoutGroup("Animation/Shoot"), SerializeField]
-        private Vector2 _shootAnimTimeRange = new(0.75f, 1);
-
-        [FoldoutGroup("Animation/Shoot"), SerializeField]
-        private AnimationCurve _shootCurve;
-
-        private Quaternion _baseBarrelRot;
+        [FoldoutGroup("Shooting/Animation"), UnityEngine.Range(0, 1)]
+        private float _cannonRotationIntensity = 0.25f;
+        [FoldoutGroup("Shooting/Animation")]
+        private float _wheelRotationIntensity = 40;
+        [FoldoutGroup("Shooting/Animation"), SerializeField]
+        private CannonAnimationKey AimAnimationKey;
+        [FoldoutGroup("Shooting/Animation"), SerializeField]
+        private Vector2 _aimPauseRange = new(0.1f, 0.25f);
+        [FoldoutGroup("Shooting/Animation"), SerializeField]
+        private CannonAnimationKey ShootAnimationKey;
+        [FoldoutGroup("Shooting/Animation"), SerializeField]
+        private Vector2 _pauseBetweenShots = new(0.05f, 0.1f);
+        [FoldoutGroup("Shooting/Animation"), SerializeField]
+        private CannonAnimationKey FinalShotAnimationKey;
 
         private IEnumerator Start()
         {
+            var startCannonPos = _cannon.localPosition;
+            var startCannonRot = _cannon.localRotation.eulerAngles;
+            var startBarrelPos = _barrel.localPosition;
+            var startBarrelRot = _barrel.localRotation.eulerAngles;
+            var startWheelsRot = _wheels.localRotation.eulerAngles;
+
             while (true)
             {
-                yield return new WaitForSeconds(Random.Range(_cooldownRange.x, _cooldownRange.y));
+                // Wait before the first shot
+                yield return new WaitForSeconds(
+                    Random.Range(_shootingPauseRange.x, _shootingPauseRange.y));
 
-                var (startCannonPos, targetCannonPos,
-                        startCannonRot, targetCannonRot,
-                        startBarrelRot, targetBarrelRot,
-                        startWheelRot, targetWheelRot)
-                    = CalculateAnimationData();
+                // Aim
+                var (aimDuration, aimCurve,
+                    aimStartCannonPos, aimEndCannonPos,
+                    aimStartBarrelPos, aimEndBarrelPos,
+                    aimStartBarrelRot, aimEndBarrelRot,
+                    aimStartWheelsRot, aimEndWheelsRot)
+                = CalculateAimAnimationData(AimAnimationKey,
+                    startCannonPos, startBarrelPos, startBarrelRot, startWheelsRot);
+                var aimStartCannonRot = _cannon.localRotation.eulerAngles;
+                var aimEndCannonRot = GetCannonAimRotation(aimStartCannonPos, aimEndCannonPos);
 
-                yield return AimAnimationRoutine(
-                    startCannonPos, targetCannonPos,
-                    startCannonRot, targetCannonRot,
-                    startBarrelRot, targetBarrelRot,
-                    startWheelRot, targetWheelRot);
+                yield return AnimateRoutine(
+                    aimDuration, aimCurve,
+                    aimStartCannonPos, aimEndCannonPos,
+                    aimStartCannonRot, aimEndCannonRot,
+                    aimStartBarrelPos, aimEndBarrelPos,
+                    aimStartBarrelRot, aimEndBarrelRot,
+                    aimStartWheelsRot, aimEndWheelsRot);
+
+                yield return new WaitForSeconds(
+                    Random.Range(_aimPauseRange.x, _aimPauseRange.y));
+
+                // Perform all shots except for the final
+                var shootStartCannonRot = aimEndCannonRot;
+                var shootEndCannonRot = aimEndCannonRot;
+                var shots = Random.Range(1, _maxProjectilesPerCycle + 1);
+
+                for (int i = 0; i < shots - 1; i++)
+                {
+                    var (shootDuration, shootCurve,
+                        shootStartCannonPos, shootEndCannonPos,
+                        shootStartBarrelPos, shootEndBarrelPos,
+                        shootStartBarrelRot, shootEndBarrelRot,
+                        shootStartWheelsRot, shootEndWheelsRot)
+                    = CalculateAimAnimationData(ShootAnimationKey,
+                        aimEndCannonPos, aimEndBarrelPos, aimEndBarrelRot, aimEndWheelsRot);
+
+                    ShootProjectile();
+
+                    yield return AnimateRoutine(
+                        shootDuration, shootCurve,
+                        shootStartCannonPos, shootEndCannonPos,
+                        shootStartCannonRot, shootEndCannonRot,
+                        shootStartBarrelPos, shootEndBarrelPos,
+                        shootStartBarrelRot, shootEndBarrelRot,
+                        shootStartWheelsRot, shootEndWheelsRot);
+
+                    yield return new WaitForSeconds(
+                        Random.Range(_pauseBetweenShots.x, _pauseBetweenShots.y));
+                }
+
+                // Final shot
+                var (finalShotDuration, finalShotCurve,
+                    finalShotStartCannonPos, finalShotEndCannonPos,
+                    finalShotStartBarrelPos, finalShotEndBarrelPos,
+                    finalShotStartBarrelRot, finalShotEndBarrelRot,
+                    finalShotStartWheelsRot, finalShotEndWheelsRot)
+                = CalculateAimAnimationData(FinalShotAnimationKey,
+                    aimEndCannonPos, aimEndBarrelPos, aimEndBarrelRot, aimEndWheelsRot);
+
+                var finalShotStartCannonRot = aimEndCannonRot;
+                var finalShotEndCannonRot = aimEndCannonRot;
 
                 ShootProjectile();
 
-                yield return ShootAnimationRoutine(
-                    startCannonPos, targetCannonPos,
-                    startCannonRot, targetCannonRot,
-                    startBarrelRot, targetBarrelRot,
-                    startWheelRot, targetWheelRot);
+                yield return AnimateRoutine(
+                    finalShotDuration, finalShotCurve,
+                    finalShotStartCannonPos, startCannonPos,
+                    finalShotStartCannonRot, startCannonRot,
+                    finalShotStartBarrelPos, startBarrelPos,
+                    finalShotStartBarrelRot, startBarrelRot,
+                    finalShotStartWheelsRot, startWheelsRot);
             }
         }
 
         private (
-            Vector3 startCannonPos, Vector3 targetCannonPos,
-            Quaternion startCannonRot, Quaternion targetCannonRot,
-            Vector3 startBarrelRot, Vector3 targetBarrelRot,
-            Quaternion startWheelRot, Quaternion targetWheelRot)
-            CalculateAnimationData()
+            float duration, AnimationCurve curve,
+            Vector3 startCannonPos, Vector3 endCannonPos,
+            Vector3 startBarrelPos, Vector3 endBarrelPos,
+            Vector3 startBarrelRot, Vector3 endBarrelRot,
+            Vector3 startWheelRot, Vector3 endWheelRot)
+        CalculateAimAnimationData(
+            CannonAnimationKey animKey,
+            Vector3 startCannonPos,
+            Vector3 startBarrelPos,
+            Vector3 startBarrelRot,
+            Vector3 startWheelsRot)
         {
-            var startCannonPos = _cannon.localPosition;
-            var targetCannonPos = startCannonPos;
-            var startCannonRot = _cannon.localRotation;
+            var duration = Random.Range(animKey.DurationRange.x, animKey.DurationRange.y);
 
-            targetCannonPos.x += Random.Range(_aimPosRange.x, _aimPosRange.y);
-            targetCannonPos.z += Random.Range(_aimPosRange.z, _aimPosRange.w);
-            var cannonMoveDir = (targetCannonPos - startCannonPos).normalized;
-            var moveDistance = Vector3.Distance(targetCannonPos, startCannonPos);
+            var cannonOffset = Misc.RandomVector3(
+                animKey.CannonPositionOffsetMin, animKey.CannonPositionOffsetMax);
+            var endCannonPos = startCannonPos + (animKey.TranslateCannonPosition
+                ? cannonOffset : _cannon.TransformDirection(cannonOffset));
+            var moveDistance = Vector3.Distance(startCannonPos, endCannonPos);
 
-            var targetAngle = Mathf.Atan2(cannonMoveDir.x, cannonMoveDir.z) * Mathf.Rad2Deg;
-            var rotationAmount = targetAngle * _aimRotIntensity * moveDistance;
-            var targetCannonRot =
-                Quaternion.Euler(0, startCannonRot.eulerAngles.y + rotationAmount, 0);
+            var barrelOffset = Misc.RandomVector3(
+                animKey.BarrelPositionOffsetMin, animKey.BarrelPositionOffsetMax);
+            var endBarrelPos = startBarrelPos + (animKey.TranslateBarrelPosition
+                ? barrelOffset : _barrel.TransformDirection(barrelOffset));
 
-            var startBarrelRot = _barrel.localEulerAngles;
-            var targetBarrelRot = startBarrelRot;
-            targetBarrelRot.x = Random.Range(_aimBarrelRotationRange.x, _aimBarrelRotationRange.y);
+            var endBarrelRot = startBarrelRot + Misc.RandomVector3(
+                animKey.BarrelRotationOffsetMin, animKey.BarrelRotationOffsetMax);
 
-            var startWheelRot = _wheels.localRotation;
-            var targetWheelRot = startWheelRot * Quaternion.Euler(
-                Vector3.right * (moveDistance * _wheelRotIntensity));
+            var endWheelsRot =
+                startWheelsRot + (Vector3.right * (moveDistance * _wheelRotationIntensity));
 
             return (
-                startCannonPos, targetCannonPos,
-                startCannonRot, targetCannonRot,
-                startBarrelRot, targetBarrelRot,
-                startWheelRot, targetWheelRot);
+                duration, animKey.Curve,
+                startCannonPos, endCannonPos,
+                startBarrelPos, endBarrelPos,
+                startBarrelRot, endBarrelRot,
+                startWheelsRot, endWheelsRot);
         }
 
-        private IEnumerator AimAnimationRoutine(
-            Vector3 startCannonPos, Vector3 targetCannonPos,
-            Quaternion startCannonRot, Quaternion targetCannonRot,
-            Vector3 startBarrelRot, Vector3 targetBarrelRot,
-            Quaternion startWheelRot, Quaternion targetWheelRot)
+        private Vector3 GetCannonAimRotation(Vector3 startPos, Vector3 endPos)
         {
-            var aimTime = Random.Range(_aimAnimTimeRange.x, _aimAnimTimeRange.y);
+            var cannonMoveDir = (endPos - startPos).normalized;
+            var moveDistance = Vector3.Distance(endPos, startPos);
+            var startCannonRot = _cannon.localRotation.eulerAngles;
+            var targetAngle = Mathf.Atan2(cannonMoveDir.x, cannonMoveDir.z) * Mathf.Rad2Deg;
+            var rotationAmount = targetAngle * _cannonRotationIntensity * moveDistance;
+            return new Vector3(0, startCannonRot.y + rotationAmount, 0);
+        }
+
+        private IEnumerator AnimateRoutine(
+            float duration, AnimationCurve curve,
+            Vector3 startCannonPos, Vector3 endCannonPos,
+            Vector3 startCannonRot, Vector3 endCannonRot,
+            Vector3 startBarrelPos, Vector3 endBarrelPos,
+            Vector3 startBarrelRot, Vector3 endBarrelRot,
+            Vector3 startWheelRot, Vector3 endWheelRot)
+        {
             float lerpPos = 0;
             while (lerpPos < 1)
             {
-                var t = _aimCurve.Evaluate(Misc.Tween(ref lerpPos, aimTime));
+                var t = curve.Evaluate(Misc.Tween(ref lerpPos, duration));
                 _cannon.localPosition =
-                    Vector3.SlerpUnclamped(startCannonPos, targetCannonPos, t);
-                _cannon.localRotation =
-                    Quaternion.SlerpUnclamped(startCannonRot, targetCannonRot, t);
+                    Vector3.LerpUnclamped(startCannonPos, endCannonPos, t);
+                _cannon.localRotation = Quaternion.Euler(
+                    Vector3.LerpUnclamped(startCannonRot, endCannonRot, t));
+                _barrel.localPosition =
+                    Vector3.LerpUnclamped(startBarrelPos, endBarrelPos, t);
                 _barrel.localRotation = Quaternion.Euler(
-                    Vector3.LerpUnclamped(startBarrelRot, targetBarrelRot, t));
-                _wheels.localRotation =
-                    Quaternion.SlerpUnclamped(startWheelRot, targetWheelRot, t);
+                    Vector3.LerpUnclamped(startBarrelRot, endBarrelRot, t));
+                _wheels.localRotation = Quaternion.Euler(
+                    Vector3.LerpUnclamped(startWheelRot, endWheelRot, t));
                 yield return null;
             }
-
-            yield return new WaitForSeconds(
-                Random.Range(_aimCooldownRange.x, _aimCooldownRange.y));
         }
 
         private void ShootProjectile()
@@ -169,29 +225,6 @@ namespace Assets.Scripts.Fruits
             projectile.AddTorque(
                 new Vector3(Misc.Random1, Misc.Random1, Misc.Random1) * shootingTorque,
                 ForceMode.Impulse);
-        }
-
-        private IEnumerator ShootAnimationRoutine(
-            Vector3 startCannonPos, Vector3 targetCannonPos,
-            Quaternion startCannonRot, Quaternion targetCannonRot,
-            Vector3 startBarrelRot, Vector3 targetBarrelRot,
-            Quaternion startWheelRot, Quaternion targetWheelRot)
-        {
-            var shootTime = Random.Range(_shootAnimTimeRange.x, _shootAnimTimeRange.y);
-            float lerpPos = 0;
-            while (lerpPos < 1)
-            {
-                var t = _shootCurve.Evaluate(Misc.Tween(ref lerpPos, shootTime));
-                _cannon.localPosition =
-                    Vector3.SlerpUnclamped(startCannonPos, targetCannonPos, t);
-                _cannon.localRotation =
-                    Quaternion.SlerpUnclamped(startCannonRot, targetCannonRot, t);
-                _barrel.localRotation = Quaternion.Euler(
-                    Vector3.LerpUnclamped(startBarrelRot, targetBarrelRot, t));
-                _wheels.localRotation =
-                    Quaternion.SlerpUnclamped(startWheelRot, targetWheelRot, t);
-                yield return null;
-            }
         }
     }
 }
