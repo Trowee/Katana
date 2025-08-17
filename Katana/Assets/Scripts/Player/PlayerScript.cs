@@ -7,7 +7,6 @@ using Assets.Scripts.TimeScale;
 using NnUtils.Modules.Easings;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Vertx.Debugging;
 
 namespace Assets.Scripts.Player
 {
@@ -126,7 +125,7 @@ namespace Assets.Scripts.Player
 
                     List<FragmentScript> fragments =
                         fragments = destructible.GetFractured(
-                            cPos, 1, col.relativeVelocity.magnitude, gameObject);
+                            _rb.linearVelocity.magnitude, gameObject);
 
                     // Approximate how much fragments moved since the collision
                     var fragPosDelta = fragments[0].transform.position - cPos;

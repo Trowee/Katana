@@ -8,13 +8,9 @@ namespace Assets.Scripts.Core
         /// <summary>
         /// Fractures the object
         /// </summary>
-        /// <param name="fractureOrigin">Where the fracture originates from</param>
-        /// <param name="fractureForce">Explosion force of the fracture</param>
         /// <param name="impactVelocity">Velocity that has to surpass a threshold for the fracture to happen(leave at -1 to ignore)</param>
         /// <param name="sender">GameObject that caused the fracture</param>
         public List<FragmentScript> GetFractured(
-            Vector3? fractureOrigin = null,
-            float fractureForce = 0,
             float impactVelocity = -1,
             GameObject sender = null);
 

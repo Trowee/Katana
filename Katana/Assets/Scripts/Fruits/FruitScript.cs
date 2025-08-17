@@ -1,6 +1,8 @@
+using System.Collections;
 using System.Collections.Generic;
 using ArtificeToolkit.Attributes;
 using Assets.Scripts.Core;
+using NnUtils.Scripts;
 using SadnessMonday.BetterPhysics;
 using UnityEngine;
 
@@ -15,23 +17,25 @@ namespace Assets.Scripts.Fruits
     {
         [SerializeField, Required] private Collider _collider;
         [SerializeField, Required] private Rigidbody _rigidbody;
-        [SerializeField] private float _destroyForce = 100;
         [SerializeField] private int _coins;
+
+        [FoldoutGroup("Spawning")]
+        [SerializeField] private float _spawnAnimTime = 0.25f;
+        [SerializeField] private AnimationCurve _spawnAnimCurve;
 
         [FoldoutGroup("Destruction")]
         [SerializeField, AssetsOnly] private FragmentScript _fragmentSettings;
         [FoldoutGroup("Destruction")]
         [SerializeField] private LayerMask _destructionMask;
+        [FoldoutGroup("Destruction")]
+        [SerializeField] private float _minDestructionVelocity = 50;
+        [FoldoutGroup("Destruction")]
+        [SerializeField] private int _fruitFragmentLayer = 5;
+
         [FoldoutGroup("Destruction/Slice")]
         [SerializeField, Required] private Slice _slice;
-        [FoldoutGroup("Destruction/Slice")]
-        [SerializeField] private float _sliceForce = 20;
         [FoldoutGroup("Destruction/Fracture")]
         [SerializeField, Required] private Fracture _fracture;
-        [FoldoutGroup("Destruction/Fracture")]
-        [SerializeField] private float _fractureForce = 5;
-        [FoldoutGroup("Destruction/Fracture")]
-        [SerializeField] private int _fruitFragmentLayer = 5;
 
         [FoldoutGroup("Particles")]
         [SerializeField] private Transform _particles;
@@ -47,27 +51,42 @@ namespace Assets.Scripts.Fruits
             _fracture = GetComponent<Fracture>();
         }
 
+        private void Start()
+        {
+            _spawnRoutine = StartCoroutine(SpawnRoutine());
+        }
+
         private void OnCollisionEnter(Collision col)
         {
             if (col.gameObject != ColosseumSceneManager.Player.gameObject &&
                 ((1 << col.gameObject.layer) & _destructionMask) != 0)
-                GetFractured(transform.position, _fractureForce);
+                GetFractured();
+        }
+
+        private Coroutine _spawnRoutine;
+        private IEnumerator SpawnRoutine()
+        {
+            var originalScale = transform.localScale;
+            float lerpPos = 0;
+            while (lerpPos < 1)
+            {
+                var t = _spawnAnimCurve.Evaluate(
+                    Misc.Tween(ref lerpPos, _spawnAnimTime, unscaled: true));
+                transform.localScale = Vector3.Lerp(Vector3.zero, originalScale, t);
+                yield return null;
+            }
         }
 
         public List<FragmentScript> GetFractured(
-            Vector3? forceOrigin = null,
-            float fractureForce = 0,
             float impactVelocity = -1,
             GameObject sender = null)
         {
-            if (impactVelocity != -1 && impactVelocity < _destroyForce) return new();
+            if (impactVelocity != -1 && impactVelocity < _minDestructionVelocity) return new();
 
             if (sender == ColosseumSceneManager.Player.gameObject)
                 GameManager.ItemManager.RewardCoins(_coins);
 
-            forceOrigin ??= transform.position;
-            var fragments = HandleFragments(_fracture.ComputeFracture(),
-                (Vector3)forceOrigin, fractureForce);
+            var fragments = HandleFragments(_fracture.ComputeFracture());
             GetDestroyed();
 
             return fragments;
@@ -79,21 +98,19 @@ namespace Assets.Scripts.Fruits
             float impactVelocity = -1,
             GameObject sender = null)
         {
-            if (impactVelocity != -1 && impactVelocity < _destroyForce) return new();
+            if (impactVelocity != -1 && impactVelocity < _minDestructionVelocity) return new();
 
             if (sender == ColosseumSceneManager.Player.gameObject)
                 GameManager.ItemManager.RewardCoins(_coins);
 
-            var fragments = HandleFragments(_slice.ComputeSlice(sliceNormal, sliceOrigin),
-                sliceOrigin, _sliceForce);
+            var fragments = HandleFragments(
+                _slice.ComputeSlice(sliceNormal, sliceOrigin));
             GetDestroyed();
 
             return fragments;
         }
 
-        private List<FragmentScript> HandleFragments(List<GameObject> fragments,
-                                     Vector3 forcePos = default,
-                                     float force = 0)
+        private List<FragmentScript> HandleFragments(List<GameObject> fragments)
         {
             if (fragments.Count < 1) return new();
 
@@ -109,9 +126,7 @@ namespace Assets.Scripts.Fruits
                 brb.PhysicsLayer = _fruitFragmentLayer;
 
                 frag.Rigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
-                var forceDir = fragment.transform.position - forcePos;
                 frag.Rigidbody.linearVelocity = _rigidbody.linearVelocity;
-                frag.Rigidbody.AddForce(force * forceDir, ForceMode.Impulse);
             });
 
             Destroy(fragments[0].transform.parent.gameObject, _fragmentSettings.Lifetime + 1);
@@ -120,6 +135,7 @@ namespace Assets.Scripts.Fruits
 
         private void GetDestroyed()
         {
+            StopCoroutine(_spawnRoutine);
             _collider.enabled = false;
             _particles.SetParent(null);
             _explosionParticles.ForEach(x => x.Play());

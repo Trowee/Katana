@@ -13,7 +13,6 @@ namespace Assets.Scripts.Fruits
     {
         [SerializeField, Required] private Collider _collider;
         [SerializeField, Required] private Rigidbody _rigidbody;
-        [SerializeField] private float _destroyForce = 25;
 
         [FoldoutGroup("Destruction")]
         [SerializeField, Required] private Fracture _fracture;
@@ -53,12 +52,15 @@ namespace Assets.Scripts.Fruits
         }
 
         public List<FragmentScript> GetFractured(
-            Vector3? forceOrigin = null, float fractureForce = 0,
-            float impactVelocity = -1, GameObject sender = null)
+            float impactVelocity = -1,
+            GameObject sender = null)
         => Explode();
 
         public List<FragmentScript> GetSliced(
-            Vector3 o = default, Vector3 n = default, float v = -1, GameObject sender = null)
+            Vector3 sliceOrigin = default,
+            Vector3 sliceNormal = default,
+            float impactVelocity = -1,
+            GameObject sender = null)
         => Explode();
 
         private List<FragmentScript> HandleFragments(List<GameObject> fragments)
@@ -92,7 +94,7 @@ namespace Assets.Scripts.Fruits
 
             foreach (var hit in hits)
                 if (hit.TryGetComponent(out IDestructible destructible))
-                    destructible.GetFractured(transform.position);
+                    destructible.GetFractured();
                 else if (hit.transform.parent != null &&
                          hit.transform.parent.TryGetComponent(out PlayerScript player))
                     player.Die();
@@ -100,13 +102,16 @@ namespace Assets.Scripts.Fruits
 
         private void AffectRigidbodies()
         {
-            var hits = Physics.OverlapSphere(
-                transform.position, _explosionRadius, _destructibleMask);
+            var hits = Physics.OverlapSphere(transform.position, _explosionRadius);
 
             foreach (var hit in hits)
                 if (hit.TryGetComponent(out Rigidbody rb))
-                    rb.AddExplosionForce(_explosionForce, transform.position, _explosionRadius, 0,
-                                         ForceMode.Impulse);
+                    rb.AddExplosionForce(
+                        _explosionForce,
+                        transform.position,
+                        _explosionRadius,
+                        0,
+                        ForceMode.Impulse);
         }
     }
 }

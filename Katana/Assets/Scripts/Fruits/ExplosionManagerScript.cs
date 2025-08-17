@@ -8,9 +8,9 @@ namespace Assets.Scripts.Fruits
     {
         [Tooltip("Prefab of the explosion effect")]
         [SerializeField, Required] private VisualEffect _explosionPrefab;
-        
+
         [Tooltip("Maximum number of explosions at once")]
-        [SerializeField] private int _explosionsCount = 8;
+        [SerializeField] private int _explosionsCount = 40;
 
         private Transform _explosionsParent;
         private VisualEffect[] _explosions;
@@ -24,7 +24,7 @@ namespace Assets.Scripts.Fruits
                 enabled = false;
                 return;
             }
-            
+
             _explosions = new VisualEffect[_explosionsCount];
             InitializeExplosions();
         }
@@ -32,9 +32,9 @@ namespace Assets.Scripts.Fruits
         /// Creates the explosions parent and instantiates the explosion prefabs
         private void InitializeExplosions()
         {
-            _explosionsParent = new GameObject().transform;
+            _explosionsParent = new GameObject("BombExplosions").transform;
             _explosionsParent.SetParent(transform);
-            
+
             for (int i = 0; i < _explosionsCount; i++)
                 _explosions[i] = Instantiate(_explosionPrefab, _explosionsParent);
         }
@@ -45,12 +45,16 @@ namespace Assets.Scripts.Fruits
             foreach (var explosion in _explosions)
             {
                 if (explosion.HasAnySystemAwake()) continue;
-                
+
                 explosion.transform.position = position;
                 explosion.Play();
-                
+
                 return;
             }
+
+            // TODO: Implement an achievement
+            Debug.LogError("No explosions left to play");
+            Debug.LogError("How did you even achieve that");
         }
     }
 }
