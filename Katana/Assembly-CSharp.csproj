@@ -1245,6 +1245,10 @@
       <HintPath>Library/ScriptAssemblies/Unity.PlayerPrefsEditor.EditorResources.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="CustomToolbar">
+      <HintPath>Library/ScriptAssemblies/CustomToolbar.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.Mathematics.Editor">
       <HintPath>Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
       <Private>False</Private>
@@ -1371,10 +1375,6 @@
     </Reference>
     <Reference Include="Unity.Burst">
       <HintPath>Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="CustomToolbar.Editor">
-      <HintPath>Library/ScriptAssemblies/CustomToolbar.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.TerrainTools.Editor">
