@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using ArtificeToolkit.Attributes;
 using Assets.Scripts.Core;
@@ -29,7 +28,26 @@ namespace Assets.Scripts.Player
 
         #region Components
 
-        [FoldoutGroup("Components"), SerializeField] private Rigidbody _rb;
+        [ValidateInput(nameof(RigidbodyValidation))]
+        [FoldoutGroup("Components"), SerializeField, Required] private Rigidbody _rb;
+
+        private bool RigidbodyValidation(ref string msg, ref LogType lt)
+        {
+            if (!_rb)
+            {
+                msg = "Rigidbody can't be null";
+                lt = LogType.Error;
+                return false;
+            }
+            if (_rb.collisionDetectionMode != CollisionDetectionMode.ContinuousDynamic)
+            {
+                msg = "Rigidbody Collision Detection Mode should be set to ContinuousDynamic, expect weird behaviour.";
+                lt = LogType.Warning;
+                return false;
+            }
+            return true;
+        }
+
         [FoldoutGroup("Components"), SerializeField] private Collider _collider;
         [FoldoutGroup("Components"), SerializeField] private GameObject _katanaObject;
         [FoldoutGroup("Components"), SerializeField] private MeshFilter _mesh;
@@ -74,6 +92,9 @@ namespace Assets.Scripts.Player
         [FoldoutGroup("Movement/Flip"), SerializeField]
         private TimeScaleKeys _flipTimeScale;
 
+        [FoldoutGroup("Movement/BulletTime"), SerializeField]
+        private TimeScaleKeys _bulletTimeScale;
+
         [FoldoutGroup("Movement/Stick"), SerializeField] private LayerMask _stickMask;
         [FoldoutGroup("Movement/Stick"), SerializeField] private float _minStickVelocity = 5;
         [FoldoutGroup("Movement/Stick"), SerializeField] private float _maxStickAngle = 45;
@@ -115,42 +136,10 @@ namespace Assets.Scripts.Player
 
         private void OnCollisionEnter(Collision col)
         {
-            if (ColosseumSceneManager.Instance.IsDead) return;
+            if (ColosseumSceneManager.IsDead) return;
 
             if (col.gameObject.TryGetComponent(out IFragmentable fragmentable))
-            {
-                foreach (var c in col.contacts)
-                {
-                    var cPos = c.point;
-
-                    if (!fragmentable.GetFractured(
-                        out var fragments, _rb.linearVelocity.magnitude, gameObject)) continue;
-
-                    // Approximate how much fragments moved since the collision
-                    var fragPosDelta = fragments[0].transform.position - cPos;
-
-                    var distances = new float[fragments.Count];
-                    var maxDistance = 0f;
-                    for (int i = 0; i < fragments.Count; i++)
-                    {
-                        // We have to use the renderer since origin is at the center of fracture
-                        var fragPos = fragments[i].GetComponent<Renderer>()
-                            .bounds.center - fragPosDelta;
-                        distances[i] = Vector3.Distance(cPos, fragPos);
-                        if (distances[i] > maxDistance)
-                            maxDistance = distances[i];
-                    }
-                    for (int i = 0; i < fragments.Count; i++)
-                    {
-                        var rb = fragments[i].Rigidbody;
-                        var t = distances[i] / maxDistance;
-                        var vel = Vector3.Lerp(Vector3.zero, _rb.linearVelocity * 0.75f, t);
-                        fragments[i].Rigidbody.linearVelocity = vel;
-                    }
-
-                    break;
-                }
-            }
+                DestroyFragmentable(fragmentable, col);
 
             // Store the col layer
             var layer = col.gameObject.layer;
@@ -184,64 +173,15 @@ namespace Assets.Scripts.Player
             _perspectiveAction.performed -= OnPerspective;
         }
 
-        private void Stick(Collision col)
-        {
-            // Return if already stuck
-            if (IsStuck) return;
-
-            // Return if not moving forward fast enough
-            if (col.relativeVelocity.magnitude < _minStickVelocity) return;
-
-            // Get forward and threshold
-            var fw = transform.up;
-            var threshold = -Mathf.Cos(_maxStickAngle * Mathf.Deg2Rad);
-
-            // Check if any of the normals are at a low enough angle relative to the player
-            if (col.contacts.Select(contact => contact.normal)
-                .Select(contactNormal => Vector3.Dot(fw, contactNormal))
-                .Any(dp => !(dp > threshold)))
-                GetStuck(col.transform);
-        }
-
-        private void GetStuck(Transform parent)
-        {
-            // Freeze rb
-            _rb.linearVelocity = Vector3.zero;
-            _rb.angularVelocity = Vector3.zero;
-            _rb.isKinematic = true;
-
-            // Set parent to follow that object
-            transform.SetParent(parent);
-            SpawnDecal(parent);
-
-            // Set IsStuck to true
-            IsStuck = true;
-        }
-
         private void SpawnDecal(Transform parent)
         {
             var decal = Instantiate(_decalPrefab, _decalPoint);
             decal.SetParent(parent);
         }
 
-        private void GetUnstuck()
-        {
-            // Return if not stuck
-            if (!IsStuck) return;
-
-            // Unfreeze the rb
-            _rb.isKinematic = false;
-
-            // Reset parent
-            transform.SetParent(null);
-
-            // Set IsStuck to false
-            IsStuck = false;
-        }
-
         private void Tilt()
         {
-            if (ColosseumSceneManager.Instance.IsDead) return;
+            if (ColosseumSceneManager.IsDead) return;
 
             // Return if stuck
             if (IsStuck) return;
@@ -263,39 +203,8 @@ namespace Assets.Scripts.Player
             _rb.MoveRotation(_rb.rotation * deltaRot);
         }
 
-        private void ChangePerspective()
-        {
-            if (ColosseumSceneManager.Instance.IsDead) return;
-
-            Settings.Perspective = Settings.Perspective switch
-            {
-                Perspective.First => Perspective.Right,
-                Perspective.Right => Perspective.Third,
-                Perspective.Third => Perspective.Left,
-                _ => Perspective.First
-            };
-
-            ColosseumSceneManager.CameraManager.SwitchCameraHandler(Settings.Perspective, _cameraSwitchDuration, _cameraSwitchEasing, unscaled: true);
-        }
-
-        private void Flip()
-        {
-            if (ColosseumSceneManager.Instance.IsDead) return;
-
-            LastAction = PlayerAction.Flip;
-            var wasStuck = IsStuck;
-            GetUnstuck();
-
-            // Add force and rotation
-            _rb.AddRelativeForce(wasStuck ? _flipStuckForce : _flipForce, ForceMode.VelocityChange);
-            _rb.AddRelativeTorque(new(_flipRotation, 0), ForceMode.Impulse);
-
-            // Apply timescale changes
-            GameManager.TimeScaleManager.UpdateTimeScale(_flipTimeScale);
-        }
-
         private bool ApplyPlayerFlippedMultiplier =>
-        ColosseumSceneManager.Instance.IsDead &&
+        ColosseumSceneManager.IsDead &&
             LastAction == PlayerAction.Flip &&
             TimeSinceLastAction <= 2;
 
@@ -306,7 +215,7 @@ namespace Assets.Scripts.Player
 
         private void Dash()
         {
-            if (ColosseumSceneManager.Instance.IsDead) return;
+            if (ColosseumSceneManager.IsDead) return;
 
             LastAction = PlayerAction.Dash;
             GetUnstuck();
@@ -324,7 +233,7 @@ namespace Assets.Scripts.Player
 
         private void Dodge()
         {
-            if (ColosseumSceneManager.Instance.IsDead) return;
+            if (ColosseumSceneManager.IsDead) return;
 
             LastAction = PlayerAction.Dodge;
             GetUnstuck();
@@ -340,6 +249,117 @@ namespace Assets.Scripts.Player
             GameManager.TimeScaleManager.UpdateTimeScale(_dodgeTimeScale);
         }
 
+        private void Flip()
+        {
+            if (ColosseumSceneManager.IsDead) return;
+
+            LastAction = PlayerAction.Flip;
+            var wasStuck = IsStuck;
+            GetUnstuck();
+
+            // Add force and rotation
+            _rb.AddRelativeForce(wasStuck ? _flipStuckForce : _flipForce, ForceMode.VelocityChange);
+            _rb.AddRelativeTorque(new(_flipRotation, 0), ForceMode.Impulse);
+
+            // Apply timescale changes
+            GameManager.TimeScaleManager.UpdateTimeScale(_flipTimeScale);
+        }
+
+        private void ChangePerspective()
+        {
+            if (ColosseumSceneManager.IsDead) return;
+
+            Settings.Perspective = Settings.Perspective switch
+            {
+                Perspective.First => Perspective.Right,
+                Perspective.Right => Perspective.Third,
+                Perspective.Third => Perspective.Left,
+                _ => Perspective.First
+            };
+
+            ColosseumSceneManager.CameraManager.SwitchCameraHandler(Settings.Perspective, _cameraSwitchDuration, _cameraSwitchEasing, unscaled: true);
+        }
+
+        private void EnterBulletTime() =>
+            GameManager.TimeScaleManager.UpdateTimeScale(_bulletTimeScale);
+
+        private void Stick(Collision col)
+        {
+            if (IsStuck) return;
+            if (col.relativeVelocity.magnitude < _minStickVelocity) return;
+
+            // Check if any of the normals are at a low enough angle relative to the player
+            var fw = transform.up;
+            var threshold = -Mathf.Cos(_maxStickAngle * Mathf.Deg2Rad);
+            if (col.contacts.Select(contact => contact.normal)
+                .Select(contactNormal => Vector3.Dot(fw, contactNormal))
+                .Any(dp => !(dp > threshold)))
+                GetStuck(col.transform);
+        }
+
+        private void GetStuck(Transform parent)
+        {
+            // Freeze rb
+            _rb.linearVelocity = Vector3.zero;
+            _rb.angularVelocity = Vector3.zero;
+            _rb.isKinematic = true;
+
+            // Set parent to follow that object
+            transform.SetParent(parent);
+            SpawnDecal(parent);
+
+            // Set IsStuck to true
+            IsStuck = true;
+        }
+
+        private void GetUnstuck()
+        {
+            if (!IsStuck) return;
+            _rb.isKinematic = false;
+            transform.SetParent(null);
+            IsStuck = false;
+        }
+
+        private void DestroyFragmentable(IFragmentable fragmentable, Collision col)
+        {
+            foreach (var c in col.contacts)
+            {
+                var cPos = c.point;
+
+                if (!fragmentable.GetFractured(
+                    out var fragments, _rb.linearVelocity.magnitude, gameObject)) continue;
+
+                // Check if player died in case it was a bomb
+                if (ColosseumSceneManager.IsDead) return;
+
+                var distances = new float[fragments.Count];
+                var maxDistance = 0f;
+                for (int i = 0; i < fragments.Count; i++)
+                {
+                    // We have to use the renderer since origin is at the center of fracture
+                    var fragPos = fragments[i].GetComponent<Renderer>()
+                        .bounds.center /*- fragPosDelta*/;
+                    distances[i] = Vector3.Distance(cPos, fragPos);
+                    if (distances[i] > maxDistance)
+                        maxDistance = distances[i];
+                }
+                for (int i = 0; i < fragments.Count; i++)
+                {
+                    var rb = fragments[i].Rigidbody;
+                    var t = distances[i] / maxDistance;
+                    var vel = Vector3.Lerp(Vector3.zero, _rb.linearVelocity * 0.75f, t);
+                    fragments[i].Rigidbody.linearVelocity = vel;
+                }
+
+                // Might implement this stopping when I add forward detection for collat idk yet
+                // _rb.linearVelocity *= 0.5f;
+                // _rb.angularVelocity *= 0.5f;
+                EnterBulletTime();
+
+                break;
+            }
+        }
+
         public void Die()
         {
             StopAllCoroutines();
@@ -350,7 +370,7 @@ namespace Assets.Scripts.Player
             _rb.isKinematic = true;
             _collider.enabled = false;
             UninitializeInputs();
-            ColosseumSceneManager.Instance.Die();
+            ColosseumSceneManager.Die();
         }
     }
 }

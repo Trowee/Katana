@@ -13,7 +13,7 @@ namespace Assets.Scripts.Core
         private static ColosseumSceneManager _instance;
         public static ColosseumSceneManager Instance =>
             _instance ? _instance : _instance = FindFirstObjectByType<ColosseumSceneManager>();
-        
+
         [SerializeField, ReadOnly] private CameraManager _cameraManager;
         public static CameraManager CameraManager
         {
@@ -33,8 +33,11 @@ namespace Assets.Scripts.Core
                 return Instance._explosionManager ??= Instance.gameObject.GetComponent<ExplosionManagerScript>();
             }
         }
-        
-        [ReadOnly] public bool IsDead;
+
+        [FoldoutGroup("Dev")]
+        [SerializeField, ReadOnly]
+        private bool _isDead;
+        public static bool IsDead => Instance._isDead;
 
         [SerializeField, Required] private PlayerScript _player;
         public static PlayerScript Player
@@ -46,14 +49,14 @@ namespace Assets.Scripts.Core
                     GameObject.FindWithTag("Player")?.GetComponent<PlayerScript>();
             }
         }
-        
+
         [SerializeField, Required] private GameObject _deathScreen;
 
         private void Reset()
         {
-            _cameraManager    = GetComponent<CameraManager>();
+            _cameraManager = GetComponent<CameraManager>();
             _explosionManager = GetComponent<ExplosionManagerScript>();
-            _player           = GameObject.FindWithTag("Player")?.GetComponent<PlayerScript>();
+            _player = GameObject.FindWithTag("Player")?.GetComponent<PlayerScript>();
         }
 
         private void Awake()
@@ -63,20 +66,20 @@ namespace Assets.Scripts.Core
                 Destroy(gameObject);
                 return;
             }
-            
+
             _instance = this;
         }
 
         private void Start()
         {
-            Cursor.visible   = false;
+            Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
         }
 
-        public void Die()
+        public static void Die()
         {
-            _deathScreen.SetActive(true);
-            IsDead = true;
+            Instance._deathScreen.SetActive(true);
+            Instance._isDead = true;
         }
     }
 }
