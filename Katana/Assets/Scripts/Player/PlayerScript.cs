@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using ArtificeToolkit.Attributes;
 using Assets.Scripts.Core;
@@ -325,9 +326,56 @@ namespace Assets.Scripts.Player
             foreach (var c in col.contacts)
             {
                 var cPos = c.point;
+                var cNorm = c.normal;
 
-                if (!fragmentable.GetFractured(
-                    out var fragments, _rb.linearVelocity.magnitude, gameObject)) continue;
+                Vector3[] axes = {
+                    transform.forward,
+                    -transform.forward,
+                    transform.up,
+                    -transform.up,
+                    transform.right,
+                    -transform.right
+                };
+
+                // Find the axis most aligned with the collision normal
+                float bestDot = -1f;
+                int bestAxis = -1;
+                for (int i = 0; i < axes.Length; i++)
+                {
+                    float dot = Vector3.Dot(axes[i], -cNorm);
+                    if (dot > bestDot)
+                    {
+                        bestDot = dot;
+                        bestAxis = i;
+                    }
+                }
+
+                Vector3? sliceDir = null;
+
+                switch (bestAxis)
+                {
+                    case 0: // Forward (Blade)
+                        sliceDir = Vector3.Cross(transform.up, transform.forward)
+                        .normalized;
+                        break;
+                    case 1: // Back (Blade Back)
+                        sliceDir = Vector3.Cross(transform.up, -transform.forward)
+                        .normalized;
+                        break;
+                    case 2: // Up (Tip)
+                        sliceDir = Vector3.Cross(transform.forward, transform.up)
+                        .normalized;
+                        break;
+                }
+
+                List<FragmentScript> fragments;
+                if (sliceDir.HasValue
+                    ? !fragmentable.GetSliced(
+                        out fragments,
+                        cPos, transform.right, _rb.linearVelocity.magnitude, gameObject)
+                    : !fragmentable.GetFractured(
+                        out fragments,
+                        _rb.linearVelocity.magnitude, gameObject)) continue;
 
                 // Check if player died in case it was a bomb
                 if (ColosseumSceneManager.IsDead) return;
@@ -347,7 +395,9 @@ namespace Assets.Scripts.Player
                 {
                     var rb = fragments[i].Rigidbody;
                     var t = distances[i] / maxDistance;
-                    var vel = Vector3.Lerp(Vector3.zero, _rb.linearVelocity * 0.75f, t);
+                    var vel = sliceDir.HasValue
+                        ? Vector3.zero
+                        : Vector3.Lerp(Vector3.zero, _rb.linearVelocity * 0.75f, t);
                     fragments[i].Rigidbody.linearVelocity = vel;
                 }
 
