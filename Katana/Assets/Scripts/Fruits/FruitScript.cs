@@ -13,7 +13,7 @@ namespace Assets.Scripts.Fruits
     [RequireComponent(typeof(BetterRigidbody))]
     [RequireComponent(typeof(Slice))]
     [RequireComponent(typeof(Fracture))]
-    public class FruitScript : MonoBehaviour, IDestructible
+    public class FruitScript : MonoBehaviour, IFragmentable
     {
         [SerializeField, Required] private Collider _collider;
         [SerializeField, Required] private Rigidbody _rigidbody;
@@ -60,7 +60,7 @@ namespace Assets.Scripts.Fruits
         {
             if (col.gameObject != ColosseumSceneManager.Player.gameObject &&
                 ((1 << col.gameObject.layer) & _destructionMask) != 0)
-                GetFractured();
+                GetFractured(out _);
         }
 
         private Coroutine _spawnRoutine;
@@ -77,37 +77,41 @@ namespace Assets.Scripts.Fruits
             }
         }
 
-        public List<FragmentScript> GetFractured(
-            float impactVelocity = -1,
+        public bool GetFractured(
+            out List<FragmentScript> fragments,
+            float? impactVelocity = null,
             GameObject sender = null)
         {
-            if (impactVelocity != -1 && impactVelocity < _minDestructionVelocity) return new();
+            fragments = new();
+            if (impactVelocity != null && impactVelocity < _minDestructionVelocity) return false;
 
             if (sender == ColosseumSceneManager.Player.gameObject)
                 GameManager.ItemManager.RewardCoins(_coins);
 
-            var fragments = HandleFragments(_fracture.ComputeFracture());
+            fragments = HandleFragments(_fracture.ComputeFracture());
             GetDestroyed();
 
-            return fragments;
+            return true;
         }
 
-        public List<FragmentScript> GetSliced(
+        public bool GetSliced(
+            out List<FragmentScript> fragments,
             Vector3 sliceOrigin,
             Vector3 sliceNormal,
-            float impactVelocity = -1,
+            float? impactVelocity = null,
             GameObject sender = null)
         {
-            if (impactVelocity != -1 && impactVelocity < _minDestructionVelocity) return new();
+            fragments = new();
+            if (impactVelocity != null && impactVelocity < _minDestructionVelocity) return false;
 
             if (sender == ColosseumSceneManager.Player.gameObject)
                 GameManager.ItemManager.RewardCoins(_coins);
 
-            var fragments = HandleFragments(
+            fragments = HandleFragments(
                 _slice.ComputeSlice(sliceNormal, sliceOrigin));
             GetDestroyed();
 
-            return fragments;
+            return true;
         }
 
         private List<FragmentScript> HandleFragments(List<GameObject> fragments)

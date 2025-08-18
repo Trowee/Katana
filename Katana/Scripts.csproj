@@ -48,6 +48,7 @@
     <Compile Include="Assets/Scripts/Player/Camera/Perspective.cs" />
     <Compile Include="Assets/Scripts/MainMenu/Shop/ShopItemScript.cs" />
     <Compile Include="Assets/Scripts/Modifiers/ModifierManager.cs" />
+    <Compile Include="Assets/Scripts/Core/IFragmentable.cs" />
     <Compile Include="Assets/Scripts/LocalizeDropdown.cs" />
     <Compile Include="Assets/Scripts/Fruits/BombScript.cs" />
     <Compile Include="Assets/Scripts/Fruits/ExplosionManagerScript.cs" />
@@ -80,7 +81,6 @@
     <Compile Include="Assets/Scripts/Colosseum/ColosseumSceneManager.cs" />
     <Compile Include="Assets/Scripts/Colosseum/ColosseumSun.cs" />
     <Compile Include="Assets/Scripts/Fruits/CannonScript.cs" />
-    <Compile Include="Assets/Scripts/Core/IDestructible.cs" />
     <Compile Include="Assets/Scripts/Core/GameManager.cs" />
     <Compile Include="Assets/Scripts/Player/Camera/CameraHandlerScript.cs" />
     <Compile Include="Assets/Scripts/Modifiers/Modifier.cs" />

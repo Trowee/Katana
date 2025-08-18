@@ -9,7 +9,7 @@ namespace Assets.Scripts.Fruits
     [RequireComponent(typeof(Collider))]
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(Fracture))]
-    public class BombScript : MonoBehaviour, IDestructible
+    public class BombScript : MonoBehaviour, IFragmentable
     {
         [SerializeField, Required] private Collider _collider;
         [SerializeField, Required] private Rigidbody _rigidbody;
@@ -51,17 +51,25 @@ namespace Assets.Scripts.Fruits
             return fragments;
         }
 
-        public List<FragmentScript> GetFractured(
-            float impactVelocity = -1,
+        public bool GetFractured(
+            out List<FragmentScript> fragments,
+            float? impactVelocity = null,
             GameObject sender = null)
-        => Explode();
+        {
+            fragments = Explode();
+            return true;
+        }
 
-        public List<FragmentScript> GetSliced(
+        public bool GetSliced(
+            out List<FragmentScript> fragments,
             Vector3 sliceOrigin = default,
             Vector3 sliceNormal = default,
-            float impactVelocity = -1,
+            float? impactVelocity = null,
             GameObject sender = null)
-        => Explode();
+        {
+            fragments = Explode();
+            return true;
+        }
 
         private List<FragmentScript> HandleFragments(List<GameObject> fragments)
         {
@@ -93,8 +101,8 @@ namespace Assets.Scripts.Fruits
                 transform.position, _explosionRadius, _destructibleMask);
 
             foreach (var hit in hits)
-                if (hit.TryGetComponent(out IDestructible destructible))
-                    destructible.GetFractured();
+                if (hit.TryGetComponent(out IFragmentable fragmentable))
+                    fragmentable.GetFractured(out _);
                 else if (hit.transform.parent != null &&
                          hit.transform.parent.TryGetComponent(out PlayerScript player))
                     player.Die();

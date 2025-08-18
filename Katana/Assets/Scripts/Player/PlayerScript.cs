@@ -117,15 +117,14 @@ namespace Assets.Scripts.Player
         {
             if (ColosseumSceneManager.Instance.IsDead) return;
 
-            if (col.gameObject.TryGetComponent(out IDestructible destructible))
+            if (col.gameObject.TryGetComponent(out IFragmentable fragmentable))
             {
                 foreach (var c in col.contacts)
                 {
                     var cPos = c.point;
 
-                    List<FragmentScript> fragments =
-                        fragments = destructible.GetFractured(
-                            _rb.linearVelocity.magnitude, gameObject);
+                    if (!fragmentable.GetFractured(
+                        out var fragments, _rb.linearVelocity.magnitude, gameObject)) continue;
 
                     // Approximate how much fragments moved since the collision
                     var fragPosDelta = fragments[0].transform.position - cPos;
