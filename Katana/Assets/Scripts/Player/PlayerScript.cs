@@ -352,8 +352,8 @@ namespace Assets.Scripts.Player
                 }
 
                 // Might implement this stopping when I add forward detection for collat idk yet
-                // _rb.linearVelocity *= 0.5f;
-                // _rb.angularVelocity *= 0.5f;
+                _rb.linearVelocity *= 0.75f;
+                _rb.angularVelocity *= 0.75f;
                 EnterBulletTime();
 
                 break;
