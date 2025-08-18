@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using ArtificeToolkit.Attributes;
 using Assets.Scripts.Core;
 using Assets.Scripts.Player;
+using SadnessMonday.BetterPhysics;
 using UnityEngine;
 
 namespace Assets.Scripts.Fruits

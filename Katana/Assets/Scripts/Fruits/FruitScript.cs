@@ -29,8 +29,6 @@ namespace Assets.Scripts.Fruits
         [SerializeField] private LayerMask _destructionMask;
         [FoldoutGroup("Destruction")]
         [SerializeField] private float _minDestructionVelocity = 50;
-        [FoldoutGroup("Destruction")]
-        [SerializeField] private int _fruitFragmentLayer = 5;
 
         [FoldoutGroup("Destruction/Slice")]
         [SerializeField, Required] private Slice _slice;
@@ -125,11 +123,6 @@ namespace Assets.Scripts.Fruits
                 frag.CopySettings(_fragmentSettings);
                 frag.GetDestroyed();
                 frags.Add(frag);
-
-                var brb = fragment.AddComponent<BetterRigidbody>();
-                brb.PhysicsLayer = _fruitFragmentLayer;
-
-                frag.Rigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
                 frag.Rigidbody.linearVelocity = _rigidbody.linearVelocity;
             });
 

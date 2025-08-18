@@ -1,13 +1,16 @@
 using System.Collections;
 using ArtificeToolkit.Attributes;
 using NnUtils.Scripts;
+using SadnessMonday.BetterPhysics;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(BetterRigidbody))]
 [RequireComponent(typeof(Collider))]
 public class FragmentScript : MonoBehaviour
 {
     public Rigidbody Rigidbody;
+    public BetterRigidbody BetterRigidbody;
     private Collider _collider;
 
     public float Lifetime = 10;
@@ -20,6 +23,7 @@ public class FragmentScript : MonoBehaviour
     private void Awake()
     {
         Rigidbody = GetComponent<Rigidbody>();
+        BetterRigidbody = GetComponent<BetterRigidbody>();
         _collider = GetComponent<Collider>();
     }
 
@@ -29,6 +33,10 @@ public class FragmentScript : MonoBehaviour
         Lifetime = original.Lifetime;
         _disappearTime = original._disappearTime;
         _disappearCurve = original._disappearCurve;
+
+        Rigidbody.interpolation = original.Rigidbody.interpolation;
+        Rigidbody.collisionDetectionMode = original.Rigidbody.collisionDetectionMode;
+        BetterRigidbody.PhysicsLayer = original.BetterRigidbody.PhysicsLayer;
     }
 
     public void GetDestroyed() => StartCoroutine(DestroyRoutine());
