@@ -350,24 +350,16 @@ namespace Assets.Scripts.Player
                     }
                 }
 
-                Vector3? sliceDir = null;
-
-                switch (bestAxis)
+                // If best axis should slice assign a value to sliceDir
+                Vector3? sliceDir = bestAxis switch
                 {
-                    case 0: // Forward (Blade)
-                        sliceDir = Vector3.Cross(transform.up, transform.forward)
-                        .normalized;
-                        break;
-                    case 1: // Back (Blade Back)
-                        sliceDir = Vector3.Cross(transform.up, -transform.forward)
-                        .normalized;
-                        break;
-                    case 2: // Up (Tip)
-                        sliceDir = Vector3.Cross(transform.forward, transform.up)
-                        .normalized;
-                        break;
-                }
+                    0 => Vector3.Cross(transform.up, transform.forward).normalized, // Blade Front
+                    1 => Vector3.Cross(transform.up, -transform.forward).normalized, // Blade Back
+                    2 => Vector3.Cross(transform.forward, transform.up).normalized, // Blade Tip
+                    _ => null
+                };
 
+                // Slice or fracture the object
                 List<FragmentScript> fragments;
                 if (sliceDir.HasValue
                     ? !fragmentable.GetSliced(
@@ -395,13 +387,15 @@ namespace Assets.Scripts.Player
                 {
                     var rb = fragments[i].Rigidbody;
                     var t = distances[i] / maxDistance;
+
+                    // Fully stop if sliced, launch forward if fractured
                     var vel = sliceDir.HasValue
                         ? Vector3.zero
                         : Vector3.Lerp(Vector3.zero, _rb.linearVelocity * 0.75f, t);
                     fragments[i].Rigidbody.linearVelocity = vel;
                 }
 
-                // Might implement this stopping when I add forward detection for collat idk yet
+                // I am still thinking about slowing down the blade, not sure if it's a good choice
                 _rb.linearVelocity *= 0.75f;
                 _rb.angularVelocity *= 0.75f;
                 EnterBulletTime();
