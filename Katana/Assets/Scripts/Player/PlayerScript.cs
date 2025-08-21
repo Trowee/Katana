@@ -372,13 +372,13 @@ namespace Assets.Scripts.Player
                 // Check if player died in case it was a bomb
                 if (ColosseumSceneManager.IsDead) return;
 
+                // Scatter fragments
                 var distances = new float[fragments.Count];
                 var maxDistance = 0f;
                 for (int i = 0; i < fragments.Count; i++)
                 {
                     // We have to use the renderer since origin is at the center of fracture
-                    var fragPos = fragments[i].GetComponent<Renderer>()
-                        .bounds.center /*- fragPosDelta*/;
+                    var fragPos = fragments[i].GetComponent<Renderer>().bounds.center;
                     distances[i] = Vector3.Distance(cPos, fragPos);
                     if (distances[i] > maxDistance)
                         maxDistance = distances[i];

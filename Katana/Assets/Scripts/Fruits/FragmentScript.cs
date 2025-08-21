@@ -15,6 +15,8 @@ public class FragmentScript : MonoBehaviour
 
     public float Lifetime = 10;
 
+    [Required]
+    [SerializeField] private PhysicsMaterial _physicsMaterial;
     [FoldoutGroup("Disappear Animation")]
     [SerializeField] private float _disappearTime = 1;
     [FoldoutGroup("Disappear Animation")]
@@ -33,6 +35,9 @@ public class FragmentScript : MonoBehaviour
         Lifetime = original.Lifetime;
         _disappearTime = original._disappearTime;
         _disappearCurve = original._disappearCurve;
+
+        _physicsMaterial = original._physicsMaterial;
+        _collider.material = _physicsMaterial;
 
         Rigidbody.interpolation = original.Rigidbody.interpolation;
         Rigidbody.collisionDetectionMode = original.Rigidbody.collisionDetectionMode;
