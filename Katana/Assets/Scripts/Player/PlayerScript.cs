@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ArtificeToolkit.Attributes;
+using Assets.Scripts.Colosseum;
 using Assets.Scripts.Core;
 using Assets.Scripts.Player.Camera;
 using Assets.Scripts.TimeScale;

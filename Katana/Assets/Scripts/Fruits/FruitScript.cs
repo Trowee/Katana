@@ -5,6 +5,7 @@ using Assets.Scripts.Core;
 using NnUtils.Scripts;
 using NnUtils.Modules.Easings;
 using UnityEngine;
+using Assets.Scripts.Colosseum;
 
 namespace Assets.Scripts.Fruits
 {

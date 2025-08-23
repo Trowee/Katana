@@ -1,4 +1,4 @@
-namespace Assets.Scripts.Core
+namespace Assets.Scripts.Colosseum
 {
     public interface IAimable
     {
