@@ -136,30 +136,7 @@ namespace Assets.Scripts.Player
             CheckForTargets();
         }
 
-        private void OnDrawGizmos()
-        {
-            var halfExtents = Vector3.Scale(_collider.size * 0.4f, _collider.transform.lossyScale);
-
-            // Calculate the collider center
-            var c = _collider.center;
-            c.y -= halfExtents.y;
-            c.z -= 0.1f;
-            var colliderCenter = _collider.transform.TransformPoint(c);
-
-            // Extend and compensate for the collider center then calculate the actual center
-            halfExtents.y += halfExtents.y * 2 + 50;
-            var center = colliderCenter + transform.up * (halfExtents.y);
-
-            // Draw the box
-            Gizmos.color = Color.green;
-            Gizmos.matrix = Matrix4x4.TRS(center, transform.rotation, Vector3.one);
-            Gizmos.DrawWireCube(Vector3.zero, halfExtents * 2f); // halfExtents to full size
-
-            // Reset matrix
-            Gizmos.matrix = Matrix4x4.identity;
-        }
-
-        private HashSet<ISelectable> _aimedAtSelectables = new();
+        private HashSet<IAimable> _aimedAt = new();
 
         private void CheckForTargets()
         {
@@ -175,21 +152,21 @@ namespace Assets.Scripts.Player
             halfExtents.y += halfExtents.y * 2 + 50;
             var center = colliderCenter + transform.up * (halfExtents.y);
 
-            HashSet<ISelectable> selectables = new();
+            HashSet<IAimable> aimables = new();
             Collider[] hits = Physics.OverlapBox(center, halfExtents, transform.rotation);
 
             foreach (var hit in hits)
             {
-                if (!hit.TryGetComponent<ISelectable>(out var selectable)) continue;
-                if (!_aimedAtSelectables.Add(selectable)) continue;
-                selectable.Hover();
-                selectables.Add(selectable);
+                if (!hit.TryGetComponent<IAimable>(out var aimable)) continue;
+                if (!_aimedAt.Add(aimable)) continue;
+                aimable.AimAt();
+                aimables.Add(aimable);
             }
 
-            foreach (var selectable in _aimedAtSelectables.Except(selectables).ToList())
+            foreach (var aimable in _aimedAt.Except(aimables).ToList())
             {
-                selectable?.Unhover();
-                _aimedAtSelectables.Remove(selectable);
+                aimable?.AimAway();
+                _aimedAt.Remove(aimable);
             }
         }
 

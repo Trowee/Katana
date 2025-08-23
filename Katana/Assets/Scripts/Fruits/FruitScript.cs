@@ -13,7 +13,7 @@ namespace Assets.Scripts.Fruits
     [RequireComponent(typeof(Renderer))]
     [RequireComponent(typeof(Slice))]
     [RequireComponent(typeof(Fracture))]
-    public class FruitScript : MonoBehaviour, ISelectable, IFragmentable
+    public class FruitScript : MonoBehaviour, IAimable, IFragmentable
     {
         [FoldoutGroup("Components")]
         [SerializeField, Required] private Collider _collider;
@@ -114,21 +114,18 @@ namespace Assets.Scripts.Fruits
             }
         }
 
-        public void Hover()
+        public void AimAt()
         {
             if (this == null) return;
             this.RestartRoutine(ref _fadeOutlineRoutine,
                 FadeOutlineRoutine(1, _outlineThickness));
         }
 
-        public void Unhover()
+        public void AimAway()
         {
             if (this == null) return;
             this.RestartRoutine(ref _fadeOutlineRoutine, FadeOutlineRoutine());
         }
-
-        public void Select() { }
-        public void Deselect() { }
 
         private Coroutine _fadeOutlineRoutine;
         private IEnumerator FadeOutlineRoutine(float opacity = 0, float thickness = 1)
