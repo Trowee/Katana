@@ -3,20 +3,42 @@ using System.Collections.Generic;
 using ArtificeToolkit.Attributes;
 using Assets.Scripts.Core;
 using NnUtils.Scripts;
-using SadnessMonday.BetterPhysics;
+using NnUtils.Modules.Easings;
 using UnityEngine;
 
 namespace Assets.Scripts.Fruits
 {
     [RequireComponent(typeof(Collider))]
     [RequireComponent(typeof(Rigidbody))]
-    [RequireComponent(typeof(BetterRigidbody))]
+    [RequireComponent(typeof(Renderer))]
     [RequireComponent(typeof(Slice))]
     [RequireComponent(typeof(Fracture))]
-    public class FruitScript : MonoBehaviour, IFragmentable
+    public class FruitScript : MonoBehaviour, ISelectable, IFragmentable
     {
+        [FoldoutGroup("Components")]
         [SerializeField, Required] private Collider _collider;
+        [FoldoutGroup("Components")]
         [SerializeField, Required] private Rigidbody _rigidbody;
+        [FoldoutGroup("Components")]
+        [ValidateInput(nameof(RendererValidation))]
+        [SerializeField] private Renderer _renderer;
+
+        private bool RendererValidation(ref string msg)
+        {
+            if (!_renderer)
+            {
+                msg = "Fruit Renderer can't be null";
+                return false;
+            }
+            var materials = _renderer.sharedMaterials;
+            if (materials.Length < 2)
+            {
+                msg = "Fruit Renderer must have 2 materials, 2nd being the Outline";
+                return false;
+            }
+            return true;
+        }
+
         [SerializeField] private int _coins;
 
         [FoldoutGroup("Spawning")]
@@ -35,18 +57,35 @@ namespace Assets.Scripts.Fruits
         [FoldoutGroup("Destruction/Fracture")]
         [SerializeField, Required] private Fracture _fracture;
 
+        [FoldoutGroup("Outline")]
+        [SerializeField] private float _outlineTransitionDuration;
+        [FoldoutGroup("Outline")]
+        [SerializeField] private Easings.Type _outlineTransitionEasing;
+
         [FoldoutGroup("Particles")]
         [SerializeField] private Transform _particles;
         [FoldoutGroup("Particles")]
         [SerializeField] private List<ParticleSystem> _explosionParticles;
         private const float DestroyParticlesAfter = 11;
 
+        private Material _outlineMat;
+        private float _outlineThickness;
+
         private void Reset()
         {
             _collider = GetComponent<Collider>();
             _rigidbody = GetComponent<Rigidbody>();
+            _renderer = GetComponent<Renderer>();
             _slice = GetComponent<Slice>();
             _fracture = GetComponent<Fracture>();
+        }
+
+        private void Awake()
+        {
+            _outlineMat = _renderer.materials[1];
+            _outlineMat.SetFloat("_OutlineOpacity", 0);
+            _outlineThickness = _outlineMat.GetFloat("_OutlineThickness");
+            _outlineMat.SetFloat("_OutlineThickness", 1);
         }
 
         private void Start()
@@ -74,6 +113,44 @@ namespace Assets.Scripts.Fruits
                 yield return null;
             }
         }
+
+        public void Hover()
+        {
+            if (this == null) return;
+            this.RestartRoutine(ref _fadeOutlineRoutine,
+                FadeOutlineRoutine(1, _outlineThickness));
+        }
+
+        public void Unhover()
+        {
+            if (this == null) return;
+            this.RestartRoutine(ref _fadeOutlineRoutine, FadeOutlineRoutine());
+        }
+
+        public void Select() { }
+        public void Deselect() { }
+
+        private Coroutine _fadeOutlineRoutine;
+        private IEnumerator FadeOutlineRoutine(float opacity = 0, float thickness = 1)
+        {
+            var startOpacity = _outlineMat.GetFloat("_OutlineOpacity");
+            var startThickness = _outlineMat.GetFloat("_OutlineThickness");
+
+            float lerpPos = 0;
+            while (lerpPos < 1)
+            {
+                var t = Misc.Tween(
+                    ref lerpPos, _outlineTransitionDuration, _outlineTransitionEasing, true);
+                _outlineMat.SetFloat("_OutlineOpacity",
+                    Mathf.Lerp(startOpacity, opacity, t));
+                _outlineMat.SetFloat("_OutlineThickness",
+                    Mathf.Lerp(startThickness, thickness, t));
+                yield return null;
+            }
+
+            _fadeOutlineRoutine = null;
+        }
+
 
         public bool GetFractured(
             out List<FragmentScript> fragments,
@@ -132,7 +209,7 @@ namespace Assets.Scripts.Fruits
 
         private void GetDestroyed()
         {
-            StopCoroutine(_spawnRoutine);
+            this.StopRoutine(ref _spawnRoutine);
             _collider.enabled = false;
             _particles.SetParent(null);
             _explosionParticles.ForEach(x => x.Play());

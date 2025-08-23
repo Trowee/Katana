@@ -42,6 +42,7 @@
     <UnityVersion>6000.3.0a5</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Assets/Scripts/Core/ISelectable.cs" />
     <Compile Include="Assets/Scripts/Items/Item.cs" />
     <Compile Include="Assets/Scripts/Player/PlayerScript.cs" />
     <Compile Include="Assets/Scripts/Colosseum/DeathScreen.cs" />
