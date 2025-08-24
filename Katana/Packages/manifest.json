@@ -32,6 +32,7 @@
     "com.unity.toolchain.linux-x86_64": "2.0.10",
     "com.unity.ugui": "2.0.0",
     "com.unity.visualeffectgraph": "17.3.0",
+    "com.unitycommunity.unitysingleton": "https://github.com/UnityCommunity/UnitySingleton.git",
     "com.vertx.debugging": "https://github.com/vertxxyz/Vertx.Debugging.git",
     "com.wooshii.hierarchydecorator": "https://github.com/WooshiiDev/HierarchyDecorator.git",
     "com.yasirkula.assetusagedetector": "https://github.com/yasirkula/UnityAssetUsageDetector.git",
