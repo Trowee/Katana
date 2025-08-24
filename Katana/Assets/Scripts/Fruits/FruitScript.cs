@@ -40,10 +40,9 @@ namespace Assets.Scripts.Fruits
             return true;
         }
 
-        [SerializeField] private int _coins;
-
         [FoldoutGroup("Spawning")]
         [SerializeField] private float _spawnAnimTime = 0.25f;
+        [FoldoutGroup("Spawning")]
         [SerializeField] private AnimationCurve _spawnAnimCurve;
 
         [FoldoutGroup("Destruction")]
@@ -51,7 +50,7 @@ namespace Assets.Scripts.Fruits
         [FoldoutGroup("Destruction")]
         [SerializeField] private LayerMask _destructionMask;
         [FoldoutGroup("Destruction")]
-        [SerializeField] private float _minDestructionVelocity = 50;
+        [SerializeField] private int _rewardCoins;
 
         [FoldoutGroup("Destruction/Slice")]
         [SerializeField, Required] private Slice _slice;
@@ -67,7 +66,6 @@ namespace Assets.Scripts.Fruits
         [SerializeField] private Transform _particles;
         [FoldoutGroup("Particles")]
         [SerializeField] private List<ParticleSystem> _explosionParticles;
-        private const float DestroyParticlesAfter = 11;
 
         private Material _outlineMat;
         private float _outlineThickness;
@@ -99,6 +97,15 @@ namespace Assets.Scripts.Fruits
             if (col.gameObject != ColosseumSceneManager.Player.gameObject &&
                 ((1 << col.gameObject.layer) & _destructionMask) != 0)
                 GetFractured(out _);
+        }
+
+        private void SetParticleLifetime()
+        {
+            _explosionParticles.ForEach(x =>
+                {
+                    var main = x.main;
+                    main.startLifetime = ColosseumSceneManager.FruitParticleLifetime;
+                });
         }
 
         private Coroutine _spawnRoutine;
@@ -156,10 +163,11 @@ namespace Assets.Scripts.Fruits
             GameObject sender = null)
         {
             fragments = new();
-            if (impactVelocity != null && impactVelocity < _minDestructionVelocity) return false;
+            if (impactVelocity != null &&
+                impactVelocity < ColosseumSceneManager.DestructionVelocity) return false;
 
             if (sender == ColosseumSceneManager.Player.gameObject)
-                GameManager.ItemManager.RewardCoins(_coins);
+                GameManager.ItemManager.RewardCoins(_rewardCoins);
 
             fragments = HandleFragments(_fracture.ComputeFracture());
             GetDestroyed();
@@ -175,10 +183,11 @@ namespace Assets.Scripts.Fruits
             GameObject sender = null)
         {
             fragments = new();
-            if (impactVelocity != null && impactVelocity < _minDestructionVelocity) return false;
+            if (impactVelocity != null &&
+                impactVelocity < ColosseumSceneManager.DestructionVelocity) return false;
 
             if (sender == ColosseumSceneManager.Player.gameObject)
-                GameManager.ItemManager.RewardCoins(_coins);
+                GameManager.ItemManager.RewardCoins(_rewardCoins);
 
             fragments = HandleFragments(
                 _slice.ComputeSlice(sliceNormal, sliceOrigin));
@@ -211,7 +220,7 @@ namespace Assets.Scripts.Fruits
             _collider.enabled = false;
             _particles.SetParent(null);
             _explosionParticles.ForEach(x => x.Play());
-            Destroy(_particles.gameObject, DestroyParticlesAfter);
+            //Destroy(_particles.gameObject, ColosseumSceneManager.FruitParticleLifetime + 0.1f);
             Destroy(gameObject);
         }
     }

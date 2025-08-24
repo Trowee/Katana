@@ -3,52 +3,38 @@ using Assets.Scripts.Fruits;
 using Assets.Scripts.Player;
 using Assets.Scripts.Player.Camera;
 using UnityEngine;
+using UnityCommunity.UnitySingleton;
 
 namespace Assets.Scripts.Core
 {
     [RequireComponent(typeof(CameraManager))]
     [RequireComponent(typeof(ExplosionManagerScript))]
-    public class ColosseumSceneManager : MonoBehaviour
+    public class ColosseumSceneManager : MonoSingleton<ColosseumSceneManager>
     {
-        private static ColosseumSceneManager _instance;
-        public static ColosseumSceneManager Instance =>
-            _instance ? _instance : _instance = FindFirstObjectByType<ColosseumSceneManager>();
+        [SerializeField, Required] private CameraManager _cameraManager;
+        public static CameraManager CameraManager => Instance._cameraManager ??=
+            Instance.gameObject.GetComponent<CameraManager>();
 
-        [SerializeField, ReadOnly] private CameraManager _cameraManager;
-        public static CameraManager CameraManager
-        {
-            get
-            {
-                if (!Instance) return null;
-                return Instance._cameraManager ??= Instance.gameObject.GetComponent<CameraManager>();
-            }
-        }
-
-        [SerializeField, ReadOnly] private ExplosionManagerScript _explosionManager;
-        public static ExplosionManagerScript ExplosionManager
-        {
-            get
-            {
-                if (!Instance) return null;
-                return Instance._explosionManager ??= Instance.gameObject.GetComponent<ExplosionManagerScript>();
-            }
-        }
-
-        [FoldoutGroup("Dev")]
-        [SerializeField, ReadOnly]
-        private bool _isDead;
-        public static bool IsDead => Instance._isDead;
+        [SerializeField, Required] private ExplosionManagerScript _explosionManager;
+        public static ExplosionManagerScript ExplosionManager => Instance._explosionManager ??=
+            Instance.gameObject.GetComponent<ExplosionManagerScript>();
 
         [SerializeField, Required] private PlayerScript _player;
-        public static PlayerScript Player
-        {
-            get
-            {
-                if (!Instance) return null;
-                return Instance._player ??=
-                    GameObject.FindWithTag("Player")?.GetComponent<PlayerScript>();
-            }
-        }
+        public static PlayerScript Player => Instance._player ??=
+            GameObject.FindWithTag("Player")?.GetComponent<PlayerScript>();
+
+        [FoldoutGroup("Fruit")]
+        [Tooltip("Force required to destroy an object")]
+        [SerializeField] private float _destructionVelocity = 50;
+        public static float DestructionVelocity => Instance._destructionVelocity;
+
+        [FoldoutGroup("Fruit")]
+        [SerializeField] private float _fruitParticleLifetime = 10;
+        public static float FruitParticleLifetime => Instance._fruitParticleLifetime;
+
+        [FoldoutGroup("Dev")]
+        [SerializeField, ReadOnly] private bool _isDead;
+        public static bool IsDead => Instance._isDead;
 
         [SerializeField, Required] private GameObject _deathScreen;
 
@@ -57,17 +43,6 @@ namespace Assets.Scripts.Core
             _cameraManager = GetComponent<CameraManager>();
             _explosionManager = GetComponent<ExplosionManagerScript>();
             _player = GameObject.FindWithTag("Player")?.GetComponent<PlayerScript>();
-        }
-
-        private void Awake()
-        {
-            if (_instance && _instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
-
-            _instance = this;
         }
 
         private void Start()

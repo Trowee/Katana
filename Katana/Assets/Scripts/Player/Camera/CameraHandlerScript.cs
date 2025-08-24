@@ -4,11 +4,12 @@ using UnityEngine;
 
 namespace Assets.Scripts.Player.Camera
 {
-    [ExecuteAlways]
+    //TODO: fix edit mode for this, relies on the broken singleton
+    //[ExecuteAlways]
     public class CameraHandlerScript : MonoBehaviour
     {
         private static Transform Player => ColosseumSceneManager.Player.transform;
-        
+
         public Perspective Perspective;
         [SerializeField] private LayerMask _cameraCollisionMask;
 
@@ -33,14 +34,14 @@ namespace Assets.Scripts.Player.Camera
             if (_rotateCamera) Rotate();
             Offset();
         }
-        
+
         [HorizontalGroup, Button]
         private void AddToSceneManager()
         {
             var handlers = ColosseumSceneManager.CameraManager.Handlers;
             if (!handlers.Contains(this)) ColosseumSceneManager.CameraManager.Handlers.Add(this);
         }
-        
+
         [HorizontalGroup, Button]
         private void RemoveFromSceneManager()
         {
@@ -64,13 +65,13 @@ namespace Assets.Scripts.Player.Camera
             {
                 var targetPos = hit.point - dir.normalized * 0.1f;
                 if (_localOffset) transform.localPosition = parent.InverseTransformPoint(targetPos);
-                else transform.position                   = targetPos;
+                else transform.position = targetPos;
             }
             else
             {
                 if (_localOffset)
                     transform.localPosition = parent.InverseTransformPoint(desiredPos);
-                else transform.position     = desiredPos;
+                else transform.position = desiredPos;
             }
         }
 
