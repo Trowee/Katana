@@ -220,7 +220,7 @@ namespace Assets.Scripts.Fruits
             _collider.enabled = false;
             _particles.SetParent(null);
             _explosionParticles.ForEach(x => x.Play());
-            //Destroy(_particles.gameObject, ColosseumSceneManager.FruitParticleLifetime + 0.1f);
+            Destroy(_particles.gameObject, ColosseumSceneManager.FruitParticleLifetime + 0.1f);
             Destroy(gameObject);
         }
     }
