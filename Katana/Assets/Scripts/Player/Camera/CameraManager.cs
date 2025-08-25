@@ -13,7 +13,7 @@ namespace Assets.Scripts.Player.Camera
         [Required] public Transform CameraHolder;
         [Required] public UnityEngine.Camera Camera;
         [Required] public UnityEngine.Camera PlayerCamera;
-        
+
         #region Handlers
         /*[ListViewSettings(ShowAddRemoveFooter = false, ShowBoundCollectionSize = false),
          OnListViewChanged(
@@ -34,7 +34,7 @@ namespace Assets.Scripts.Player.Camera
             SwitchToDefaultHandler();
         }
         #endregion
-        
+
         private void Start()
         {
             SwitchToDefaultHandler();
@@ -43,19 +43,19 @@ namespace Assets.Scripts.Player.Camera
         private void SwitchToDefaultHandler()
         {
             if (Handlers.Count < 1) return;
-            SwitchCameraHandler(Handlers[0].Perspective, 0, Easings.Type.Linear);
+            SwitchCameraHandler(Handlers[0].Perspective, 0, EasingType.Linear);
         }
-        
+
         public void SwitchCameraHandler(Perspective perspective, float duration = 0,
-            Easings.Type easing = Easings.Type.Linear, bool unscaled = false)
+            EasingType easing = EasingType.Linear, bool unscaled = false)
             => SwitchCameraHandler(perspective, duration, easing, null, unscaled);
 
         public void SwitchCameraHandler(Perspective perspective, float duration = 0,
             AnimationCurve curve = null, bool unscaled = false)
-            => SwitchCameraHandler(perspective, duration, Easings.Type.Linear, curve, unscaled);
+            => SwitchCameraHandler(perspective, duration, EasingType.Linear, curve, unscaled);
 
         private void SwitchCameraHandler(Perspective perspective, float duration,
-            Easings.Type easing, AnimationCurve curve, bool unscaled)
+            EasingType easing, AnimationCurve curve, bool unscaled)
         {
             var handler = Handlers.FirstOrDefault(x => x.Perspective == perspective);
             if (!handler) return;
@@ -67,7 +67,7 @@ namespace Assets.Scripts.Player.Camera
         }
 
         private Coroutine _switchCameraRoutine;
-        private IEnumerator SwitchCameraRoutine(float duration, Easings.Type easing,
+        private IEnumerator SwitchCameraRoutine(float duration, EasingType easing,
             AnimationCurve curve, bool unscaled)
         {
             var startPos = CameraHolder.localPosition;

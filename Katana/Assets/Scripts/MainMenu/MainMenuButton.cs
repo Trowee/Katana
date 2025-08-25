@@ -12,7 +12,7 @@ namespace Assets.Scripts.MainMenu
         [SerializeField] private Vector3 _selectedPosition = Vector3.zero;
         [SerializeField] private Vector3 _deselectedPosition = Vector3.left * 0.5f;
         [SerializeField] private float _animationTime = 1;
-        [SerializeField] private Easings.Type _animationEasing = Easings.Type.ExpoOut;
+        [SerializeField] private EasingType _animationEasing = EasingType.ExpoOut;
 
         private void Reset()
         {
@@ -36,7 +36,7 @@ namespace Assets.Scripts.MainMenu
         private IEnumerator MoveRoutine(Vector3 targetPos)
         {
             var startPos = _mesh.localPosition;
-            
+
             float lerpPos = 0;
             while (lerpPos < 1)
             {

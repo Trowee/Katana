@@ -61,7 +61,7 @@ namespace Assets.Scripts.Player
         #endregion
 
         [FoldoutGroup("Camera"), SerializeField] private float _cameraSwitchDuration = 1;
-        [FoldoutGroup("Camera"), SerializeField] private Easings.Type _cameraSwitchEasing = Easings.Type.ExpoOut;
+        [FoldoutGroup("Camera"), SerializeField] private EasingType _cameraSwitchEasing = EasingType.ExpoOut;
 
         #region Movement
 

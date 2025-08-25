@@ -27,12 +27,12 @@ namespace Assets.Scripts.Core
 
         [FoldoutGroup("Components"), SerializeField] private Transform _dofPoint;
         [FoldoutGroup("Components"), SerializeField] private DepthOfField _dof;
-        
+
         [FoldoutGroup("Values"), SerializeField] private bool _followMouse;
         [FoldoutGroup("Values"), SerializeField] private LayerMask _layerMask;
         [FoldoutGroup("Values"), SerializeField] private float _defaultDistance = 100;
         [FoldoutGroup("Values"), SerializeField] private float _transitionTime = 1;
-        [FoldoutGroup("Values"), SerializeField] private Easings.Type _transitionEasing = Easings.Type.ExpoOut;
+        [FoldoutGroup("Values"), SerializeField] private EasingType _transitionEasing = EasingType.ExpoOut;
 
         private void Reset()
         {

@@ -12,7 +12,7 @@ namespace Assets.Scripts.Colosseum
         [HideInInspector, SerializeField] private DecalProjector _decalProjector;
         [SerializeField] private float _lifeTime = 10;
         [SerializeField] private float _fadeTime = 5;
-        [SerializeField] private Easings.Type _fadeEasing = Easings.Type.SineIn;
+        [SerializeField] private EasingType _fadeEasing = EasingType.SineIn;
 
         private void Reset()
         {

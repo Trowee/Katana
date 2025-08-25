@@ -60,7 +60,7 @@ namespace Assets.Scripts.Fruits
         [FoldoutGroup("Outline")]
         [SerializeField] private float _outlineTransitionDuration;
         [FoldoutGroup("Outline")]
-        [SerializeField] private Easings.Type _outlineTransitionEasing;
+        [SerializeField] private EasingType _outlineTransitionEasing;
 
         [FoldoutGroup("Particles")]
         [SerializeField] private Transform _particles;

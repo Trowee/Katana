@@ -16,7 +16,7 @@ namespace Assets.Scripts.MainMenu
     public class SettingsMenu : MonoBehaviour
     {
         private static SettingsManager Settings => GameManager.SettingsManager;
-        
+
         [FoldoutGroup("Graphics"), SerializeField, Required]
         private Toggle _useDOF;
         [FoldoutGroup("Graphics"), SerializeField, Required]
@@ -25,7 +25,7 @@ namespace Assets.Scripts.MainMenu
         private TMP_Dropdown _perspective;
         [FoldoutGroup("Graphics"), SerializeField, Required]
         private TMP_Dropdown _locale;
-        
+
         [FoldoutGroup("Audio"), SerializeField, Required]
         private Slider _masterVolume;
         [FoldoutGroup("Audio"), SerializeField, Required]
@@ -34,18 +34,18 @@ namespace Assets.Scripts.MainMenu
         private Slider _musicVolume;
         [FoldoutGroup("Audio"), SerializeField, Required]
         private Slider _ambienceVolume;
-        
+
         [FoldoutGroup("Tabs"), SerializeField, Required]
         private RectTransform _tabsPanel;
         [FoldoutGroup("Tabs"), SerializeField]
         private float _animationTime;
         [FoldoutGroup("Tabs"), SerializeField]
-        private Easings.Type _animationEasing;
+        private EasingType _animationEasing;
         [FoldoutGroup("Tabs"), SerializeField]
         private AnimationCurve _animationCurve;
-        
+
         private float _tabSize;
-        
+
         private void Start()
         {
             _tabSize = _tabsPanel.rect.width;
@@ -54,7 +54,7 @@ namespace Assets.Scripts.MainMenu
 
         private void UpdateUI()
         {
-            _useDOF.isOn      = Settings.UseDOF;
+            _useDOF.isOn = Settings.UseDOF;
             _motionBlur.value = Settings.MotionBlur;
             _perspective.value =
                 Array.IndexOf(Enum.GetValues(typeof(Perspective)), Settings.Perspective);
@@ -65,11 +65,11 @@ namespace Assets.Scripts.MainMenu
             _locale.SetValueWithoutNotify(LocalizationSettings
                                           .AvailableLocales.Locales
                                           .IndexOf(LocalizationSettings.SelectedLocale));
-            
+
             _masterVolume.value = Settings.MasterVolume;
-            _sfxVolume.value    = Settings.SFXVolume;
-            _musicVolume.value  = Settings.MusicVolume;
-            _ambienceVolume.value  = Settings.AmbienceVolume;
+            _sfxVolume.value = Settings.SFXVolume;
+            _musicVolume.value = Settings.MusicVolume;
+            _ambienceVolume.value = Settings.AmbienceVolume;
         }
 
         public void SwitchTab(int tabIndex) =>
@@ -81,7 +81,7 @@ namespace Assets.Scripts.MainMenu
             var startPos = _tabsPanel.anchoredPosition;
             var targetPos = startPos;
             targetPos.x = targetX;
-            
+
             float lerpPos = 0;
             while (lerpPos < 1)
             {
@@ -90,7 +90,7 @@ namespace Assets.Scripts.MainMenu
                 _tabsPanel.anchoredPosition = Vector2.LerpUnclamped(startPos, targetPos, t);
                 yield return null;
             }
-            
+
             _switchTabRoutine = null;
         }
 

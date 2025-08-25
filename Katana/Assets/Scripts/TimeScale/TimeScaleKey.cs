@@ -1,6 +1,5 @@
 using System;
 using NnUtils.Modules.Easings;
-using NnUtils.Scripts;
 
 namespace Assets.Scripts.TimeScale
 {
@@ -9,9 +8,9 @@ namespace Assets.Scripts.TimeScale
     {
         public float TimeScale;
         public float Time;
-        public Easings.Type Easing;
+        public EasingType Easing;
 
-        public TimeScaleKey(float timeScale = 1, float time = 0, Easings.Type easing = Easings.Type.Linear)
+        public TimeScaleKey(float timeScale = 1, float time = 0, EasingType easing = EasingType.Linear)
         {
             TimeScale = timeScale;
             Time = time;
