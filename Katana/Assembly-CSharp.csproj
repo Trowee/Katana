@@ -1303,6 +1303,10 @@
       <HintPath>Library/ScriptAssemblies/Unity.AI.Navigation.Editor.ConversionSystem.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="UnityCommunity.UnitySingleton">
+      <HintPath>Library/ScriptAssemblies/UnityCommunity.UnitySingleton.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.TerrainTools">
       <HintPath>Library/ScriptAssemblies/Unity.TerrainTools.dll</HintPath>
       <Private>False</Private>
