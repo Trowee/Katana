@@ -8,6 +8,7 @@ using Assets.Scripts.TimeScale;
 using NnUtils.Modules.Easings;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Vertx.Debugging;
 
 namespace Assets.Scripts.Player
 {
@@ -129,6 +130,7 @@ namespace Assets.Scripts.Player
                 Settings.Perspective, _cameraSwitchDuration,
                 _cameraSwitchEasing, unscaled: true);
             GetStuck(null);
+
         }
 
         private void Update()
