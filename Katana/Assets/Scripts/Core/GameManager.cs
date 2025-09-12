@@ -66,7 +66,7 @@ namespace Assets.Scripts.Core
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            TimeScaleManager.UpdateTimeScale(1, -100);
+            TimeScaleManager.SetTimeScale(1, -100);
         }
     }
 }

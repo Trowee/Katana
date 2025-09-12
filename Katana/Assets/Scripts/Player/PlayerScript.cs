@@ -267,7 +267,7 @@ namespace Assets.Scripts.Player
             _rb.AddRelativeForce(_dashForce, ForceMode.VelocityChange);
 
             // Apply timescale changes
-            GameManager.TimeScaleManager.UpdateTimeScale(_dashTimeScale);
+            GameManager.TimeScaleManager.SetTimeScale(_dashTimeScale);
         }
 
         private void Dodge()
@@ -285,7 +285,7 @@ namespace Assets.Scripts.Player
             _rb.AddRelativeForce(_dodgeForce, ForceMode.VelocityChange);
 
             // Apply timescale changes
-            GameManager.TimeScaleManager.UpdateTimeScale(_dodgeTimeScale);
+            GameManager.TimeScaleManager.SetTimeScale(_dodgeTimeScale);
         }
 
         private void Flip()
@@ -301,7 +301,7 @@ namespace Assets.Scripts.Player
             _rb.AddRelativeTorque(new(_flipRotation, 0), ForceMode.Impulse);
 
             // Apply timescale changes
-            GameManager.TimeScaleManager.UpdateTimeScale(_flipTimeScale);
+            GameManager.TimeScaleManager.SetTimeScale(_flipTimeScale);
         }
 
         private void ChangePerspective()
@@ -320,7 +320,7 @@ namespace Assets.Scripts.Player
         }
 
         private void EnterBulletTime() =>
-            GameManager.TimeScaleManager.UpdateTimeScale(_bulletTimeScale);
+            GameManager.TimeScaleManager.SetTimeScale(_bulletTimeScale);
 
         private void Stick(Collision col)
         {
@@ -445,7 +445,7 @@ namespace Assets.Scripts.Player
         public void Die()
         {
             StopAllCoroutines();
-            GameManager.TimeScaleManager.UpdateTimeScale(_deathTimeScale, 1000);
+            GameManager.TimeScaleManager.SetTimeScale(_deathTimeScale, 1000);
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             _katanaObject.SetActive(false);
