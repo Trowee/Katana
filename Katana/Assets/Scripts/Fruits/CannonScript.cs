@@ -27,15 +27,14 @@ namespace Assets.Scripts.Fruits
         private Vector2 _shootingTorqueRange = new(-360, 360);
         [FoldoutGroup("Shooting"), SerializeField]
         private Vector2 _shootingPauseRange = new(1, 3);
-        [FoldoutGroup("Shooting"), SerializeField,
-            ValidateInput(nameof(_projectilesValidation),
-                "Cannon must have at least 1 Projectile")]
+        [FoldoutGroup("Shooting"), SerializeField]
+        [ValidateInput(nameof(_projectilesValidation), "Cannon must have at least 1 Projectile")]
         private List<Rigidbody> _projectiles;
         private bool _projectilesValidation() => _projectiles.Count >= 1;
 
-        [FoldoutGroup("Shooting/Animation"), UnityEngine.Range(0, 1)]
+        [FoldoutGroup("Shooting/Animation"), UnityEngine.Range(0, 1), SerializeField]
         private float _cannonRotationIntensity = 0.25f;
-        [FoldoutGroup("Shooting/Animation")]
+        [FoldoutGroup("Shooting/Animation"), SerializeField]
         private float _wheelRotationIntensity = 40;
         [FoldoutGroup("Shooting/Animation"), SerializeField]
         private CannonAnimationKey AimAnimationKey;
@@ -44,19 +43,69 @@ namespace Assets.Scripts.Fruits
         [FoldoutGroup("Shooting/Animation"), SerializeField]
         private CannonAnimationKey ShootAnimationKey;
         [FoldoutGroup("Shooting/Animation"), SerializeField]
+        [ValidateInput(nameof(ValidatePauseBetweenShots))]
         private Vector2 _pauseBetweenShots = new(0.05f, 0.1f);
         [FoldoutGroup("Shooting/Animation"), SerializeField]
         private CannonAnimationKey FinalShotAnimationKey;
 
-        [FoldoutGroup("Shooting/VFX"), SerializeField]
+        private bool ValidatePauseBetweenShots(ref string msg)
+        {
+            var vfxDelay = _shotVFXDelayBetweenBursts * _shotVFXBurstCount;
+            if (vfxDelay <= Mathf.Min(_pauseBetweenShots.x, _pauseBetweenShots.y)) return true;
+
+            msg = $"{nameof(_pauseBetweenShots)} must be greater than {nameof(_shotVFXDelayBetweenBursts)} * {nameof(_shotVFXBurstCount)} ({vfxDelay}), expect weird behaviour";
+            return false;
+        }
+
+        [FoldoutGroup("Shooting/VFX"), SerializeField, ChildGameObjectsOnly]
+        //[ValidateInput(nameof(ValidateShotVFX))]
         private VisualEffect _shotVFX;
         [FoldoutGroup("Shooting/VFX"), SerializeField]
-        private int _shotVFXBurstCount = 5;
-        //TODO: Add validation for delay between bursts and shots
+        [ValidateInput(nameof(ValidateVFXBurstCount))]
+        private int _shotVFXBurstCount = 6;
         [FoldoutGroup("Shooting/VFX"), SerializeField]
-        private float _shotVFXDelayBetweenBursts = 0.05f;
+        [ValidateInput(nameof(ValidateVFXDelayBetweenBursts))]
+        private float _shotVFXDelayBetweenBursts = 0.025f;
         [FoldoutGroup("Shooting/VFX"), SerializeField]
         private AnimationCurve _shotVFXSpeedCurve;
+
+        private bool ValidateShotVFX(ref string msg)
+        {
+            if (!_shotVFX)
+            {
+                msg = $"{nameof(_shotVFX)} is required";
+                return false;
+            }
+
+            // Getting capacity doesn't work in editor so just return true
+            return true;
+
+            var capacity = _shotVFX.GetParticleSystemInfo(0).capacity;
+            var spawnCount = _shotVFX.GetFloat("SpawnCount");
+            var particleCount = spawnCount * _shotVFXBurstCount;
+
+            if (particleCount > capacity)
+            {
+                msg = $"{_shotVFX} capacity will be exceeded, it must be at least {particleCount}";
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool ValidateVFXBurstCount(ref string msg)
+        {
+            if (_shotVFXBurstCount > 0) return true;
+            msg = $"{nameof(_shotVFXBurstCount)} must be greater than 0";
+            return false;
+        }
+
+        private bool ValidateVFXDelayBetweenBursts(ref string msg)
+        {
+            if (_shotVFXDelayBetweenBursts > 0) return true;
+            msg = $"{nameof(_shotVFXDelayBetweenBursts)} must be greater than 0";
+            return false;
+        }
 
         private IEnumerator Start()
         {
@@ -255,7 +304,8 @@ namespace Assets.Scripts.Fruits
             {
                 var t = _shotVFXBurstCount > 1 ? i / (_shotVFXBurstCount - 1f) : 0;
                 currentSpeedRange.y = Mathf.Lerp(
-                    _speedRange.x, _speedRange.y, _shotVFXSpeedCurve.Evaluate(t) * shotStrength);
+                    _speedRange.x, _speedRange.y,
+                    _shotVFXSpeedCurve.Evaluate(t) * Mathf.Max(0.5f, shotStrength));
                 _shotVFX.SetVector2("SpeedRange", currentSpeedRange);
                 _shotVFX.Play();
                 yield return new WaitForSeconds(_shotVFXDelayBetweenBursts);
