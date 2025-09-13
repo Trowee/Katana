@@ -115,8 +115,7 @@ namespace Assets.Scripts.Fruits
             float lerpPos = 0;
             while (lerpPos < 1)
             {
-                var t = _spawnAnimCurve.Evaluate(
-                    Misc.Tween(ref lerpPos, _spawnAnimTime, unscaled: true));
+                var t = _spawnAnimCurve.Evaluate(Misc.Tween(ref lerpPos, _spawnAnimTime));
                 transform.localScale = Vector3.Lerp(Vector3.zero, originalScale, t);
                 yield return null;
             }
