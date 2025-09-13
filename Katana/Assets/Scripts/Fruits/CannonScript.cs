@@ -58,22 +58,6 @@ namespace Assets.Scripts.Fruits
         [FoldoutGroup("Shooting/VFX"), SerializeField]
         private AnimationCurve _shotVFXSpeedCurve;
 
-        private IEnumerator ShootVFXRoutine()
-        {
-            var _speedRange = _shotVFX.GetVector2("SpeedRange");
-            var currentSpeedRange = _speedRange;
-            for (int i = 0; i < _shotVFXBurstCount; i++)
-            {
-                var t = _shotVFXBurstCount > 1 ? i / (_shotVFXBurstCount - 1f) : 0;
-                currentSpeedRange.y = Mathf.Lerp(
-                    _speedRange.x, _speedRange.y, _shotVFXSpeedCurve.Evaluate(t));
-                _shotVFX.SetVector2("SpeedRange", currentSpeedRange);
-                _shotVFX.Play();
-                yield return new WaitForSeconds(_shotVFXDelayBetweenBursts);
-            }
-            _shotVFX.SetVector2("SpeedRange", _speedRange);
-        }
-
         private IEnumerator Start()
         {
             var startCannonPos = _cannon.localPosition;
@@ -241,19 +225,43 @@ namespace Assets.Scripts.Fruits
 
         private void ShootProjectile()
         {
+            var shotStrength = Random.Range(0f, 1f);
             var p = _projectiles[Random.Range(0, _projectiles.Count)];
             var projectile = Instantiate(p, _projectileSpawnPoint.position,
                 _projectileSpawnPoint.rotation);
 
-            var shootingForce = Random.Range(_shootingForceRange.x, _shootingForceRange.y);
+            var shootingForce = Mathf.Lerp(
+                _shootingForceRange.x, _shootingForceRange.y, shotStrength);
             projectile.AddRelativeForce(Vector3.forward * shootingForce, ForceMode.Impulse);
 
-            var shootingTorque = Random.Range(_shootingTorqueRange.x, _shootingTorqueRange.y);
+            var shootingTorque = Mathf.Lerp(
+                _shootingTorqueRange.x, _shootingTorqueRange.y, shotStrength);
             projectile.AddTorque(
                 new Vector3(Misc.Random1, Misc.Random1, Misc.Random1) * shootingTorque,
                 ForceMode.Impulse);
 
-            StartCoroutine(ShootVFXRoutine());
+            StartCoroutine(ShootVFXRoutine(shotStrength));
+        }
+
+        private IEnumerator ShootVFXRoutine(float shotStrength)
+        {
+            _shotVFX.transform.position = _projectileSpawnPoint.position;
+            _shotVFX.transform.rotation = _projectileSpawnPoint.rotation;
+
+            var _speedRange = _shotVFX.GetVector2("SpeedRange");
+            var currentSpeedRange = _speedRange;
+
+            for (int i = 0; i < _shotVFXBurstCount; i++)
+            {
+                var t = _shotVFXBurstCount > 1 ? i / (_shotVFXBurstCount - 1f) : 0;
+                currentSpeedRange.y = Mathf.Lerp(
+                    _speedRange.x, _speedRange.y, _shotVFXSpeedCurve.Evaluate(t) * shotStrength);
+                _shotVFX.SetVector2("SpeedRange", currentSpeedRange);
+                _shotVFX.Play();
+                yield return new WaitForSeconds(_shotVFXDelayBetweenBursts);
+            }
+
+            _shotVFX.SetVector2("SpeedRange", _speedRange);
         }
     }
 }
