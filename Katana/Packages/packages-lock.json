@@ -8,14 +8,14 @@
         "com.unity.editorcoroutines": "1.0.0",
         "com.unity.nuget.newtonsoft-json": "3.0.2"
       },
-      "hash": "f37d3285edce544892f46ad6a12b69ece93cc337"
+      "hash": "0d7227e7849bd583703f5c0ba278509b5906e964"
     },
     "com.bgtools.playerprefseditor": {
       "version": "https://github.com/Dysman/bgTools-playerPrefsEditor.git#upm",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "e98cb18702ec61457b051aad8a1862eab4f70b4e"
+      "hash": "211f644d5d859c06d22d7a7f5144b449d432ee09"
     },
     "com.coffee.ui-effect": {
       "version": "https://github.com/mob-sakai/UIEffect.git?path=Packages/src",
@@ -24,21 +24,21 @@
       "dependencies": {
         "com.unity.ugui": "1.0.0"
       },
-      "hash": "6f90044ec83adbd66475a6d2b5baa38e85678809"
+      "hash": "a975cf347a7ede954b2370703052f9545716fbaa"
     },
     "com.cqf.urpvolumetricfog": {
       "version": "https://github.com/CristianQiu/Unity-URP-Volumetric-Light.git",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "88053c1a52ec57cf2ea0afa30d6e915a1f078686"
+      "hash": "3f28b49218ca4c928ca0d4c3d508f0c0ddf43473"
     },
     "com.cysharp.zlinq": {
       "version": "https://github.com/Cysharp/ZLinq.git?path=src/ZLinq.Unity/Assets/ZLinq.Unity",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "d887c10ac0e13e0c2e57b03c57aafb54358c428d"
+      "hash": "a9ffb01a61e9f59374ed852367b63b3273e52065"
     },
     "com.github-glitchenzo.nugetforunity": {
       "version": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity",
@@ -96,7 +96,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "f5409aeae048d58f8318eac513adc6090853953d"
+      "hash": "c4dde156eb06fa2a970a065c798709b35f15f529"
     },
     "com.qiaozhilei.easy-text-effects": {
       "version": "https://github.com/LeiQiaoZhi/Easy-Text-Effect.git",
@@ -105,7 +105,7 @@
       "dependencies": {
         "com.unity.ugui": "1.0.0"
       },
-      "hash": "8e92bebf129bae32ab9d718346da37ba7c58f594"
+      "hash": "0e500390d9e1f46adb40b8cc2d5c80cedafdb1a3"
     },
     "com.redbluegames.mulligan": {
       "version": "https://github.com/redbluegames/unity-mulligan-renamer.git?path=/Assets/RedBlueGames/MulliganRenamer",
@@ -163,7 +163,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ai.navigation": {
-      "version": "2.0.8",
+      "version": "2.0.9",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -215,7 +215,7 @@
       "dependencies": {}
     },
     "com.unity.ide.rider": {
-      "version": "3.0.36",
+      "version": "3.0.37",
       "depth": 0,
       "source": "registry",
       "dependencies": {
