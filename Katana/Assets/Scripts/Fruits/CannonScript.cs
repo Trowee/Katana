@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ArtificeToolkit.Attributes;
 using NnUtils.Scripts;
 using UnityEngine;
+using UnityEngine.VFX;
 using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.Fruits
@@ -46,6 +47,32 @@ namespace Assets.Scripts.Fruits
         private Vector2 _pauseBetweenShots = new(0.05f, 0.1f);
         [FoldoutGroup("Shooting/Animation"), SerializeField]
         private CannonAnimationKey FinalShotAnimationKey;
+
+        [FoldoutGroup("Shooting/VFX"), SerializeField]
+        private VisualEffect _shotVFX;
+        [FoldoutGroup("Shooting/VFX"), SerializeField]
+        private int _shotVFXBurstCount = 5;
+        //TODO: Add validation for delay between bursts and shots
+        [FoldoutGroup("Shooting/VFX"), SerializeField]
+        private float _shotVFXDelayBetweenBursts = 0.05f;
+        [FoldoutGroup("Shooting/VFX"), SerializeField]
+        private AnimationCurve _shotVFXSpeedCurve;
+
+        private IEnumerator ShootVFXRoutine()
+        {
+            var _speedRange = _shotVFX.GetVector2("SpeedRange");
+            var currentSpeedRange = _speedRange;
+            for (int i = 0; i < _shotVFXBurstCount; i++)
+            {
+                var t = _shotVFXBurstCount > 1 ? i / (_shotVFXBurstCount - 1f) : 0;
+                currentSpeedRange.y = Mathf.Lerp(
+                    _speedRange.x, _speedRange.y, _shotVFXSpeedCurve.Evaluate(t));
+                _shotVFX.SetVector2("SpeedRange", currentSpeedRange);
+                _shotVFX.Play();
+                yield return new WaitForSeconds(_shotVFXDelayBetweenBursts);
+            }
+            _shotVFX.SetVector2("SpeedRange", _speedRange);
+        }
 
         private IEnumerator Start()
         {
@@ -225,6 +252,8 @@ namespace Assets.Scripts.Fruits
             projectile.AddTorque(
                 new Vector3(Misc.Random1, Misc.Random1, Misc.Random1) * shootingTorque,
                 ForceMode.Impulse);
+
+            StartCoroutine(ShootVFXRoutine());
         }
     }
 }
