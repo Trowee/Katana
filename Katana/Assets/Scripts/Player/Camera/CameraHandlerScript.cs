@@ -34,19 +34,28 @@ namespace Assets.Scripts.Player.Camera
             Offset();
         }
 
-        [HorizontalGroup, Button]
+        [HorizontalGroup("Management"), Button]
         private void AddToSceneManager()
         {
             var handlers = CameraManager.Handlers;
             if (!handlers.Contains(this)) CameraManager.Handlers.Add(this);
         }
 
-        [HorizontalGroup, Button]
+        [HorizontalGroup("Management"), Button]
         private void RemoveFromSceneManager()
         {
             var handlers = CameraManager.Handlers;
             if (handlers.Contains(this)) CameraManager.Handlers.Remove(this);
         }
+
+        [HorizontalGroup("Switching"), Button]
+        private void SiwtchToPreviousHandler() => CameraManager.SwitchToPreviousHandler();
+
+        [HorizontalGroup("Switching"), Button]
+        private void SiwtchToThisHandler() => CameraManager.SwitchCameraHandler(Perspective);
+
+        [HorizontalGroup("Switching"), Button]
+        private void SiwtchToNextHandler() => CameraManager.SwitchToNextHandler();
 
         private void Offset()
         {

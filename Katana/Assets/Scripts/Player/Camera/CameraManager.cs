@@ -78,6 +78,16 @@ namespace Assets.Scripts.Player.Camera
             SwitchCameraHandler(Handlers[0].Perspective, new());
         }
 
+        [HorizontalGroup("Switching"), Button]
+        public static void SwitchToPreviousHandler(
+            CameraAnimationSettings animationSettings = null, bool unscaled = true)
+        {
+            int index = Handlers.IndexOf(CurrentHandler) - 1;
+            index = index < 0 ? Handlers.Count - 1 : index;
+            SwitchCameraHandler(Handlers[index].Perspective, animationSettings, unscaled);
+        }
+
+        [HorizontalGroup("Switching"), Button]
         public static void SwitchToNextHandler(
             CameraAnimationSettings animationSettings = null, bool unscaled = true)
         {
