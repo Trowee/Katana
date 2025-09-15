@@ -445,7 +445,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "9416bf62bb893a1d416ff3c5ef83275164373f11"
+      "hash": "9184522a79adfc68c7da90fc03cd4cc66a3ece4a"
     },
     "com.vertx.debugging": {
       "version": "https://github.com/vertxxyz/Vertx.Debugging.git",
