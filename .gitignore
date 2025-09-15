@@ -1,4 +1,4 @@
-/Builds
+# Unity
 /Katana/IndexingPerformanceReport
 /Katana/Library
 /Katana/Logs
@@ -9,4 +9,19 @@
 /Katana/Assets/Ignore
 /Katana/Assets/Ignore.meta
 
+# IDE
+/Katana/.idea
+/Katana/.zed
+/Katana/.vs
+/Katana/.vscode
+
+# Misc
 *.blend1
+*.tmp
+mono_crash.*
+*.stackdump
+*.log
+!/rub.log
+
+# Builds
+/Builds
