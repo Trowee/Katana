@@ -1,10 +1,12 @@
 /Builds
+/Katana/IndexingPerformanceReport
 /Katana/Library
 /Katana/Logs
 /Katana/obj
 /Katana/Temp
 /Katana/UserSettings
-/Katana/Assets/Ignore/
+/Katana/Assets/_Recovery
+/Katana/Assets/Ignore
 /Katana/Assets/Ignore.meta
 
 *.blend1
