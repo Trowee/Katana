@@ -16,21 +16,13 @@ namespace Assets.Scripts.Player.Camera
         [FoldoutGroup("Position"), SerializeField] private Vector3 _offset;
         [Tooltip("Whether offset is applied locally or globally")]
         [FoldoutGroup("Position"), SerializeField] private bool _localOffset;
-        [Tooltip("If enabled, offset will be applied according to the rotation")]
-        [FoldoutGroup("Position"), SerializeField] private bool _translateOffset;
-
-        [Tooltip("Whether the camera will follow player's rotation")]
-        [FoldoutGroup("Rotation"), SerializeField] private bool _rotateCamera;
-        [Tooltip("Delta between the player rotation and camera rotation")]
-        [FoldoutGroup("Rotation"), SerializeField] private Vector3 _rotationOffset;
 
         private void OnEnable() => AddToSceneManager();
 
         private void Update()
         {
-            // Move camera to the player's position to allow for proper offset after rotation
+            // Move camera to the player's position to allow for proper offset
             transform.position = Player.position;
-            if (_rotateCamera) Rotate();
             Offset();
         }
 
@@ -62,8 +54,7 @@ namespace Assets.Scripts.Player.Camera
             var parent = transform.parent ? transform.parent : transform;
             var offset = _localOffset ? parent.TransformPoint(_offset) - Player.position : _offset;
 
-            var desiredPos = transform.position +
-                             (_translateOffset ? transform.TransformVector(offset) : offset);
+            var desiredPos = transform.position + offset;
             var dir = desiredPos - Player.position;
             var distance = dir.magnitude;
 
@@ -81,11 +72,6 @@ namespace Assets.Scripts.Player.Camera
                     transform.localPosition = parent.InverseTransformPoint(desiredPos);
                 else transform.position = desiredPos;
             }
-        }
-
-        private void Rotate()
-        {
-            transform.localRotation = Player.localRotation * Quaternion.Euler(_rotationOffset);
         }
     }
 }
