@@ -8,7 +8,6 @@ using Assets.Scripts.TimeScale;
 using NnUtils.Modules.Easings;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Vertx.Debugging;
 
 namespace Assets.Scripts.Player
 {

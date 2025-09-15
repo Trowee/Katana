@@ -4,8 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Player.Camera
 {
-    //TODO: fix edit mode for this, relies on the broken singleton
-    //[ExecuteAlways]
+    [ExecuteAlways]
     public class CameraHandlerScript : MonoBehaviour
     {
         private static Transform Player => ColosseumSceneManager.Player.transform;
