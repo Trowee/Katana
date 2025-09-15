@@ -37,15 +37,15 @@ namespace Assets.Scripts.Player.Camera
         [HorizontalGroup, Button]
         private void AddToSceneManager()
         {
-            var handlers = ColosseumSceneManager.CameraManager.Handlers;
-            if (!handlers.Contains(this)) ColosseumSceneManager.CameraManager.Handlers.Add(this);
+            var handlers = CameraManager.Handlers;
+            if (!handlers.Contains(this)) CameraManager.Handlers.Add(this);
         }
 
         [HorizontalGroup, Button]
         private void RemoveFromSceneManager()
         {
-            var handlers = ColosseumSceneManager.CameraManager.Handlers;
-            if (handlers.Contains(this)) ColosseumSceneManager.CameraManager.Handlers.Remove(this);
+            var handlers = CameraManager.Handlers;
+            if (handlers.Contains(this)) CameraManager.Handlers.Remove(this);
         }
 
         private void Offset()

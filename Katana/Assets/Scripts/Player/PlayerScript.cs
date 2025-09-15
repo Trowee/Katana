@@ -60,9 +60,6 @@ namespace Assets.Scripts.Player
 
         #endregion
 
-        [FoldoutGroup("Camera"), SerializeField] private float _cameraSwitchDuration = 1;
-        [FoldoutGroup("Camera"), SerializeField] private EasingType _cameraSwitchEasing = EasingType.ExpoOut;
-
         #region Movement
 
         [FoldoutGroup("Movement/Tilt"), SerializeField]
@@ -125,11 +122,8 @@ namespace Assets.Scripts.Player
         private void Start()
         {
             _renderer.sharedMaterial = GameManager.ItemManager.SelectedItem.Material;
-            ColosseumSceneManager.CameraManager.SwitchCameraHandler(
-                Settings.Perspective, _cameraSwitchDuration,
-                _cameraSwitchEasing, unscaled: true);
+            CameraManager.SwitchCameraHandler(Settings.Perspective);
             GetStuck(null);
-
         }
 
         private void Update()
@@ -307,15 +301,8 @@ namespace Assets.Scripts.Player
         {
             if (ColosseumSceneManager.IsDead) return;
 
-            Settings.Perspective = Settings.Perspective switch
-            {
-                Perspective.First => Perspective.Right,
-                Perspective.Right => Perspective.Third,
-                Perspective.Third => Perspective.Left,
-                _ => Perspective.First
-            };
-
-            ColosseumSceneManager.CameraManager.SwitchCameraHandler(Settings.Perspective, _cameraSwitchDuration, _cameraSwitchEasing, unscaled: true);
+            CameraManager.SwitchToNextHandler();
+            Settings.Perspective = CameraManager.CurrentPerspective;
         }
 
         private void EnterBulletTime() =>
