@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a4710c5f2e763cc68a7a3549454c63eb
+guid: 24b6fafceefc4bbc2b58803117ebb5df
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -12,8 +12,18 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: ColosseumFloor
+    second: {fileID: 2100000, guid: d8c3c6ed63fa5951d89eb019adeb6dab, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: ColosseumPit
-    second: {fileID: 2100000, guid: 151a1958f8260be0ea449c2a944237ff, type: 2}
+    second: {fileID: 2100000, guid: 75772cdb1d8bc7d648f7ada8c24a04e9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ColosseumStairs
+    second: {fileID: 2100000, guid: 0beeb7df44c1c87fa87f29dd7ebb86ef, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -45,7 +55,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
     importPhysicalCameras: 1
