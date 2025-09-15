@@ -15,6 +15,9 @@
 /Katana/.vs
 /Katana/.vscode
 
+# Builds
+/Builds
+
 # Misc
 *.blend1
 *.tmp
@@ -24,6 +27,3 @@ mono_crash.*
 !/rub.log
 *.csproj
 *.sln
-
-# Builds
-/Builds
