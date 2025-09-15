@@ -68,7 +68,7 @@ namespace Assets.Scripts.Core
             float lerpPos = 0;
             while (lerpPos < 1)
             {
-                var t = Misc.Tween(ref lerpPos, _transitionTime, _transitionEasing, true);
+                var t = Misc.Tween(ref lerpPos, _transitionTime, _transitionEasing, unscaled: true);
                 _distance = Mathf.Lerp(_previousDistance, _targetDistance, t);
                 _dof.focusDistance.value = _distance;
                 yield return null;

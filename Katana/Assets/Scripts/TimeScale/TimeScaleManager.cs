@@ -98,8 +98,9 @@ namespace Assets.Scripts.TimeScale
                 float lerpPos = 0;
                 while (lerpPos < 1)
                 {
-                    var t = Misc.Tween(ref lerpPos, timeScale.Time, timeScale.Easing, true,
-                     multiplier: SetPauseTimeScale ? 1 : PauseTimeScale);
+                    var t = Misc.Tween(
+                        ref lerpPos, timeScale.Time, timeScale.Easing, unscaled: true,
+                        multiplier: SetPauseTimeScale ? 1 : PauseTimeScale);
                     var ts = Mathf.Lerp(startTimeScale, timeScale.TimeScale, t);
                     if (SetPauseTimeScale) PauseTimeScale = ts;
                     else TimeScale = ts;

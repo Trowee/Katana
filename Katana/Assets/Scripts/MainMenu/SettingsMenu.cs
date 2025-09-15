@@ -86,7 +86,7 @@ namespace Assets.Scripts.MainMenu
             while (lerpPos < 1)
             {
                 var t = _animationCurve.Evaluate(
-                    Misc.Tween(ref lerpPos, _animationTime, _animationEasing, true));
+                    Misc.Tween(ref lerpPos, _animationTime, _animationEasing, unscaled: true));
                 _tabsPanel.anchoredPosition = Vector2.LerpUnclamped(startPos, targetPos, t);
                 yield return null;
             }

@@ -40,7 +40,7 @@ namespace Assets.Scripts.MainMenu
             float lerpPos = 0;
             while (lerpPos < 1)
             {
-                var t = Misc.Tween(ref lerpPos, _animationTime, _animationEasing, true);
+                var t = Misc.Tween(ref lerpPos, _animationTime, _animationEasing, unscaled: true);
                 _mesh.transform.localPosition = Vector3.LerpUnclamped(startPos, targetPos, t);
                 yield return null;
             }

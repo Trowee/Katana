@@ -26,7 +26,8 @@ namespace Assets.Scripts.Colosseum
             float lerpPos = 1;
             while (lerpPos > 0)
             {
-                var t = Misc.ReverseTween(ref lerpPos, _fadeTime, _fadeEasing, false, true);
+                var t = Misc.ReverseTween(ref lerpPos, _fadeTime, _fadeEasing,
+                    unscaled: false, invertEasing: true);
                 _decalProjector.fadeFactor = t;
                 yield return null;
             }

@@ -143,8 +143,8 @@ namespace Assets.Scripts.Fruits
             float lerpPos = 0;
             while (lerpPos < 1)
             {
-                var t = Misc.Tween(
-                    ref lerpPos, _outlineTransitionDuration, _outlineTransitionEasing, true);
+                var t = Misc.Tween(ref lerpPos, _outlineTransitionDuration,
+                    _outlineTransitionEasing, unscaled: true);
                 _outlineMat.SetFloat("_OutlineOpacity",
                     Mathf.Lerp(startOpacity, opacity, t));
                 _outlineMat.SetFloat("_OutlineThickness",

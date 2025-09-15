@@ -13,27 +13,7 @@ namespace Assets.Scripts.Player.Camera
         [Required] public Transform CameraHolder;
         [Required] public UnityEngine.Camera Camera;
         [Required] public UnityEngine.Camera PlayerCamera;
-
-        #region Handlers
-        /*[ListViewSettings(ShowAddRemoveFooter = false, ShowBoundCollectionSize = false),
-         OnListViewChanged(
-            OnItemChanged = nameof(HandleHandlersItemChanged),
-            OnItemIndexChanged = nameof(HandleHandlersIndexChanged)
-            )]*/
         public List<CameraHandlerScript> Handlers = new();
-
-        private void HandleHandlersItemChanged(int index, CameraHandlerScript handler)
-        {
-            if (index != 0) return;
-            SwitchToDefaultHandler();
-        }
-
-        private void HandleHandlersIndexChanged(int before, int after)
-        {
-            if (before != 0 && after != 0) return;
-            SwitchToDefaultHandler();
-        }
-        #endregion
 
         private void Start()
         {
@@ -76,12 +56,9 @@ namespace Assets.Scripts.Player.Camera
             float lerpPos = 0;
             while (lerpPos < 1)
             {
-                var t = Misc.Tween(ref lerpPos, duration, easing, unscaled);
-                if (curve != null) t = curve.Evaluate(t);
-
+                var t = Misc.Tween(ref lerpPos, duration, easing, curve, unscaled);
                 CameraHolder.localPosition = Vector3.Lerp(startPos, Vector3.zero, t);
                 CameraHolder.localRotation = Quaternion.Lerp(startRot, Quaternion.identity, t);
-
                 yield return null;
             }
 
