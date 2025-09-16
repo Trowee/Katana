@@ -6,6 +6,7 @@ using UnityEngine;
 #if STEAMAUDIO_ENABLED
 
 using SteamAudio;
+using Vector3 = UnityEngine.Vector3;
 
 #endif
 
@@ -188,10 +189,15 @@ namespace AudioManager
                             position = audioItem.Position
                         }
                     },
-                SourceType.Object => audioItem.AsChildObject
-                                         ? new(key.Name)
-                                         { transform = { parent = audioItem.Target.transform } }
-                                         : audioItem.Target,
+                SourceType.Object => audioItem.AsChildObject ?
+                    new(key.Name)
+                    {
+                        transform =
+                        {
+                            parent = audioItem.Target.transform,
+                            localPosition = Vector3.zero
+                        }
+                    } : audioItem.Target,
                 _ => throw new ArgumentOutOfRangeException()
             };
 
