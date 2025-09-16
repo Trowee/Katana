@@ -2,7 +2,8 @@
     "name": "nnra.AudioManager",
     "rootNamespace": "",
     "references": [
-        "GUID:bb2b36e553b3dcb4f83b3babae58fa1a"
+        "GUID:bb2b36e553b3dcb4f83b3babae58fa1a",
+        "GUID:558d81aa619cc114fbdab8165212bc9d"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

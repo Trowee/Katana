@@ -5,6 +5,13 @@ using AudioManager.Effects;
 using UnityEngine;
 using UnityEngine.Audio;
 
+#if STEAMAUDIO_ENABLED
+
+using SteamAudio;
+using Vector3 = UnityEngine.Vector3;
+
+#endif
+
 namespace AudioManager
 {
     [Serializable]
@@ -159,10 +166,24 @@ namespace AudioManager
 
         public AudioEffects Effects => UseEffectsPreset ? AudioEffectsPreset.Effects : AudioEffects;
 
-        [Required]
         [EnableIf(nameof(UseEffectsPreset), true)]
+        [Required]
         [PreviewScriptable]
         public AudioEffectsPreset AudioEffectsPreset;
+
+#if STEAMAUDIO_ENABLED
+
+        [Title("Steam Audio")]
+        public bool OverrideSteamAudioSource = false;
+
+        [EnableIf(nameof(OverrideSteamAudioSource), true)]
+        public bool UseSteamAudioSource = false;
+
+        [EnableIf(nameof(OverrideSteamAudioSource), true)]
+        [Required]
+        public SteamAudioSource SteamAudioSourcePreset;
+
+#endif
 
         public AudioItem() : this(ResourceAssignmentType.ResourceItem)
         {
@@ -195,45 +216,65 @@ namespace AudioManager
             tweaks: resourceItem.Tweaks,
             useEffectsPreset: resourceItem.UseEffectsPreset,
             audioEffects: resourceItem.AudioEffects,
-            audioEffectsPreset: resourceItem.AudioEffectsPreset)
+            audioEffectsPreset: resourceItem.AudioEffectsPreset
+
+#if STEAMAUDIO_ENABLED
+
+            ,
+            overrideSteamAudioSource: true,
+            useSteamAudioSource: resourceItem.UseSteamAudioSource,
+            steamAudioSourcePreset: resourceItem.SteamAudioSourcePreset
+
+#endif
+        )
         {
         }
 
-        public AudioItem(ResourceAssignmentType resourceAssignmentType = default,
-                         AudioResourceItem audioResourceItem = null,
-                         AudioResource audioResource = null,
-                         string audioResourceName = null,
-                         SourceType sourceType = default,
-                         bool reuseSource = true,
-                         bool overridePlayOnAwake = false,
-                         bool playOnAwake = false,
-                         bool overrideLoop = false,
-                         bool loop = false,
-                         bool overrideScaled = false,
-                         bool scaled = true,
-                         bool destroySourceOnFinished = false,
-                         bool destroyTargetOnFinished = false,
-                         Vector3 position = default,
-                         bool asChildObject = true,
-                         bool assignTargetAtRuntime = false,
-                         GameObject target = null,
-                         bool overrideFadeIn = false,
-                         bool fadeIn = false,
-                         float fadeInTime = 0,
-                         Easings.Type fadeInEasing = Easings.Type.Linear,
-                         bool fadeInScale = true,
-                         bool fadeInScaleWithPitch = true,
-                         bool overrideFadeOut = false,
-                         bool fadeOut = false,
-                         float fadeOutTime = 0,
-                         Easings.Type fadeOutEasing = Easings.Type.Linear,
-                         bool fadeOutScale = true,
-                         bool fadeOutScaleWithPitch = true,
-                         bool reloadTweaksEveryPlay = true,
-                         List<IAppliable<AudioSource>> tweaks = null,
-                         bool useEffectsPreset = false,
-                         AudioEffects audioEffects = null,
-                         AudioEffectsPreset audioEffectsPreset = null)
+        public AudioItem(
+            ResourceAssignmentType resourceAssignmentType = default,
+            AudioResourceItem audioResourceItem = null,
+            AudioResource audioResource = null,
+            string audioResourceName = null,
+            SourceType sourceType = default,
+            bool reuseSource = true,
+            bool overridePlayOnAwake = false,
+            bool playOnAwake = false,
+            bool overrideLoop = false,
+            bool loop = false,
+            bool overrideScaled = false,
+            bool scaled = true,
+            bool destroySourceOnFinished = false,
+            bool destroyTargetOnFinished = false,
+            Vector3 position = default,
+            bool asChildObject = true,
+            bool assignTargetAtRuntime = false,
+            GameObject target = null,
+            bool overrideFadeIn = false,
+            bool fadeIn = false,
+            float fadeInTime = 0,
+            Easings.Type fadeInEasing = Easings.Type.Linear,
+            bool fadeInScale = true,
+            bool fadeInScaleWithPitch = true,
+            bool overrideFadeOut = false,
+            bool fadeOut = false,
+            float fadeOutTime = 0,
+            Easings.Type fadeOutEasing = Easings.Type.Linear,
+            bool fadeOutScale = true,
+            bool fadeOutScaleWithPitch = true,
+            bool reloadTweaksEveryPlay = true,
+            List<IAppliable<AudioSource>> tweaks = null,
+            bool useEffectsPreset = false,
+            AudioEffects audioEffects = null,
+            AudioEffectsPreset audioEffectsPreset = null
+#if STEAMAUDIO_ENABLED
+
+            ,
+            bool overrideSteamAudioSource = false,
+            bool useSteamAudioSource = false,
+            SteamAudioSource steamAudioSourcePreset = null
+
+#endif
+        )
         {
             ReuseSource = reuseSource;
             ResourceAssignmentType = resourceAssignmentType;
@@ -270,6 +311,14 @@ namespace AudioManager
             UseEffectsPreset = useEffectsPreset;
             AudioEffects = audioEffects ?? new();
             AudioEffectsPreset = audioEffectsPreset;
+
+#if STEAMAUDIO_ENABLED
+
+            OverrideSteamAudioSource = overrideSteamAudioSource;
+            UseSteamAudioSource = useSteamAudioSource;
+            SteamAudioSourcePreset = steamAudioSourcePreset;
+
+#endif
         }
 
         public string Name =>
@@ -300,5 +349,30 @@ namespace AudioManager
             Tweaks.ForEach(t => t?.Apply(source));
             return source;
         }
+
+#if STEAMAUDIO_ENABLED
+
+        public SteamAudioSource ApplySettingsToSteamAudioSource(SteamAudioSource target)
+        {
+            var flags =
+                System.Reflection.BindingFlags.Public |
+                System.Reflection.BindingFlags.Instance |
+                System.Reflection.BindingFlags.DeclaredOnly;
+
+            foreach (var pinfo in typeof(SteamAudioSource).GetProperties(flags))
+                if (pinfo.CanWrite)
+                    try
+                    {
+                        pinfo.SetValue(target, pinfo.GetValue(SteamAudioSourcePreset, null), null);
+                    }
+                    catch { }
+
+            foreach (var finfo in typeof(SteamAudioSource).GetFields(flags))
+                if (!finfo.IsStatic) finfo.SetValue(target, finfo.GetValue(SteamAudioSourcePreset));
+
+            return target;
+        }
+
+#endif
     }
 }

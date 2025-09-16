@@ -4,6 +4,13 @@ using AudioManager.Effects;
 using UnityEngine;
 using UnityEngine.Audio;
 
+#if STEAMAUDIO_ENABLED
+
+using SteamAudio;
+using Vector3 = UnityEngine.Vector3;
+
+#endif
+
 namespace AudioManager
 {
     [CreateAssetMenu(fileName = "ResourceItem",
@@ -30,10 +37,12 @@ namespace AudioManager
 
         [Title("Source")]
         [ValidateInput(nameof(ValidateSourceType),
-                       "SourceType can't be set to Object on an AudioResourceItem")]
+            "SourceType can't be set to Object on an AudioResourceItem")]
         [HideLabel]
         [EnumToggle]
         public SourceType SourceType;
+
+        private bool ValidateSourceType => SourceType != SourceType.Object;
 
         [EnableIf(nameof(SourceType), SourceType.Positional)]
         public Vector3 Position;
@@ -87,6 +96,15 @@ namespace AudioManager
         [PreviewScriptable]
         public AudioEffectsPreset AudioEffectsPreset;
 
-        private bool ValidateSourceType => SourceType != SourceType.Object;
+#if STEAMAUDIO_ENABLED
+
+        [Title("Steam Audio")]
+        public bool UseSteamAudioSource = false;
+
+        [EnableIf(nameof(UseSteamAudioSource), true)]
+        [Required]
+        public SteamAudioSource SteamAudioSourcePreset;
+
+#endif
     }
 }

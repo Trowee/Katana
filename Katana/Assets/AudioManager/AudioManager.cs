@@ -3,12 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+#if STEAMAUDIO_ENABLED
+
+using SteamAudio;
+
+#endif
+
 namespace AudioManager
 {
     public class AudioManager : MonoBehaviour
     {
         public readonly Dictionary<AudioManagerKey, HashSet<AudioManagerItem>> Items = new();
         private Transform _sourceParent;
+
+#if STEAMAUDIO_ENABLED
+
+        private SteamAudioProbeBatch _steamAudioProbeBatch;
+        public SteamAudioProbeBatch SteamAudioProbeBatch =>
+            _steamAudioProbeBatch ??= FindFirstObjectByType<SteamAudioProbeBatch>();
+
+#endif
 
         private void Awake()
         {
@@ -40,7 +54,7 @@ namespace AudioManager
             var foundItem = TryGetItem(key, audioItem, out var existingItem);
             var item = foundItem ? existingItem : CreateItem(key, audioItem);
 
-            item.ApplySettings(!foundItem).ApplyEffects();
+            item.ApplySettings(!foundItem).ApplyEffects().ApplySteamAudioSourceSettings();
             if (!foundItem && item.PlayOnAwake()) item.Play();
             return item;
         }
@@ -86,8 +100,7 @@ namespace AudioManager
             catch (Exception e)
             {
                 Debug.LogException(new(
-                                       $"(Audio Manager) Failed to create target for '{audioItem.Name}'",
-                                       e));
+                    $"(Audio Manager) Failed to create Target Object for '{audioItem.Name}'", e));
                 return null;
             }
 
@@ -106,10 +119,24 @@ namespace AudioManager
             catch (Exception e)
             {
                 Debug.LogException(new(
-                                       $"(Audio Manager) Failed to create source for '{audioItem.Name}'",
-                                       e));
+                    $"(Audio Manager) Failed to create Audio Source for '{audioItem.Name}'", e));
                 return null;
             }
+
+#if STEAMAUDIO_ENABLED
+
+            try
+            {
+                item.SteamAudioSource = CreateSteamAudioSource(item);
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(new(
+                    $"(Audio Manager) Failed to get or create Steam Audio Source for '{audioItem.Name}'", e));
+                return null;
+            }
+
+#endif
 
             return item;
         }
@@ -121,7 +148,7 @@ namespace AudioManager
 
         private AudioSource CreateSource(AudioManagerKey key, AudioManagerItem item)
         {
-            item.Source = item.gameObject.AddComponent<AudioSource>();
+            var Source = item.gameObject.AddComponent<AudioSource>();
 
             if (item.AudioItem.ReuseSource)
             {
@@ -134,8 +161,19 @@ namespace AudioManager
                 items.Add(item);
             }
 
-            return item.Source;
+            return Source;
         }
+
+#if STEAMAUDIO_ENABLED
+
+        private SteamAudioSource CreateSteamAudioSource(AudioManagerItem item) =>
+            (item.AudioItem.OverrideSteamAudioSource
+            ? item.AudioItem.UseSteamAudioSource
+            : item.OriginalAudioItem.UseSteamAudioSource)
+                ? item.gameObject.AddComponent<SteamAudioSource>()
+                : null;
+
+#endif
 
         private GameObject CreateSourceObject(AudioManagerKey key, AudioItem audioItem) =>
             key.SourceType switch
@@ -152,7 +190,7 @@ namespace AudioManager
                     },
                 SourceType.Object => audioItem.AsChildObject
                                          ? new(key.Name)
-                                             { transform = { parent = audioItem.Target.transform } }
+                                         { transform = { parent = audioItem.Target.transform } }
                                          : audioItem.Target,
                 _ => throw new ArgumentOutOfRangeException()
             };

@@ -4,6 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+#if STEAMAUDIO_ENABLED
+
+using SteamAudio;
+
+#endif
+
 namespace AudioManager
 {
     public class AudioManagerItem : MonoBehaviour
@@ -25,6 +31,12 @@ namespace AudioManager
         public AudioItem AudioItem;
 
         public AudioSource Source;
+
+#if STEAMAUDIO_ENABLED
+
+        public SteamAudioSource SteamAudioSource;
+
+#endif
 
         /// Whether item is paused
         public bool Paused { get; private set; }
@@ -58,6 +70,25 @@ namespace AudioManager
         {
             OriginalAudioItem.Effects.ApplyEffects(this);
             if (OriginalAudioItem != AudioItem) AudioItem.Effects.ApplyEffects(this);
+            return this;
+        }
+
+        public AudioManagerItem ApplySteamAudioSourceSettings()
+        {
+            if (AudioItem.OverrideSteamAudioSource)
+            {
+                if (!AudioItem.UseSteamAudioSource) return this;
+                AudioItem.ApplySettingsToSteamAudioSource(SteamAudioSource);
+            }
+            else
+            {
+                if (!OriginalAudioItem.UseSteamAudioSource) return this;
+                OriginalAudioItem.ApplySettingsToSteamAudioSource(SteamAudioSource);
+            }
+
+            // Apply the Steam Audio Probe Batch in case it was used
+            SteamAudioSource.pathingProbeBatch = Manager.SteamAudioProbeBatch;
+
             return this;
         }
 
