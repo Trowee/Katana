@@ -76,6 +76,7 @@ namespace AudioManager
         [ForceArtifice]
         public List<IAppliable<AudioSource>> Tweaks;
 
+        [Title("Effects")]
         public bool UseEffectsPreset = false;
 
         [EnableIf(nameof(UseEffectsPreset), false)]
