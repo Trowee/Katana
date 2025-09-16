@@ -1,7 +1,6 @@
 using System;
 using AudioManager.MinMax;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace AudioManager.Tweaks
 {
@@ -11,7 +10,10 @@ namespace AudioManager.Tweaks
         [MinMax(0, 10000, "")]
         public Vector2 DistanceRange = new(1, 500);
 
-        public void Apply(AudioSource source) =>
-            source.dopplerLevel = Random.Range(DistanceRange.x, DistanceRange.y);
+        public void Apply(AudioSource source)
+        {
+            source.minDistance = DistanceRange.x;
+            source.maxDistance = DistanceRange.y;
+        }
     }
 }
