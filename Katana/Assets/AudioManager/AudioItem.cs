@@ -94,50 +94,40 @@ namespace AudioManager
         [Required]
         public GameObject Target;
 
-        [HideInInspector]
+        [Title("Fade In")]
         public bool OverrideFadeIn;
 
-        [TabGroup("Fade In")]
-        [Optional(nameof(OverrideFadeIn))]
+        [EnableIf(nameof(OverrideFadeIn), true)]
         public bool FadeIn;
 
-        [TabGroup("Fade In")]
-        [Optional(nameof(OverrideFadeIn), displayCheckbox: false)]
+        [EnableIf(nameof(OverrideFadeIn), true)]
         public float FadeInTime;
 
-        [TabGroup("Fade In")]
-        [Optional(nameof(OverrideFadeIn), displayCheckbox: false)]
+        [EnableIf(nameof(OverrideFadeIn), true)]
         public Easings.Type FadeInEasing;
 
-        [TabGroup("Fade In")]
-        [Optional(nameof(OverrideFadeIn), displayCheckbox: false)]
+        [EnableIf(nameof(OverrideFadeIn), true)]
         public bool FadeInScale;
 
-        [TabGroup("Fade In")]
-        [Optional(nameof(OverrideFadeIn), displayCheckbox: false)]
+        [EnableIf(nameof(OverrideFadeIn), true)]
         public bool FadeInScaleWithPitch;
 
-        [HideInInspector]
+        [Title("Fade Out")]
         public bool OverrideFadeOut;
 
-        [TabGroup("Fade Out")]
-        [Optional(nameof(OverrideFadeOut))]
+        [EnableIf(nameof(OverrideFadeOut), true)]
         public bool FadeOut;
 
-        [TabGroup("Fade Out")]
-        [Optional(nameof(OverrideFadeOut), displayCheckbox: false)]
+        [EnableIf(nameof(OverrideFadeOut), true)]
         public float FadeOutTime;
 
-        [TabGroup("Fade Out")]
-        [Optional(nameof(OverrideFadeOut), displayCheckbox: false)]
+        [EnableIf(nameof(OverrideFadeOut), true)]
         public Easings.Type FadeOutEasing;
 
-        [TabGroup("Fade Out")]
-        [Optional(nameof(OverrideFadeOut), displayCheckbox: false)]
+        [EnableIf(nameof(OverrideFadeOut), true)]
         public bool FadeOutScale;
 
-        [TabGroup("Fade Out")]
-        [Optional(nameof(OverrideFadeOut), displayCheckbox: false)]
+        [EnableIf(nameof(OverrideFadeOut), true)]
         public bool FadeOutScaleWithPitch;
 
         [Title("Tweaks")]
