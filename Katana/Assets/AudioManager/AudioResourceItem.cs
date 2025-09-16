@@ -81,12 +81,11 @@ namespace AudioManager
         [EnableIf(nameof(UseEffectsPreset), false)]
         public AudioEffects AudioEffects;
 
-        [ValidateInput(nameof(ValidateEffectsPreset))]
         [EnableIf(nameof(UseEffectsPreset), true)]
+        [Required]
         [PreviewScriptable]
         public AudioEffectsPreset AudioEffectsPreset;
 
         private bool ValidateSourceType => SourceType != SourceType.Object;
-        private bool ValidateEffectsPreset => !UseEffectsPreset || AudioEffectsPreset;
     }
 }

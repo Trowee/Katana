@@ -5,8 +5,7 @@ namespace AudioManager.Effects
     [Serializable]
     public abstract class AudioEffect
     {
-        public bool Enabled;
+        public abstract Type GetEffectType();
         public abstract void ApplyEffect(AudioManagerItem item);
-        public abstract void ClearEffect(AudioManagerItem item);
     }
 }

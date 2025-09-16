@@ -18,24 +18,15 @@ namespace AudioManager.Effects
         [Range(0, 1)]
         public float WetMix = 1;
 
+        public override Type GetEffectType() => typeof(AudioEchoFilter);
+
         public override void ApplyEffect(AudioManagerItem item)
         {
-            if (!Enabled)
-            {
-                ClearEffect(item);
-                return;
-            }
-
             var filter = item.gameObject.GetOrAddComponent<AudioEchoFilter>();
-            item.EffectsByType[typeof(AudioEchoFilter)].Add(this);
-
             filter.delay = Delay;
             filter.decayRatio = DecayRatio;
             filter.dryMix = DryMix;
             filter.wetMix = WetMix;
         }
-
-        public override void ClearEffect(AudioManagerItem item) =>
-            item.EffectsByType[typeof(AudioEchoFilter)].Remove(this);
     }
 }

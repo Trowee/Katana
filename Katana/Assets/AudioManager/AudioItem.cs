@@ -7,7 +7,6 @@ using UnityEngine.Audio;
 
 namespace AudioManager
 {
-    // TODO: Replace ValidateInput with Required when fixed for EnableIf
     [Serializable]
     public class AudioItem
     {
@@ -17,20 +16,21 @@ namespace AudioManager
         public ResourceAssignmentType ResourceAssignmentType;
 
         [HideLabel]
-        [ValidateInput(nameof(ValidateResourceItem))]
         [EnableIf(nameof(ResourceAssignmentType), ResourceAssignmentType.ResourceItem)]
+        [Required]
         [PreviewScriptable]
         public AudioResourceItem AudioResourceItem;
 
         [HideLabel]
-        [ValidateInput(nameof(ValidateAudioResource))]
         [EnableIf(nameof(ResourceAssignmentType), ResourceAssignmentType.Resource)]
+        [Required]
         public AudioResource AudioResource;
 
         [HideLabel]
-        [ValidateInput(nameof(ValidateResourceName), "Audio Resource Name can't be empty")]
         [EnableIf(nameof(ResourceAssignmentType), ResourceAssignmentType.Name)]
+        [ValidateInput(nameof(ValidateResourceName), "Audio Resource Name can't be empty")]
         public string AudioResourceName;
+        private bool ValidateResourceName => !string.IsNullOrEmpty(AudioResourceName);
 
         [HorizontalGroup("Play")]
         [Title("Reuse Source")]
@@ -88,11 +88,10 @@ namespace AudioManager
         [EnableIf(nameof(SourceType), SourceType.Object)]
         public bool AssignTargetAtRuntime;
 
-        // TODO: Replace with a single EnableIf when implemented
         [HideLabel]
-        [ValidateInput(nameof(ValidateAttachTarget))]
-        [EnableIf(nameof(SourceType), SourceType.Object)]
         [EnableIf(nameof(AssignTargetAtRuntime), false)]
+        [EnableIf(nameof(SourceType), SourceType.Object)]
+        [Required]
         public GameObject Target;
 
         [HideInInspector]
@@ -149,19 +148,15 @@ namespace AudioManager
         public List<IAppliable<AudioSource>> Tweaks;
 
         [Title("Effects")]
-        public bool OverrideEffects;
-
-        [Optional(nameof(OverrideEffects), displayCheckbox: false)]
         public bool UseEffectsPreset;
 
         [EnableIf(nameof(UseEffectsPreset), false)]
-        // TODO: Report to artifice, it doesn't work under optional
-        //[Optional(nameof(OverrideEffects), displayCheckbox: false)]
         public AudioEffects AudioEffects;
 
-        [ValidateInput(nameof(ValidateEffectsPreset))]
+        public AudioEffects Effects => UseEffectsPreset ? AudioEffectsPreset.Effects : AudioEffects;
+
+        [Required]
         [EnableIf(nameof(UseEffectsPreset), true)]
-        [Optional(nameof(OverrideEffects), displayCheckbox: false)]
         [PreviewScriptable]
         public AudioEffectsPreset AudioEffectsPreset;
 
@@ -194,7 +189,6 @@ namespace AudioManager
             fadeOutScale: resourceItem.FadeOutScale,
             fadeOutScaleWithPitch: resourceItem.FadeOutScaleWithPitch,
             tweaks: resourceItem.Tweaks,
-            overrideEffects: true,
             useEffectsPreset: resourceItem.UseEffectsPreset,
             audioEffects: resourceItem.AudioEffects,
             audioEffectsPreset: resourceItem.AudioEffectsPreset)
@@ -233,7 +227,6 @@ namespace AudioManager
                          bool fadeOutScaleWithPitch = true,
                          bool reloadTweaksEveryPlay = true,
                          List<IAppliable<AudioSource>> tweaks = null,
-                         bool overrideEffects = false,
                          bool useEffectsPreset = false,
                          AudioEffects audioEffects = null,
                          AudioEffectsPreset audioEffectsPreset = null)
@@ -270,23 +263,10 @@ namespace AudioManager
             FadeOutScaleWithPitch = fadeOutScaleWithPitch;
             ReloadTweaksEveryPlay = reloadTweaksEveryPlay;
             Tweaks = tweaks;
-            OverrideEffects = overrideEffects;
             UseEffectsPreset = useEffectsPreset;
             AudioEffects = audioEffects ?? new();
             AudioEffectsPreset = audioEffectsPreset;
         }
-
-        private bool ValidateResourceItem =>
-            ResourceAssignmentType != ResourceAssignmentType.ResourceItem || AudioResourceItem;
-        private bool ValidateAudioResource =>
-            ResourceAssignmentType != ResourceAssignmentType.Resource || AudioResource;
-        private bool ValidateResourceName => !string.IsNullOrEmpty(AudioResourceName);
-        private bool ValidateAttachTarget =>
-            SourceType != SourceType.Object || AssignTargetAtRuntime || Target;
-
-        private bool ValidateEffectsPreset => !UseEffectsPreset || AudioEffectsPreset;
-
-        public AudioEffects Effects => UseEffectsPreset ? AudioEffectsPreset.Effects : AudioEffects;
 
         public string Name =>
             ResourceAssignmentType switch
@@ -304,7 +284,7 @@ namespace AudioManager
                 ResourceAssignmentType.Resource => AudioResource,
                 ResourceAssignmentType.Name => source.resource,
                 ResourceAssignmentType.Manual => throw new(
-                                                     "(Audio Item) ResourceAssignmentType must not be set to 'Manual' at the time of calling the GetAudioResource function"),
+                    "(Audio Item) ResourceAssignmentType must not be set to 'Manual' at the time of calling the GetAudioResource function"),
                 _ => throw new ArgumentOutOfRangeException()
             };
 

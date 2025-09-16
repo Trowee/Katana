@@ -27,17 +27,11 @@ namespace AudioManager.Effects
         [Range(0, 1)]
         public float Depth = 0.03f;
 
+        public override Type GetEffectType() => typeof(AudioChorusFilter);
+
         public override void ApplyEffect(AudioManagerItem item)
         {
-            if (!Enabled)
-            {
-                ClearEffect(item);
-                return;
-            }
-
             var filter = item.gameObject.GetOrAddComponent<AudioChorusFilter>();
-            item.EffectsByType[typeof(AudioChorusFilter)].Add(this);
-
             filter.dryMix = DryMix;
             filter.wetMix1 = WetMix1;
             filter.wetMix2 = WetMix2;
@@ -46,8 +40,5 @@ namespace AudioManager.Effects
             filter.rate = Rate;
             filter.depth = Depth;
         }
-
-        public override void ClearEffect(AudioManagerItem item) =>
-            item.EffectsByType[typeof(AudioChorusFilter)].Remove(this);
     }
 }

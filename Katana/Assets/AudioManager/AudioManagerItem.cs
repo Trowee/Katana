@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using AudioManager.Effects;
 using UnityEngine;
 
 namespace AudioManager
@@ -16,9 +15,9 @@ namespace AudioManager
         }
 
         public AudioManager Manager;
-        
+
         public AudioManagerKey Key;
-        
+
         /// AudioItem this Item was created from
         public AudioItem OriginalAudioItem;
 
@@ -32,16 +31,6 @@ namespace AudioManager
 
         /// Unscaled Pitch
         public float Pitch { get; private set; } = 1;
-
-        public readonly Dictionary<Type, HashSet<AudioEffect>> EffectsByType = new()
-        {
-            { typeof(AudioChorusFilter), new() },
-            { typeof(AudioDistortionFilter), new() },
-            { typeof(AudioEchoFilter), new() },
-            { typeof(AudioHighPassFilter), new() },
-            { typeof(AudioLowPassFilter), new() },
-            { typeof(AudioReverbFilter), new() }
-        };
 
         private readonly Dictionary<TweenType, Coroutine> _tweenRoutines = new();
 
@@ -67,22 +56,8 @@ namespace AudioManager
 
         public AudioManagerItem ApplyEffects()
         {
-            if (OriginalAudioItem.OverrideEffects)
-                OriginalAudioItem.Effects.ApplyEffects(this);
-            else OriginalAudioItem.Effects.ClearEffects(this);
-
-            if (AudioItem.OverrideEffects)
-            {
-                if (OriginalAudioItem != AudioItem)
-                    AudioItem.Effects.ApplyEffects(this);
-            }
-            else AudioItem.Effects.ClearEffects(this);
-
-            foreach (var ec in EffectsByType)
-                if (EffectsByType[ec.Key].Count < 1 &&
-                    gameObject.TryGetComponent(ec.Key, out var effect))
-                    DestroyImmediate(effect);
-
+            OriginalAudioItem.Effects.ApplyEffects(this);
+            if (OriginalAudioItem != AudioItem) AudioItem.Effects.ApplyEffects(this);
             return this;
         }
 
@@ -120,15 +95,7 @@ namespace AudioManager
             return this;
         }
 
-        private void DestroyEffects()
-        {
-            foreach (var (type, effects) in EffectsByType)
-            {
-                effects.Clear();
-                if (gameObject.TryGetComponent(type, out var effect))
-                    DestroyImmediate(effect);
-            }
-        }
+        private void DestroyEffects() => AudioItem.Effects.DestroyEffects(this);
 
         public AudioManagerItem Pause()
         {

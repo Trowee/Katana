@@ -12,22 +12,13 @@ namespace AudioManager.Effects
         [Range(1, 10)]
         public float LowPassResonanceQ = 1;
 
+        public override Type GetEffectType() => typeof(AudioLowPassFilter);
+
         public override void ApplyEffect(AudioManagerItem item)
         {
-            if (!Enabled)
-            {
-                ClearEffect(item);
-                return;
-            }
-
             var filter = item.gameObject.GetOrAddComponent<AudioLowPassFilter>();
-            item.EffectsByType[typeof(AudioLowPassFilter)].Add(this);
-
             filter.cutoffFrequency = LowPassCutoffFrequency;
             filter.lowpassResonanceQ = LowPassResonanceQ;
         }
-
-        public override void ClearEffect(AudioManagerItem item) =>
-            item.EffectsByType[typeof(AudioLowPassFilter)].Remove(this);
     }
 }
