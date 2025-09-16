@@ -94,40 +94,54 @@ namespace AudioManager
         [Required]
         public GameObject Target;
 
+        [HorizontalGroup("Fade")]
         [Title("Fade In")]
+        [HideLabel]
         public bool OverrideFadeIn;
 
+        [HorizontalGroup("Fade")]
+        [Title("Fade Out")]
+        [HideLabel]
+        public bool OverrideFadeOut;
+
         [EnableIf(nameof(OverrideFadeIn), true)]
+        [TabGroup("Fade In")]
         public bool FadeIn;
 
         [EnableIf(nameof(OverrideFadeIn), true)]
+        [TabGroup("Fade In")]
         public float FadeInTime;
 
         [EnableIf(nameof(OverrideFadeIn), true)]
+        [TabGroup("Fade In")]
         public Easings.Type FadeInEasing;
 
         [EnableIf(nameof(OverrideFadeIn), true)]
+        [TabGroup("Fade In")]
         public bool FadeInScale;
 
         [EnableIf(nameof(OverrideFadeIn), true)]
+        [TabGroup("Fade In")]
         public bool FadeInScaleWithPitch;
 
-        [Title("Fade Out")]
-        public bool OverrideFadeOut;
-
         [EnableIf(nameof(OverrideFadeOut), true)]
+        [TabGroup("Fade Out")]
         public bool FadeOut;
 
         [EnableIf(nameof(OverrideFadeOut), true)]
+        [TabGroup("Fade Out")]
         public float FadeOutTime;
 
         [EnableIf(nameof(OverrideFadeOut), true)]
+        [TabGroup("Fade Out")]
         public Easings.Type FadeOutEasing;
 
         [EnableIf(nameof(OverrideFadeOut), true)]
+        [TabGroup("Fade Out")]
         public bool FadeOutScale;
 
         [EnableIf(nameof(OverrideFadeOut), true)]
+        [TabGroup("Fade Out")]
         public bool FadeOutScaleWithPitch;
 
         [Title("Tweaks")]
