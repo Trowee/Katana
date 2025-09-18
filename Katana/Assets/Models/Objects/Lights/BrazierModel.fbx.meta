@@ -12,6 +12,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Brazier
+    second: {fileID: 2100000, guid: 72651f2276d3c2959b97d4842ef1c2b3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: BrazierMaterial
     second: {fileID: 2100000, guid: 72651f2276d3c2959b97d4842ef1c2b3, type: 2}
   materials:
@@ -45,7 +50,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
     importPhysicalCameras: 1
