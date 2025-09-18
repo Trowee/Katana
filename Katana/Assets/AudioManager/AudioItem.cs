@@ -189,97 +189,46 @@ namespace AudioManager
         {
         }
 
-        public AudioItem(AudioItem item) => new AudioItem().Copy(item);
-
-        public AudioItem Copy(AudioItem item)
-        {
-            ResourceAssignmentType = item.ResourceAssignmentType;
-            AudioResourceItem = item.AudioResourceItem;
-            AudioResource = item.AudioResource;
-            AudioResourceName = item.AudioResourceName;
-            SourceType = item.SourceType;
-            ReuseSource = item.ReuseSource;
-            OverridePlayOnAwake = item.OverridePlayOnAwake;
-            PlayOnAwake = item.PlayOnAwake;
-            OverrideLoop = item.OverrideLoop;
-            Loop = item.Loop;
-            OverrideScaled = item.OverrideScaled;
-            Scaled = item.Scaled;
-            DestroySourceOnFinished = item.DestroySourceOnFinished;
-            DestroyTargetOnFinished = item.DestroyTargetOnFinished;
-            Position = item.Position;
-            AsChildObject = item.AsChildObject;
-            AssignTargetAtRuntime = item.AssignTargetAtRuntime;
-            Target = item.Target;
-            OverrideFadeIn = item.OverrideFadeIn;
-            FadeIn = item.FadeIn;
-            FadeInTime = item.FadeInTime;
-            FadeInEasing = item.FadeInEasing;
-            FadeInScale = item.FadeInScale;
-            FadeInScaleWithPitch = item.FadeInScaleWithPitch;
-            OverrideFadeOut = item.OverrideFadeOut;
-            FadeOut = item.FadeOut;
-            FadeOutTime = item.FadeOutTime;
-            FadeOutEasing = item.FadeOutEasing;
-            FadeOutScale = item.FadeOutScale;
-            FadeOutScaleWithPitch = item.FadeOutScaleWithPitch;
-            ReloadTweaksEveryPlay = item.ReloadTweaksEveryPlay;
-            Tweaks = item.Tweaks;
-            UseEffectsPreset = item.UseEffectsPreset;
-            AudioEffects = item.AudioEffects;
-            AudioEffectsPreset = item.AudioEffectsPreset;
+        public AudioItem(AudioResourceItem resourceItem) : this(
+            ResourceAssignmentType.ResourceItem,
+            resourceItem,
+            sourceType: SourceType.Manager,
+            reuseSource: true,
+            overridePlayOnAwake: true,
+            playOnAwake: resourceItem.PlayOnAwake,
+            overrideLoop: true,
+            loop: resourceItem.Loop,
+            overrideScaled: true,
+            scaled: resourceItem.Scaled,
+            position: resourceItem.Position,
+            overrideFadeIn: true,
+            fadeIn: resourceItem.FadeIn,
+            fadeInTime: resourceItem.FadeInTime,
+            fadeInEasing: resourceItem.FadeInEasing,
+            fadeInScale: resourceItem.FadeInScale,
+            fadeInScaleWithPitch: resourceItem.FadeInScaleWithPitch,
+            overrideFadeOut: true,
+            fadeOut: resourceItem.FadeOut,
+            fadeOutTime: resourceItem.FadeOutTime,
+            fadeOutEasing: resourceItem.FadeOutEasing,
+            fadeOutScale: resourceItem.FadeOutScale,
+            fadeOutScaleWithPitch: resourceItem.FadeOutScaleWithPitch,
+            tweaks: resourceItem.Tweaks,
+            useEffectsPreset: resourceItem.UseEffectsPreset,
+            audioEffects: resourceItem.AudioEffects,
+            audioEffectsPreset: resourceItem.AudioEffectsPreset
 
 #if STEAMAUDIO_ENABLED
 
-            OverrideSteamAudioSource = item.OverrideSteamAudioSource;
-            UseSteamAudioSource = item.UseSteamAudioSource;
-            SteamAudioSourcePreset = item.SteamAudioSourcePreset;
+            ,
+            overrideSteamAudioSource: true,
+            useSteamAudioSource: resourceItem.UseSteamAudioSource,
+            steamAudioSourcePreset: resourceItem.SteamAudioSourcePreset
 
 #endif
-            return this;
-        }
-
-        public AudioItem(AudioResourceItem resourceItem) => new AudioItem().Copy(resourceItem);
-
-        public AudioItem Copy(AudioResourceItem resourceItem)
+        )
         {
-            ResourceAssignmentType = ResourceAssignmentType.ResourceItem;
-            AudioResourceItem = resourceItem;
-            SourceType = resourceItem.SourceType;
-            OverridePlayOnAwake = true;
-            PlayOnAwake = resourceItem.PlayOnAwake;
-            OverrideLoop = true;
-            Loop = resourceItem.Loop;
-            OverrideScaled = true;
-            Scaled = resourceItem.Scaled;
-            Position = resourceItem.Position;
-            OverrideFadeIn = true;
-            FadeIn = resourceItem.FadeIn;
-            FadeInTime = resourceItem.FadeInTime;
-            FadeInEasing = resourceItem.FadeInEasing;
-            FadeInScale = resourceItem.FadeInScale;
-            FadeInScaleWithPitch = resourceItem.FadeInScaleWithPitch;
-            OverrideFadeOut = true;
-            FadeOut = resourceItem.FadeOut;
-            FadeOutTime = resourceItem.FadeOutTime;
-            FadeOutEasing = resourceItem.FadeOutEasing;
-            FadeOutScale = resourceItem.FadeOutScale;
-            FadeOutScaleWithPitch = resourceItem.FadeOutScaleWithPitch;
-            Tweaks = resourceItem.Tweaks;
-            UseEffectsPreset = resourceItem.UseEffectsPreset;
-            AudioEffects = resourceItem.AudioEffects;
-            AudioEffectsPreset = resourceItem.AudioEffectsPreset;
-
-#if STEAMAUDIO_ENABLED
-
-            OverrideSteamAudioSource = true;
-            UseSteamAudioSource = resourceItem.UseSteamAudioSource;
-            SteamAudioSourcePreset = resourceItem.SteamAudioSourcePreset;
-
-#endif
-            return this;
         }
-
 
         public AudioItem(
             ResourceAssignmentType resourceAssignmentType = default,
