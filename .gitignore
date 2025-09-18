@@ -15,6 +15,10 @@
 /Katana/.vs
 /Katana/.vscode
 
+# Reaper
+*.reappeaks
+*.rpp-bak
+
 # Builds
 /Builds
 
