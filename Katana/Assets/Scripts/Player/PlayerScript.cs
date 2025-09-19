@@ -136,6 +136,8 @@ namespace Assets.Scripts.Player
 
         private void CheckForTargets()
         {
+            if (ColosseumSceneManager.IsDead) return;
+
             var halfExtents = Vector3.Scale(_collider.size * 0.4f, _collider.transform.lossyScale);
 
             // Calculate the collider center
