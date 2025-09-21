@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7f879838da757c5cb96b4bf392321c7a
+guid: a70a30f940848e243af4b0e77a80a46e
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -7,23 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: ColosseumTorchMaterial
+      name: ArenaFix
+    second: {fileID: 2100000, guid: 8fdc19f5e2844d1478b9c0f64d6267db, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TorchMaterial
     second: {fileID: 2100000, guid: 0282d822c2dfb9218bc827a4e18f6d9c, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Nail
-    second: {fileID: 2100000, guid: 176f3851335b3f8f7a43069357a8934b, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Torch
-    second: {fileID: 2100000, guid: 0282d822c2dfb9218bc827a4e18f6d9c, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: WallHolder
-    second: {fileID: 2100000, guid: 82409e5e2c965b14c800bd87f3455fc3, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -55,7 +45,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
     importPhysicalCameras: 1
@@ -82,7 +72,7 @@ ModelImporter:
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
-    secondaryUVAreaDistortion: 15
+    secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVMarginMethod: 1
     secondaryUVMinLightmapResolution: 40
