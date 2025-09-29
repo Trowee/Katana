@@ -8,7 +8,7 @@
         "com.unity.editorcoroutines": "1.0.0",
         "com.unity.nuget.newtonsoft-json": "3.0.2"
       },
-      "hash": "0d7227e7849bd583703f5c0ba278509b5906e964"
+      "hash": "edeb8bae3c0602a9424fee990373c0afa1ce4c81"
     },
     "com.bgtools.playerprefseditor": {
       "version": "https://github.com/Dysman/bgTools-playerPrefsEditor.git#upm",
