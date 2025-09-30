@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 350ef89042164ce48be1bb542836448c
 ModelImporter:
-  serializedVersion: 22200
+  serializedVersion: 24200
   internalIDToNameTable: []
   externalObjects:
   - first:
@@ -14,6 +14,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: AppleTree
     second: {fileID: 2100000, guid: f6b7628eddb4ca249b7a4fc14e9606cb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: apple
+    second: {fileID: 2100000, guid: 5e416547e95d1c74eacd20427436f390, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -66,6 +71,9 @@ ModelImporter:
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
     optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
