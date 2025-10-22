@@ -8,7 +8,7 @@
         "com.unity.editorcoroutines": "1.0.0",
         "com.unity.nuget.newtonsoft-json": "3.0.2"
       },
-      "hash": "edeb8bae3c0602a9424fee990373c0afa1ce4c81"
+      "hash": "78a645b33d79980b9eb8aeb71522bb674b57da24"
     },
     "com.bgtools.playerprefseditor": {
       "version": "https://github.com/Dysman/bgTools-playerPrefsEditor.git#upm",
@@ -24,7 +24,7 @@
       "dependencies": {
         "com.unity.ugui": "1.0.0"
       },
-      "hash": "9380f96572e8c3b09a2d553e5d32fbbe0381ed4d"
+      "hash": "a885fc5bc117b9eaa92b1b75709c8384141cc4a7"
     },
     "com.cqf.urpvolumetricfog": {
       "version": "https://github.com/CristianQiu/Unity-URP-Volumetric-Light.git",
@@ -38,7 +38,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "ac8c2887ab0bf33c878f5c454b180dfa84c86c0c"
+      "hash": "f59785046a36605378e18678af15ee66549aa26b"
     },
     "com.github-glitchenzo.nugetforunity": {
       "version": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity",
@@ -96,7 +96,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "c4dde156eb06fa2a970a065c798709b35f15f529"
+      "hash": "01c22f7ecae77bbf848806c780b627ce6c4d0980"
     },
     "com.qiaozhilei.easy-text-effects": {
       "version": "https://github.com/LeiQiaoZhi/Easy-Text-Effect.git",
@@ -224,11 +224,11 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.23",
+      "version": "2.0.25",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.test-framework": "1.1.9"
+        "com.unity.test-framework": "1.1.31"
       },
       "url": "https://packages.unity.com"
     },
@@ -242,7 +242,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.localization": {
-      "version": "1.5.7",
+      "version": "1.5.8",
       "depth": 0,
       "source": "registry",
       "dependencies": {
