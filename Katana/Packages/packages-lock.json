@@ -8,7 +8,7 @@
         "com.unity.editorcoroutines": "1.0.0",
         "com.unity.nuget.newtonsoft-json": "3.0.2"
       },
-      "hash": "78a645b33d79980b9eb8aeb71522bb674b57da24"
+      "hash": "d1689e6d38ba350faf118f0b4de9988ce4bef257"
     },
     "com.bgtools.playerprefseditor": {
       "version": "https://github.com/Dysman/bgTools-playerPrefsEditor.git#upm",
@@ -413,7 +413,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.toolchain.linux-x86_64": {
-      "version": "2.0.10",
+      "version": "2.0.11",
       "depth": 0,
       "source": "registry",
       "dependencies": {
