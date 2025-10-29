@@ -89,7 +89,7 @@
       "dependencies": {
         "com.unity.editorcoroutines": "1.0.0"
       },
-      "hash": "1bedf0c19659316659a147089a9ccd1a60d28037"
+      "hash": "3a12aabc79dd707d537942aca2c6c9c1ab7ac3c3"
     },
     "com.opalstudio.customtoolbar": {
       "version": "https://github.com/Alaxxxx/CustomToolbar.git",
