@@ -9,6 +9,11 @@
 /Katana/Assets/Ignore
 /Katana/Assets/Ignore.meta
 
+# Baked Maps
+/Katana/Assets/Scenes/*/*Scene/*.exr
+/Katana/Assets/Scenes/*/*Scene/*.png
+/Katana/Assets/Scenes/*/*Scene/*.bytes
+
 # IDE
 /Katana/.idea
 /Katana/.zed
