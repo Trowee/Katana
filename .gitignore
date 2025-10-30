@@ -36,3 +36,4 @@ mono_crash.*
 !/rub.log
 *.csproj
 *.sln
+*.slnx
