@@ -1,0 +1,214 @@
+<?xml version="1.0"?>
+<xliff xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0" srcLang="en" trgLang="sr-Cyrl" xmlns="urn:oasis:names:tc:xliff:document:2.0">
+  <file id="c3f0e8408e83e70e6bc6fe14714beaf7" original="Assets/Localization/Tables/Katanas/Katanas_sr-Cyrl.asset">
+    <group id="bdfa180f17056523fa429777fc3414cf" name="Katanas">
+      <unit id="856096968704" name="Ancient" xml:space="preserve">
+        <segment>
+          <source>Ancient</source>
+          <target>Древна</target>
+        </segment>
+      </unit>
+      <unit id="901718413312" name="Modern" xml:space="preserve">
+        <segment>
+          <source>Modern</source>
+          <target>Модерна</target>
+        </segment>
+      </unit>
+      <unit id="925651111936" name="Whiteout" xml:space="preserve">
+        <segment>
+          <source>Whiteout</source>
+          <target>Мећава</target>
+        </segment>
+      </unit>
+      <unit id="956550549504" name="Carbon Fiber" xml:space="preserve">
+        <segment>
+          <source>Carbon Fiber</source>
+          <target>Угљена</target>
+        </segment>
+      </unit>
+      <unit id="996681650176" name="Case Hardened" xml:space="preserve">
+        <segment>
+          <source>Case Hardened</source>
+          <target>Каљена</target>
+        </segment>
+      </unit>
+      <unit id="1032480034816" name="Galaxy" xml:space="preserve">
+        <segment>
+          <source>Galaxy</source>
+          <target>Галактичка</target>
+        </segment>
+      </unit>
+      <unit id="1062624497664" name="Torched" xml:space="preserve">
+        <segment>
+          <source>Torched</source>
+          <target>Пламена</target>
+        </segment>
+      </unit>
+      <unit id="1089065390080" name="Gold" xml:space="preserve">
+        <segment>
+          <source>Gold</source>
+          <target>Златна</target>
+        </segment>
+      </unit>
+      <unit id="1112452829184" name="Dragon's Breath" xml:space="preserve">
+        <segment>
+          <source>Dragon's Breath</source>
+          <target>Змајев Дах</target>
+        </segment>
+      </unit>
+    </group>
+  </file>
+  <file id="929c48e48341c0a3b9af1e6faa879d63" original="Assets/Localization/Tables/Actions/Actions_sr-Cyrl.asset">
+    <group id="1b75b0a67b8963586a02e5552196ff56" name="Actions">
+      <unit id="6519721984" name="Flip" xml:space="preserve">
+        <segment>
+          <source>Flip</source>
+          <target>Окрет</target>
+        </segment>
+      </unit>
+      <unit id="11116679168" name="Dash" xml:space="preserve">
+        <segment>
+          <source>Dash</source>
+          <target>Налет</target>
+        </segment>
+      </unit>
+      <unit id="13540986880" name="Dodge" xml:space="preserve">
+        <segment>
+          <source>Dodge</source>
+          <target>Измицање</target>
+        </segment>
+      </unit>
+      <unit id="17039036416" name="Perspective" xml:space="preserve">
+        <segment>
+          <source>Perspective</source>
+          <target>Перспектива</target>
+        </segment>
+      </unit>
+    </group>
+  </file>
+  <file id="ceaa983011a0dbceba4644e9f55aed66" original="Assets/Localization/Tables/Colosseum/Colosseum_sr-Cyrl.asset">
+    <group id="dd3223439a56eaa5795194f2d0e95090" name="Colosseum">
+      <unit id="10227486720" name="You Died" xml:space="preserve">
+        <segment>
+          <source>You Died</source>
+          <target>Умро Си</target>
+        </segment>
+      </unit>
+      <unit id="705051693056" name="Play Again" xml:space="preserve">
+        <segment>
+          <source>Play Again</source>
+          <target>Играј Поново</target>
+        </segment>
+      </unit>
+      <unit id="1533846163456" name="Menu" xml:space="preserve">
+        <segment>
+          <source>Menu</source>
+          <target>Мени</target>
+        </segment>
+      </unit>
+    </group>
+  </file>
+  <file id="66322a4e12e15adb8ad0b7aba095a50f" original="Assets/Localization/Tables/MainMenu/MainMenu_sr-Cyrl.asset">
+    <group id="b642acd2e345bf5a0b6f9151f497df76" name="MainMenu" />
+  </file>
+  <file id="aee127833b10a0fe9bec71484b02065e" original="Assets/Localization/Tables/Settings/Settings_sr-Cyrl.asset">
+    <group id="5c842220a76282d9dbc0412ef50cf5d6" name="Settings">
+      <unit id="21642987900928" name="Graphics" xml:space="preserve">
+        <segment>
+          <source>Graphics</source>
+          <target>Графике</target>
+        </segment>
+      </unit>
+      <unit id="22491579486208" name="Audio	" xml:space="preserve">
+        <segment>
+          <source>Audio</source>
+          <target>Аудио</target>
+        </segment>
+      </unit>
+      <unit id="23094279999488" name="Input" xml:space="preserve">
+        <segment>
+          <source>Input</source>
+          <target>Унос</target>
+        </segment>
+      </unit>
+      <unit id="46985270464512" name="Depth Of Field" xml:space="preserve">
+        <segment>
+          <source>Depth Of Field</source>
+          <target>Дубина Поља</target>
+        </segment>
+      </unit>
+      <unit id="48743447203840" name="Motion Blur" xml:space="preserve">
+        <segment>
+          <source>Motion Blur</source>
+          <target>Замућење Покрета</target>
+        </segment>
+      </unit>
+      <unit id="54021525803008" name="Perspective" xml:space="preserve">
+        <segment>
+          <source>Perspective</source>
+          <target>Перспектива</target>
+        </segment>
+      </unit>
+      <unit id="54644061179904" name="First Person" xml:space="preserve">
+        <segment>
+          <source>First Person</source>
+          <target>Прво Лице</target>
+        </segment>
+      </unit>
+      <unit id="55073759236096" name="Third Person" xml:space="preserve">
+        <segment>
+          <source>Third Person</source>
+          <target>Треће Лице</target>
+        </segment>
+      </unit>
+      <unit id="55576895361024" name="Right" xml:space="preserve">
+        <segment>
+          <source>Right</source>
+          <target>Десна</target>
+        </segment>
+      </unit>
+      <unit id="56102194188288" name="Left" xml:space="preserve">
+        <segment>
+          <source>Left</source>
+          <target>Лева</target>
+        </segment>
+      </unit>
+      <unit id="71216309932032" name="Volume" xml:space="preserve">
+        <segment>
+          <source>Volume</source>
+          <target>Гласноћа</target>
+        </segment>
+      </unit>
+      <unit id="72254060433408" name="SFX" xml:space="preserve">
+        <segment>
+          <source>SFX</source>
+          <target>Ефекти</target>
+        </segment>
+      </unit>
+      <unit id="72679736152064" name="Music" xml:space="preserve">
+        <segment>
+          <source>Music</source>
+          <target>Музика</target>
+        </segment>
+      </unit>
+      <unit id="263941479141376" name="Language" xml:space="preserve">
+        <segment>
+          <source>Language</source>
+          <target>Језик</target>
+        </segment>
+      </unit>
+      <unit id="723736422191104" name="Reset	" xml:space="preserve">
+        <segment>
+          <source>Reset</source>
+          <target>Ресетуј</target>
+        </segment>
+      </unit>
+      <unit id="4562956098146304" name="Ambience" xml:space="preserve">
+        <segment>
+          <source>Ambience</source>
+          <target>Амбијент</target>
+        </segment>
+      </unit>
+    </group>
+  </file>
+</xliff>

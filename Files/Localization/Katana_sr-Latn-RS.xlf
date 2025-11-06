@@ -1,0 +1,214 @@
+<?xml version="1.0"?>
+<xliff xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0" srcLang="en" trgLang="sr-Latn-RS" xmlns="urn:oasis:names:tc:xliff:document:2.0">
+  <file id="836480dbc288f16fba9ecfd1adb978f5" original="Assets/Localization/Tables/Katanas/Katanas_sr-Latn-RS.asset">
+    <group id="bdfa180f17056523fa429777fc3414cf" name="Katanas">
+      <unit id="856096968704" name="Ancient" xml:space="preserve">
+        <segment>
+          <source>Ancient</source>
+          <target>Drevna</target>
+        </segment>
+      </unit>
+      <unit id="901718413312" name="Modern" xml:space="preserve">
+        <segment>
+          <source>Modern</source>
+          <target>Moderna</target>
+        </segment>
+      </unit>
+      <unit id="925651111936" name="Whiteout" xml:space="preserve">
+        <segment>
+          <source>Whiteout</source>
+          <target>Mećava</target>
+        </segment>
+      </unit>
+      <unit id="956550549504" name="Carbon Fiber" xml:space="preserve">
+        <segment>
+          <source>Carbon Fiber</source>
+          <target>Ugljena</target>
+        </segment>
+      </unit>
+      <unit id="996681650176" name="Case Hardened" xml:space="preserve">
+        <segment>
+          <source>Case Hardened</source>
+          <target>Kaljena</target>
+        </segment>
+      </unit>
+      <unit id="1032480034816" name="Galaxy" xml:space="preserve">
+        <segment>
+          <source>Galaxy</source>
+          <target>Galaktička</target>
+        </segment>
+      </unit>
+      <unit id="1062624497664" name="Torched" xml:space="preserve">
+        <segment>
+          <source>Torched</source>
+          <target>Plamena</target>
+        </segment>
+      </unit>
+      <unit id="1089065390080" name="Gold" xml:space="preserve">
+        <segment>
+          <source>Gold</source>
+          <target>Zlatna</target>
+        </segment>
+      </unit>
+      <unit id="1112452829184" name="Dragon's Breath" xml:space="preserve">
+        <segment>
+          <source>Dragon's Breath</source>
+          <target>Zmajev Dah</target>
+        </segment>
+      </unit>
+    </group>
+  </file>
+  <file id="c2ea7c578898c07308020beccf086a49" original="Assets/Localization/Tables/Actions/Actions_sr-Latn-RS.asset">
+    <group id="1b75b0a67b8963586a02e5552196ff56" name="Actions">
+      <unit id="6519721984" name="Flip" xml:space="preserve">
+        <segment>
+          <source>Flip</source>
+          <target>Okret</target>
+        </segment>
+      </unit>
+      <unit id="11116679168" name="Dash" xml:space="preserve">
+        <segment>
+          <source>Dash</source>
+          <target>Nalet</target>
+        </segment>
+      </unit>
+      <unit id="13540986880" name="Dodge" xml:space="preserve">
+        <segment>
+          <source>Dodge</source>
+          <target>Izmicanje</target>
+        </segment>
+      </unit>
+      <unit id="17039036416" name="Perspective" xml:space="preserve">
+        <segment>
+          <source>Perspective</source>
+          <target>Perspektiva</target>
+        </segment>
+      </unit>
+    </group>
+  </file>
+  <file id="6a1ef4029dc216d509bbcfd806f2c80c" original="Assets/Localization/Tables/Colosseum/Colosseum_sr-Latn-RS.asset">
+    <group id="dd3223439a56eaa5795194f2d0e95090" name="Colosseum">
+      <unit id="10227486720" name="You Died" xml:space="preserve">
+        <segment>
+          <source>You Died</source>
+          <target>Umro Si</target>
+        </segment>
+      </unit>
+      <unit id="705051693056" name="Play Again" xml:space="preserve">
+        <segment>
+          <source>Play Again</source>
+          <target>Igraj Ponovo</target>
+        </segment>
+      </unit>
+      <unit id="1533846163456" name="Menu" xml:space="preserve">
+        <segment>
+          <source>Menu</source>
+          <target>Meni</target>
+        </segment>
+      </unit>
+    </group>
+  </file>
+  <file id="77c44edd956b120569a33fe38a5cf46b" original="Assets/Localization/Tables/MainMenu/MainMenu_sr-Latn-RS.asset">
+    <group id="b642acd2e345bf5a0b6f9151f497df76" name="MainMenu" />
+  </file>
+  <file id="7ac98f276bb9a2e888d560f3ed81ed47" original="Assets/Localization/Tables/Settings/Settings_sr-Latn-RS.asset">
+    <group id="5c842220a76282d9dbc0412ef50cf5d6" name="Settings">
+      <unit id="21642987900928" name="Graphics" xml:space="preserve">
+        <segment>
+          <source>Graphics</source>
+          <target>Grafike</target>
+        </segment>
+      </unit>
+      <unit id="22491579486208" name="Audio	" xml:space="preserve">
+        <segment>
+          <source>Audio</source>
+          <target>Audio</target>
+        </segment>
+      </unit>
+      <unit id="23094279999488" name="Input" xml:space="preserve">
+        <segment>
+          <source>Input</source>
+          <target>Unos</target>
+        </segment>
+      </unit>
+      <unit id="46985270464512" name="Depth Of Field" xml:space="preserve">
+        <segment>
+          <source>Depth Of Field</source>
+          <target>Dubina Polja</target>
+        </segment>
+      </unit>
+      <unit id="48743447203840" name="Motion Blur" xml:space="preserve">
+        <segment>
+          <source>Motion Blur</source>
+          <target>Zamućenje Pokreta</target>
+        </segment>
+      </unit>
+      <unit id="54021525803008" name="Perspective" xml:space="preserve">
+        <segment>
+          <source>Perspective</source>
+          <target>Perspektiva</target>
+        </segment>
+      </unit>
+      <unit id="54644061179904" name="First Person" xml:space="preserve">
+        <segment>
+          <source>First Person</source>
+          <target>Prvo Lice</target>
+        </segment>
+      </unit>
+      <unit id="55073759236096" name="Third Person" xml:space="preserve">
+        <segment>
+          <source>Third Person</source>
+          <target>Treće Lice</target>
+        </segment>
+      </unit>
+      <unit id="55576895361024" name="Right" xml:space="preserve">
+        <segment>
+          <source>Right</source>
+          <target>Desna</target>
+        </segment>
+      </unit>
+      <unit id="56102194188288" name="Left" xml:space="preserve">
+        <segment>
+          <source>Left</source>
+          <target>Leva</target>
+        </segment>
+      </unit>
+      <unit id="71216309932032" name="Volume" xml:space="preserve">
+        <segment>
+          <source>Volume</source>
+          <target>Glasnoća</target>
+        </segment>
+      </unit>
+      <unit id="72254060433408" name="SFX" xml:space="preserve">
+        <segment>
+          <source>SFX</source>
+          <target>Efekti</target>
+        </segment>
+      </unit>
+      <unit id="72679736152064" name="Music" xml:space="preserve">
+        <segment>
+          <source>Music</source>
+          <target>Muzika</target>
+        </segment>
+      </unit>
+      <unit id="263941479141376" name="Language" xml:space="preserve">
+        <segment>
+          <source>Language</source>
+          <target>Jezik</target>
+        </segment>
+      </unit>
+      <unit id="723736422191104" name="Reset	" xml:space="preserve">
+        <segment>
+          <source>Reset</source>
+          <target>Resetuj</target>
+        </segment>
+      </unit>
+      <unit id="4562956098146304" name="Ambience" xml:space="preserve">
+        <segment>
+          <source>Ambience</source>
+          <target>Ambijent</target>
+        </segment>
+      </unit>
+    </group>
+  </file>
+</xliff>
