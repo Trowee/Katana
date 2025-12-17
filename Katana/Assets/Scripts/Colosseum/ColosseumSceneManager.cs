@@ -5,7 +5,7 @@ using Assets.Scripts.Player.Camera;
 using UnityEngine;
 using UnityCommunity.UnitySingleton;
 
-namespace Assets.Scripts.Core
+namespace Assets.Scripts.Colosseum
 {
     [RequireComponent(typeof(CameraManager))]
     [RequireComponent(typeof(ExplosionManagerScript))]

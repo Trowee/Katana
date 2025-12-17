@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using ArtificeToolkit.Attributes;
 using Assets.Scripts.Core;
+using Assets.Scripts.Colosseum;
 using Assets.Scripts.Player;
 using UnityEngine;
 

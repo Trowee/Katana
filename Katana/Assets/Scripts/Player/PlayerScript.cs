@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ArtificeToolkit.Attributes;
@@ -5,7 +6,6 @@ using Assets.Scripts.Colosseum;
 using Assets.Scripts.Core;
 using Assets.Scripts.Player.Camera;
 using Assets.Scripts.TimeScale;
-using NnUtils.Modules.Easings;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -103,6 +103,8 @@ namespace Assets.Scripts.Player
         [FoldoutGroup("Death"), SerializeField] private TimeScaleKeys _deathTimeScale;
 
         [FoldoutGroup("Dev"), ReadOnly] public bool IsStuck;
+
+        public Action<PlayerAction> OnPerformedAction;
 
         private void Reset()
         {
@@ -242,9 +244,24 @@ namespace Assets.Scripts.Player
             LastAction == PlayerAction.Flip &&
             TimeSinceLastAction <= 2;
 
-        private void OnDash(InputAction.CallbackContext ctx) => Dash();
-        private void OnDodge(InputAction.CallbackContext ctx) => Dodge();
-        private void OnFlip(InputAction.CallbackContext ctx) => Flip();
+        private void OnDash(InputAction.CallbackContext ctx)
+        {
+            Dash();
+            OnPerformedAction?.Invoke(PlayerAction.Dash);
+        }
+
+        private void OnDodge(InputAction.CallbackContext ctx)
+        {
+            Dodge();
+            OnPerformedAction?.Invoke(PlayerAction.Dodge);
+        }
+
+        private void OnFlip(InputAction.CallbackContext ctx)
+        {
+            Flip();
+            OnPerformedAction?.Invoke(PlayerAction.Flip);
+        }
+
         private void OnPerspective(InputAction.CallbackContext ctx) => ChangePerspective();
 
         private void Dash()

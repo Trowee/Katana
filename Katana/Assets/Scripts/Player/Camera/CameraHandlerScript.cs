@@ -1,5 +1,5 @@
 using ArtificeToolkit.Attributes;
-using Assets.Scripts.Core;
+using Assets.Scripts.Colosseum;
 using UnityEngine;
 
 namespace Assets.Scripts.Player.Camera
