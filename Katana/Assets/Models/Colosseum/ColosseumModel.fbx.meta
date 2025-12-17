@@ -12,6 +12,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Colosseum
+    second: {fileID: 2100000, guid: ea5a8414b2e55aaffaa2b89a36bffa16, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: ColosseumFloor
     second: {fileID: 2100000, guid: d8c3c6ed63fa5951d89eb019adeb6dab, type: 2}
   - first:
