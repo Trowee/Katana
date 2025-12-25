@@ -3,4 +3,4 @@
 	url = https://www.github.com/nnra6864/NnUtils
 [submodule "SourceAssets"]
 	path = SourceAssets
-	url = https://git.NnStdios.xyz/NnStdios/KatanaSourceAssets
+	url = https://github.com/NnStdios/KatanaSourceAssets
