@@ -8,7 +8,7 @@
         "com.unity.editorcoroutines": "1.0.0",
         "com.unity.nuget.newtonsoft-json": "3.0.2"
       },
-      "hash": "d1689e6d38ba350faf118f0b4de9988ce4bef257"
+      "hash": "b5f98e4484f646de24a3ed6563f43c810ec3500c"
     },
     "com.bgtools.playerprefseditor": {
       "version": "https://github.com/Dysman/bgTools-playerPrefsEditor.git#upm",
@@ -24,28 +24,28 @@
       "dependencies": {
         "com.unity.ugui": "1.0.0"
       },
-      "hash": "a885fc5bc117b9eaa92b1b75709c8384141cc4a7"
+      "hash": "815162eab9760a7567423deb47fd9d3437eb26d8"
     },
     "com.cqf.urpvolumetricfog": {
       "version": "https://github.com/CristianQiu/Unity-URP-Volumetric-Light.git",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "3f28b49218ca4c928ca0d4c3d508f0c0ddf43473"
+      "hash": "0a37318047a7d24651f164718f17123c3c48e9e5"
     },
     "com.cysharp.zlinq": {
       "version": "https://github.com/Cysharp/ZLinq.git?path=src/ZLinq.Unity/Assets/ZLinq.Unity",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "f59785046a36605378e18678af15ee66549aa26b"
+      "hash": "c6d15be4efecc0afca628fd194f8f62ee0b4bb15"
     },
     "com.github-glitchenzo.nugetforunity": {
       "version": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "a7c6b49a0141a5bff9b1983e38137522ef61977d"
+      "hash": "34432703a177c97631a4eb1d908f086037c67969"
     },
     "com.handzlikchris.fastscriptreload": {
       "version": "https://github.com/handzlikchris/FastScriptReload.git?path=Assets",
@@ -61,7 +61,7 @@
       "dependencies": {
         "com.unity.shadergraph": "7.1.8"
       },
-      "hash": "38d18b868ba4550aab2f76b2817882474300e75c"
+      "hash": "81a21b22fbefb4e983379aed3a4490e9c446c9fb"
     },
     "com.maligan.unity-zed": {
       "version": "https://github.com/maligan/unity-zed.git",
@@ -110,7 +110,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "87f0b4a81e6581a4a462dcd1a772aac0f6a23c21"
+      "hash": "406fd0dadc3801e1d149e65175bea0f284c186fd"
     },
     "com.opalstudio.scenemanipulator": {
       "version": "https://github.com/Alaxxxx/SceneManipulator.git",
@@ -165,7 +165,7 @@
       "dependencies": {
         "com.unity.render-pipelines.universal": "14.0.11"
       },
-      "hash": "3f7b28476cb83f2d56cf73a13c81de798a94f005"
+      "hash": "31d65c1cf2133476d5d80060305b2335f7a784ab"
     },
     "com.unity.addressables": {
       "version": "2.7.4",
@@ -245,11 +245,11 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.25",
+      "version": "2.0.26",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.test-framework": "1.1.31"
+        "com.unity.test-framework": "1.1.33"
       },
       "url": "https://packages.unity.com"
     },
@@ -263,7 +263,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.localization": {
-      "version": "1.5.8",
+      "version": "1.5.9",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -422,7 +422,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.timeline": {
-      "version": "1.8.9",
+      "version": "1.8.10",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -483,14 +483,14 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "4de62306b1412118f44f177952d3f6268e8e1161"
+      "hash": "b8287bf992001b2b944afbf7d031ae1ed3238e88"
     },
     "com.yasirkula.assetusagedetector": {
       "version": "https://github.com/yasirkula/UnityAssetUsageDetector.git",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "790a508dcd45526e338e06b771026b875f9f04a0"
+      "hash": "8f8316266c7d06f02a903aa8ba72e234d87b3a64"
     },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",
