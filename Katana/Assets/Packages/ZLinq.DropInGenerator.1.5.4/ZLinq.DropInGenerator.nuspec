@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>ZLinq.DropInGenerator</id>
-    <version>1.4.10</version>
+    <version>1.5.4</version>
     <authors>Cysharp</authors>
     <developmentDependency>true</developmentDependency>
     <license type="expression">MIT</license>
@@ -13,6 +13,6 @@
     <description>DropIn replacement Source Generator for ZLinq.</description>
     <copyright>© Cysharp, Inc.</copyright>
     <tags>linq</tags>
-    <repository type="git" url="https://github.com/Cysharp/ZLinq" branch="refs/heads/main" commit="7157f8f60c9e93cd5bbeb2e7f600089e0c489232" />
+    <repository type="git" url="https://github.com/Cysharp/ZLinq" branch="refs/heads/main" commit="61032309d4830d1b612d9af01ac97533f075d947" />
   </metadata>
 </package>
